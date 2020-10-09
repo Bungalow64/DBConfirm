@@ -19,6 +19,8 @@ namespace Sample.Core.MSTest.Tests.Views
 
             results
                 .AssertRowCount(0);
+
+            Assert.AreEqual(0, await CountRowsInViewAsync("dbo.AllUsers"));
         }
 
         [TestMethod]
@@ -40,6 +42,8 @@ namespace Sample.Core.MSTest.Tests.Views
                 {
                     { "FirstName", "Jamie" }
                 });
+
+            Assert.AreEqual(1, await CountRowsInViewAsync("dbo.AllUsers"));
         }
 
         [TestMethod]

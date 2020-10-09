@@ -19,6 +19,8 @@ namespace Sample.Core.MSTest.Tests.Tables
 
             results
                 .AssertRowCount(0);
+
+            Assert.AreEqual(0, await CountRowsInTableAsync("dbo.Users"));
         }
 
         [TestMethod]
@@ -40,6 +42,8 @@ namespace Sample.Core.MSTest.Tests.Tables
                 {
                     { "FirstName", "Jamie" }
                 });
+
+            Assert.AreEqual(1, await CountRowsInTableAsync("dbo.Users"));
         }
 
         [TestMethod]

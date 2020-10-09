@@ -41,9 +41,14 @@ namespace Common
             TestRunner.Dispose();
         }
 
-        public Task<QueryResult> GetAllRowsAsync(string table)
+        public Task<int> CountRowsInTableAsync(string tableName)
         {
-            return TestRunner.GetAllRowsAsync(table);
+            return TestRunner.CountRowsInTableAsync(tableName);
+        }
+
+        public Task<int> CountRowsInViewAsync(string viewName)
+        {
+            return TestRunner.CountRowsInViewAsync(viewName);
         }
 
         public Task ExecuteStoredProcedureNonQueryAsync(string procedureName, params SqlParameter[] parameters)

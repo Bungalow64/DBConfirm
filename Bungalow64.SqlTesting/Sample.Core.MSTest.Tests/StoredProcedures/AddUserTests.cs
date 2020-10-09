@@ -42,7 +42,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 new SqlParameter("NumberOfHats", 3),
                 new SqlParameter("Cost", 34));
 
-            QueryResult data = await GetAllRowsAsync("dbo.Users");
+            QueryResult data = await ExecuteTableAsync("dbo.Users");
 
             data.AssertRowCount(2);
             data.AssertColumnsExist("FirstName", "LastName", "EmailAddress", "CreatedDate");

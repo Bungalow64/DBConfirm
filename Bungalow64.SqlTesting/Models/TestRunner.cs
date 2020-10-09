@@ -52,23 +52,6 @@ namespace Models
 
         #region Actions
 
-        public Task<QueryResult> GetAllRowsAsync(string table)
-        {
-            using (DataSet ds = new DataSet())
-            {
-                ds.Locale = CultureInfo.InvariantCulture;
-
-                using (SqlCommand command = new SqlCommand($"SELECT * FROM {table}", SqlConnection, SqlTransaction))
-                {
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(ds);
-                    }
-                }
-                return Task.FromResult(new QueryResult(ds.Tables[0]));
-            }
-        }
-
         public async Task ExecuteStoredProcedureNonQueryAsync(string procedureName, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
@@ -102,21 +85,12 @@ namespace Models
 
         public Task<QueryResult> ExecuteViewAsync(string viewName)
         {
-            using (DataSet ds = new DataSet())
-            {
-                ds.Locale = CultureInfo.InvariantCulture;
+            return ExecuteCommandAsync($"SELECT * FROM {viewName}");
+        }
 
-                using (SqlCommand command = new SqlCommand($"SELECT * FROM {viewName}", SqlConnection, SqlTransaction))
-                {
-                    command.CommandType = CommandType.Text;
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(ds);
-                    }
-                }
-                return Task.FromResult(new QueryResult(ds.Tables[0]));
-            }
+        public async Task<int> CountRowsInViewAsync(string viewName)
+        {
+            return (await ExecuteCommandScalarAsync<int>($"SELECT COUNT(*) AS [Count] FROM {viewName}")).RawData;
         }
 
         public Task<IList<QueryResult>> ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, params SqlParameter[] parameters)
@@ -150,7 +124,7 @@ namespace Models
             }
         }
 
-        public async Task ExecuteCommandNoResultsAsync(string commandText, SqlParameter[] parameters)
+        public async Task ExecuteCommandNoResultsAsync(string commandText, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
             {
@@ -161,7 +135,7 @@ namespace Models
             }
         }
 
-        public Task<QueryResult> ExecuteCommandAsync(string commandText, SqlParameter[] parameters)
+        public Task<QueryResult> ExecuteCommandAsync(string commandText, params SqlParameter[] parameters)
         {
             using (DataSet ds = new DataSet())
             {
@@ -180,7 +154,7 @@ namespace Models
             }
         }
 
-        public async Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, SqlParameter[] parameters)
+        public async Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
             {
@@ -191,7 +165,7 @@ namespace Models
             }
         }
 
-        public Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, SqlParameter[] parameters)
+        public Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, params SqlParameter[] parameters)
         {
             using (DataSet ds = new DataSet())
             {
@@ -214,6 +188,11 @@ namespace Models
         public Task<QueryResult> ExecuteTableAsync(string tableName)
         {
             return ExecuteViewAsync(tableName);
+        }
+
+        public Task<int> CountRowsInTableAsync(string tableName)
+        {
+            return CountRowsInViewAsync(tableName);
         }
 
         #endregion
