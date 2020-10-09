@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -33,10 +29,10 @@ namespace Common
         }
 
         [TestInitialize]
-        public void Init()
+        public async Task Init()
         {
             TestRunner = new TestRunner(Configuration.GetConnectionString("TestDatabase"));
-            TestRunner.InitialiseAsync().Wait();
+            await TestRunner.InitialiseAsync();
         }
 
         [TestCleanup]
@@ -58,6 +54,46 @@ namespace Common
         public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, params SqlParameter[] parameters)
         {
             return TestRunner.ExecuteStoredProcedureQueryAsync(procedureName, parameters);
+        }
+
+        public Task<IList<QueryResult>> ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, params SqlParameter[] parameters)
+        {
+            return TestRunner.ExecuteStoredProcedureMultipleDataSetAsync(procedureName, parameters);
+        }
+
+        public Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, params SqlParameter[] parameters)
+        {
+            return TestRunner.ExecuteStoredProcedureScalarAsync<T>(procedureName, parameters);
+        }
+
+        public Task<QueryResult> ExecuteViewAsync(string viewName)
+        {
+            return TestRunner.ExecuteViewAsync(viewName);
+        }
+
+        public Task<QueryResult> ExecuteTableAsync(string tableName)
+        {
+            return TestRunner.ExecuteTableAsync(tableName);
+        }
+
+        public Task ExecuteCommandNoResultsAsync(string commandText, params SqlParameter[] parameters)
+        {
+            return TestRunner.ExecuteCommandNoResultsAsync(commandText, parameters);
+        }
+
+        public Task<QueryResult> ExecuteCommandAsync(string commandText, params SqlParameter[] parameters)
+        {
+            return TestRunner.ExecuteCommandAsync(commandText, parameters);
+        }
+
+        public Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, params SqlParameter[] parameters)
+        {
+            return TestRunner.ExecuteCommandMultipleDataSetAsync(commandText, parameters);
+        }
+
+        public Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, params SqlParameter[] parameters)
+        {
+            return TestRunner.ExecuteCommandScalarAsync<T>(commandText, parameters);
         }
     }
 }

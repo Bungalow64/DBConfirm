@@ -2,6 +2,7 @@
 using Models.Dates.Abstract;
 using Models.States.Abstract;
 using Models.Strings.Abstract;
+using Models.Validation;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -28,32 +29,11 @@ namespace Models
 
         public RowResult AssertValue(string columnName, object expectedValue)
         {
-            expectedValue = expectedValue ?? DBNull.Value;
-
             _queryResult.AssertColumnExists(columnName);
 
             object value = _row[columnName];
 
-            if (expectedValue is IState stateValue)
-            {
-                stateValue.AssertState(value, $"Column {columnName} in row {_rowNumber} has an unexpected state");
-            }
-            else if (expectedValue is IDateComparison dateValue)
-            {
-                Assert.IsInstanceOfType(value, typeof(DateTime), $"Column {columnName} in row {_rowNumber} is not a valid DateTime object");
-
-                dateValue.AssertDate((DateTime)value, $"Column {columnName} in row {_rowNumber} is different by {{0}}");
-            }
-            else if (expectedValue is IStringComparison stringValue)
-            {
-                Assert.IsInstanceOfType(value, typeof(string), $"Column {columnName} in row {_rowNumber} is not a valid String object");
-
-                stringValue.AssertString((string)value, $"Column {columnName} in row {_rowNumber} {{0}}");
-            }
-            else
-            {
-                Assert.AreEqual(expectedValue, value, $"Column {columnName} in row {_rowNumber} has an unexpected value");
-            }
+            ValueValidation.Validate(expectedValue, value, $"Column {columnName} in row {_rowNumber}");
 
             return this;
         }
