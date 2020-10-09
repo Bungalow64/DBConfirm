@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -26,6 +27,11 @@ namespace Models
             :base(data)
         {
 
+        }
+
+        public override string ToString()
+        {
+            return Environment.NewLine + string.Join(Environment.NewLine, this);
         }
     }
 }

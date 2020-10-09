@@ -14,7 +14,7 @@ namespace Models.Strings
 
         public void AssertString(string value, string message)
         {
-            Assert.AreEqual(ExpectedLength, value?.Length ?? 0, message);
+            Assert.AreEqual(ExpectedLength, value?.Length ?? 0, message, "has an unexpected length");
         }
     }
 }

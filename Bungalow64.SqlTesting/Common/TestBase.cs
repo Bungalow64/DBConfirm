@@ -45,14 +45,19 @@ namespace Common
             TestRunner.Dispose();
         }
 
-        public QueryResult GetAllRows(string table)
+        public Task<QueryResult> GetAllRowsAsync(string table)
         {
-            return TestRunner.GetAllRows(table);
+            return TestRunner.GetAllRowsAsync(table);
         }
 
-        public Task ExecuteStoredProcedureAsync(string procedureName, params SqlParameter[] parameters)
+        public Task ExecuteStoredProcedureNonQueryAsync(string procedureName, params SqlParameter[] parameters)
         {
-            return TestRunner.ExecuteStoredProcedureAsync(procedureName, parameters);
+            return TestRunner.ExecuteStoredProcedureNonQueryAsync(procedureName, parameters);
+        }
+
+        public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, params SqlParameter[] parameters)
+        {
+            return TestRunner.ExecuteStoredProcedureQueryAsync(procedureName, parameters);
         }
     }
 }

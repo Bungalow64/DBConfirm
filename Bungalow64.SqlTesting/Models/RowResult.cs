@@ -48,7 +48,7 @@ namespace Models
             {
                 Assert.IsInstanceOfType(value, typeof(string), $"Column {columnName} in row {_rowNumber} is not a valid String object");
 
-                stringValue.AssertString((string)value, $"Column {columnName} in row {_rowNumber} has an unexpeccted length");
+                stringValue.AssertString((string)value, $"Column {columnName} in row {_rowNumber} {{0}}");
             }
             else
             {

@@ -93,10 +93,59 @@ namespace Models
             return this;
         }
 
+        public QueryResult AssertRowExists(DataSetRow expectedData)
+        {
+            AssertColumnNames(expectedData);
+
+            for (int x = 0; x < TotalRows; x++)
+            {
+                try
+                {
+                    AssertRowValues(x, expectedData);
+                    return this;
+                }
+                catch (AssertFailedException) { }
+            }
+
+            Assert.Fail($"No rows found matching the expected data: {expectedData}");
+            return this;
+        }
+
+        public QueryResult AssertRowDoesNotExist(DataSetRow expectedData)
+        {
+            AssertColumnNames(expectedData);
+
+            for (int x = 0; x < TotalRows; x++)
+            {
+                bool isMatch = false;
+                try
+                {
+                    AssertRowValues(x, expectedData);
+                    isMatch = true;
+                }
+                catch (AssertFailedException) { }
+
+                if (isMatch)
+                {
+                    Assert.Fail($"Row {x} matches the expected data that should not match anything: {expectedData}");
+                }
+            }
+
+            return this;
+        }
+
         internal DataRow GetRow(int rowNumber)
         {
             AssertRowPositionExists(rowNumber);
             return RawData.Rows[rowNumber];
+        }
+
+        private void AssertColumnNames(DataSetRow expectedData)
+        {
+            foreach (KeyValuePair<string, object> row in expectedData)
+            {
+                AssertColumnExists(row.Key);
+            }
         }
     }
 }

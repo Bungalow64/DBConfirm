@@ -16,8 +16,8 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
             var expectedData = new DataSetRow
             {
                 ["FirstName"] = "Jamie",
-                ["LastName"] = ExpectedData.IsNotNull(),
-                ["EmailAddress"] = "jamie@bungalow64.co.uk",
+                ["LastName"] = ExpectedData.NotMatchesRegex(".*@.*"),
+                ["EmailAddress"] = ExpectedData.MatchesRegex(".*@.*"),
                 ["CreatedDate"] = ExpectedData.IsUtcNow(),
                 ["StartDate"] = ExpectedData.IsDay("01-Mar-2020 00:10:00"),
                 ["IsActive"] = true,
@@ -26,7 +26,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 ["Cost"] = 15.87m
             };
 
-            await ExecuteStoredProcedureAsync("dbo.AddUser",
+            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Jamie"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
@@ -34,9 +34,17 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            QueryResult data = GetAllRows("dbo.Users");
+            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+                new SqlParameter("FirstName", "AAA"),
+                new SqlParameter("LastName", "FFF"),
+                new SqlParameter("EmailAddress", "AAA@FFF.co.uk"),
+                new SqlParameter("StartDate", DateTime.Parse("01-Jan-2020")),
+                new SqlParameter("NumberOfHats", 3),
+                new SqlParameter("Cost", 34));
 
-            data.AssertRowCount(1);
+            QueryResult data = await GetAllRowsAsync("dbo.Users");
+
+            data.AssertRowCount(2);
             data.AssertColumnsExist("FirstName", "LastName", "EmailAddress", "CreatedDate");
             data.AssertColumnsNotExist("Age", "JobTitle");
             data.AssertValue(0, "FirstName", "Jamie");
@@ -55,6 +63,32 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
             data
                 .ValidateRow(0)
                 .AssertValue("FirstName", ExpectedData.HasLength(5));
+
+            data
+                .AssertRowValues(0, new DataSetRow
+                {
+                    { "FirstName", "Jamie" },
+                    { "LastName", "Burns" }
+                })
+                .AssertRowValues(1, new DataSetRow
+                {
+                    { "FirstName", "AAA" },
+                    { "LastName", "FFF" }
+                });
+
+            data
+                .AssertRowExists(new DataSetRow
+                {
+                    { "FirstName", "Jamie" },
+                    { "LastName", "Burns" }
+                });
+
+            data
+                .AssertRowDoesNotExist(new DataSetRow
+                {
+                    { "FirstName", "Jeff" },
+                    { "LastName", "Burns" }
+                });
         }
     }
 }

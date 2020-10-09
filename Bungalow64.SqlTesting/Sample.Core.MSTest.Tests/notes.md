@@ -14,9 +14,4 @@ Installed SQL 2019 Developer and SSMS 2019.  Added database, set as Simple recov
 #Tasks
 
 Next: Handle connection string as part of library?
-Next: Add handlers for bool checks
-Next: Add handlers for regex checks
-Next: Add handler for number/decimal checks
-Next: Add logic for ValidateAnyRow checks
-Next: Add inverse logic for ValidateRow and ValidateAnyRow checks
 Next: Look at RelationshipValidator - is it needed?

@@ -5,6 +5,7 @@ using Models.Dates;
 using Models.Dates.Abstract;
 using Models.Strings.Abstract;
 using Models.Strings;
+using System.Text.RegularExpressions;
 
 namespace Models
 {
@@ -23,5 +24,9 @@ namespace Models
         public static IDateComparison IsDate(DateTime expectedDate) => new SpecificDate(expectedDate);
 
         public static IStringComparison HasLength(int expectedLength) => new SpecificLength(expectedLength);
+        public static IStringComparison MatchesRegex(Regex expectedRegex) => new MatchRegex(expectedRegex);
+        public static IStringComparison MatchesRegex(string expectedRegex) => new MatchRegex(expectedRegex);
+        public static IStringComparison NotMatchesRegex(Regex unexpectedRegex) => new NoMatchRegex(unexpectedRegex);
+        public static IStringComparison NotMatchesRegex(string unexpectedRegex) => new NoMatchRegex(unexpectedRegex);
     }
 }

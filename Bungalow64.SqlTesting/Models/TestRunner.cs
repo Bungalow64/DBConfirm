@@ -50,7 +50,7 @@ namespace Models
 
         #region Actions
 
-        public QueryResult GetAllRows(string table)
+        public Task<QueryResult> GetAllRowsAsync(string table)
         {
             using (DataSet ds = new DataSet())
             {
@@ -63,11 +63,11 @@ namespace Models
                         adapter.Fill(ds);
                     }
                 }
-                return new QueryResult(ds.Tables[0]);
+                return Task.FromResult(new QueryResult(ds.Tables[0]));
             }
         }
 
-        public async Task ExecuteStoredProcedureAsync(string procedureName, params SqlParameter[] parameters)
+        public async Task ExecuteStoredProcedureNonQueryAsync(string procedureName, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
             {
@@ -75,6 +75,25 @@ namespace Models
                 command.Parameters.AddRange(parameters);
 
                 await command.ExecuteNonQueryAsync();
+            }
+        }
+        public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, params SqlParameter[] parameters)
+        {
+            using (DataSet ds = new DataSet())
+            {
+                ds.Locale = CultureInfo.InvariantCulture;
+
+                using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(parameters);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(ds);
+                    }
+                }
+                return Task.FromResult(new QueryResult(ds.Tables[0]));
             }
         }
         #endregion
