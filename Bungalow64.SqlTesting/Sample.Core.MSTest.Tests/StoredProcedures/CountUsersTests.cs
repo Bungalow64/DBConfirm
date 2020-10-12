@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Sample.Core.MSTest.Tests.Templates;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task CountUsers_NoData_ReturnNoRows()
         {
-            QueryResult result = await ExecuteStoredProcedureQueryAsync("dbo.CountUsers", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uK"));
+            QueryResult result = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.CountUsers", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uK"));
 
             result
                 .AssertRowCount(1);
@@ -23,7 +24,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task CountUsers_MatchEmailAddress_Return1()
         {
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Jamie"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
@@ -31,7 +32,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            ScalarResult<int> result = await ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uK"));
+            ScalarResult<int> result = await TestRunner.ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uK"));
 
             result
                 .AssertValue(1);
@@ -40,7 +41,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task CountUsers_NoMatchEmailAddress_Return0()
         {
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Jamie"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
@@ -48,7 +49,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            ScalarResult<int> result = await ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new SqlParameter("EmailAddress", "RARARAR@dsf.co.uK"));
+            ScalarResult<int> result = await TestRunner.ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new SqlParameter("EmailAddress", "RARARAR@dsf.co.uK"));
 
             result
                 .AssertValue(0);
@@ -58,9 +59,9 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         }
 
         [TestMethod]
-        public async Task CountUsers_NoMatchEmailAddress_Return0_ByCommand()
+        public async Task CountUsers_NoMatchEmailAddress_Return1_ByCommand()
         {
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Jamie"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
@@ -68,7 +69,58 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            ScalarResult<int> result = await ExecuteCommandScalarAsync<int>("EXEC dbo.CountUsers @EmailAddress", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            ScalarResult<int> result = await TestRunner.ExecuteCommandScalarAsync<int>("EXEC dbo.CountUsers @EmailAddress", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+
+            result
+                .AssertValue(1);
+        }
+
+        [TestMethod]
+        public async Task CountUsers_MatchEmailAddress_Return1_UseDataSetupIdentity()
+        {
+            await TestRunner.InsertDataAsync("dbo.Users", new DataSetRow
+            {
+                { "FirstName", "Jamie" },
+                { "LastName", "Burns" },
+                { "EmailAddress", "jamie@bungalow64.co.uk" },
+                { "StartDate", DateTime.Parse("01-Mar-2020") },
+                { "NumberOfHats", 14 },
+                { "Cost", 15.87 },
+                { "CreatedDate", DateTime.Parse("01-Feb-2020") },
+            });
+
+            ScalarResult<int> result = await TestRunner.ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uK"));
+
+            result
+                .AssertValue(1);
+        }
+
+        [TestMethod]
+        public async Task CountUsers_MatchEmailAddress_Return1_UseDefaultDataTemplateSetupIdentity()
+        {
+            await TestRunner.InsertAsync<UserTemplate>();
+
+            ScalarResult<int> result = await TestRunner.ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new DataSetRow
+            {
+                { "EmailAddress", "jamie@bungalow64.co.uK" }
+            });
+
+            result
+                .AssertValue(1);
+        }
+
+        [TestMethod]
+        public async Task CountUsers_MatchEmailAddress_Return1_UseDataTemplateSetupIdentity()
+        {
+            await TestRunner.InsertAsync(new UserTemplate
+            {
+                { "EmailAddress", "jimmy@bungalow64.co.uk" }
+            });
+
+            ScalarResult<int> result = await TestRunner.ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new DataSetRow
+            {
+                { "EmailAddress", "jimmy@bungalow64.co.uK" }
+            });
 
             result
                 .AssertValue(1);

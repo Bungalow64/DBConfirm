@@ -15,18 +15,18 @@ namespace Sample.Core.MSTest.Tests.Views
         [TestMethod]
         public async Task AllUsers_NoData_NothingReturned()
         {
-            QueryResult results = await ExecuteViewAsync("dbo.AllUsers");
+            QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
 
             results
                 .AssertRowCount(0);
 
-            Assert.AreEqual(0, await CountRowsInViewAsync("dbo.AllUsers"));
+            Assert.AreEqual(0, await TestRunner.CountRowsInViewAsync("dbo.AllUsers"));
         }
 
         [TestMethod]
         public async Task AllUsers_OneRow_OneUserReturned()
         {
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Jamie"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
@@ -34,7 +34,7 @@ namespace Sample.Core.MSTest.Tests.Views
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            QueryResult results = await ExecuteViewAsync("dbo.AllUsers");
+            QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
 
             results
                 .AssertRowCount(1)
@@ -43,13 +43,13 @@ namespace Sample.Core.MSTest.Tests.Views
                     { "FirstName", "Jamie" }
                 });
 
-            Assert.AreEqual(1, await CountRowsInViewAsync("dbo.AllUsers"));
+            Assert.AreEqual(1, await TestRunner.CountRowsInViewAsync("dbo.AllUsers"));
         }
 
         [TestMethod]
         public async Task AllUsers_TwoRows_TwoUsersReturned()
         {
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Jamie"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
@@ -57,7 +57,7 @@ namespace Sample.Core.MSTest.Tests.Views
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Stuart"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "stuart@bungalow64.co.uk"),
@@ -65,7 +65,7 @@ namespace Sample.Core.MSTest.Tests.Views
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            QueryResult results = await ExecuteViewAsync("dbo.AllUsers");
+            QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
 
             results
                 .AssertRowCount(2)

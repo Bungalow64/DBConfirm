@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
+﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
@@ -39,66 +37,6 @@ namespace Common
         public void Cleanup()
         {
             TestRunner.Dispose();
-        }
-
-        public Task<int> CountRowsInTableAsync(string tableName)
-        {
-            return TestRunner.CountRowsInTableAsync(tableName);
-        }
-
-        public Task<int> CountRowsInViewAsync(string viewName)
-        {
-            return TestRunner.CountRowsInViewAsync(viewName);
-        }
-
-        public Task ExecuteStoredProcedureNonQueryAsync(string procedureName, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteStoredProcedureNonQueryAsync(procedureName, parameters);
-        }
-
-        public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteStoredProcedureQueryAsync(procedureName, parameters);
-        }
-
-        public Task<IList<QueryResult>> ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteStoredProcedureMultipleDataSetAsync(procedureName, parameters);
-        }
-
-        public Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteStoredProcedureScalarAsync<T>(procedureName, parameters);
-        }
-
-        public Task<QueryResult> ExecuteViewAsync(string viewName)
-        {
-            return TestRunner.ExecuteViewAsync(viewName);
-        }
-
-        public Task<QueryResult> ExecuteTableAsync(string tableName)
-        {
-            return TestRunner.ExecuteTableAsync(tableName);
-        }
-
-        public Task ExecuteCommandNoResultsAsync(string commandText, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteCommandNoResultsAsync(commandText, parameters);
-        }
-
-        public Task<QueryResult> ExecuteCommandAsync(string commandText, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteCommandAsync(commandText, parameters);
-        }
-
-        public Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteCommandMultipleDataSetAsync(commandText, parameters);
-        }
-
-        public Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, params SqlParameter[] parameters)
-        {
-            return TestRunner.ExecuteCommandScalarAsync<T>(commandText, parameters);
         }
     }
 }
