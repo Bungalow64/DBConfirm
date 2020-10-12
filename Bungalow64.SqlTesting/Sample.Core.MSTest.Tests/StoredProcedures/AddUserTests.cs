@@ -26,7 +26,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 ["Cost"] = 15.87m
             };
 
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "Jamie"),
                 new SqlParameter("LastName", "Burns"),
                 new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
@@ -34,7 +34,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 new SqlParameter("NumberOfHats", 14),
                 new SqlParameter("Cost", 15.87));
 
-            await ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
                 new SqlParameter("FirstName", "AAA"),
                 new SqlParameter("LastName", "FFF"),
                 new SqlParameter("EmailAddress", "AAA@FFF.co.uk"),
@@ -42,7 +42,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 new SqlParameter("NumberOfHats", 3),
                 new SqlParameter("Cost", 34));
 
-            QueryResult data = await GetAllRowsAsync("dbo.Users");
+            QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
             data.AssertRowCount(2);
             data.AssertColumnsExist("FirstName", "LastName", "EmailAddress", "CreatedDate");

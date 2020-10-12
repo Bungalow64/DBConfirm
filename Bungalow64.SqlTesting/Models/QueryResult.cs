@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,6 +8,11 @@ namespace Models
     public class QueryResult
     {
         public DataTable RawData { get; private set; }
+
+        public QueryResult()
+        {
+            RawData = new DataTable();
+        }
 
         public QueryResult(DataTable rawData)
         {
