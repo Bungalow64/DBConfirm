@@ -7,7 +7,10 @@ namespace Models.Templates
     {
         public Func<T> Function { get; }
 
-        public Resolver(Func<T> function) => Function = function;
+        public Resolver(Func<T> function)
+        {
+            Function = function ?? throw new ArgumentNullException(nameof(function));
+        }
 
         public object Resolve() => Function();
     }
