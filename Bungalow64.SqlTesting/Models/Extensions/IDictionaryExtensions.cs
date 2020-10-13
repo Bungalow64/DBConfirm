@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Models.Exceptions;
 using Models.Templates.Asbtract;
 using Models.Templates.Placeholders;
 using System;
@@ -11,12 +12,16 @@ namespace Models.Extensions
     {
         public static SqlParameter[] ToSqlParameters(this IDictionary<string, object> dictionary)
         {
+            if ((dictionary?.Count ?? 0) == 0)
+            {
+                return new SqlParameter[0];
+            }
+
             object getValue(KeyValuePair<string, object> value)
             {
                 if (value.Value is RequiredPlaceholder)
                 {
-                    // TODO: Confirm correct exception, use different or custom
-                    throw new MissingMemberException($"The value for {value.Key} is required but has not been set");
+                    throw new RequiredPlaceholderIsNullException($"The value for {value.Key} is required but has not been set", value.Key);
                 }
                 if (value.Value is IResolver resolverValue)
                 {

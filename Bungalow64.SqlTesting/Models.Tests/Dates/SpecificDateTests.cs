@@ -64,7 +64,7 @@ namespace Models.Tests.Dates
                 new SpecificDate(expectedDate)
                     .AssertDate(actualDate, "Date is wrong: {0}"));
 
-            Assert.AreEqual(ex.Message, expectedMessage);
+            Assert.AreEqual(expectedMessage, ex.Message);
         }
     }
 }
