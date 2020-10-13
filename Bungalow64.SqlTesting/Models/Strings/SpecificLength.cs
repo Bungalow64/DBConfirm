@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models.Strings.Abstract;
+using System;
 
 namespace Models.Strings
 {
@@ -9,6 +10,10 @@ namespace Models.Strings
 
         public SpecificLength(int expectedLength)
         {
+            if (expectedLength < 0)
+            {
+                throw new ArgumentException("Expected length cannot be less than 0", nameof(expectedLength));
+            }
             ExpectedLength = expectedLength;
         }
 

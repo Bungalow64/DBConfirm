@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models.Strings.Abstract;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Models.Strings
@@ -10,11 +11,19 @@ namespace Models.Strings
 
         public NoMatchRegex(Regex unexpectedRegex)
         {
+            if (unexpectedRegex == null)
+            {
+                throw new ArgumentNullException(nameof(unexpectedRegex));
+            }
             UnexpectedRegex = unexpectedRegex;
         }
 
         public NoMatchRegex(string unexpectedRegex)
         {
+            if (unexpectedRegex == null)
+            {
+                throw new ArgumentNullException(nameof(unexpectedRegex));
+            }
             UnexpectedRegex = new Regex(unexpectedRegex);
         }
 

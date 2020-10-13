@@ -1,5 +1,4 @@
 ﻿using Models.Templates.Asbtract;
-using System;
 
 namespace Models.Templates
 {
@@ -16,14 +15,5 @@ namespace Models.Templates
         protected BaseTemplate() : base() { }
 
         protected BaseTemplate(DataSetRow data) : base(data) { }
-
-        protected int? GetIdentity(Func<int> function)
-        {
-            if (function != null)
-            {
-                return function();
-            }
-            return null;
-        }
     }
 }

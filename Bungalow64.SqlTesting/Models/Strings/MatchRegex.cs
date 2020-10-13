@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models.Strings.Abstract;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Models.Strings
@@ -10,11 +11,19 @@ namespace Models.Strings
 
         public MatchRegex(Regex expectedRegex)
         {
+            if (expectedRegex == null)
+            {
+                throw new ArgumentNullException(nameof(expectedRegex));
+            }
             ExpectedRegex = expectedRegex;
         }
 
         public MatchRegex(string expectedRegex)
         {
+            if (expectedRegex == null)
+            {
+                throw new ArgumentNullException(nameof(expectedRegex));
+            }
             ExpectedRegex = new Regex(expectedRegex);
         }
 
