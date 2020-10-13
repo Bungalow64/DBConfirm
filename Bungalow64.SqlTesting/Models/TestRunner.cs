@@ -8,10 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Models.Templates.Asbtract;
 using Models.Extensions;
+using Models.Abstract;
 
 namespace Models
 {
-    public class TestRunner : IDisposable
+    public class TestRunner : ITestRunner
     {
         #region Setup
 
