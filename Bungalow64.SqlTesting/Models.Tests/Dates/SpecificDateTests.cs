@@ -1,12 +1,20 @@
 ﻿using Models.Dates;
 using NUnit.Framework;
 using System;
+using System.Globalization;
+using System.Threading;
 
 namespace Models.Tests.Dates
 {
     [TestFixture]
     public class SpecificDateTests
     {
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
+        }
+
         [Test]
         public void SpecificDate_CtorWithDate_DateSet()
         {
