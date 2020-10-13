@@ -22,12 +22,12 @@ namespace Models.Dates
             DateTime expectedDay = new DateTime(ExpectedDate.Year, ExpectedDate.Month, ExpectedDate.Day, 0, 0, 0, ExpectedDate.Kind);
             DateTime actualDay = new DateTime(value.Year, value.Month, value.Day, 0, 0, 0, value.Kind);
 
-            TimeSpan difference = expectedDay - actualDay;
+            TimeSpan difference = actualDay - expectedDay;
 
             Assert.AreEqual(expectedDay,
                 actualDay,
                 message,
-                $"{difference.TotalDays} day{(difference.TotalDays == 1 ? "" : "s")}");
+                $"{difference.TotalDays} day{(Math.Abs(difference.TotalDays) == 1 ? "" : "s")}");
         }
     }
 }

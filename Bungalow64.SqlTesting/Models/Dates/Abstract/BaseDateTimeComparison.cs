@@ -20,7 +20,7 @@ namespace Models.Dates.Abstract
 
         protected void AssertDate(DateTime expectedDate, DateTime value, string message)
         {
-            TimeSpan difference = expectedDate - value;
+            TimeSpan difference = value - expectedDate;
 
             if (difference.Duration() >= Precision)
             {
