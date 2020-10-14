@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Models
+namespace Models.DataResults
 {
     public class QueryResult
     {
@@ -42,9 +42,9 @@ namespace Models
             {
                 if (RawData.Columns.Count == 0)
                 {
-                    return $"Expected column {expectedColumnName} to be found but no columns were found";
+                    return $"Expected column {expectedColumnName ?? "<null>"} to be found but no columns were found";
                 }
-                return $"Expected column {expectedColumnName} to be found but the only columns found are {string.Join(", ", ColumnNames)}";
+                return $"Expected column {expectedColumnName ?? "<null>"} to be found but the only columns found are {string.Join(", ", ColumnNames)}";
             };
 
             CollectionAssert.Contains(ColumnNames.ToList(), expectedColumnName, GetFailureMessage());
@@ -59,7 +59,7 @@ namespace Models
 
         public QueryResult AssertColumnsExist(params string[] columnNames)
         {
-            columnNames
+            (columnNames ?? new string[] { null })
                 .ToList()
                 .ForEach(p => AssertColumnExists(p));
             return this;
@@ -67,7 +67,7 @@ namespace Models
 
         public QueryResult AssertColumnsNotExist(params string[] columnNames)
         {
-            columnNames
+            (columnNames ?? new string[] { null })
                 .ToList()
                 .ForEach(p => AssertColumnNotExists(p));
             return this;
@@ -75,7 +75,7 @@ namespace Models
 
         public QueryResult AssertRowPositionExists(int expectedRowNumber)
         {
-            Assert.IsTrue(TotalRows > expectedRowNumber, $"There is no row at position {expectedRowNumber}.  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
+            Assert.IsTrue(TotalRows > expectedRowNumber && expectedRowNumber >= 0, $"There is no row at position {expectedRowNumber} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
             return this;
         }
 

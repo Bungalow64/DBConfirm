@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Models.Templates.Asbtract;
+using Models.DataResults;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

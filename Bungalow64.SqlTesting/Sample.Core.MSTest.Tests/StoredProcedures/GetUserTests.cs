@@ -7,6 +7,7 @@ using Sample.Core.MSTest.Tests.Templates.Complex;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Models.DataResults;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {

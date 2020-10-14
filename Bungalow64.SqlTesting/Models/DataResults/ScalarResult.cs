@@ -1,6 +1,6 @@
 ﻿using Models.Validation;
 
-namespace Models
+namespace Models.DataResults
 {
     public class ScalarResult<T>
     {

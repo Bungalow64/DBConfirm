@@ -11,6 +11,7 @@ namespace Models.Validation
         public static void Validate(object expectedValue, object value, string messagePrefix)
         {
             expectedValue = expectedValue ?? DBNull.Value;
+            value = value ?? DBNull.Value;
 
             if (expectedValue is IState stateValue)
             {
