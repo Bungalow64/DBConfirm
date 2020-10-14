@@ -1,17 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
-using Models.Templates;
-using Models.Templates.Asbtract;
-using Models.Templates.Placeholders;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace Models
 {
     public class DataSetRow : Dictionary<string, object>
     {
-        // TODO: Consider moving Dictionary into a property, instead of an inherited type.  Might make Intellisense clearer, and can limit what can be done with it (if that's wanted?)
         public new object this[string key]
         {
             get
@@ -31,13 +25,17 @@ namespace Models
         public DataSetRow() { }
 
         public DataSetRow(Dictionary<string, object> data)
-            :base(data)
+            :base(data ?? new Dictionary<string, object>())
         {
 
         }
 
         public override string ToString()
         {
+            if (Count == 0)
+            {
+                return string.Empty;
+            }
             return Environment.NewLine + string.Join(Environment.NewLine, this);
         }
 
@@ -45,7 +43,7 @@ namespace Models
         {
             DataSetRow merged = new DataSetRow();
             this.ToList().ForEach(p => merged.Add(p.Key, p.Value));
-            dictionary.ToList().ForEach(p => merged[p.Key] = p.Value);
+            dictionary?.ToList().ForEach(p => merged[p.Key] = p.Value);
             return merged;
         }
     }
