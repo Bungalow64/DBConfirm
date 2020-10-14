@@ -1,13 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.Dates.Abstract;
-using Models.States.Abstract;
-using Models.Strings.Abstract;
-using Models.Validation;
+﻿using Models.Validation;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace Models
+namespace Models.DataResults
 {
     public class RowResult
     {

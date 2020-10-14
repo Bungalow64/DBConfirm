@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using System;
 using System.Threading.Tasks;
+using Models.DataResults;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {

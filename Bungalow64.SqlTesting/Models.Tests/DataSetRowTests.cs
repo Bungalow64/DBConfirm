@@ -10,7 +10,9 @@ namespace Models.Tests
         [Test]
         public void DataSetRow_Values_CanSetAndRetrieveValue()
         {
+#pragma warning disable IDE0028 // Simplify collection initialization
             DataSetRow row = new DataSetRow();
+#pragma warning restore IDE0028 // Simplify collection initialization
             row["UserId"] = 123;
 
             Assert.AreEqual(123, row["UserId"]);
