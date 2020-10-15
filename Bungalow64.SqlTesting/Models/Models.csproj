@@ -2,10 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Company>Bungalow64 Technologies Ltd</Company>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <Authors>Jamie Burns</Authors>
+    <Version>0.1.0</Version>
+    <PackageId>Bungalow64.SqlTesting.Core</PackageId>
+    <Product>Bungalow64 SqlTesting (Core)</Product>
+    <PackageIcon>RawLogo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Users\jamie\OneDrive - Bungalow64 Technologies Ltd\Branding\RawLogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Package\RawLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
