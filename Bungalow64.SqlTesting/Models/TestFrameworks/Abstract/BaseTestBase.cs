@@ -32,6 +32,11 @@ namespace Models.TestFrameworks.Abstract
 
             if (connectionString == null)
             {
+                connectionString = System.Environment.GetEnvironmentVariable("ConnectionString");
+            }
+
+            if (connectionString == null)
+            {
                 connectionString = Configuration.GetConnectionString("TestDatabase");
             }
 
