@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Company>Bungalow64 Technologies Ltd</Company>
-		<Authors>Jamie Burns</Authors>
+		<Authors>Bungalow64</Authors>
 		<Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
