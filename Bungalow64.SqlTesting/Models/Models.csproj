@@ -1,11 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Company>Bungalow64 Technologies Ltd</Company>
+		<Authors>Bungalow64</Authors>
+		<Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases.
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
-  </ItemGroup>
+This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
+
+This package is the core logic; see the MSTest2/NUnit packages for the framework-dependent runners.</Description>
+		<Version>0.1.0</Version>
+		<PackageId>Bungalow64.SqlTesting.Core</PackageId>
+		<Product>Bungalow64 SqlTesting (Core)</Product>
+		<PackageIcon>Package\RawLogo.png</PackageIcon>
+		<PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;</PackageTags>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Package\RawLogo.png" Pack="true" Visible="true" PackagePath="Package\RawLogo.png" />
+	</ItemGroup>
 
 </Project>
