@@ -1,4 +1,5 @@
 ﻿using Models.TestFrameworks.Abstract;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -59,5 +60,7 @@ namespace Frameworks.NUnit
         {
             FrameworkAssert.Assert.IsTrue(condition, message, parameters);
         }
+
+        public void Error(string message) => throw new AssertionException(message);
     }
 }

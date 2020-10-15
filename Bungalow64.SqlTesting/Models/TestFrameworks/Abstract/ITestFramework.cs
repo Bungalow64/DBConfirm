@@ -19,5 +19,6 @@ namespace Models.TestFrameworks.Abstract
         void IsInstanceOfType(object value, Type expectedType, string message, params string[] parameters);
         void Matches(string value, Regex pattern, string message, params string[] parameters);
         void DoesNotMatch(string value, Regex pattern, string message, params string[] parameters);
+        void Error(string message);
     }
 }

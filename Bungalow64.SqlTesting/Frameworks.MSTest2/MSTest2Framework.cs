@@ -1,4 +1,5 @@
-﻿using Models.TestFrameworks.Abstract;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Models.TestFrameworks.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -58,5 +59,7 @@ namespace Frameworks.MSTest2
         {
             FrameworkAssert.Assert.IsTrue(condition, message, parameters);
         }
+
+        public void Error(string message) => throw new AssertFailedException(message);
     }
 }
