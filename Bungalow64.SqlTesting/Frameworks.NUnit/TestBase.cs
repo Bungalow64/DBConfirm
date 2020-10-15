@@ -1,44 +1,26 @@
 ﻿using System.Threading.Tasks;
-using Models.Factories;
-using Models.Factories.Abstract;
-using Microsoft.Extensions.Configuration;
-using Models.Abstract;
 using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 
 namespace Frameworks.NUnit
 {
-    public abstract class TestBase
+    public abstract class TestBase : BaseTestBase
     {
-        protected ITestRunner TestRunner;
+        protected override ITestFramework TestFramework { get; set; } = new NUnitFramework();
 
-        protected static TestContext Context { get; set; }
-
-        internal ITestRunnerFactory TestRunnerFactory { private get; set; } = new TestRunnerFactory();
-
-        internal ITestFramework TestFramework { private get; set; } = new NUnitFramework();
-
-        private static IConfiguration Configuration
+        protected override string GetParameter(string parameterName)
         {
-            get
+            if (TestContext.Parameters.Exists(parameterName))
             {
-                return new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .Build();
+                return TestContext.Parameters[parameterName];
             }
+            return null;
         }
 
         [SetUp]
-        public async Task Init()
-        {
-            TestRunner = TestRunnerFactory.BuildTestRunner(Configuration.GetConnectionString("TestDatabase"));
-            await TestRunner.InitialiseAsync(TestFramework);
-        }
+        public Task Init() => BaseInit();
 
         [TearDown]
-        public void Cleanup()
-        {
-            TestRunner.Dispose();
-        }
+        public void Cleanup() => BaseCleanup();
     }
 }
