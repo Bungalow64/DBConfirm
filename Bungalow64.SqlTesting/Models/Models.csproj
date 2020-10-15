@@ -3,16 +3,18 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Company>Bungalow64 Technologies Ltd</Company>
-		<AssemblyVersion>0.1.0.0</AssemblyVersion>
-		<FileVersion>0.1.0.0</FileVersion>
-		<PackageVersion>0.1.0.0-alpha</PackageVersion>
 		<Authors>Jamie Burns</Authors>
-		<Description>Black-box SQL testing</Description>
+		<Description>
+			A testing library written to easily add unit tests to cover behaviour held in SQL Server databases.
+			This library allows you to write SQL unit tests in code alongside all your other unit tests, including 
+			running them from within your IDE and as part of CI builds.
+			This package is the core logic; see the MSTest2/NUnit packages for the framework-dependent runners.
+		</Description>
 		<Version>0.1.0</Version>
 		<PackageId>Bungalow64.SqlTesting.Core</PackageId>
 		<Product>Bungalow64 SqlTesting (Core)</Product>
 		<PackageIcon>Package\RawLogo.png</PackageIcon>
-		<PackageTags>Unit Testing;Integration Testing;SQL Server; SQL Testing;SQL Test;SQL Unit Tests;SQL Integration Tests;SQL Unit Testing;SQL Integration Testing;</PackageTags>
+		<PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
