@@ -1,4 +1,5 @@
 ﻿using Models.DataResults;
+using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 
 namespace Models.Tests.DataResults
@@ -6,10 +7,12 @@ namespace Models.Tests.DataResults
     [TestFixture]
     public class ScalarResultTests
     {
+        private readonly ITestFramework _testFramework = new Frameworks.MSTest2.MSTest2Framework();
+
         [Test]
         public void ScalarResult_Ctor_ValueSet()
         {
-            ScalarResult<int> result = new ScalarResult<int>(1001);
+            ScalarResult<int> result = new ScalarResult<int>(_testFramework, 1001);
 
             Assert.AreEqual(1001, result.RawData);
         }
@@ -17,7 +20,7 @@ namespace Models.Tests.DataResults
         [Test]
         public void ScalarResult_AssertValue_ValueMatches_NoError()
         {
-            ScalarResult<int> result = new ScalarResult<int>(1001);
+            ScalarResult<int> result = new ScalarResult<int>(_testFramework, 1001);
 
             Assert.DoesNotThrow(() => 
                 result.AssertValue(1001));
@@ -26,7 +29,7 @@ namespace Models.Tests.DataResults
         [Test]
         public void ScalarResult_AssertValue_ValueDoesNotMatch_Error()
         {
-            ScalarResult<int> result = new ScalarResult<int>(1001);
+            ScalarResult<int> result = new ScalarResult<int>(_testFramework, 1001);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                result.AssertValue(1002));
@@ -37,7 +40,7 @@ namespace Models.Tests.DataResults
         [Test]
         public void ScalarResult_AssertValue_ValueDoesNotMatchExpectedIsNull_Error()
         {
-            ScalarResult<int> result = new ScalarResult<int>(1001);
+            ScalarResult<int> result = new ScalarResult<int>(_testFramework, 1001);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                result.AssertValue(null));

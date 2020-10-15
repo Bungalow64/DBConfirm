@@ -1,4 +1,5 @@
 ﻿using Models.Dates;
+using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
 using System.Globalization;
@@ -9,6 +10,8 @@ namespace Models.Tests.Dates
     [TestFixture]
     public class SpecificDateTimeTests
     {
+        private readonly ITestFramework _testFramework = new Frameworks.MSTest2.MSTest2Framework();
+
         [OneTimeSetUp]
         public void Setup()
         {
@@ -45,7 +48,7 @@ namespace Models.Tests.Dates
 
             Assert.DoesNotThrow(() =>
                 new SpecificDateTime(expectedDate)
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
         }
 
         [TestCase("02-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<02/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -86400000 ms")]
@@ -64,7 +67,7 @@ namespace Models.Tests.Dates
 
             Exception ex = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 new SpecificDateTime(expectedDate)
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }
@@ -81,7 +84,7 @@ namespace Models.Tests.Dates
 
             Assert.DoesNotThrow(() =>
                 new SpecificDateTime(expectedDate, TimeSpan.FromMinutes(1))
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
         }
 
         [TestCase("02-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<02/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -86400000 ms")]
@@ -100,7 +103,7 @@ namespace Models.Tests.Dates
 
             Exception ex = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 new SpecificDateTime(expectedDate)
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }

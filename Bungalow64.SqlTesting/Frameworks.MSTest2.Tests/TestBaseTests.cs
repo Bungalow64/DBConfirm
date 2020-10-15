@@ -1,11 +1,12 @@
-using Common.Factories.Abstract;
-using Common.Tests.TestHelpers;
+using Models.Factories.Abstract;
+using Frameworks.MSTest2.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models.Abstract;
 using Moq;
 using System.Threading.Tasks;
+using Models.TestFrameworks.Abstract;
 
-namespace Common.Tests
+namespace Frameworks.MSTest2.Tests
 {
     [TestClass]
     public class TestBaseTests
@@ -43,7 +44,7 @@ namespace Common.Tests
                 .Returns(_testRunnerMock.Object);
 
             _testRunnerMock
-                .Setup(p => p.InitialiseAsync())
+                .Setup(p => p.InitialiseAsync(It.IsAny<ITestFramework>()))
                 .Returns(Task.CompletedTask);
 
             await GetTestClass().Init();
@@ -52,7 +53,7 @@ namespace Common.Tests
                 .Verify(p => p.BuildTestRunner(It.IsAny<string>()), Times.Once);
 
             _testRunnerMock
-                .Verify(p => p.InitialiseAsync(), Times.Once);
+                .Verify(p => p.InitialiseAsync(It.IsAny<ITestFramework>()), Times.Once);
         }
 
         [TestMethod]
@@ -63,7 +64,7 @@ namespace Common.Tests
                 .Returns(_testRunnerMock.Object);
 
             _testRunnerMock
-                .Setup(p => p.InitialiseAsync())
+                .Setup(p => p.InitialiseAsync(It.IsAny<ITestFramework>()))
                 .Returns(Task.CompletedTask);
 
             _testRunnerMock

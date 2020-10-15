@@ -1,4 +1,5 @@
 ﻿using Models.DataResults;
+using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System.Data;
 
@@ -7,6 +8,7 @@ namespace Models.Tests.DataResults
     [TestFixture]
     public class RowResultTests
     {
+        private readonly ITestFramework _testFramework = new Frameworks.MSTest2.MSTest2Framework();
         private DataTable CreateDefaultTable()
         {
             DataTable table = new DataTable();
@@ -33,7 +35,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
             Assert.DoesNotThrow(() => { RowResult result = new RowResult(queryResult, rowNumber); });
         }
 
@@ -47,7 +49,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 { RowResult result = new RowResult(queryResult, rowNumber); });
 
@@ -65,7 +67,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            RowResult result = new RowResult(new QueryResult(table), 0);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), 0);
 
             Assert.DoesNotThrow(() => { RowResult nextResult = result.ValidateRow(rowNumber); });
         }
@@ -80,7 +82,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            RowResult result = new RowResult(new QueryResult(table), 0);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), 0);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 { RowResult nextResult = result.ValidateRow(rowNumber); });
@@ -100,7 +102,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            RowResult result = new RowResult(new QueryResult(table), rowNumber);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), rowNumber);
 
             Assert.DoesNotThrow(() => { result = result.AssertValue("UserId", expectedUserId); });
         }
@@ -119,7 +121,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            RowResult result = new RowResult(new QueryResult(table), rowNumber);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), rowNumber);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { result = result.AssertValue("UserId", expectedUserId); });
@@ -134,7 +136,7 @@ namespace Models.Tests.DataResults
 
             AddRow(table, 1001, 1002);
 
-            RowResult result = new RowResult(new QueryResult(table), 0);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), 0);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { result = result.AssertValue("UserId2", 1001); });
@@ -149,7 +151,7 @@ namespace Models.Tests.DataResults
 
             AddRow(table, 1001, 1002);
 
-            RowResult result = new RowResult(new QueryResult(table), 0);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), 0);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { result = result.AssertValue(null, 1001); });
@@ -164,7 +166,7 @@ namespace Models.Tests.DataResults
             DataRow row = table.NewRow();
             table.Rows.Add(row);
 
-            RowResult result = new RowResult(new QueryResult(table), 0);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), 0);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { result = result.AssertValue("UserId", 1001); });
@@ -179,7 +181,7 @@ namespace Models.Tests.DataResults
             DataRow row = table.NewRow();
             table.Rows.Add(row);
 
-            RowResult result = new RowResult(new QueryResult(table), 0);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), 0);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { result = result.AssertValue(null, 1001); });
@@ -198,7 +200,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            RowResult result = new RowResult(new QueryResult(table), rowNumber);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), rowNumber);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -229,7 +231,7 @@ namespace Models.Tests.DataResults
                 { "DomainId", expectedDomainId }
             };
 
-            RowResult result = new RowResult(new QueryResult(table), rowNumber);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), rowNumber);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 { result = result.AssertValues(expectedData); });
@@ -254,7 +256,7 @@ namespace Models.Tests.DataResults
                 { "DomainId", expectedDomainId }
             };
 
-            RowResult result = new RowResult(new QueryResult(table), rowNumber);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), rowNumber);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { result = result.AssertValues(expectedData); });
@@ -279,7 +281,7 @@ namespace Models.Tests.DataResults
                 { "DomainId", expectedDomainId }
             };
 
-            RowResult result = new RowResult(new QueryResult(table), rowNumber);
+            RowResult result = new RowResult(new QueryResult(_testFramework, table), rowNumber);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { result = result.AssertValues(expectedData); });

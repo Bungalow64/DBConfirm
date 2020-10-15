@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.Strings.Abstract;
+﻿using Models.Strings.Abstract;
+using Models.TestFrameworks.Abstract;
 using System;
 using System.Text.RegularExpressions;
 
@@ -11,11 +11,7 @@ namespace Models.Strings
 
         public MatchRegex(Regex expectedRegex)
         {
-            if (expectedRegex == null)
-            {
-                throw new ArgumentNullException(nameof(expectedRegex));
-            }
-            ExpectedRegex = expectedRegex;
+            ExpectedRegex = expectedRegex ?? throw new ArgumentNullException(nameof(expectedRegex));
         }
 
         public MatchRegex(string expectedRegex)
@@ -27,9 +23,9 @@ namespace Models.Strings
             ExpectedRegex = new Regex(expectedRegex);
         }
 
-        public void AssertString(string value, string message)
+        public void AssertString(ITestFramework testFramework, string value, string message)
         {
-            StringAssert.Matches(value, ExpectedRegex, message, "does not match the regex");
+            testFramework.StringAssert.Matches(value, ExpectedRegex, message, "does not match the regex");
         }
     }
 }

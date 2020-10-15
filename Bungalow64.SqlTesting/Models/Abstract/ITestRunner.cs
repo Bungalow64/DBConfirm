@@ -4,6 +4,7 @@ using Models.DataResults;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Models.TestFrameworks.Abstract;
 
 namespace Models.Abstract
 {
@@ -27,7 +28,7 @@ namespace Models.Abstract
         Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, params SqlParameter[] parameters);
         Task<QueryResult> ExecuteTableAsync(string tableName);
         Task<QueryResult> ExecuteViewAsync(string viewName);
-        Task InitialiseAsync();
+        Task InitialiseAsync(ITestFramework testFramework);
         Task<T> InsertAsync<T>() where T : ITemplate, new();
         Task<T> InsertAsync<T>(T template) where T : ITemplate;
         Task<T> InsertComplexAsync<T>(T complexTemplate) where T : IComplexTemplate;

@@ -1,6 +1,7 @@
-﻿using Models.Abstract;
+﻿using Frameworks.MSTest2;
+using Models.Abstract;
 
-namespace Common.Tests.TestHelpers
+namespace Frameworks.MSTest2.Tests.TestHelpers
 {
     public class MockedTestClass : TestBase
     {

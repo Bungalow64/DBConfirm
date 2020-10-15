@@ -1,6 +1,7 @@
 ﻿using Models.Dates.Abstract;
 using Models.Factories;
 using Models.Factories.Abstract;
+using Models.TestFrameworks.Abstract;
 using System;
 
 namespace Models.Dates
@@ -13,9 +14,9 @@ namespace Models.Dates
 
         public UtcNowDate(TimeSpan precision) : base(precision) { }
 
-        public override void AssertDate(DateTime value, string message)
+        public override void AssertDate(ITestFramework testFramework, DateTime value, string message)
         {
-            AssertDate(DateUtcNowFactory.UtcNow, value, message);
+            AssertDate(testFramework, DateUtcNowFactory.UtcNow, value, message);
         }
     }
 }

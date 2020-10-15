@@ -1,7 +1,9 @@
-﻿namespace Models.Strings.Abstract
+﻿using Models.TestFrameworks.Abstract;
+
+namespace Models.Strings.Abstract
 {
     public interface IStringComparison
     {
-        void AssertString(string value, string message);
+        void AssertString(ITestFramework testFramework, string value, string message);
     }
 }

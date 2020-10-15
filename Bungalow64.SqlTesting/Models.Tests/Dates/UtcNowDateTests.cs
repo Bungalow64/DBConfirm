@@ -1,5 +1,6 @@
 ﻿using Models.Dates;
 using Models.Factories.Abstract;
+using Models.TestFrameworks.Abstract;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -11,6 +12,7 @@ namespace Models.Tests.Dates
     [TestFixture]
     public class UtcNowDateTests
     {
+        private readonly ITestFramework _testFramework = new Frameworks.MSTest2.MSTest2Framework();
         private Mock<IDateUtcNowFactory> _dateUtcNowFactoryMock;
 
         [OneTimeSetUp]
@@ -70,7 +72,7 @@ namespace Models.Tests.Dates
 
             Assert.DoesNotThrow(() =>
                 CreateUtcNowDate()
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
         }
 
         [TestCase("04-Mar-2020 08:10:10.500", "03-Mar-2020 08:10:10.500", "Assert.AreEqual failed. Expected:<04/03/2020 08:10:10>. Actual:<03/03/2020 08:10:10>. DateTime is wrong: -86400000 ms")]
@@ -93,7 +95,7 @@ namespace Models.Tests.Dates
 
             Exception ex = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 CreateUtcNowDate()
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }
@@ -117,7 +119,7 @@ namespace Models.Tests.Dates
 
             Assert.DoesNotThrow(() =>
                 CreateUtcNowDate(TimeSpan.FromMinutes(1))
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
         }
 
         [TestCase("04-Mar-2020 08:10:10.500", "03-Mar-2020 08:10:10.500", "Assert.AreEqual failed. Expected:<04/03/2020 08:10:10>. Actual:<03/03/2020 08:10:10>. DateTime is wrong: -86400000 ms")]
@@ -138,7 +140,7 @@ namespace Models.Tests.Dates
 
             Exception ex = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 CreateUtcNowDate(TimeSpan.FromMinutes(1))
-                    .AssertDate(actualDate, "DateTime is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }

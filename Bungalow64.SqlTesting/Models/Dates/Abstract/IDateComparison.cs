@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.TestFrameworks.Abstract;
+using System;
 
 namespace Models.Dates.Abstract
 {
@@ -6,6 +7,6 @@ namespace Models.Dates.Abstract
     {
         TimeSpan Precision { get; }
 
-        void AssertDate(DateTime value, string message);
+        void AssertDate(ITestFramework testFramework, DateTime value, string message);
     }
 }
