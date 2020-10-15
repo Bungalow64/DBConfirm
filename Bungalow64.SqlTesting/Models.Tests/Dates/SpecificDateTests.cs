@@ -1,4 +1,5 @@
 ﻿using Models.Dates;
+using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
 using System.Globalization;
@@ -9,6 +10,8 @@ namespace Models.Tests.Dates
     [TestFixture]
     public class SpecificDateTests
     {
+        private readonly ITestFramework _testFramework = new Frameworks.MSTest2.MSTest2Framework();
+
         [OneTimeSetUp]
         public void Setup()
         {
@@ -46,7 +49,7 @@ namespace Models.Tests.Dates
 
             Assert.DoesNotThrow(() =>
                 new SpecificDate(expectedDate)
-                    .AssertDate(actualDate, "Date is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "Date is wrong: {0}"));
         }
 
         [TestCase("02-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<02/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. Date is wrong: -1 day")]
@@ -62,7 +65,7 @@ namespace Models.Tests.Dates
 
             Exception ex = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 new SpecificDate(expectedDate)
-                    .AssertDate(actualDate, "Date is wrong: {0}"));
+                    .AssertDate(_testFramework, actualDate, "Date is wrong: {0}"));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }

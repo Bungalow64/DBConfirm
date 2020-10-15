@@ -29,7 +29,7 @@ namespace Models.DataResults
 
             object value = _row[columnName];
 
-            ValueValidation.Validate(expectedValue, value, $"Column {columnName} in row {_rowNumber}");
+            ValueValidation.Validate(_queryResult.TestFramework, expectedValue, value, $"Column {columnName} in row {_rowNumber}");
 
             return this;
         }

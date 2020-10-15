@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.Strings.Abstract;
+﻿using Models.Strings.Abstract;
+using Models.TestFrameworks.Abstract;
 using System;
 
 namespace Models.Strings
@@ -17,9 +17,9 @@ namespace Models.Strings
             ExpectedLength = expectedLength;
         }
 
-        public void AssertString(string value, string message)
+        public void AssertString(ITestFramework testFramework, string value, string message)
         {
-            Assert.AreEqual(ExpectedLength, value?.Length ?? 0, message, "has an unexpected length");
+            testFramework.Assert.AreEqual(ExpectedLength, value?.Length ?? 0, message, "has an unexpected length");
         }
     }
 }

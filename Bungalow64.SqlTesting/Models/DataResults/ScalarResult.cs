@@ -1,4 +1,5 @@
-﻿using Models.Validation;
+﻿using Models.TestFrameworks.Abstract;
+using Models.Validation;
 
 namespace Models.DataResults
 {
@@ -6,14 +7,17 @@ namespace Models.DataResults
     {
         public T RawData { get; private set; }
 
-        public ScalarResult(T rawData)
+        internal readonly ITestFramework TestFramework;
+
+        public ScalarResult(ITestFramework testFramework, T rawData)
         {
+            TestFramework = testFramework;
             RawData = rawData;
         }
 
         public ScalarResult<T> AssertValue(object expectedValue)
         {
-            ValueValidation.Validate(expectedValue, RawData, $"Scalar result");
+            ValueValidation.Validate(TestFramework, expectedValue, RawData, $"Scalar result");
 
             return this;
         }

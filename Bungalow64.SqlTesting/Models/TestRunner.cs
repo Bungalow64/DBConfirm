@@ -10,6 +10,7 @@ using Models.Templates.Asbtract;
 using Models.Extensions;
 using Models.Abstract;
 using Models.DataResults;
+using Models.TestFrameworks.Abstract;
 
 namespace Models
 {
@@ -21,6 +22,8 @@ namespace Models
         private SqlConnection SqlConnection { get; set; }
         private SqlTransaction SqlTransaction { get; set; }
 
+        private ITestFramework _testFramework;
+
         private bool disposedValue;
 
         public TestRunner(string connectionString)
@@ -28,8 +31,10 @@ namespace Models
             ConnectionString = connectionString;
         }
 
-        public async Task InitialiseAsync()
+        public async Task InitialiseAsync(ITestFramework testFramework)
         {
+            _testFramework = testFramework ?? throw new ArgumentNullException(nameof(testFramework));
+
             SqlConnection = new SqlConnection(ConnectionString);
             await SqlConnection.OpenAsync();
 
@@ -85,9 +90,9 @@ namespace Models
                 }
                 if (ds.Tables.Count > 0)
                 {
-                    return Task.FromResult(new QueryResult(ds.Tables[0]));
+                    return Task.FromResult(new QueryResult(_testFramework, ds.Tables[0]));
                 }
-                return Task.FromResult(new QueryResult());
+                return Task.FromResult(new QueryResult(_testFramework));
             }
         }
 
@@ -117,7 +122,7 @@ namespace Models
                         adapter.Fill(ds);
                     }
                 }
-                return Task.FromResult((IList<QueryResult>)ds.Tables.Cast<DataTable>().Select(p => new QueryResult(p)).ToList());
+                return Task.FromResult((IList<QueryResult>)ds.Tables.Cast<DataTable>().Select(p => new QueryResult(_testFramework, p)).ToList());
             }
         }
 
@@ -133,7 +138,7 @@ namespace Models
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddRange(parameters);
 
-                return new ScalarResult<T>((T)await command.ExecuteScalarAsync());
+                return new ScalarResult<T>(_testFramework, (T)await command.ExecuteScalarAsync());
             }
         }
 
@@ -175,9 +180,9 @@ namespace Models
                 }
                 if (ds.Tables.Count > 0)
                 {
-                    return Task.FromResult(new QueryResult(ds.Tables[0]));
+                    return Task.FromResult(new QueryResult(_testFramework, ds.Tables[0]));
                 }
-                return Task.FromResult(new QueryResult());
+                return Task.FromResult(new QueryResult(_testFramework));
             }
         }
 
@@ -193,7 +198,7 @@ namespace Models
                 command.CommandType = CommandType.Text;
                 command.Parameters.AddRange(parameters);
 
-                return new ScalarResult<T>((T)await command.ExecuteScalarAsync());
+                return new ScalarResult<T>(_testFramework, (T)await command.ExecuteScalarAsync());
             }
         }
 
@@ -218,7 +223,7 @@ namespace Models
                         adapter.Fill(ds);
                     }
                 }
-                return Task.FromResult((IList<QueryResult>)ds.Tables.Cast<DataTable>().Select(p => new QueryResult(p)).ToList());
+                return Task.FromResult((IList<QueryResult>)ds.Tables.Cast<DataTable>().Select(p => new QueryResult(_testFramework, p)).ToList());
             }
         }
 

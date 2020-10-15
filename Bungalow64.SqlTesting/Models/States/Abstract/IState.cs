@@ -1,7 +1,9 @@
-﻿namespace Models.States.Abstract
+﻿using Models.TestFrameworks.Abstract;
+
+namespace Models.States.Abstract
 {
     public interface IState
     {
-        void AssertState(object value, string message);
+        void AssertState(ITestFramework testFramework, object value, string message);
     }
 }

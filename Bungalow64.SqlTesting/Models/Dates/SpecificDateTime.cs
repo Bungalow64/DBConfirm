@@ -1,4 +1,5 @@
 ﻿using Models.Dates.Abstract;
+using Models.TestFrameworks.Abstract;
 using System;
 
 namespace Models.Dates
@@ -21,9 +22,9 @@ namespace Models.Dates
 
         public SpecificDateTime(string expectedDate, TimeSpan precision) : this(DateTime.Parse(expectedDate), precision) { }
 
-        public override void AssertDate(DateTime value, string message)
+        public override void AssertDate(ITestFramework testFramework, DateTime value, string message)
         {
-            AssertDate(ExpectedDate, value, message);
+            AssertDate(testFramework, ExpectedDate, value, message);
         }
     }
 }

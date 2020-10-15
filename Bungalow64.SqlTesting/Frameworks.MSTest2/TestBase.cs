@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Common.Factories;
-using Common.Factories.Abstract;
+using Models.Factories;
+using Models.Factories.Abstract;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models.Abstract;
+using Models.TestFrameworks.Abstract;
 
-namespace Common
+namespace Frameworks.MSTest2
 {
     public abstract class TestBase
     {
@@ -13,6 +14,8 @@ namespace Common
         protected static TestContext Context { get; set; }
 
         internal ITestRunnerFactory TestRunnerFactory { private get; set; } = new TestRunnerFactory();
+
+        internal ITestFramework TestFramework { private get; set; } = new MSTest2Framework();
 
         [ClassInitialize(InheritanceBehavior.BeforeEachDerivedClass)]
         public static void ClassInitialise(TestContext testContext)
@@ -34,7 +37,7 @@ namespace Common
         public async Task Init()
         {
             TestRunner = TestRunnerFactory.BuildTestRunner(Configuration.GetConnectionString("TestDatabase"));
-            await TestRunner.InitialiseAsync();
+            await TestRunner.InitialiseAsync(TestFramework);
         }
 
         [TestCleanup]

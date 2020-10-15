@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Models.TestFrameworks.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,13 +10,17 @@ namespace Models.DataResults
     {
         public DataTable RawData { get; private set; }
 
-        public QueryResult()
+        internal readonly ITestFramework TestFramework;
+
+        public QueryResult(ITestFramework testFramework)
         {
+            TestFramework = testFramework;
             RawData = new DataTable();
         }
 
-        public QueryResult(DataTable rawData)
+        public QueryResult(ITestFramework testFramework, DataTable rawData)
         {
+            TestFramework = testFramework;
             RawData = rawData ?? new DataTable();
         }
 
@@ -26,13 +31,13 @@ namespace Models.DataResults
 
         public QueryResult AssertRowCount(int expected)
         {
-            Assert.AreEqual(expected, TotalRows, $"The total row count is unexpected");
+            TestFramework.Assert.AreEqual(expected, TotalRows, $"The total row count is unexpected");
             return this;
         }
 
         public QueryResult AssertColumnCount(int expected)
         {
-            Assert.AreEqual(expected, TotalColumns, $"The total column count is unexpected");
+            TestFramework.Assert.AreEqual(expected, TotalColumns, $"The total column count is unexpected");
             return this;
         }
 
@@ -47,13 +52,13 @@ namespace Models.DataResults
                 return $"Expected column {expectedColumnName ?? "<null>"} to be found but the only columns found are {string.Join(", ", ColumnNames)}";
             };
 
-            CollectionAssert.Contains(ColumnNames.ToList(), expectedColumnName, GetFailureMessage());
+            TestFramework.CollectionAssert.Contains(ColumnNames.ToList(), expectedColumnName, GetFailureMessage());
             return this;
         }
 
         public QueryResult AssertColumnNotExists(string expectedColumnName)
         {
-            CollectionAssert.DoesNotContain(ColumnNames.ToList(), expectedColumnName, $"Expected column {expectedColumnName} to not be found but it was found");
+            TestFramework.CollectionAssert.DoesNotContain(ColumnNames.ToList(), expectedColumnName, $"Expected column {expectedColumnName} to not be found but it was found");
             return this;
         }
 
@@ -75,7 +80,7 @@ namespace Models.DataResults
 
         public QueryResult AssertRowPositionExists(int expectedRowNumber)
         {
-            Assert.IsTrue(TotalRows > expectedRowNumber && expectedRowNumber >= 0, $"There is no row at position {expectedRowNumber} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
+            TestFramework.Assert.IsTrue(TotalRows > expectedRowNumber && expectedRowNumber >= 0, $"There is no row at position {expectedRowNumber} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
             return this;
         }
 
@@ -105,13 +110,14 @@ namespace Models.DataResults
             {
                 try
                 {
+                    // This can't use an assert exception here, as NUnit will still regard the test as failed.
                     AssertRowValues(x, expectedData);
                     return this;
                 }
-                catch (AssertFailedException) { }
+                catch (Exception) { }
             }
 
-            Assert.Fail($"No rows found matching the expected data: {expectedData}");
+            TestFramework.Assert.Fail($"No rows found matching the expected data: {expectedData}");
             return this;
         }
 
@@ -127,11 +133,11 @@ namespace Models.DataResults
                     AssertRowValues(x, expectedData);
                     isMatch = true;
                 }
-                catch (AssertFailedException) { }
+                catch (Exception) { }
 
                 if (isMatch)
                 {
-                    Assert.Fail($"Row {x} matches the expected data that should not match anything: {expectedData}");
+                    TestFramework.Assert.Fail($"Row {x} matches the expected data that should not match anything: {expectedData}");
                 }
             }
 

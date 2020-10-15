@@ -1,4 +1,5 @@
 ﻿using Models.Strings;
+using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
 
@@ -7,6 +8,8 @@ namespace Models.Tests.Strings
     [TestFixture]
     public class SpecificLengthTests
     {
+        private readonly ITestFramework _testFramework = new Frameworks.MSTest2.MSTest2Framework();
+
         [Test]
         public void SpecificLength_Ctor_SetExpectedLength_LengthSet()
         {
@@ -35,7 +38,7 @@ namespace Models.Tests.Strings
         {
             SpecificLength specificLength = new SpecificLength(length);
 
-            Assert.DoesNotThrow(() => specificLength.AssertString(value, "Custom message: {0}"));
+            Assert.DoesNotThrow(() => specificLength.AssertString(_testFramework, value, "Custom message: {0}"));
         }
 
         [TestCase(1, "")]
@@ -47,7 +50,7 @@ namespace Models.Tests.Strings
         {
             SpecificLength specificLength = new SpecificLength(length);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => specificLength.AssertString(value, "Custom message: {0}"));
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => specificLength.AssertString(_testFramework, value, "Custom message: {0}"));
 
             Assert.AreEqual($"Assert.AreEqual failed. Expected:<{length}>. Actual:<{value?.Length ?? 0}>. Custom message: has an unexpected length", exception.Message);
         }

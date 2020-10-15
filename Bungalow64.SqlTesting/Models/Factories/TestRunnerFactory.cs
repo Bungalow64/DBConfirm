@@ -1,8 +1,7 @@
-﻿using Common.Factories.Abstract;
-using Models;
+﻿using Models.Factories.Abstract;
 using Models.Abstract;
 
-namespace Common.Factories
+namespace Models.Factories
 {
     public class TestRunnerFactory : ITestRunnerFactory
     {

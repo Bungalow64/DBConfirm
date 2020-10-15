@@ -1,4 +1,5 @@
 ﻿using Models.DataResults;
+using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System.Data;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Models.Tests.DataResults
     public class QueryResultTests
     {
         #region Setup
+
+        private readonly ITestFramework _testFramework = new Frameworks.MSTest2.MSTest2Framework();
 
         private DataTable CreateDefaultTable()
         {
@@ -32,7 +35,7 @@ namespace Models.Tests.DataResults
         [Test]
         public void QueryResult_Ctor_Default_EmptyTableSet()
         {
-            QueryResult queryResult = new QueryResult();
+            QueryResult queryResult = new QueryResult(_testFramework);
 
             Assert.AreEqual(0, queryResult.RawData.Rows.Count);
         }
@@ -54,7 +57,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.AreEqual(3, queryResult.RawData.Rows.Count);
         }
@@ -66,7 +69,7 @@ namespace Models.Tests.DataResults
         [Test]
         public void QueryResult_TotalRows_DefaultConstructor_0()
         {
-            QueryResult queryResult = new QueryResult();
+            QueryResult queryResult = new QueryResult(_testFramework);
 
             Assert.AreEqual(0, queryResult.TotalRows);
         }
@@ -91,7 +94,7 @@ namespace Models.Tests.DataResults
                 AddRow(table, x, x);
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.AreEqual(expectedRows, queryResult.TotalRows);
         }
@@ -103,7 +106,7 @@ namespace Models.Tests.DataResults
         [Test]
         public void QueryResult_TotalColumns_DefaultConstructor_0()
         {
-            QueryResult queryResult = new QueryResult();
+            QueryResult queryResult = new QueryResult(_testFramework);
 
             Assert.AreEqual(0, queryResult.TotalColumns);
         }
@@ -121,7 +124,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.AreEqual(0, queryResult.TotalColumns);
         }
@@ -133,7 +136,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.AreEqual(2, queryResult.TotalColumns);
         }
@@ -145,7 +148,7 @@ namespace Models.Tests.DataResults
         [Test]
         public void QueryResult_ColumnNames_DefaultConstructor_0Items()
         {
-            QueryResult queryResult = new QueryResult();
+            QueryResult queryResult = new QueryResult(_testFramework);
 
             Assert.IsNotNull(queryResult.ColumnNames);
             Assert.AreEqual(0, queryResult.ColumnNames.Count);
@@ -165,7 +168,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.IsNotNull(queryResult.ColumnNames);
             Assert.AreEqual(0, queryResult.ColumnNames.Count);
@@ -178,7 +181,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.IsNotNull(queryResult.ColumnNames);
             Assert.AreEqual(2, queryResult.ColumnNames.Count);
@@ -202,7 +205,7 @@ namespace Models.Tests.DataResults
                 AddRow(table, x, x);
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertRowCount(expectedRows));
@@ -220,7 +223,7 @@ namespace Models.Tests.DataResults
                 AddRow(table, x, x);
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertRowCount(expectedRows));
@@ -243,7 +246,7 @@ namespace Models.Tests.DataResults
                 table.Columns.Add($"Column{x}", typeof(int));
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnCount(expectedColumns));
@@ -261,7 +264,7 @@ namespace Models.Tests.DataResults
                 table.Columns.Add($"Column{x}", typeof(int));
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnCount(expectedColumns));
@@ -281,7 +284,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnExists(columnName));
@@ -296,7 +299,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnExists(columnName));
@@ -311,7 +314,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnExists(null));
@@ -324,7 +327,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnExists(null));
@@ -337,7 +340,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnExists("UserId"));
@@ -358,7 +361,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnNotExists(columnName));
@@ -372,7 +375,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnNotExists(columnName));
@@ -387,7 +390,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnNotExists(null));
@@ -398,7 +401,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnNotExists(null));
@@ -409,7 +412,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnNotExists("UserId"));
@@ -427,7 +430,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsExist(columnName));
@@ -443,7 +446,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("DomainId", typeof(int));
             table.Columns.Add("AddressId1", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsExist(columnName1, columnName2));
@@ -458,7 +461,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(columnName));
@@ -476,7 +479,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(columnName1, columnName2));
@@ -492,7 +495,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(columnName1, columnName2));
@@ -508,7 +511,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(columnName1, columnName2));
@@ -523,7 +526,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(null));
@@ -538,7 +541,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(null, null));
@@ -551,7 +554,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(null));
@@ -564,7 +567,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist(null, null));
@@ -577,7 +580,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist("UserId"));
@@ -590,7 +593,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsExist("UserId", "DomainId"));
@@ -611,7 +614,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsNotExist(columnName));
@@ -626,7 +629,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsNotExist(columnName1, columnName2));
@@ -640,7 +643,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsNotExist(columnName));
@@ -656,7 +659,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsNotExist(columnName1, columnName2));
@@ -672,7 +675,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnsNotExist(columnName1, columnName2));
@@ -687,7 +690,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsNotExist(null));
@@ -700,7 +703,7 @@ namespace Models.Tests.DataResults
             table.Columns.Add("UserId", typeof(int));
             table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsNotExist(null, null));
@@ -711,7 +714,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsNotExist(null));
@@ -722,7 +725,7 @@ namespace Models.Tests.DataResults
         {
             DataTable table = new DataTable();
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertColumnsNotExist("UserId"));
@@ -747,7 +750,7 @@ namespace Models.Tests.DataResults
                 AddRow(table, x, x);
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertRowPositionExists(expectedPosition));
@@ -766,7 +769,7 @@ namespace Models.Tests.DataResults
                 AddRow(table, x, x);
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertRowPositionExists(expectedRows));
@@ -785,7 +788,7 @@ namespace Models.Tests.DataResults
                 AddRow(table, x, x);
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertRowPositionExists(expectedRows));
@@ -806,7 +809,7 @@ namespace Models.Tests.DataResults
                 AddRow(table, x, x);
             }
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertRowPositionExists(expectedRows));
@@ -831,7 +834,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             Assert.DoesNotThrow(() =>
                 queryResult.AssertValue(rowNumber, columnName, expectedValue));
@@ -846,7 +849,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertValue(rowNumber, "UserId", expectedUserId));
@@ -862,7 +865,7 @@ namespace Models.Tests.DataResults
             DataTable table = CreateDefaultTable();
             AddRow(table, 1001, 1002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertValue(0, columnName, expectedValue));
@@ -883,7 +886,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertValue(rowNumber, columnName, expectedUserId));
@@ -905,7 +908,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             RowResult rowResult = queryResult.ValidateRow(rowNumber);
 
@@ -921,7 +924,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 { RowResult result = queryResult.ValidateRow(rowNumber); });
@@ -943,7 +946,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -964,7 +967,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { queryResult.AssertRowValues(rowNumber, new DataSetRow()); });
@@ -982,7 +985,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1006,7 +1009,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1034,7 +1037,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1059,7 +1062,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 3001, 3002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1087,7 +1090,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1113,7 +1116,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1146,7 +1149,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1168,7 +1171,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {
@@ -1194,7 +1197,7 @@ namespace Models.Tests.DataResults
             AddRow(table, 2001, 2002);
             AddRow(table, 3001, 3002);
 
-            QueryResult queryResult = new QueryResult(table);
+            QueryResult queryResult = new QueryResult(_testFramework, table);
 
             DataSetRow expectedData = new DataSetRow
             {

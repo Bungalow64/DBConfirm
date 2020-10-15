@@ -1,6 +1,6 @@
 ﻿using Models.Abstract;
 
-namespace Common.Factories.Abstract
+namespace Models.Factories.Abstract
 {
     public interface ITestRunnerFactory
     {

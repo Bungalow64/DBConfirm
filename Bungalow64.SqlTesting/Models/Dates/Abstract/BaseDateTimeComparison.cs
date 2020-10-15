@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Models.TestFrameworks.Abstract;
 using System;
 
 namespace Models.Dates.Abstract
@@ -16,15 +16,15 @@ namespace Models.Dates.Abstract
             Precision = precision;
         }
 
-        public abstract void AssertDate(DateTime value, string message);
+        public abstract void AssertDate(ITestFramework testFramework, DateTime value, string message);
 
-        protected void AssertDate(DateTime expectedDate, DateTime value, string message)
+        protected void AssertDate(ITestFramework testFramework, DateTime expectedDate, DateTime value, string message)
         {
             TimeSpan difference = value - expectedDate;
 
             if (difference.Duration() >= Precision)
             {
-                Assert.AreEqual(expectedDate, value, message, $"{difference.TotalMilliseconds} ms");
+                testFramework.Assert.AreEqual(expectedDate, value, message, $"{difference.TotalMilliseconds} ms");
             }
         }
     }

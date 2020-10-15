@@ -1,17 +1,17 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using System;
 using Models.DataResults;
 using System.Threading.Tasks;
-using Frameworks.MSTest2;
+using Frameworks.NUnit;
+using NUnit.Framework;
 
-namespace Sample.Core.MSTest.Tests.Views
+namespace Sample.Core.NUnit.Tests.Views
 {
-    [TestClass]
+    [TestFixture]
     public class AllUsersTests : TestBase
     {
-        [TestMethod]
+        [Test]
         public async Task AllUsers_NoData_NothingReturned()
         {
             QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
@@ -22,7 +22,7 @@ namespace Sample.Core.MSTest.Tests.Views
             Assert.AreEqual(0, await TestRunner.CountRowsInViewAsync("dbo.AllUsers"));
         }
 
-        [TestMethod]
+        [Test]
         public async Task AllUsers_OneRow_OneUserReturned()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
@@ -45,7 +45,8 @@ namespace Sample.Core.MSTest.Tests.Views
             Assert.AreEqual(1, await TestRunner.CountRowsInViewAsync("dbo.AllUsers"));
         }
 
-        [TestMethod]
+        [Ignore("Requires Task 52: Update QueryResult.AssertRowExists to not use Assert to verify row exists")]
+        [Test]
         public async Task AllUsers_TwoRows_TwoUsersReturned()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
