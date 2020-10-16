@@ -4,6 +4,7 @@ using Models.Factories;
 using Models.Factories.Abstract;
 using System;
 using System.Threading.Tasks;
+using MartinCostello.SqlLocalDb;
 
 namespace Models.TestFrameworks.Abstract
 {
@@ -62,6 +63,29 @@ namespace Models.TestFrameworks.Abstract
         protected void BaseCleanup()
         {
             TestRunner?.Dispose();
+        }
+
+        protected static TemporarySqlLocalDbInstance Database { get; set; }
+
+        protected static void SetUpDatabase()
+        {
+            using (var _databaseApi = new SqlLocalDbApi())
+            {
+                Database = _databaseApi.CreateTemporaryInstance();
+                Database.Manage().Start();
+            }
+        }
+
+        protected static void DropDatabase()
+        {
+            try
+            {
+                using (var _databaseApi = new SqlLocalDbApi())
+                {
+                    Database?.Dispose();
+                    Database = null;
+                }
+            } catch (Exception) { }
         }
     }
 }

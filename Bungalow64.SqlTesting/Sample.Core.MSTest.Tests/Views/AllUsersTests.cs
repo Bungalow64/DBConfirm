@@ -15,7 +15,7 @@ namespace Sample.Core.MSTest.Tests.Views
         public async Task AllUsers_NoData_NothingReturned()
         {
             QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
-
+            
             results
                 .AssertRowCount(0);
 

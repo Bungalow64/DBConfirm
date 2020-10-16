@@ -14,8 +14,9 @@ namespace Frameworks.MSTest2
         public static void ClassInitialise(TestContext testContext)
         {
             Context = testContext;
+            SetUpDatabase();
         }
-        
+
         protected override string GetParameter(string parameterName)
         {
             if (Context != null && Context.Properties.Contains(parameterName))
@@ -30,5 +31,23 @@ namespace Frameworks.MSTest2
 
         [TestCleanup]
         public void Cleanup() => BaseCleanup();
+
+        [ClassCleanup(InheritanceBehavior.BeforeEachDerivedClass)]
+        public static void ClassCleanup()
+        {
+            DropDatabase();
+        }
+
+        [AssemblyInitialize()]
+        public static void AssemblyInitialize()
+        {
+
+        }
+
+        [AssemblyCleanup()]
+        public static void AssemblyCleanup()
+        {
+
+        }
     }
 }
