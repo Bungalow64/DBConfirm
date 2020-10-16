@@ -8,5 +8,6 @@ namespace Models.Dates.Abstract
         TimeSpan Precision { get; }
 
         void AssertDate(ITestFramework testFramework, DateTime value, string message);
+        bool Validate(DateTime value);
     }
 }

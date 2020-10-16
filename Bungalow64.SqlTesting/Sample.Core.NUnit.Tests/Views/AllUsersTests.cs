@@ -45,7 +45,6 @@ namespace Sample.Core.NUnit.Tests.Views
             Assert.AreEqual(1, await TestRunner.CountRowsInViewAsync("dbo.AllUsers"));
         }
 
-        [Ignore("Requires Task 52: Update QueryResult.AssertRowExists to not use Assert to verify row exists")]
         [Test]
         public async Task AllUsers_TwoRows_TwoUsersReturned()
         {

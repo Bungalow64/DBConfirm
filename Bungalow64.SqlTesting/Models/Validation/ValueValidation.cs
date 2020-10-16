@@ -8,7 +8,7 @@ namespace Models.Validation
 {
     public static class ValueValidation
     {
-        public static void Validate(ITestFramework testFramework, object expectedValue, object value, string messagePrefix)
+        public static void Assert(ITestFramework testFramework, object expectedValue, object value, string messagePrefix)
         {
             expectedValue = expectedValue ?? DBNull.Value;
             value = value ?? DBNull.Value;
@@ -33,6 +33,37 @@ namespace Models.Validation
             {
                 testFramework.Assert.AreEqual(expectedValue, value, $"{messagePrefix} has an unexpected value");
             }
+        }
+
+        internal static bool Validate(object expectedValue, object value)
+        {
+            expectedValue = expectedValue ?? DBNull.Value;
+            value = value ?? DBNull.Value;
+
+            if (expectedValue is IState stateValue)
+            {
+                return stateValue.Validate(value);
+            }
+            else if (expectedValue is IDateComparison dateValue)
+            {
+                if (!(value is DateTime))
+                {
+                    return false;
+                }
+
+                return dateValue.Validate((DateTime)value);
+            }
+            else if (expectedValue is IStringComparison stringValue)
+            {
+                if (!(value is string))
+                {
+                    return false;
+                }
+
+                return stringValue.Validate((string)value);
+            }
+
+            return Equals(expectedValue, value);
         }
     }
 }

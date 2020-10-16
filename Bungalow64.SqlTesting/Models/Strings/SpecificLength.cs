@@ -21,5 +21,10 @@ namespace Models.Strings
         {
             testFramework.Assert.AreEqual(ExpectedLength, value?.Length ?? 0, message, "has an unexpected length");
         }
+
+        public bool Validate(string value)
+        {
+            return (value?.Length ?? 0) == ExpectedLength;
+        }
     }
 }

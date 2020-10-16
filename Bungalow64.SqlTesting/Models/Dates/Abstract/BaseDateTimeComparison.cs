@@ -17,6 +17,7 @@ namespace Models.Dates.Abstract
         }
 
         public abstract void AssertDate(ITestFramework testFramework, DateTime value, string message);
+        public abstract bool Validate(DateTime value);
 
         protected void AssertDate(ITestFramework testFramework, DateTime expectedDate, DateTime value, string message)
         {
@@ -26,6 +27,13 @@ namespace Models.Dates.Abstract
             {
                 testFramework.Assert.AreEqual(expectedDate, value, message, $"{difference.TotalMilliseconds} ms");
             }
+        }
+
+        protected bool Validate(DateTime expectedDate, DateTime value)
+        {
+            TimeSpan difference = value - expectedDate;
+
+            return !(difference.Duration() >= Precision);
         }
     }
 }

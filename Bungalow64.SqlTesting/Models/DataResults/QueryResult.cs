@@ -108,13 +108,10 @@ namespace Models.DataResults
 
             for (int x = 0; x < TotalRows; x++)
             {
-                try
+                if (ValidateRow(x).ValidateValuesMatch(expectedData))
                 {
-                    // This can't use an assert exception here, as NUnit will still regard the test as failed.
-                    AssertRowValues(x, expectedData);
                     return this;
                 }
-                catch (Exception) { }
             }
 
             TestFramework.Assert.Fail($"No rows found matching the expected data: {expectedData}");
