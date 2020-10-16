@@ -2,12 +2,17 @@
 using Models.Abstract;
 using Models.Factories;
 using Models.Factories.Abstract;
+using System;
 using System.Threading.Tasks;
 
 namespace Models.TestFrameworks.Abstract
 {
     public abstract class BaseTestBase
     {
+        private const string RunSettingsParameterName = "ConnectionString";
+        private const string EnvironmentVariableName = "ConnectionString";
+        private const string AppConfigConnectionStringName = "TestDatabase";
+
         protected ITestRunner TestRunner;
 
         internal ITestRunnerFactory TestRunnerFactory { private get; set; } = new TestRunnerFactory();
@@ -26,31 +31,27 @@ namespace Models.TestFrameworks.Abstract
             }
         }
 
-        protected async Task BaseInit(string connectionString = null)
+        protected async Task BaseInit()
         {
-            TestRunner = await NewConnectionAsync(connectionString);
-        }
-
-        protected async Task<ITestRunner> NewConnectionAsync(string connectionString = null)
-        {
-            if (connectionString == null)
-            {
-                connectionString = GetParameter("ConnectionString");
-            }
-
-            if (connectionString == null)
-            {
-                connectionString = System.Environment.GetEnvironmentVariable("ConnectionString");
-            }
-
-            if (connectionString == null)
-            {
-                connectionString = Configuration.GetConnectionString("TestDatabase");
-            }
+            string connectionString =
+                Environment.GetEnvironmentVariable(EnvironmentVariableName)
+                ?? GetParameter(RunSettingsParameterName)
+                ?? Configuration.GetConnectionString(AppConfigConnectionStringName)
+                ?? null;
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                TestFramework.Error(@"Cannot find connection string in TestContext ('ConnectionString' property) or in appsettings.json ('ConnectionStrings\TestDatabase')");
+                TestFramework.Error($@"Cannot find connection string.  Looked in EnvironmentVariables ('{EnvironmentVariableName}'), TestContext ('{RunSettingsParameterName}' property) and appsettings.json ('{AppConfigConnectionStringName}' connection string)");
+            }
+
+            TestRunner = await NewConnectionAsync(connectionString);
+        }
+
+        protected async Task<ITestRunner> NewConnectionAsync(string connectionString)
+        {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentNullException(nameof(connectionString));
             }
 
             ITestRunner testRunner = TestRunnerFactory.BuildTestRunner(connectionString);
