@@ -27,5 +27,10 @@ namespace Models.Strings
         {
             testFramework.StringAssert.Matches(value, ExpectedRegex, message, "does not match the regex");
         }
+
+        public bool Validate(string value)
+        {
+            return ExpectedRegex.IsMatch(value);
+        }
     }
 }

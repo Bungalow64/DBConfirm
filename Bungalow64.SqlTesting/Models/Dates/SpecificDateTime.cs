@@ -26,5 +26,10 @@ namespace Models.Dates
         {
             AssertDate(testFramework, ExpectedDate, value, message);
         }
+
+        public override bool Validate(DateTime value)
+        {
+            return Validate(ExpectedDate, value);
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Models.DataResults
 
         public ScalarResult<T> AssertValue(object expectedValue)
         {
-            ValueValidation.Validate(TestFramework, expectedValue, RawData, $"Scalar result");
+            ValueValidation.Assert(TestFramework, expectedValue, RawData, $"Scalar result");
 
             return this;
         }

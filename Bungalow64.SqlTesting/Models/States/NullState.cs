@@ -10,5 +10,10 @@ namespace Models.States
         {
             testFramework.Assert.AreEqual(DBNull.Value, value ?? DBNull.Value, message);
         }
+
+        public bool Validate(object value)
+        {
+            return DBNull.Value == (value ?? DBNull.Value);
+        }
     }
 }

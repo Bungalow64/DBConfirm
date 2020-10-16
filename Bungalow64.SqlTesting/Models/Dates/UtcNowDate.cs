@@ -18,5 +18,10 @@ namespace Models.Dates
         {
             AssertDate(testFramework, DateUtcNowFactory.UtcNow, value, message);
         }
+
+        public override bool Validate(DateTime value)
+        {
+            return Validate(DateUtcNowFactory.UtcNow, value);
+        }
     }
 }

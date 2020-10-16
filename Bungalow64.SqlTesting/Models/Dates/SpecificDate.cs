@@ -10,6 +10,8 @@ namespace Models.Dates
 
         public DateTime ExpectedDate { get; }
 
+        private DateTime ExpectedDateDay => GetDateDay(ExpectedDate);
+
         public SpecificDate(DateTime expectedDate) : base()
         {
             ExpectedDate = expectedDate;
@@ -19,15 +21,24 @@ namespace Models.Dates
 
         public void AssertDate(ITestFramework testFramework, DateTime value, string message)
         {
-            DateTime expectedDay = new DateTime(ExpectedDate.Year, ExpectedDate.Month, ExpectedDate.Day, 0, 0, 0, ExpectedDate.Kind);
-            DateTime actualDay = new DateTime(value.Year, value.Month, value.Day, 0, 0, 0, value.Kind);
+            DateTime actualDay = GetDateDay(value);
 
-            TimeSpan difference = actualDay - expectedDay;
+            TimeSpan difference = actualDay - ExpectedDateDay;
 
-            testFramework.Assert.AreEqual(expectedDay,
+            testFramework.Assert.AreEqual(ExpectedDateDay,
                 actualDay,
                 message,
                 $"{difference.TotalDays} day{(Math.Abs(difference.TotalDays) == 1 ? "" : "s")}");
         }
+
+        public bool Validate(DateTime value)
+        {
+            DateTime actualDay = GetDateDay(value);
+
+            return Equals(ExpectedDateDay, actualDay);
+        }
+
+        private static DateTime GetDateDay(DateTime value) =>
+            new DateTime(value.Year, value.Month, value.Day, 0, 0, 0, value.Kind);
     }
 }

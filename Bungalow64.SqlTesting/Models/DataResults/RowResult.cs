@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Models.DataResults
 {
@@ -29,7 +30,7 @@ namespace Models.DataResults
 
             object value = _row[columnName];
 
-            ValueValidation.Validate(_queryResult.TestFramework, expectedValue, value, $"Column {columnName} in row {_rowNumber}");
+            ValueValidation.Assert(_queryResult.TestFramework, expectedValue, value, $"Column {columnName} in row {_rowNumber}");
 
             return this;
         }
@@ -47,5 +48,21 @@ namespace Models.DataResults
 
         public RowResult ValidateRow(int rowNumber) =>
             new RowResult(_queryResult, rowNumber);
+
+        internal bool ValidateValuesMatch(DataSetRow expectedValues)
+        {
+            expectedValues = expectedValues ?? new DataSetRow();
+
+            return expectedValues.All(p => ValidateValue(p.Key, p.Value));
+        }
+
+        private bool ValidateValue(string columnName, object expectedValue)
+        {
+            _queryResult.AssertColumnExists(columnName);
+
+            object value = _row[columnName];
+
+            return ValueValidation.Validate(expectedValue, value);
+        }
     }
 }
