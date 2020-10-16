@@ -22,3 +22,12 @@ Placeholder - an indication that a particular field requires a value of some kin
 Next: Handle connection string as part of library?
 Next: Look at RelationshipValidator - is it needed?
 
+#CI Integration
+
+The connection string can be set in 3 places
+ - appsettings.json, under ConnectionStrings\TestDatabase
+ - *.runsettings file, under TestRunParameters\ConnectionString
+ - Environment Variable, as ConnectionString
+
+ Running locally, the appsettings works fine.
+ In CI (Azure DevOps), the best option is Environment Variable.  This needs to be set in the Pipeline Variables, and this will be picked up during the test run 

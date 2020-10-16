@@ -26,9 +26,17 @@ namespace Models.TestFrameworks.Abstract
             }
         }
 
-        protected async Task BaseInit()
+        protected async Task BaseInit(string connectionString = null)
         {
-            string connectionString = GetParameter("ConnectionString");
+            TestRunner = await NewConnectionAsync(connectionString);
+        }
+
+        protected async Task<ITestRunner> NewConnectionAsync(string connectionString = null)
+        {
+            if (connectionString == null)
+            {
+                connectionString = GetParameter("ConnectionString");
+            }
 
             if (connectionString == null)
             {
@@ -45,8 +53,9 @@ namespace Models.TestFrameworks.Abstract
                 TestFramework.Error(@"Cannot find connection string in TestContext ('ConnectionString' property) or in appsettings.json ('ConnectionStrings\TestDatabase')");
             }
 
-            TestRunner = TestRunnerFactory.BuildTestRunner(connectionString);
-            await TestRunner.InitialiseAsync(TestFramework);
+            ITestRunner testRunner = TestRunnerFactory.BuildTestRunner(connectionString);
+            await testRunner.InitialiseAsync(TestFramework);
+            return testRunner;
         }
 
         protected void BaseCleanup()
