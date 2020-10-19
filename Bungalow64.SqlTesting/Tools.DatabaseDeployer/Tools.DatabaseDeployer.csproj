@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\CountDatabases.sql" />
+    <None Remove="Scripts\CreateDatabase.sql" />
+    <None Remove="Scripts\DropDatabase.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\CountDatabases.sql" />
+    <EmbeddedResource Include="Scripts\CreateDatabase.sql" />
+    <EmbeddedResource Include="Scripts\DropDatabase.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>
