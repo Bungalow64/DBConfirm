@@ -279,22 +279,27 @@ namespace Models
             return ((int?)data.RawData.Rows[0]["IdentityValue"], data.RawData.Rows[0]["IdentityColumnName"].ToString());
         }
 
-        public Task<T> InsertAsync<T>() where T : ITemplate, new()
+        public Task<T> InsertTemplateAsync<T>() where T : ITemplate, new()
         {
-            return InsertAsync(new T());
+            return InsertTemplateAsync(new T());
         }
 
-        public async Task<T> InsertComplexAsync<T>(T complexTemplate) where T : IComplexTemplate
+        public async Task<T> InsertTemplateAsync<T>(T template) where T : ITemplate
         {
-            await complexTemplate.InsertAsync(this);
-            return complexTemplate;
-        }
+            if (template.IsInserted)
+            {
+                return template;
+            }
 
-        public async Task<T> InsertAsync<T>(T template) where T : ITemplate
-        {
-            await InsertDataAsync(template.TableName, template.DefaultData, template.CustomData);
+            await template.InsertAsync(this);
 
+            template.RecordInsertion();
             return template;
+        }
+
+        public Task<ITemplate> InsertTemplateAsync(ITemplate template)
+        {
+            return InsertTemplateAsync<ITemplate>(template);
         }
 
         public Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow data)
@@ -302,7 +307,7 @@ namespace Models
             return InsertDataAsync(tableName, data, null);
         }
 
-        private async Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow defaultData, DataSetRow overrideData = null)
+        public async Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow defaultData, DataSetRow overrideData)
         {
             DataSetRow data = defaultData;
             if (overrideData != null)

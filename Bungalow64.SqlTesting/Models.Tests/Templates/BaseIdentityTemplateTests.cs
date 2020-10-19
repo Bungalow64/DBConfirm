@@ -7,7 +7,7 @@ namespace Models.Tests.Templates
     [TestFixture]
     public class BaseIdentityTemplateTests
     {
-        public class TestIdentityTemplate : BaseIdentityTemplate
+        public class TestIdentityTemplate : BaseIdentityTemplate<TestIdentityTemplate>
         {
             public override string IdentityColumnName => "UserId";
 

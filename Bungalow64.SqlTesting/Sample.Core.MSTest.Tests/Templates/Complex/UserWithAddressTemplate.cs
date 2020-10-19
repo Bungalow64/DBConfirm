@@ -1,10 +1,10 @@
 ﻿using Models;
-using Models.Templates.Asbtract;
+using Models.Templates;
 using System.Threading.Tasks;
 
 namespace Sample.Core.MSTest.Tests.Templates.Complex
 {
-    public class UserWithAddressTemplate : IComplexTemplate
+    public class UserWithAddressTemplate : BaseComplexTemplate
     {
         public UserTemplate User { get; set; }
 
@@ -16,12 +16,12 @@ namespace Sample.Core.MSTest.Tests.Templates.Complex
             UserAddress = new UserAddressTemplate();
         }
 
-        public async Task InsertAsync(TestRunner testRunner)
+        public override async Task InsertAsync(TestRunner testRunner)
         {
-            await testRunner.InsertAsync(User);
+            await testRunner.InsertTemplateAsync(User);
 
             UserAddress["UserId"] = User.Identity;
-            await testRunner.InsertAsync(UserAddress);
+            await testRunner.InsertTemplateAsync(UserAddress);
         }
     }
 }

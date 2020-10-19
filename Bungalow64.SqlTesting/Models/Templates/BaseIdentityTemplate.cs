@@ -1,6 +1,7 @@
 ﻿namespace Models.Templates
 {
-    public abstract class BaseIdentityTemplate : BaseTemplate
+    public abstract class BaseIdentityTemplate<T> : BaseSimpleTemplate<T>
+        where T : BaseIdentityTemplate<T>
     {
         public abstract string IdentityColumnName { get; }
 

@@ -107,8 +107,8 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         {
             UserTemplate user = new UserTemplate();
             UserAddressTemplate userA = new UserAddressTemplate(user);
-            await TestRunner.InsertAsync(user);
-            await TestRunner.InsertAsync(userA);
+            await TestRunner.InsertTemplateAsync(user);
+            await TestRunner.InsertTemplateAsync(userA);
 
             IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
@@ -131,13 +131,13 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ReturnMultiplePostcodes()
         {
-            UserTemplate user = await TestRunner.InsertAsync<UserTemplate>();
-            await TestRunner.InsertAsync(new UserAddressTemplate
+            UserTemplate user = await TestRunner.InsertTemplateAsync<UserTemplate>();
+            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
             {
                 { "UserId", user.Identity },
                 { "Postcode", "HD6 3UB" }
             });
-            await TestRunner.InsertAsync(new UserAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
             {
                 { "UserId", user.Identity },
                 { "Postcode", "HD6 4UB" }
@@ -170,22 +170,22 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ReturnUsers()
         {
-            UserTemplate user1 = await TestRunner.InsertAsync(new UserTemplate
+            UserTemplate user1 = await TestRunner.InsertTemplateAsync(new UserTemplate
             {
                 { "FirstName", "user1" },
                 { "EmailAddress", "user1@b64.co.uk" }
             });
-            UserTemplate user2 = await TestRunner.InsertAsync(new UserTemplate
+            UserTemplate user2 = await TestRunner.InsertTemplateAsync(new UserTemplate
             {
                 { "FirstName", "user2" },
                 { "EmailAddress", "user1@b64.co.uk" }
             });
-            await TestRunner.InsertAsync(new UserAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
             {
                 { "UserId", user1.Identity },
                 { "Postcode", "HD6 3UB" }
             });
-            await TestRunner.InsertAsync(new UserAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
             {
                 { "UserId", user2.Identity },
                 { "Postcode", "HD6 4UB" }
@@ -218,7 +218,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ViaComplex_ReturnUsers()
         {
-            await TestRunner.InsertComplexAsync(new UserWithAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
                 User = new UserTemplate
                 {
@@ -231,7 +231,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 }
             });
 
-            await TestRunner.InsertComplexAsync(new UserWithAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
                 User = new UserTemplate
                 {
@@ -271,7 +271,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ViaComplexSameAddress_ReturnUsers()
         {
-            await TestRunner.InsertComplexAsync(new UserWithAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
                 User = new UserTemplate
                 {
@@ -280,7 +280,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 }
             });
 
-            await TestRunner.InsertComplexAsync(new UserWithAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
                 User = new UserTemplate
                 {
@@ -316,8 +316,8 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ViaComplexAllDefault_ReturnUsers()
         {
-            await TestRunner.InsertComplexAsync(new UserWithAddressTemplate());
-            await TestRunner.InsertComplexAsync(new UserWithAddressTemplate());
+            await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate());
+            await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate());
 
             IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
@@ -346,7 +346,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ViaComplexOneUserTwoAddress_ReturnUser()
         {
-            await TestRunner.InsertComplexAsync(new UserWithTwoAddressesTemplate());
+            await TestRunner.InsertTemplateAsync(new UserWithTwoAddressesTemplate());
 
             IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
