@@ -7,7 +7,7 @@ namespace Models.Tests.Templates
     [TestFixture]
     public class BaseTemplateTests
     {
-        public class TestIdentityTemplate : BaseTemplate
+        public class TestIdentityTemplate : BaseSimpleTemplate<TestIdentityTemplate>
         {
             public override string TableName => "dbo.Users";
 

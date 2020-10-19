@@ -29,9 +29,12 @@ namespace Models.Abstract
         Task<QueryResult> ExecuteTableAsync(string tableName);
         Task<QueryResult> ExecuteViewAsync(string viewName);
         Task InitialiseAsync(ITestFramework testFramework);
-        Task<T> InsertAsync<T>() where T : ITemplate, new();
-        Task<T> InsertAsync<T>(T template) where T : ITemplate;
-        Task<T> InsertComplexAsync<T>(T complexTemplate) where T : IComplexTemplate;
+
         Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow data);
+        Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow defaultData, DataSetRow overrideData);
+
+        Task<T> InsertTemplateAsync<T>() where T : ITemplate, new();
+        Task<T> InsertTemplateAsync<T>(T template) where T : ITemplate;
+        Task<ITemplate> InsertTemplateAsync(ITemplate template);
     }
 }

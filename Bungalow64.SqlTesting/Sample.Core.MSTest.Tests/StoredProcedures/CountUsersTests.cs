@@ -98,7 +98,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task CountUsers_MatchEmailAddress_Return1_UseDefaultDataTemplateSetupIdentity()
         {
-            await TestRunner.InsertAsync<UserTemplate>();
+            await TestRunner.InsertTemplateAsync<UserTemplate>();
 
             ScalarResult<int> result = await TestRunner.ExecuteStoredProcedureScalarAsync<int>("dbo.CountUsers", new DataSetRow
             {
@@ -112,7 +112,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task CountUsers_MatchEmailAddress_Return1_UseDataTemplateSetupIdentity()
         {
-            await TestRunner.InsertAsync(new UserTemplate
+            await TestRunner.InsertTemplateAsync(new UserTemplate
             {
                 { "EmailAddress", "jimmy@bungalow64.co.uk" }
             });

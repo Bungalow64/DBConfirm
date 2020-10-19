@@ -4,7 +4,7 @@ using Models.Templates.Placeholders;
 
 namespace Sample.Core.MSTest.Tests.Templates
 {
-    public class UserAddressTemplate : BaseIdentityTemplate
+    public class UserAddressTemplate : BaseIdentityTemplate<UserAddressTemplate>
     {
         public override string TableName => "dbo.UserAddresses";
 
@@ -24,5 +24,12 @@ namespace Sample.Core.MSTest.Tests.Templates
         {
             this["UserId"] = user.IdentityResolver;
         }
+
+        public UserAddressTemplate WithId(int value) => SetValue(IdentityColumnName, value);
+
+        public UserAddressTemplate WithUserId(int value) => SetValue("UserId", value);
+        public UserAddressTemplate WithAddress1(string value) => SetValue("Address1", value);
+        public UserAddressTemplate WithPostcode(string value) => SetValue("Postcode", value);
+        public UserAddressTemplate WithOther(string value) => SetValue("Other", value);
     }
 }

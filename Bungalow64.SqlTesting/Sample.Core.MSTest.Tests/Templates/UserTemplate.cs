@@ -4,7 +4,7 @@ using System;
 
 namespace Sample.Core.MSTest.Tests.Templates
 {
-    public class UserTemplate : BaseIdentityTemplate
+    public class UserTemplate : BaseIdentityTemplate<UserTemplate>
     {
         public override string TableName => "dbo.Users";
 
@@ -20,5 +20,15 @@ namespace Sample.Core.MSTest.Tests.Templates
             { "Cost", 15.87 },
             { "CreatedDate", DateTime.UtcNow }
         };
+
+        public UserTemplate WithId(int value) => SetValue(IdentityColumnName, value);
+
+        public UserTemplate WithFirstName(string value) => SetValue("FirstName", value);
+        public UserTemplate WithLastName(string value) => SetValue("LastName", value);
+        public UserTemplate WithEmailAddress(string value) => SetValue("EmailAddress", value);
+        public UserTemplate WithStartDate(DateTime value) => SetValue("StartDate", value);
+        public UserTemplate WithNumberOfHats(int value) => SetValue("NumberOfHats", value);
+        public UserTemplate WithCost(decimal value) => SetValue("Cost", value);
+        public UserTemplate WithCreatedDate(DateTime value) => SetValue("CreatedDate", value);
     }
 }

@@ -1,10 +1,11 @@
-﻿namespace Models.Templates.Asbtract
+﻿using System.Threading.Tasks;
+
+namespace Models.Templates.Asbtract
 {
     public interface ITemplate
     {
-        string TableName { get; }
-        DataSetRow CustomData { get; }
-        DataSetRow DefaultData { get; }
-        DataSetRow MergedData { get; }
+        bool IsInserted { get; }
+        void RecordInsertion();
+        Task InsertAsync(TestRunner testRunner);
     }
 }
