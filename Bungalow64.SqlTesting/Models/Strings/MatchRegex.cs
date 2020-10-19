@@ -1,11 +1,11 @@
-﻿using Models.Strings.Abstract;
+﻿using Models.Comparisons;
 using Models.TestFrameworks.Abstract;
 using System;
 using System.Text.RegularExpressions;
 
 namespace Models.Strings
 {
-    public class MatchRegex : IStringComparison
+    public class MatchRegex : IComparison
     {
         public Regex ExpectedRegex { get; }
 
@@ -23,14 +23,21 @@ namespace Models.Strings
             ExpectedRegex = new Regex(expectedRegex);
         }
 
-        public void AssertString(ITestFramework testFramework, string value, string message)
+        public void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            testFramework.StringAssert.Matches(value, ExpectedRegex, message, "does not match the regex");
+            testFramework.Assert.IsInstanceOfType(value, typeof(string), $"{messagePrefix} is not a valid String object");
+
+            testFramework.StringAssert.Matches((string)value, ExpectedRegex, $"{messagePrefix} does not match the regex");
         }
 
-        public bool Validate(string value)
+        public bool Validate(object value)
         {
-            return ExpectedRegex.IsMatch(value);
+            if (!(value is string))
+            {
+                return false;
+            }
+
+            return ExpectedRegex.IsMatch((string)value);
         }
     }
 }

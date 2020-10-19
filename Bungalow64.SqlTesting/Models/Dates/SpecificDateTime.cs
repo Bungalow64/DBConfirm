@@ -4,32 +4,65 @@ using System;
 
 namespace Models.Dates
 {
+    /// <summary>
+    /// Asserts that a value matches a specific date and time.  The precision (default 1 second) is used to match values within a certain limit
+    /// </summary>
     public class SpecificDateTime : BaseDateTimeComparison
     {
+        /// <summary>
+        /// The expected date
+        /// </summary>
         public DateTime ExpectedDate { get; }
 
+        /// <summary>
+        /// Constructor, setting the expected date
+        /// </summary>
+        /// <param name="expectedDate">The expected date</param>
         public SpecificDateTime(DateTime expectedDate) : base()
         {
             ExpectedDate = expectedDate;
         }
 
+        /// <summary>
+        /// Constructor, setting the expected date
+        /// </summary>
+        /// <param name="expectedDate">The expected date, to be parsed with <see cref="DateTime.Parse(string)"/></param>
         public SpecificDateTime(string expectedDate) : this(DateTime.Parse(expectedDate)) { }
 
+        /// <summary>
+        /// Constructor, setting the expected date
+        /// </summary>
+        /// <param name="expectedDate">The expected date</param>
+        /// <param name="precision">The precision to be used in the comparison</param>
         public SpecificDateTime(DateTime expectedDate, TimeSpan precision) : base(precision)
         {
             ExpectedDate = expectedDate;
         }
 
+        /// <summary>
+        /// Constructor, setting the expected date
+        /// </summary>
+        /// <param name="expectedDate">The expected date, to be parsed with <see cref="DateTime.Parse(string)"/></param>
+        /// <param name="precision">The precision to be used in the comparison</param>
         public SpecificDateTime(string expectedDate, TimeSpan precision) : this(DateTime.Parse(expectedDate), precision) { }
 
-        public override void AssertDate(ITestFramework testFramework, DateTime value, string message)
+        /// <inheritdoc/>
+        public override void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            AssertDate(testFramework, ExpectedDate, value, message);
+            testFramework.Assert.IsInstanceOfType(value, typeof(DateTime), $"{messagePrefix} is not a valid DateTime object");
+
+            AssertDate(testFramework, ExpectedDate, (DateTime)value, $"{messagePrefix} is different by {{0}}");
         }
 
-        public override bool Validate(DateTime value)
+        /// <inheritdoc/>
+        public override bool Validate(object value)
         {
-            return Validate(ExpectedDate, value);
+            if (!(value is DateTime))
+            {
+                return false;
+            }
+
+            return Validate(ExpectedDate, (DateTime)value);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Models.Templates.Asbtract;
+﻿using Models.Abstract;
+using Models.Templates.Asbtract;
 using System.Threading.Tasks;
 
 namespace Models.Templates
@@ -28,6 +29,6 @@ namespace Models.Templates
             return (T)this;
         }
 
-        public Task InsertAsync(TestRunner testRunner) => testRunner.InsertDataAsync(TableName, DefaultData, CustomData);
+        public Task InsertAsync(ITestRunner testRunner) => testRunner.InsertDataAsync(TableName, DefaultData, CustomData);
     }
 }

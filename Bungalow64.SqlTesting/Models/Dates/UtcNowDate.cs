@@ -6,22 +6,44 @@ using System;
 
 namespace Models.Dates
 {
+    /// <summary>
+    /// Asserts that a value matches UtcNow.  The precision (default 1 second) is used to match values within a certain limit
+    /// </summary>
     public class UtcNowDate : BaseDateTimeComparison
     {
+        /// <summary>
+        /// The factory used to calculate UtcNow.  By default, this is using DateTime.UtcNow
+        /// </summary>
         internal IDateUtcNowFactory DateUtcNowFactory { private get; set; } = new DateUtcNowFactory();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public UtcNowDate() : base() { }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="precision">The precision to be used in the comparison</param>
         public UtcNowDate(TimeSpan precision) : base(precision) { }
 
-        public override void AssertDate(ITestFramework testFramework, DateTime value, string message)
+        /// <inheritdoc/>
+        public override void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            AssertDate(testFramework, DateUtcNowFactory.UtcNow, value, message);
+            testFramework.Assert.IsInstanceOfType(value, typeof(DateTime), $"{messagePrefix} is not a valid DateTime object");
+
+            AssertDate(testFramework, DateUtcNowFactory.UtcNow, (DateTime)value, $"{messagePrefix} is different by {{0}}");
         }
 
-        public override bool Validate(DateTime value)
+        /// <inheritdoc/>
+        public override bool Validate(object value)
         {
-            return Validate(DateUtcNowFactory.UtcNow, value);
+            if (!(value is DateTime))
+            {
+                return false;
+            }
+
+            return Validate(DateUtcNowFactory.UtcNow, (DateTime)value);
         }
     }
 }

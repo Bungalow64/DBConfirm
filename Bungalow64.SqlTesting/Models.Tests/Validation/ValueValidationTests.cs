@@ -1,6 +1,5 @@
-﻿using Models.Dates.Abstract;
-using Models.States.Abstract;
-using Models.Strings.Abstract;
+﻿using Models.Comparisons;
+using Models.Dates.Abstract;
 using Models.TestFrameworks.Abstract;
 using Models.Validation;
 using Moq;
@@ -69,10 +68,10 @@ namespace Models.Tests.Validation
             object requestedValue = null;
             string requestedMessage = null;
 
-            Mock<IState> state = new Mock<IState>(MockBehavior.Strict);
+            Mock<IComparison> state = new Mock<IComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertState(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
                 .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
@@ -84,10 +83,10 @@ namespace Models.Tests.Validation
                 ValueValidation.Assert(_testFramework, state.Object, "ValueA", "Custom assertion"));
 
             state
-                .Verify(p => p.AssertState(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual("ValueA", requestedValue);
-            Assert.AreEqual("Custom assertion has an unexpected state", requestedMessage);
+            Assert.AreEqual("Custom assertion", requestedMessage);
         }
 
         [Test]
@@ -96,10 +95,10 @@ namespace Models.Tests.Validation
             object requestedValue = null;
             string requestedMessage = null;
 
-            Mock<IState> state = new Mock<IState>(MockBehavior.Strict);
+            Mock<IComparison> state = new Mock<IComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertState(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
                 .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
@@ -110,23 +109,23 @@ namespace Models.Tests.Validation
                 ValueValidation.Assert(_testFramework, state.Object, "ValueA", "Custom assertion"));
 
             state
-                .Verify(p => p.AssertState(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual("ValueA", requestedValue);
-            Assert.AreEqual("Custom assertion has an unexpected state", requestedMessage);
+            Assert.AreEqual("Custom assertion", requestedMessage);
         }
 
         [Test]
         public void ValueValidation_Assert_AssertDate_AreNotEqual_ThrowError()
         {
-            DateTime? requestedValue = null;
+            object requestedValue = null;
             string requestedMessage = null;
 
             Mock<IDateComparison> state = new Mock<IDateComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertDate(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()))
-                .Callback<ITestFramework, DateTime, string>((s, p, q) =>
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
                     requestedMessage = q;
@@ -137,23 +136,23 @@ namespace Models.Tests.Validation
                 ValueValidation.Assert(_testFramework, state.Object, DateTime.Parse("01-Mar-2020"), "Custom assertion"));
 
             state
-                .Verify(p => p.AssertDate(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual(DateTime.Parse("01-Mar-2020"), requestedValue);
-            Assert.AreEqual("Custom assertion is different by {0}", requestedMessage);
+            Assert.AreEqual("Custom assertion", requestedMessage);
         }
 
         [Test]
         public void ValueValidation_Assert_AssertDate_AreEqual_ThrowNoError()
         {
-            DateTime? requestedValue = null;
+            object requestedValue = null;
             string requestedMessage = null;
 
             Mock<IDateComparison> state = new Mock<IDateComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertDate(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()))
-                .Callback<ITestFramework, DateTime, string>((s, p, q) =>
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
                     requestedMessage = q;
@@ -163,50 +162,47 @@ namespace Models.Tests.Validation
                 ValueValidation.Assert(_testFramework, state.Object, DateTime.Parse("01-Mar-2020"), "Custom assertion"));
 
             state
-                .Verify(p => p.AssertDate(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual(DateTime.Parse("01-Mar-2020"), requestedValue);
-            Assert.AreEqual("Custom assertion is different by {0}", requestedMessage);
+            Assert.AreEqual("Custom assertion", requestedMessage);
         }
 
         [Test]
         public void ValueValidation_Assert_AssertDate_ActualValueNotADate_ThrowError()
         {
-            DateTime? requestedValue = null;
+            object requestedValue = null;
             string requestedMessage = null;
 
             Mock<IDateComparison> state = new Mock<IDateComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertDate(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()))
-                .Callback<ITestFramework, DateTime, string>((s, p, q) =>
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
                     requestedMessage = q;
                 })
                 .Throws(new Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException());
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 ValueValidation.Assert(_testFramework, state.Object, 123, "Custom assertion"));
 
             state
-                .Verify(p => p.AssertDate(It.IsAny<ITestFramework>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Never);
-
-            Assert.IsNotNull(exception);
-            Assert.AreEqual("Assert.IsInstanceOfType failed. Custom assertion is not a valid DateTime object Expected type:<System.DateTime>. Actual type:<System.Int32>.", exception.Message);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()), Times.Once);
         }
 
         [Test]
         public void ValueValidation_Assert_AssertString_AreNotEqual_ThrowError()
         {
-            string requestedValue = null;
+            object requestedValue = null;
             string requestedMessage = null;
 
-            Mock<IStringComparison> state = new Mock<IStringComparison>(MockBehavior.Strict);
+            Mock<IComparison> state = new Mock<IComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertString(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<ITestFramework, string, string>((s, p, q) =>
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
                     requestedMessage = q;
@@ -217,23 +213,23 @@ namespace Models.Tests.Validation
                 ValueValidation.Assert(_testFramework, state.Object, "ABC", "Custom assertion"));
 
             state
-                .Verify(p => p.AssertString(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual("ABC", requestedValue);
-            Assert.AreEqual("Custom assertion {0}", requestedMessage);
+            Assert.AreEqual("Custom assertion", requestedMessage);
         }
 
         [Test]
         public void ValueValidation_Assert_AssertString_AreEqual_ThrowNoError()
         {
-            string requestedValue = null;
+            object requestedValue = null;
             string requestedMessage = null;
 
-            Mock<IStringComparison> state = new Mock<IStringComparison>(MockBehavior.Strict);
+            Mock<IComparison> state = new Mock<IComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertString(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<ITestFramework, string, string>((s, p, q) =>
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
                     requestedMessage = q;
@@ -243,37 +239,34 @@ namespace Models.Tests.Validation
                 ValueValidation.Assert(_testFramework, state.Object, "ABC", "Custom assertion"));
 
             state
-                .Verify(p => p.AssertString(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual("ABC", requestedValue);
-            Assert.AreEqual("Custom assertion {0}", requestedMessage);
+            Assert.AreEqual("Custom assertion", requestedMessage);
         }
 
         [Test]
         public void ValueValidation_Assert_AssertString_ActualValueNotAString_ThrowError()
         {
-            string requestedValue = null;
+            object requestedValue = null;
             string requestedMessage = null;
 
-            Mock<IStringComparison> state = new Mock<IStringComparison>(MockBehavior.Strict);
+            Mock<IComparison> state = new Mock<IComparison>(MockBehavior.Strict);
 
             state
-                .Setup(p => p.AssertString(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<ITestFramework, string, string>((s, p, q) =>
+                .Setup(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Callback<ITestFramework, object, string>((s, p, q) =>
                 {
                     requestedValue = p;
                     requestedMessage = q;
                 })
                 .Throws(new Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException());
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 ValueValidation.Assert(_testFramework, state.Object, 123, "Custom assertion"));
 
             state
-                .Verify(p => p.AssertString(It.IsAny<ITestFramework>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-
-            Assert.IsNotNull(exception);
-            Assert.AreEqual("Assert.IsInstanceOfType failed. Custom assertion is not a valid String object Expected type:<System.String>. Actual type:<System.Int32>.", exception.Message);
+                .Verify(p => p.Assert(It.IsAny<ITestFramework>(), It.IsAny<object>(), It.IsAny<string>()), Times.Once);
         }
     }
 }

@@ -14,6 +14,7 @@ using Models.TestFrameworks.Abstract;
 
 namespace Models
 {
+    /// <inheritdoc/>
     public class TestRunner : ITestRunner
     {
         #region Setup
@@ -26,11 +27,13 @@ namespace Models
 
         private bool disposedValue;
 
+        /// <inheritdoc/>
         public TestRunner(string connectionString)
         {
             ConnectionString = connectionString;
         }
 
+        /// <inheritdoc/>
         public async Task InitialiseAsync(ITestFramework testFramework)
         {
             _testFramework = testFramework ?? throw new ArgumentNullException(nameof(testFramework));
@@ -61,6 +64,7 @@ namespace Models
 
         #region Actions
 
+        /// <inheritdoc/>
         public async Task ExecuteStoredProcedureNonQueryAsync(string procedureName, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
@@ -72,6 +76,13 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
+        public Task ExecuteStoredProcedureNonQueryAsync(string procedureName, IDictionary<string, object> parameters)
+        {
+            return ExecuteStoredProcedureNonQueryAsync(procedureName, parameters.ToSqlParameters());
+        }
+
+        /// <inheritdoc/>
         public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, params SqlParameter[] parameters)
         {
             using (DataSet ds = new DataSet())
@@ -96,16 +107,25 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
+        public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, IDictionary<string, object> parameters)
+        {
+            return ExecuteStoredProcedureQueryAsync(procedureName, parameters.ToSqlParameters());
+        }
+
+        /// <inheritdoc/>
         public Task<QueryResult> ExecuteViewAsync(string viewName)
         {
             return ExecuteCommandAsync($"SELECT * FROM {viewName}");
         }
 
+        /// <inheritdoc/>
         public async Task<int> CountRowsInViewAsync(string viewName)
         {
             return (await ExecuteCommandScalarAsync<int>($"SELECT COUNT(*) AS [Count] FROM {viewName}")).RawData;
         }
 
+        /// <inheritdoc/>
         public Task<IList<QueryResult>> ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, params SqlParameter[] parameters)
         {
             using (DataSet ds = new DataSet())
@@ -126,11 +146,13 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
         public Task<IList<QueryResult>> ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, IDictionary<string, object> parameters)
         {
             return ExecuteStoredProcedureMultipleDataSetAsync(procedureName, parameters.ToSqlParameters());
         }
 
+        /// <inheritdoc/>
         public async Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
@@ -142,11 +164,13 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
         public Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, IDictionary<string, object> parameters)
         {
             return ExecuteStoredProcedureScalarAsync<T>(procedureName, parameters.ToSqlParameters());
         }
 
+        /// <inheritdoc/>
         public async Task ExecuteCommandNoResultsAsync(string commandText, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
@@ -158,11 +182,13 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
         public Task ExecuteCommandNoResultsAsync(string commandText, IDictionary<string, object> parameters)
         {
             return ExecuteCommandNoResultsAsync(commandText, parameters.ToSqlParameters());
         }
 
+        /// <inheritdoc/>
         public Task<QueryResult> ExecuteCommandAsync(string commandText, params SqlParameter[] parameters)
         {
             using (DataSet ds = new DataSet())
@@ -186,11 +212,13 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
         public Task<QueryResult> ExecuteCommandAsync(string commandText, IDictionary<string, object> parameters)
         {
-            return ExecuteCommandAsync(commandText, parameters.ToSqlParameters());
+            return ExecuteCommandAsync(commandText, parameters?.ToSqlParameters() ?? new SqlParameter[0]);
         }
 
+        /// <inheritdoc/>
         public async Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, params SqlParameter[] parameters)
         {
             using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
@@ -202,11 +230,13 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
         public Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, IDictionary<string, object> parameters)
         {
             return ExecuteCommandScalarAsync<T>(commandText, parameters.ToSqlParameters());
         }
 
+        /// <inheritdoc/>
         public Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, params SqlParameter[] parameters)
         {
             using (DataSet ds = new DataSet())
@@ -227,63 +257,31 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
         public Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, IDictionary<string, object> parameters)
         {
             return ExecuteCommandMultipleDataSetAsync(commandText, parameters.ToSqlParameters());
         }
 
+        /// <inheritdoc/>
         public Task<QueryResult> ExecuteTableAsync(string tableName)
         {
             return ExecuteViewAsync(tableName);
         }
 
+        /// <inheritdoc/>
         public Task<int> CountRowsInTableAsync(string tableName)
         {
             return CountRowsInViewAsync(tableName);
         }
 
-        private static string DelimitColumnName(string name)
-        {
-            name = name.TrimStart('[').TrimEnd(']');
-            return $"[{name}]";
-        }
-
-        private async Task<(int? identity, string identityColumnName)> InsertDefaultWithIdentity(string tableName)
-        {
-            string command = $@"
-                INSERT INTO
-                    {tableName}
-                DEFAULT VALUES;
-
-                IF OBJECTPROPERTY(OBJECT_ID('{tableName}'), 'TableHasIdentity') = 1
-                BEGIN
-                    SELECT
-                        SCOPE_IDENTITY() AS IdentityValue
-                        ,name AS IdentityColumnName
-                    FROM 
-		                sys.identity_columns
-	                WHERE
-		                OBJECT_SCHEMA_NAME(object_id) + '.' + OBJECT_NAME(object_id) = '{tableName}'
-                END
-                ELSE
-                BEGIN
-                    SELECT NULL
-                END";
-
-            QueryResult data = await ExecuteCommandAsync(command);
-
-            if (data.TotalRows == 0)
-            {
-                return (null, null);
-            }
-            return ((int?)data.RawData.Rows[0]["IdentityValue"], data.RawData.Rows[0]["IdentityColumnName"].ToString());
-        }
-
+        /// <inheritdoc/>
         public Task<T> InsertTemplateAsync<T>() where T : ITemplate, new()
         {
             return InsertTemplateAsync(new T());
         }
 
+        /// <inheritdoc/>
         public async Task<T> InsertTemplateAsync<T>(T template) where T : ITemplate
         {
             if (template.IsInserted)
@@ -297,16 +295,19 @@ namespace Models
             return template;
         }
 
+        /// <inheritdoc/>
         public Task<ITemplate> InsertTemplateAsync(ITemplate template)
         {
             return InsertTemplateAsync<ITemplate>(template);
         }
 
+        /// <inheritdoc/>
         public Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow data)
         {
             return InsertDataAsync(tableName, data, null);
         }
 
+        /// <inheritdoc/>
         public async Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow defaultData, DataSetRow overrideData)
         {
             DataSetRow data = defaultData;
@@ -317,7 +318,7 @@ namespace Models
 
             if (data.All(p => p.Value == null))
             {
-                var (defaultIdentityValue, defaultIdentityColumnName) = await InsertDefaultWithIdentity(tableName);
+                (int? defaultIdentityValue, string defaultIdentityColumnName) = await InsertDefaultWithIdentity(tableName);
 
                 return new DataSetRow
                 {
@@ -399,6 +400,42 @@ namespace Models
             return data;
         }
 
+        private static string DelimitColumnName(string name)
+        {
+            name = name.TrimStart('[').TrimEnd(']');
+            return $"[{name}]";
+        }
+
+        private async Task<(int? identity, string identityColumnName)> InsertDefaultWithIdentity(string tableName)
+        {
+            string command = $@"
+                INSERT INTO
+                    {tableName}
+                DEFAULT VALUES;
+
+                IF OBJECTPROPERTY(OBJECT_ID('{tableName}'), 'TableHasIdentity') = 1
+                BEGIN
+                    SELECT
+                        SCOPE_IDENTITY() AS IdentityValue
+                        ,name AS IdentityColumnName
+                    FROM 
+		                sys.identity_columns
+	                WHERE
+		                OBJECT_SCHEMA_NAME(object_id) + '.' + OBJECT_NAME(object_id) = '{tableName}'
+                END
+                ELSE
+                BEGIN
+                    SELECT NULL
+                END";
+
+            QueryResult data = await ExecuteCommandAsync(command);
+
+            if (data.TotalRows == 0)
+            {
+                return (null, null);
+            }
+            return ((int?)data.RawData.Rows[0]["IdentityValue"], data.RawData.Rows[0]["IdentityColumnName"].ToString());
+        }
 
         #endregion
 
@@ -417,6 +454,7 @@ namespace Models
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             Dispose(disposing: true);

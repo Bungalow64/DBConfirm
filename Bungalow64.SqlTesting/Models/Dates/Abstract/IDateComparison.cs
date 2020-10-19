@@ -1,13 +1,16 @@
-﻿using Models.TestFrameworks.Abstract;
+﻿using Models.Comparisons;
 using System;
 
 namespace Models.Dates.Abstract
 {
-    public interface IDateComparison
+    /// <summary>
+    /// The interface for date comparison objects
+    /// </summary>
+    public interface IDateComparison : IComparison
     {
+        /// <summary>
+        /// Gets the precision to be used in the comparison
+        /// </summary>
         TimeSpan Precision { get; }
-
-        void AssertDate(ITestFramework testFramework, DateTime value, string message);
-        bool Validate(DateTime value);
     }
 }

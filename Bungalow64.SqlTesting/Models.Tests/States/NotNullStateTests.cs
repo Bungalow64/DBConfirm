@@ -16,7 +16,7 @@ namespace Models.Tests.States
             object value = 123;
 
             new NotNullState()
-                .AssertState(_testFramework, value, "CustomMessage");
+                .Assert(_testFramework, value, "CustomMessage");
         }
 
         [Test]
@@ -25,9 +25,9 @@ namespace Models.Tests.States
             object value = null;
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => new NotNullState()
-                .AssertState(_testFramework, value, "CustomMessage"));
+                .Assert(_testFramework, value, "CustomMessage"));
 
-            Assert.AreEqual("Assert.AreNotEqual failed. Expected any value except:<>. Actual:<>. CustomMessage", exception.Message);
+            Assert.AreEqual("Assert.AreNotEqual failed. Expected any value except:<>. Actual:<>. CustomMessage has an unexpected state", exception.Message);
         }
 
         [Test]
@@ -36,9 +36,9 @@ namespace Models.Tests.States
             object value = DBNull.Value;
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => new NotNullState()
-                .AssertState(_testFramework, value, "CustomMessage"));
+                .Assert(_testFramework, value, "CustomMessage"));
 
-            Assert.AreEqual("Assert.AreNotEqual failed. Expected any value except:<>. Actual:<>. CustomMessage", exception.Message);
+            Assert.AreEqual("Assert.AreNotEqual failed. Expected any value except:<>. Actual:<>. CustomMessage has an unexpected state", exception.Message);
         }
     }
 }

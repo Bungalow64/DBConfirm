@@ -1,4 +1,5 @@
-﻿using Models.Templates.Asbtract;
+﻿using Models.Abstract;
+using Models.Templates.Asbtract;
 using System.Threading.Tasks;
 
 namespace Models.Templates
@@ -9,6 +10,6 @@ namespace Models.Templates
 
         public void RecordInsertion() => IsInserted = true;
 
-        public abstract Task InsertAsync(TestRunner testRunner);
+        public abstract Task InsertAsync(ITestRunner testRunner);
     }
 }

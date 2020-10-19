@@ -1,11 +1,11 @@
-﻿using Models.Strings.Abstract;
+﻿using Models.Comparisons;
 using Models.TestFrameworks.Abstract;
 using System;
 using System.Text.RegularExpressions;
 
 namespace Models.Strings
 {
-    public class NoMatchRegex : IStringComparison
+    public class NoMatchRegex : IComparison
     {
         public Regex UnexpectedRegex { get; }
 
@@ -23,14 +23,21 @@ namespace Models.Strings
             UnexpectedRegex = new Regex(unexpectedRegex);
         }
 
-        public void AssertString(ITestFramework testFramework, string value, string message)
+        public void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            testFramework.StringAssert.DoesNotMatch(value, UnexpectedRegex, message, "matches the regex when it should not match");
+            testFramework.Assert.IsInstanceOfType(value, typeof(string), $"{messagePrefix} is not a valid String object");
+
+            testFramework.StringAssert.DoesNotMatch((string)value, UnexpectedRegex, $"{messagePrefix} matches the regex when it should not match");
         }
 
-        public bool Validate(string value)
+        public bool Validate(object value)
         {
-            return !UnexpectedRegex.IsMatch(value);
+            if (!(value is string))
+            {
+                return false;
+            }
+
+            return !UnexpectedRegex.IsMatch((string)value);
         }
     }
 }

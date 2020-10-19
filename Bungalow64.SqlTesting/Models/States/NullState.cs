@@ -1,16 +1,21 @@
-﻿using Models.States.Abstract;
+﻿using Models.Comparisons;
 using Models.TestFrameworks.Abstract;
 using System;
 
 namespace Models.States
 {
-    public class NullState : IState
+    /// <summary>
+    /// Asserts that a value is null
+    /// </summary>
+    public class NullState : IComparison
     {
-        public void AssertState(ITestFramework testFramework, object value, string message)
+        /// <inheritdoc/>
+        public void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            testFramework.Assert.AreEqual(DBNull.Value, value ?? DBNull.Value, message);
+            testFramework.Assert.AreEqual(DBNull.Value, value ?? DBNull.Value, $"{messagePrefix} has an unexpected state");
         }
 
+        /// <inheritdoc/>
         public bool Validate(object value)
         {
             return DBNull.Value == (value ?? DBNull.Value);
