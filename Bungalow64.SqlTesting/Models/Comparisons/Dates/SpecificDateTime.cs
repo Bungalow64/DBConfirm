@@ -1,8 +1,8 @@
-﻿using Models.Dates.Abstract;
+﻿using Models.Comparisons.Dates.Abstract;
 using Models.TestFrameworks.Abstract;
 using System;
 
-namespace Models.Dates
+namespace Models.Comparisons.Dates
 {
     /// <summary>
     /// Asserts that a value matches a specific date and time.  The precision (default 1 second) is used to match values within a certain limit
@@ -49,7 +49,7 @@ namespace Models.Dates
         /// <inheritdoc/>
         public override void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            testFramework.Assert.IsInstanceOfType(value, typeof(DateTime), $"{messagePrefix} is not a valid DateTime object");
+            testFramework.IsInstanceOfType(value, typeof(DateTime), $"{messagePrefix} is not a valid DateTime object");
 
             AssertDate(testFramework, ExpectedDate, (DateTime)value, $"{messagePrefix} is different by {{0}}");
         }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Models.Exceptions;
-using Models.Templates.Asbtract;
+using Models.Templates.Abstract;
 using Models.Templates.Placeholders;
 using System;
 using System.Collections.Generic;

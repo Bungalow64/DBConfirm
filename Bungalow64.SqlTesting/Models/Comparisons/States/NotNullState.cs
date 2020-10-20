@@ -1,8 +1,8 @@
-﻿using Models.Comparisons;
+﻿using Models.Comparisons.Abstract;
 using Models.TestFrameworks.Abstract;
 using System;
 
-namespace Models.States
+namespace Models.Comparisons.States
 {
     /// <summary>
     /// Asserts that a value is not null
@@ -12,7 +12,7 @@ namespace Models.States
         /// <inheritdoc/>
         public void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            testFramework.Assert.AreNotEqual(DBNull.Value, value ?? DBNull.Value, $"{messagePrefix} has an unexpected state");
+            testFramework.AreNotEqual(DBNull.Value, value ?? DBNull.Value, $"{messagePrefix} has an unexpected state");
         }
 
         /// <inheritdoc/>

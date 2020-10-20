@@ -1,10 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models;
 using System;
 using System.Threading.Tasks;
 using Models.DataResults;
 using Frameworks.MSTest2;
+using Models.Comparisons;
+using Models.Data;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {

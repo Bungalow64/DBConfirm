@@ -1,4 +1,5 @@
-﻿using Models.Validation;
+﻿using Models.Data;
+using Models.Validation;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,7 +38,7 @@ namespace Models.DataResults
         /// Asserts that a specific value exists for the given column.  Also asserts that the column exists
         /// </summary>
         /// <param name="columnName">The column name (case-sensitive)</param>
-        /// <param name="expectedValue">The expected value.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="expectedValue">The expected value.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns the same <see cref="RowResult"/> object</returns>
         public RowResult AssertValue(string columnName, object expectedValue)
         {
@@ -53,7 +54,7 @@ namespace Models.DataResults
         /// <summary>
         /// Asserts that the row matches the expected data.  Also asserts that all columns in the expected data exist
         /// </summary>
-        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns the same <see cref="RowResult"/> object</returns>
         public RowResult AssertValues(DataSetRow expectedData)
         {
@@ -77,7 +78,7 @@ namespace Models.DataResults
         /// <summary>
         /// Validates whether the values match the row, returning a boolean representing the result
         /// </summary>
-        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns whether the values match the current row</returns>
         internal bool ValidateValuesMatch(DataSetRow expectedData)
         {

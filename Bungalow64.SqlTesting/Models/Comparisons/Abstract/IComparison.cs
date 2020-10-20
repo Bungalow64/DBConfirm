@@ -1,6 +1,6 @@
 ﻿using Models.TestFrameworks.Abstract;
 
-namespace Models.Comparisons
+namespace Models.Comparisons.Abstract
 {
     /// <summary>
     /// Defines the interface for comparison objects, to implement advanced assertion logic

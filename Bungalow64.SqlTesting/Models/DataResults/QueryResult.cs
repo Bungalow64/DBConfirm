@@ -1,4 +1,5 @@
-﻿using Models.TestFrameworks.Abstract;
+﻿using Models.Data;
+using Models.TestFrameworks.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -63,7 +64,7 @@ namespace Models.DataResults
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertRowCount(int expected)
         {
-            TestFramework.Assert.AreEqual(expected, TotalRows, $"The total row count is unexpected");
+            TestFramework.AreEqual(expected, TotalRows, $"The total row count is unexpected");
             return this;
         }
 
@@ -74,7 +75,7 @@ namespace Models.DataResults
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertColumnCount(int expected)
         {
-            TestFramework.Assert.AreEqual(expected, TotalColumns, $"The total column count is unexpected");
+            TestFramework.AreEqual(expected, TotalColumns, $"The total column count is unexpected");
             return this;
         }
 
@@ -94,7 +95,7 @@ namespace Models.DataResults
                 return $"Expected column {expectedColumnName ?? "<null>"} to be found but the only columns found are {string.Join(", ", ColumnNames)}";
             };
 
-            TestFramework.CollectionAssert.Contains(ColumnNames.ToList(), expectedColumnName, GetFailureMessage());
+            TestFramework.Contains(ColumnNames.ToList(), expectedColumnName, GetFailureMessage());
             return this;
         }
 
@@ -105,7 +106,7 @@ namespace Models.DataResults
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertColumnNotExists(string notExpectedColumnName)
         {
-            TestFramework.CollectionAssert.DoesNotContain(ColumnNames.ToList(), notExpectedColumnName, $"Expected column {notExpectedColumnName} to not be found but it was found");
+            TestFramework.DoesNotContain(ColumnNames.ToList(), notExpectedColumnName, $"Expected column {notExpectedColumnName} to not be found but it was found");
             return this;
         }
 
@@ -142,7 +143,7 @@ namespace Models.DataResults
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertRowPositionExists(int expectedRowPosition)
         {
-            TestFramework.Assert.IsTrue(TotalRows > expectedRowPosition && expectedRowPosition >= 0, $"There is no row at position {expectedRowPosition} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
+            TestFramework.IsTrue(TotalRows > expectedRowPosition && expectedRowPosition >= 0, $"There is no row at position {expectedRowPosition} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
             return this;
         }
 
@@ -151,7 +152,7 @@ namespace Models.DataResults
         /// </summary>
         /// <param name="rowNumber">The row number (zero-based)</param>
         /// <param name="columnName">The column name (case-sensitive)</param>
-        /// <param name="expectedValue">The expected value.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="expectedValue">The expected value.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertValue(int rowNumber, string columnName, object expectedValue)
         {
@@ -173,7 +174,7 @@ namespace Models.DataResults
         /// Asserts that the row at the given position matches the expected data.  Also asserts that all columns in the expected data exist
         /// </summary>
         /// <param name="rowNumber">The row number (zero-based)</param>
-        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertRowValues(int rowNumber, DataSetRow expectedData)
         {
@@ -185,7 +186,7 @@ namespace Models.DataResults
         /// <summary>
         /// Asserts that at least one row matches the expected data.  Also asserts that all columns in the expected data exist
         /// </summary>
-        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertRowExists(DataSetRow expectedData)
         {
@@ -199,14 +200,14 @@ namespace Models.DataResults
                 }
             }
 
-            TestFramework.Assert.Fail($"No rows found matching the expected data: {expectedData}");
+            TestFramework.Fail($"No rows found matching the expected data: {expectedData}");
             return this;
         }
 
         /// <summary>
         /// Asserts that no rows match the supplied data.  Also asserts that all columns in the supplied data exist
         /// </summary>
-        /// <param name="unexpectedData">The unexpected data.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="unexpectedData">The unexpected data.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertRowDoesNotExist(DataSetRow unexpectedData)
         {
@@ -224,7 +225,7 @@ namespace Models.DataResults
 
                 if (isMatch)
                 {
-                    TestFramework.Assert.Fail($"Row {x} matches the expected data that should not match anything: {unexpectedData}");
+                    TestFramework.Fail($"Row {x} matches the expected data that should not match anything: {unexpectedData}");
                 }
             }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Models
+namespace Models.Data
 {
     /// <summary>
     /// Defines the data for a single row, in a single table
@@ -41,7 +41,7 @@ namespace Models
         /// </summary>
         /// <param name="data">The data used to instantiate the row.  The Key relates to the column name, and the Value relates to the column value</param>
         public DataSetRow(Dictionary<string, object> data)
-            :base(data ?? new Dictionary<string, object>())
+            : base(data ?? new Dictionary<string, object>())
         {
 
         }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models;
 using Sample.Core.MSTest.Tests.Templates;
 using Sample.Core.MSTest.Tests.Templates.Complex;
 using System;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models.DataResults;
 using Frameworks.MSTest2;
+using Models.Data;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {

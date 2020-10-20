@@ -6,15 +6,18 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
-using Models.Templates.Asbtract;
 using Models.Extensions;
-using Models.Abstract;
 using Models.DataResults;
 using Models.TestFrameworks.Abstract;
+using Models.Templates.Abstract;
+using Models.Runners.Abstract;
+using Models.Data;
 
-namespace Models
+namespace Models.Runners
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// The the standard test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
+    /// </summary>
     public class TestRunner : ITestRunner
     {
         #region Setup
@@ -27,7 +30,10 @@ namespace Models
 
         private bool disposedValue;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Constructor, setting the connection string of the target database
+        /// </summary>
+        /// <param name="connectionString">The connection string to use</param>
         public TestRunner(string connectionString)
         {
             ConnectionString = connectionString;
@@ -441,6 +447,10 @@ namespace Models
 
         #region Dispose
 
+        /// <summary>
+        /// Rolls back the active transaction, and closes the connection to the target database
+        /// </summary>
+        /// <param name="disposing">Indicates whether the object is being disposed from the <see cref="IDisposable.Dispose"/> method</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

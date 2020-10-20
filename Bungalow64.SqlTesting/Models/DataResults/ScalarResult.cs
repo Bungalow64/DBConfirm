@@ -33,7 +33,7 @@ namespace Models.DataResults
         /// <summary>
         /// Asserts that the value matches the expected value
         /// </summary>
-        /// <param name="expectedValue">The expected value.  Respects <see cref="Comparisons.IComparison"/> objects</param>
+        /// <param name="expectedValue">The expected value.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
         /// <returns>Returns the same <see cref="ScalarResult{T}"/> object</returns>
         public ScalarResult<T> AssertValue(object expectedValue)
         {

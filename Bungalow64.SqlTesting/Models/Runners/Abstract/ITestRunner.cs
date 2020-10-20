@@ -1,15 +1,16 @@
 ﻿using Microsoft.Data.SqlClient;
-using Models.Templates.Asbtract;
 using Models.DataResults;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models.TestFrameworks.Abstract;
+using Models.Templates.Abstract;
+using Models.Data;
 
-namespace Models.Abstract
+namespace Models.Runners.Abstract
 {
     /// <summary>
-    /// The test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
+    /// The interface for the test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
     /// </summary>
     public interface ITestRunner : IDisposable
     {
@@ -175,7 +176,7 @@ namespace Models.Abstract
         /// <summary>
         /// Returns all data for a specific view
         /// </summary>
-        /// <param name="tableName">The name of the view, including schema</param>
+        /// <param name="viewName">The name of the view, including schema</param>
         /// <returns>Returns all columns and values found</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<QueryResult> ExecuteViewAsync(string viewName);
@@ -215,7 +216,6 @@ namespace Models.Abstract
         /// <summary>
         /// Inserts data based on the supplied template.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
         /// </summary>
-        /// <typeparam name="T">The type of template to insert</typeparam>
         /// <returns>Returns the template object, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<ITemplate> InsertTemplateAsync(ITemplate template);

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
-using Models;
 using System;
 using Models.DataResults;
 using System.Threading.Tasks;
 using Frameworks.NUnit;
 using NUnit.Framework;
+using Models.Data;
 
 namespace Sample.Core.NUnit.Tests.Views
 {

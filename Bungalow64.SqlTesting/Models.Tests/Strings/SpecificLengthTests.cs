@@ -1,4 +1,4 @@
-﻿using Models.Strings;
+﻿using Models.Comparisons.Strings;
 using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;

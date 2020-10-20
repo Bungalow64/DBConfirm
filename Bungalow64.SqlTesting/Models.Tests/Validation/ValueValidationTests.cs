@@ -1,5 +1,5 @@
-﻿using Models.Comparisons;
-using Models.Dates.Abstract;
+﻿using Models.Comparisons.Abstract;
+using Models.Comparisons.Dates.Abstract;
 using Models.TestFrameworks.Abstract;
 using Models.Validation;
 using Moq;

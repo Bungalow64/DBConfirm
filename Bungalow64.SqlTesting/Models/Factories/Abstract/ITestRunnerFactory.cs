@@ -1,4 +1,4 @@
-﻿using Models.Abstract;
+﻿using Models.Runners.Abstract;
 
 namespace Models.Factories.Abstract
 {

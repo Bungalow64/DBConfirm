@@ -1,13 +1,23 @@
-﻿using Models.Comparisons;
+﻿using Models.Comparisons.Abstract;
 using Models.TestFrameworks.Abstract;
 using System;
 
-namespace Models.Strings
+namespace Models.Comparisons.Strings
 {
+    /// <summary>
+    /// Asserts that a string is of a specific length
+    /// </summary>
     public class SpecificLength : IComparison
     {
+        /// <summary>
+        /// The expected length
+        /// </summary>
         public int ExpectedLength { get; }
 
+        /// <summary>
+        /// Constructor, setting the expected length
+        /// </summary>
+        /// <param name="expectedLength">The expected length</param>
         public SpecificLength(int expectedLength)
         {
             if (expectedLength < 0)
@@ -17,17 +27,19 @@ namespace Models.Strings
             ExpectedLength = expectedLength;
         }
 
+        /// <inheritdoc/>
         public void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
             if (value == null)
             {
                 value = string.Empty;
             }
-            testFramework.Assert.IsInstanceOfType(value, typeof(string), $"{messagePrefix} is not a valid String object");
+            testFramework.IsInstanceOfType(value, typeof(string), $"{messagePrefix} is not a valid String object");
 
-            testFramework.Assert.AreEqual(ExpectedLength, ((string)value)?.Length ?? 0, $"{messagePrefix} has an unexpected length");
+            testFramework.AreEqual(ExpectedLength, ((string)value)?.Length ?? 0, $"{messagePrefix} has an unexpected length");
         }
 
+        /// <inheritdoc/>
         public bool Validate(object value)
         {
             if (value == null)

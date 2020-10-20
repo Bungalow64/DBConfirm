@@ -2,7 +2,7 @@
 using Models.DataResults;
 using System.Threading.Tasks;
 using Frameworks.MSTest2;
-using Models.Abstract;
+using Models.Runners.Abstract;
 
 namespace Sample.Core.MSTest.Tests.Views
 {

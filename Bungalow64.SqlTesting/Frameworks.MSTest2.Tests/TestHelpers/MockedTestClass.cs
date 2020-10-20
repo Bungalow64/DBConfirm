@@ -1,5 +1,5 @@
 ﻿using Frameworks.MSTest2;
-using Models.Abstract;
+using Models.Runners.Abstract;
 
 namespace Frameworks.MSTest2.Tests.TestHelpers
 {

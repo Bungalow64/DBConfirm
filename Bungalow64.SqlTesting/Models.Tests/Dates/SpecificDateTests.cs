@@ -1,4 +1,4 @@
-﻿using Models.Dates;
+﻿using Models.Comparisons.Dates;
 using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;

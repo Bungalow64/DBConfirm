@@ -1,12 +1,12 @@
 ﻿using System;
-using Models.States;
-using Models.Dates;
-using Models.Dates.Abstract;
-using Models.Strings;
 using System.Text.RegularExpressions;
-using Models.Comparisons;
+using Models.Comparisons.Abstract;
+using Models.Comparisons.Strings;
+using Models.Comparisons.Dates.Abstract;
+using Models.Comparisons.Dates;
+using Models.Comparisons.States;
 
-namespace Models
+namespace Models.Comparisons
 {
     /// <summary>
     /// Facade to build data comparison objects, used to test comparisons with more flexibility

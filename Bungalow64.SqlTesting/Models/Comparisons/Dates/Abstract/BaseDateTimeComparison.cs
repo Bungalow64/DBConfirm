@@ -1,7 +1,7 @@
 ﻿using Models.TestFrameworks.Abstract;
 using System;
 
-namespace Models.Dates.Abstract
+namespace Models.Comparisons.Dates.Abstract
 {
     /// <summary>
     /// Abstract base class for DateTime comparisons.  Defines a default precision of 1 second
@@ -46,7 +46,7 @@ namespace Models.Dates.Abstract
 
             if (difference.Duration() >= Precision)
             {
-                testFramework.Assert.AreEqual(expectedDate, value, message, $"{difference.TotalMilliseconds} ms");
+                testFramework.AreEqual(expectedDate, value, message, $"{difference.TotalMilliseconds} ms");
             }
         }
 

@@ -1,8 +1,8 @@
-﻿using Models.Dates.Abstract;
+﻿using Models.Comparisons.Dates.Abstract;
 using Models.TestFrameworks.Abstract;
 using System;
 
-namespace Models.Dates
+namespace Models.Comparisons.Dates
 {
     /// <summary>
     /// Asserts that a value matches a specific date, ignoring the time of day.
@@ -37,13 +37,13 @@ namespace Models.Dates
         /// <inheritdoc/>
         public void Assert(ITestFramework testFramework, object value, string messagePrefix)
         {
-            testFramework.Assert.IsInstanceOfType(value, typeof(DateTime), $"{messagePrefix} is not a valid DateTime object");
+            testFramework.IsInstanceOfType(value, typeof(DateTime), $"{messagePrefix} is not a valid DateTime object");
 
             DateTime actualDay = GetDateDay((DateTime)value);
 
             TimeSpan difference = actualDay - ExpectedDateDay;
 
-            testFramework.Assert.AreEqual(ExpectedDateDay,
+            testFramework.AreEqual(ExpectedDateDay,
                 actualDay,
                 $"{messagePrefix} is different by {{0}}",
                 $"{difference.TotalDays} day{(Math.Abs(difference.TotalDays) == 1 ? "" : "s")}");

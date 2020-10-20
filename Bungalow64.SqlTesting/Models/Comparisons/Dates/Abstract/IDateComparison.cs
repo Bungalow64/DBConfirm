@@ -1,7 +1,7 @@
-﻿using Models.Comparisons;
+﻿using Models.Comparisons.Abstract;
 using System;
 
-namespace Models.Dates.Abstract
+namespace Models.Comparisons.Dates.Abstract
 {
     /// <summary>
     /// The interface for date comparison objects
