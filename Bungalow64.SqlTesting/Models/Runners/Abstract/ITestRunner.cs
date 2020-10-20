@@ -10,8 +10,9 @@ using Models.Data;
 namespace Models.Runners.Abstract
 {
     /// <summary>
-    /// The interface for the test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
+    /// The interface for the test runner, handling all SQL connections for a single database
     /// </summary>
+    /// <remarks>When communicating with a database multiple times within a single test, the same test runner instance must be used</remarks>
     public interface ITestRunner : IDisposable
     {
         /// <summary>
@@ -182,16 +183,18 @@ namespace Models.Runners.Abstract
         Task<QueryResult> ExecuteViewAsync(string viewName);
 
         /// <summary>
-        /// Inserts data into a table.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+        /// Inserts data into a table
         /// </summary>
+        /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
         /// <param name="tableName">The name of the table to insert into, including schema</param>
         /// <param name="data">The data to insert</param>
         /// <returns>Returns the data inserted, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow data);
         /// <summary>
-        /// Inserts data into a table.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set.  Data from both <paramref name="defaultData"/> and <paramref name="overrideData"/> is used, however where the same columns are specified in both data sets, then the value in <paramref name="overrideData"/> is used
+        /// Inserts data into a table
         /// </summary>
+        /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set.  Data from both <paramref name="defaultData"/> and <paramref name="overrideData"/> is used, however where the same columns are specified in both data sets, then the value in <paramref name="overrideData"/> is used</remarks>
         /// <param name="tableName">The name of the table to insert into, including schema</param>
         /// <param name="defaultData">The default data to insert</param>
         /// <param name="overrideData">The data to insert, overriding the data provided in <paramref name="defaultData"/></param>
@@ -200,22 +203,25 @@ namespace Models.Runners.Abstract
         Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow defaultData, DataSetRow overrideData);
 
         /// <summary>
-        /// Inserts data based on the default values defined in the template.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+        /// Inserts data based on the default values defined in the template
         /// </summary>
+        /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
         /// <typeparam name="T">The type of template to insert</typeparam>
         /// <returns>Returns the template object, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<T> InsertTemplateAsync<T>() where T : ITemplate, new();
         /// <summary>
-        /// Inserts data based on the supplied template.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+        /// Inserts data based on the supplied template
         /// </summary>
+        /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
         /// <typeparam name="T">The type of template to insert</typeparam>
         /// <returns>Returns the template object, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<T> InsertTemplateAsync<T>(T template) where T : ITemplate;
         /// <summary>
-        /// Inserts data based on the supplied template.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+        /// Inserts data based on the supplied template
         /// </summary>
+        /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
         /// <returns>Returns the template object, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<ITemplate> InsertTemplateAsync(ITemplate template);

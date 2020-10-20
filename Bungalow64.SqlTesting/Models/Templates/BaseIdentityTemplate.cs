@@ -21,8 +21,9 @@ namespace Models.Templates
         public int Identity => (int)this[IdentityColumnName];
 
         /// <summary>
-        /// Gets the resolver object, which, when resolved, returns the value of the identity column.  This can be used to reference the identity value before <see cref="ITemplate.InsertAsync(ITestRunner)"/> has been executed
+        /// Gets the resolver object, which, when resolved, returns the value of the identity column
         /// </summary>
+        /// <remarks>This can be used to reference the identity value before <see cref="ITemplate.InsertAsync(ITestRunner)"/> has been executed</remarks>
         public Resolver<int> IdentityResolver => new Resolver<int>(() => Identity);
     }
 }
