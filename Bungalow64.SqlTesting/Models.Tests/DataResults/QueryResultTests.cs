@@ -309,6 +309,20 @@ namespace Models.Tests.DataResults
         }
 
         [Test]
+        public void QueryResult_AssertColumnExists_OnlyOneColumnFound_ErrorMessageCorrect()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("UserId", typeof(int));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnExists("DomainId"));
+
+            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column DomainId to be found but the only column found is UserId", exception.Message);
+        }
+
+        [Test]
         public void QueryResult_AssertColumnExists_NullColumn_ExistingColumns_Error()
         {
             DataTable table = new DataTable();
