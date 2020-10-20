@@ -1,4 +1,4 @@
-﻿using Models.Strings;
+﻿using Models.Comparisons.Strings;
 using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
@@ -49,7 +49,7 @@ namespace Models.Tests.Strings
         {
             MatchRegex matchRegex = new MatchRegex(@"\b[M]\w+");
 
-            Assert.DoesNotThrow(() => matchRegex.AssertString(_testFramework, "Mike", "Custom message: {0}"));
+            Assert.DoesNotThrow(() => matchRegex.Assert(_testFramework, "Mike", "Custom message"));
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace Models.Tests.Strings
         {
             MatchRegex matchRegex = new MatchRegex(@"\b[M]\w+");
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => matchRegex.AssertString(_testFramework, "Brian", "Custom message: {0}"));
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => matchRegex.Assert(_testFramework, "Brian", "Custom message"));
 
-            Assert.AreEqual("StringAssert.Matches failed. String 'Brian' does not match pattern '\\b[M]\\w+'. Custom message: does not match the regex.", exception.Message);
+            Assert.AreEqual("StringAssert.Matches failed. String 'Brian' does not match pattern '\\b[M]\\w+'. Custom message does not match the regex.", exception.Message);
         }
     }
 }

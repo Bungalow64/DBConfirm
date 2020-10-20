@@ -16,6 +16,10 @@ This package is the core logic; see the MSTest2/NUnit packages for the framework
 		<PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;</PackageTags>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile>C:\Git\Bungalow64.SqlTesting\Bungalow64.SqlTesting\Models\Documentation\Models.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.9" />
@@ -24,6 +28,10 @@ This package is the core logic; see the MSTest2/NUnit packages for the framework
 
 	<ItemGroup>
 		<None Include="Package\RawLogo.png" Pack="true" Visible="true" PackagePath="Package\RawLogo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Documentation\" />
 	</ItemGroup>
 
 </Project>

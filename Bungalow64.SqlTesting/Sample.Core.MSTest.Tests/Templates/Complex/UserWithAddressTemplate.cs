@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Models.Runners.Abstract;
 using Models.Templates;
 using System.Threading.Tasks;
 
@@ -16,7 +16,7 @@ namespace Sample.Core.MSTest.Tests.Templates.Complex
             UserAddress = new UserAddressTemplate();
         }
 
-        public override async Task InsertAsync(TestRunner testRunner)
+        public override async Task InsertAsync(ITestRunner testRunner)
         {
             await testRunner.InsertTemplateAsync(User);
 

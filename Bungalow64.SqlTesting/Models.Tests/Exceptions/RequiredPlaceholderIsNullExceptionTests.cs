@@ -17,10 +17,10 @@ namespace Models.Tests.Exceptions
         }
 
         [Test]
-        public void RequiredPlaceholderIsNullException_CtorWithMessage_MessageSet()
+        public void RequiredPlaceholderIsNullException_CtorWithColumnName_ColumnNameSet()
         {
             RequiredPlaceholderIsNullException exception = new RequiredPlaceholderIsNullException("Custom message");
-            Assert.AreEqual("Custom message", exception.Message);
+            Assert.AreEqual("Custom message", exception.ColumnName);
         }
 
         [Test]

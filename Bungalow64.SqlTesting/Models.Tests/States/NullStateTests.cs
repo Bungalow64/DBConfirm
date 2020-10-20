@@ -1,4 +1,4 @@
-﻿using Models.States;
+﻿using Models.Comparisons.States;
 using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
@@ -16,9 +16,9 @@ namespace Models.Tests.States
             object value = 123;
 
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => new NullState()
-                .AssertState(_testFramework, value, "CustomMessage"));
+                .Assert(_testFramework, value, "CustomMessage"));
 
-            Assert.AreEqual("Assert.AreEqual failed. Expected:< (System.DBNull)>. Actual:<123 (System.Int32)>. CustomMessage", exception.Message);
+            Assert.AreEqual("Assert.AreEqual failed. Expected:< (System.DBNull)>. Actual:<123 (System.Int32)>. CustomMessage has an unexpected state", exception.Message);
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Models.Tests.States
             object value = null;
 
             new NullState()
-                .AssertState(_testFramework, value, "CustomMessage");
+                .Assert(_testFramework, value, "CustomMessage");
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Models.Tests.States
             object value = DBNull.Value;
 
             new NullState()
-                .AssertState(_testFramework, value, "CustomMessage");
+                .Assert(_testFramework, value, "CustomMessage");
         }
     }
 }

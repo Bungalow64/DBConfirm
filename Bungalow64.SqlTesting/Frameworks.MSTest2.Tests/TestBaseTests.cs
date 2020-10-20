@@ -1,10 +1,10 @@
 using Models.Factories.Abstract;
 using Frameworks.MSTest2.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.Abstract;
 using Moq;
 using System.Threading.Tasks;
 using Models.TestFrameworks.Abstract;
+using Models.Runners.Abstract;
 
 namespace Frameworks.MSTest2.Tests
 {

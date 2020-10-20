@@ -1,4 +1,4 @@
-﻿using Models.Strings;
+﻿using Models.Comparisons.Strings;
 using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
@@ -38,7 +38,7 @@ namespace Models.Tests.Strings
         {
             SpecificLength specificLength = new SpecificLength(length);
 
-            Assert.DoesNotThrow(() => specificLength.AssertString(_testFramework, value, "Custom message: {0}"));
+            Assert.DoesNotThrow(() => specificLength.Assert(_testFramework, value, "Custom message"));
         }
 
         [TestCase(1, "")]
@@ -50,9 +50,10 @@ namespace Models.Tests.Strings
         {
             SpecificLength specificLength = new SpecificLength(length);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => specificLength.AssertString(_testFramework, value, "Custom message: {0}"));
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() 
+                => specificLength.Assert(_testFramework, value, "Custom message"));
 
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{length}>. Actual:<{value?.Length ?? 0}>. Custom message: has an unexpected length", exception.Message);
+            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{length}>. Actual:<{value?.Length ?? 0}>. Custom message has an unexpected length", exception.Message);
         }
     }
 }

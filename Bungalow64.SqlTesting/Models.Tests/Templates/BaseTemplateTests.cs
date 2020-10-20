@@ -1,4 +1,5 @@
-﻿using Models.Templates;
+﻿using Models.Data;
+using Models.Templates;
 using NUnit.Framework;
 using System.Collections.Generic;
 

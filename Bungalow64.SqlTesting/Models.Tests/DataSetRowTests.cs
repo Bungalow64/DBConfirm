@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Models.Data;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 

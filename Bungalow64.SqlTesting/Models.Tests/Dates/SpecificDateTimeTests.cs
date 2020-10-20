@@ -1,4 +1,4 @@
-﻿using Models.Dates;
+﻿using Models.Comparisons.Dates;
 using Models.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
@@ -48,18 +48,18 @@ namespace Models.Tests.Dates
 
             Assert.DoesNotThrow(() =>
                 new SpecificDateTime(expectedDate)
-                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
+                    .Assert(_testFramework, actualDate, "DateTime is wrong: {0}"));
         }
 
-        [TestCase("02-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<02/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -86400000 ms")]
-        [TestCase("01-Mar-2020", "02-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<02/03/2020 00:00:00>. DateTime is wrong: 86400000 ms")]
-        [TestCase("03-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<03/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -172800000 ms")]
-        [TestCase("01-Mar-2020", "03-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<03/03/2020 00:00:00>. DateTime is wrong: 172800000 ms")]
-        [TestCase("01-Mar-2020 08:12:34", "03-Mar-2020 15:12:31", "Assert.AreEqual failed. Expected:<01/03/2020 08:12:34>. Actual:<03/03/2020 15:12:31>. DateTime is wrong: 197997000 ms")]
-        [TestCase("01-Mar-2020 09:12:31", "01-Mar-2020 21:23:54", "Assert.AreEqual failed. Expected:<01/03/2020 09:12:31>. Actual:<01/03/2020 21:23:54>. DateTime is wrong: 43883000 ms")]
-        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 23:59:59", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 23:59:59>. DateTime is wrong: 86399000 ms")]
-        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 00:00:01", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 00:00:01>. DateTime is wrong: 1000 ms")]
-        [TestCase("01-Mar-2020 00:00:01", "01-Mar-2020 00:00:00", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:01>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -1000 ms")]
+        [TestCase("02-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<02/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. Custom Date is different by -86400000 ms")]
+        [TestCase("01-Mar-2020", "02-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<02/03/2020 00:00:00>. Custom Date is different by 86400000 ms")]
+        [TestCase("03-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<03/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. Custom Date is different by -172800000 ms")]
+        [TestCase("01-Mar-2020", "03-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<03/03/2020 00:00:00>. Custom Date is different by 172800000 ms")]
+        [TestCase("01-Mar-2020 08:12:34", "03-Mar-2020 15:12:31", "Assert.AreEqual failed. Expected:<01/03/2020 08:12:34>. Actual:<03/03/2020 15:12:31>. Custom Date is different by 197997000 ms")]
+        [TestCase("01-Mar-2020 09:12:31", "01-Mar-2020 21:23:54", "Assert.AreEqual failed. Expected:<01/03/2020 09:12:31>. Actual:<01/03/2020 21:23:54>. Custom Date is different by 43883000 ms")]
+        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 23:59:59", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 23:59:59>. Custom Date is different by 86399000 ms")]
+        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 00:00:01", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 00:00:01>. Custom Date is different by 1000 ms")]
+        [TestCase("01-Mar-2020 00:00:01", "01-Mar-2020 00:00:00", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:01>. Actual:<01/03/2020 00:00:00>. Custom Date is different by -1000 ms")]
         public void SpecificDateTime_AssertDate_DifferentTimes_DefaultPrecision_Error(string expectedDateString, string actualDateString, string expectedMessage)
         {
             DateTime expectedDate = DateTime.Parse(expectedDateString);
@@ -67,7 +67,7 @@ namespace Models.Tests.Dates
 
             Exception ex = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 new SpecificDateTime(expectedDate)
-                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
+                    .Assert(_testFramework, actualDate, "Custom Date"));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }
@@ -84,18 +84,18 @@ namespace Models.Tests.Dates
 
             Assert.DoesNotThrow(() =>
                 new SpecificDateTime(expectedDate, TimeSpan.FromMinutes(1))
-                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
+                    .Assert(_testFramework, actualDate, "Custom Date"));
         }
 
-        [TestCase("02-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<02/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -86400000 ms")]
-        [TestCase("01-Mar-2020", "02-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<02/03/2020 00:00:00>. DateTime is wrong: 86400000 ms")]
-        [TestCase("03-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<03/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -172800000 ms")]
-        [TestCase("01-Mar-2020", "03-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<03/03/2020 00:00:00>. DateTime is wrong: 172800000 ms")]
-        [TestCase("01-Mar-2020 08:12:34", "03-Mar-2020 15:12:31", "Assert.AreEqual failed. Expected:<01/03/2020 08:12:34>. Actual:<03/03/2020 15:12:31>. DateTime is wrong: 197997000 ms")]
-        [TestCase("01-Mar-2020 09:12:31", "01-Mar-2020 21:23:54", "Assert.AreEqual failed. Expected:<01/03/2020 09:12:31>. Actual:<01/03/2020 21:23:54>. DateTime is wrong: 43883000 ms")]
-        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 23:59:59", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 23:59:59>. DateTime is wrong: 86399000 ms")]
-        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 00:01:00", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 00:01:00>. DateTime is wrong: 60000 ms")]
-        [TestCase("01-Mar-2020 00:01:00", "01-Mar-2020 00:00:00", "Assert.AreEqual failed. Expected:<01/03/2020 00:01:00>. Actual:<01/03/2020 00:00:00>. DateTime is wrong: -60000 ms")]
+        [TestCase("02-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<02/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. Custom Date is different by -86400000 ms")]
+        [TestCase("01-Mar-2020", "02-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<02/03/2020 00:00:00>. Custom Date is different by 86400000 ms")]
+        [TestCase("03-Mar-2020", "01-Mar-2020", "Assert.AreEqual failed. Expected:<03/03/2020 00:00:00>. Actual:<01/03/2020 00:00:00>. Custom Date is different by -172800000 ms")]
+        [TestCase("01-Mar-2020", "03-Mar-2020", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<03/03/2020 00:00:00>. Custom Date is different by 172800000 ms")]
+        [TestCase("01-Mar-2020 08:12:34", "03-Mar-2020 15:12:31", "Assert.AreEqual failed. Expected:<01/03/2020 08:12:34>. Actual:<03/03/2020 15:12:31>. Custom Date is different by 197997000 ms")]
+        [TestCase("01-Mar-2020 09:12:31", "01-Mar-2020 21:23:54", "Assert.AreEqual failed. Expected:<01/03/2020 09:12:31>. Actual:<01/03/2020 21:23:54>. Custom Date is different by 43883000 ms")]
+        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 23:59:59", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 23:59:59>. Custom Date is different by 86399000 ms")]
+        [TestCase("01-Mar-2020 00:00:00", "01-Mar-2020 00:01:00", "Assert.AreEqual failed. Expected:<01/03/2020 00:00:00>. Actual:<01/03/2020 00:01:00>. Custom Date is different by 60000 ms")]
+        [TestCase("01-Mar-2020 00:01:00", "01-Mar-2020 00:00:00", "Assert.AreEqual failed. Expected:<01/03/2020 00:01:00>. Actual:<01/03/2020 00:00:00>. Custom Date is different by -60000 ms")]
         public void SpecificDateTime_AssertDate_DifferentTimes_Precision1Minute_Error(string expectedDateString, string actualDateString, string expectedMessage)
         {
             DateTime expectedDate = DateTime.Parse(expectedDateString);
@@ -103,7 +103,7 @@ namespace Models.Tests.Dates
 
             Exception ex = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 new SpecificDateTime(expectedDate)
-                    .AssertDate(_testFramework, actualDate, "DateTime is wrong: {0}"));
+                    .Assert(_testFramework, actualDate, "Custom Date"));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }
