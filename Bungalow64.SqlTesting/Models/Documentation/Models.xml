@@ -728,8 +728,9 @@
         </member>
         <member name="T:Models.Runners.Abstract.ITestRunner">
             <summary>
-            The interface for the test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
+            The interface for the test runner, handling all SQL connections for a single database
             </summary>
+            <remarks>When communicating with a database multiple times within a single test, the same test runner instance must be used</remarks>
         </member>
         <member name="M:Models.Runners.Abstract.ITestRunner.InitialiseAsync(Models.TestFrameworks.Abstract.ITestFramework)">
             <summary>
@@ -920,8 +921,9 @@
         </member>
         <member name="M:Models.Runners.Abstract.ITestRunner.InsertDataAsync(System.String,Models.Data.DataSetRow)">
             <summary>
-            Inserts data into a table.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+            Inserts data into a table
             </summary>
+            <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
             <param name="tableName">The name of the table to insert into, including schema</param>
             <param name="data">The data to insert</param>
             <returns>Returns the data inserted, including the identity value (if applicable)</returns>
@@ -929,8 +931,9 @@
         </member>
         <member name="M:Models.Runners.Abstract.ITestRunner.InsertDataAsync(System.String,Models.Data.DataSetRow,Models.Data.DataSetRow)">
             <summary>
-            Inserts data into a table.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set.  Data from both <paramref name="defaultData"/> and <paramref name="overrideData"/> is used, however where the same columns are specified in both data sets, then the value in <paramref name="overrideData"/> is used
+            Inserts data into a table
             </summary>
+            <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set.  Data from both <paramref name="defaultData"/> and <paramref name="overrideData"/> is used, however where the same columns are specified in both data sets, then the value in <paramref name="overrideData"/> is used</remarks>
             <param name="tableName">The name of the table to insert into, including schema</param>
             <param name="defaultData">The default data to insert</param>
             <param name="overrideData">The data to insert, overriding the data provided in <paramref name="defaultData"/></param>
@@ -939,24 +942,27 @@
         </member>
         <member name="M:Models.Runners.Abstract.ITestRunner.InsertTemplateAsync``1">
             <summary>
-            Inserts data based on the default values defined in the template.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+            Inserts data based on the default values defined in the template
             </summary>
+            <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
             <typeparam name="T">The type of template to insert</typeparam>
             <returns>Returns the template object, including the identity value (if applicable)</returns>
             <exception cref="T:System.Data.Common.DbException"></exception>
         </member>
         <member name="M:Models.Runners.Abstract.ITestRunner.InsertTemplateAsync``1(``0)">
             <summary>
-            Inserts data based on the supplied template.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+            Inserts data based on the supplied template
             </summary>
+            <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
             <typeparam name="T">The type of template to insert</typeparam>
             <returns>Returns the template object, including the identity value (if applicable)</returns>
             <exception cref="T:System.Data.Common.DbException"></exception>
         </member>
         <member name="M:Models.Runners.Abstract.ITestRunner.InsertTemplateAsync(Models.Templates.Abstract.ITemplate)">
             <summary>
-            Inserts data based on the supplied template.  Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set
+            Inserts data based on the supplied template
             </summary>
+            <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
             <returns>Returns the template object, including the identity value (if applicable)</returns>
             <exception cref="T:System.Data.Common.DbException"></exception>
         </member>
@@ -1148,8 +1154,9 @@
         </member>
         <member name="P:Models.Templates.BaseIdentityTemplate`1.IdentityResolver">
             <summary>
-            Gets the resolver object, which, when resolved, returns the value of the identity column.  This can be used to reference the identity value before <see cref="M:Models.Templates.Abstract.ITemplate.InsertAsync(Models.Runners.Abstract.ITestRunner)"/> has been executed
+            Gets the resolver object, which, when resolved, returns the value of the identity column
             </summary>
+            <remarks>This can be used to reference the identity value before <see cref="M:Models.Templates.Abstract.ITemplate.InsertAsync(Models.Runners.Abstract.ITestRunner)"/> has been executed</remarks>
         </member>
         <member name="T:Models.Templates.BaseSimpleTemplate`1">
             <summary>

@@ -92,6 +92,10 @@ namespace Models.DataResults
                 {
                     return $"Expected column {expectedColumnName ?? "<null>"} to be found but no columns were found";
                 }
+                if (RawData.Columns.Count == 1)
+                {
+                    return $"Expected column {expectedColumnName ?? "<null>"} to be found but the only column found is {ColumnNames.First()}";
+                }
                 return $"Expected column {expectedColumnName ?? "<null>"} to be found but the only columns found are {string.Join(", ", ColumnNames)}";
             };
 
