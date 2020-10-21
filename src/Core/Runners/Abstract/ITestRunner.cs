@@ -88,6 +88,7 @@ namespace SQLConfirm.Core.Runners.Abstract
         /// </summary>
         /// <param name="commandText">The command to execute</param>
         /// <param name="parameters">The parameters to be used.  The Key is used as the parameter name, and the Value used as the parameter value</param>
+        /// <typeparam name="T">The type of the object to return</typeparam>
         /// <returns>Returns the object returned from the command</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         /// <exception cref="InvalidCastException"></exception>
@@ -97,6 +98,7 @@ namespace SQLConfirm.Core.Runners.Abstract
         /// </summary>
         /// <param name="commandText">The command to execute</param>
         /// <param name="parameters">The parameters to be used</param>
+        /// <typeparam name="T">The type of the object to return</typeparam>
         /// <returns>Returns the object returned from the command</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         /// <exception cref="InvalidCastException"></exception>
@@ -154,6 +156,7 @@ namespace SQLConfirm.Core.Runners.Abstract
         /// </summary>
         /// <param name="procedureName">The name of the stored procedure, including schema</param>
         /// <param name="parameters">The parameters to be used.  The Key is used as the parameter name, and the Value used as the parameter value</param>
+        /// <typeparam name="T">The type of the object to return</typeparam>
         /// <returns>Returns the object returned from the stored procedure</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         /// <exception cref="InvalidCastException"></exception>
@@ -163,6 +166,7 @@ namespace SQLConfirm.Core.Runners.Abstract
         /// </summary>
         /// <param name="procedureName">The name of the stored procedure, including schema</param>
         /// <param name="parameters">The parameters to be used</param>
+        /// <typeparam name="T">The type of the object to return</typeparam>
         /// <returns>Returns the object returned from the stored procedure</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         /// <exception cref="InvalidCastException"></exception>
@@ -215,6 +219,7 @@ namespace SQLConfirm.Core.Runners.Abstract
         /// </summary>
         /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
         /// <typeparam name="T">The type of template to insert</typeparam>
+        /// <param name="template">The template containing the data to add</param>
         /// <returns>Returns the template object, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<T> InsertTemplateAsync<T>(T template) where T : ITemplate;
@@ -222,6 +227,7 @@ namespace SQLConfirm.Core.Runners.Abstract
         /// Inserts data based on the supplied template
         /// </summary>
         /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
+        /// <param name="template">The template containing the data to add</param>
         /// <returns>Returns the template object, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<ITemplate> InsertTemplateAsync(ITemplate template);

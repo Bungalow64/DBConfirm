@@ -13,7 +13,7 @@
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
 
 This package is the core logic; see the MSTest/NUnit packages for the framework-dependent runners.</Description>
-    <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;</PackageTags>
+    <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;SQLConfirm</PackageTags>
     <PackageIcon>Bungalow64.png</PackageIcon>
   </PropertyGroup>
 
