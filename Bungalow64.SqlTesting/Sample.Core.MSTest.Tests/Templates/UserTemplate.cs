@@ -1,5 +1,5 @@
-﻿using Models.Data;
-using Models.Templates;
+﻿using SQLConfirm.Core.Data;
+using SQLConfirm.Core.Templates;
 using System;
 
 namespace Sample.Core.MSTest.Tests.Templates

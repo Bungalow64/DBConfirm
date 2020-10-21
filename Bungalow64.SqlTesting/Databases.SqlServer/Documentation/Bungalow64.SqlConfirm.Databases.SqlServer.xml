@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SQLConfirm.Databases.SqlServer</name>
+    </assembly>
+    <members>
+        <member name="T:SQLConfirm.Databases.SqlServer.Extensions.IDictionaryExtensions">
+            <summary>
+            Defines extensions to <see cref="T:System.Collections.Generic.IDictionary`2"/>
+            </summary>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Extensions.IDictionaryExtensions.ToSqlParameters(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Converts an <see cref="T:System.Collections.Generic.IDictionary`2"/> to an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects.  The Key is used as the column name, and the Value the parameter value
+            </summary>
+            <param name="dictionary">The dictionary to convert.  A null or empty dictionary results in an empty array</param>
+            <returns>Returns an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects</returns>
+        </member>
+        <member name="T:SQLConfirm.Databases.SqlServer.Extensions.SqlQueryParameterExtensions">
+            <summary>
+            Defines extensions to <see cref="T:SQLConfirm.Core.Parameters.SqlQueryParameter"/>
+            </summary>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Extensions.SqlQueryParameterExtensions.ToSqlParameters(SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <summary>
+            Converts an array of <see cref="T:SQLConfirm.Core.Parameters.SqlQueryParameter"/> to an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects
+            </summary>
+            <param name="parameters">The array to convert.  A null or empty array results in an empty array</param>
+            <returns>Returns an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects</returns>
+        </member>
+        <member name="T:SQLConfirm.Databases.SqlServer.Factories.TestRunnerFactory">
+            <summary>
+            The default <see cref="T:SQLConfirm.Core.Runners.Abstract.ITestRunner"/> factory, using <see cref="T:SQLConfirm.Databases.SqlServer.Runners.TestRunner"/>
+            </summary>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Factories.TestRunnerFactory.BuildTestRunner(System.String)">
+            <summary>
+            Gets an instantiation of <see cref="T:SQLConfirm.Core.Runners.Abstract.ITestRunner"/>, using <see cref="T:SQLConfirm.Databases.SqlServer.Runners.TestRunner"/>
+            </summary>
+            <param name="connectionString">The connection string to use for SQL connections</param>
+            <returns>Returns the generated <see cref="T:SQLConfirm.Core.Runners.Abstract.ITestRunner"/></returns>
+        </member>
+        <member name="T:SQLConfirm.Databases.SqlServer.Runners.TestRunner">
+            <summary>
+            The the standard test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
+            </summary>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.#ctor(System.String)">
+            <summary>
+            Constructor, setting the connection string of the target database
+            </summary>
+            <param name="connectionString">The connection string to use</param>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.InitialiseAsync(SQLConfirm.Core.TestFrameworks.Abstract.ITestFramework)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureNonQueryAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureNonQueryAsync(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureQueryAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureQueryAsync(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteViewAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.CountRowsInViewAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureMultipleDataSetAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureMultipleDataSetAsync(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureScalarAsync``1(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteStoredProcedureScalarAsync``1(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandNoResultsAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandNoResultsAsync(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandAsync(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandScalarAsync``1(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandScalarAsync``1(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandMultipleDataSetAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteCommandMultipleDataSetAsync(System.String,SQLConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.ExecuteTableAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.CountRowsInTableAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.InsertTemplateAsync``1">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.InsertTemplateAsync``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.InsertTemplateAsync(SQLConfirm.Core.Templates.Abstract.ITemplate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.InsertDataAsync(System.String,SQLConfirm.Core.Data.DataSetRow)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.InsertDataAsync(System.String,SQLConfirm.Core.Data.DataSetRow,SQLConfirm.Core.Data.DataSetRow)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.Dispose(System.Boolean)">
+            <summary>
+            Rolls back the active transaction, and closes the connection to the target database
+            </summary>
+            <param name="disposing">Indicates whether the object is being disposed from the <see cref="M:System.IDisposable.Dispose"/> method</param>
+        </member>
+        <member name="M:SQLConfirm.Databases.SqlServer.Runners.TestRunner.Dispose">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

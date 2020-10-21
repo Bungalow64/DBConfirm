@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.TestFrameworks.Abstract;
-using Models.Runners.Abstract;
+using SQLConfirm.Core.TestFrameworks.Abstract;
+using SQLConfirm.Core.Runners.Abstract;
+using SQLConfirm.Core.Factories.Abstract;
+using SQLConfirm.Databases.SqlServer.Factories;
 
-namespace Frameworks.MSTest2
+namespace SQLConfirm.Frameworks.MSTest2
 {
     /// <summary>
     /// The abstract base class for test classes using MSTest2
@@ -19,6 +21,9 @@ namespace Frameworks.MSTest2
         /// Gets and sets the <see cref="ITestFramework"/> to be used for assertions, by default using <see cref="MSTest2Framework"/> 
         /// </summary>
         protected override ITestFramework TestFramework { get; set; } = new MSTest2Framework();
+
+        /// <inheritdoc/>
+        protected override ITestRunnerFactory TestRunnerFactory { get; set; } = new TestRunnerFactory();
 
         /// <summary>
         /// The initialisation called once before all tests are run in a class, to set the current <see cref="TestContext"/> object

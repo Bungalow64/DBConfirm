@@ -1,10 +1,10 @@
-﻿using Models.TestFrameworks.Abstract;
+﻿using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Frameworks.NUnit
+namespace SQLConfirm.Frameworks.NUnit
 {
     /// <summary>
     /// The test framework using NUnit
@@ -14,7 +14,7 @@ namespace Frameworks.NUnit
         /// <inheritdoc/>
         public void AreEqual(object expected, object actual, string message, params string[] parameters)
         {
-            
+
             Assert.AreEqual(expected, actual, message, parameters);
         }
 

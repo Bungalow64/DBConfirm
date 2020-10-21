@@ -2,19 +2,21 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<PackageId>Bungalow64.SqlTesting.MSTest2</PackageId>
+		<PackageId>SQLConfirm.Frameworks.MSTest2</PackageId>
 		<Version>0.1.0</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
-		<Product>Bungalow64 SqlTesting (MSTest2 framework)</Product>
+		<Product>SQLConfirm (MSTest2 framework)</Product>
 		<Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
 
 This package is the test runner for MSTest2.
 		</Description>
-		<PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;MSTest;MSTest2</PackageTags>
+		<PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;MSTest;MSTest2;SqlConfirm</PackageTags>
 		<PackageIcon>Package\RawLogo.png</PackageIcon>
+		<RootNamespace>SQLConfirm.Frameworks.MSTest2</RootNamespace>
+		<AssemblyName>SQLConfirm.Frameworks.MSTest2</AssemblyName>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,15 +30,16 @@ This package is the test runner for MSTest2.
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Models\Models.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="Package\RawLogo.png" Pack="true" Visible="true" PackagePath="Package\RawLogo.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Documentation\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Core\Core.csproj" />
+	  <ProjectReference Include="..\Databases.SqlServer\Databases.SqlServer.csproj" />
 	</ItemGroup>
 
 </Project>

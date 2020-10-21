@@ -1,10 +1,10 @@
-using Models.Factories.Abstract;
+using SQLConfirm.Core.Factories.Abstract;
 using Frameworks.MSTest2.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
-using Models.TestFrameworks.Abstract;
-using Models.Runners.Abstract;
+using SQLConfirm.Core.TestFrameworks.Abstract;
+using SQLConfirm.Core.Runners.Abstract;
 
 namespace Frameworks.MSTest2.Tests
 {
@@ -28,7 +28,7 @@ namespace Frameworks.MSTest2.Tests
         {
             MockedTestClass testClass = new MockedTestClass
             {
-                TestRunnerFactory = _testRunnerFactoryMock.Object
+                ExposedTestRunnerFactory = _testRunnerFactoryMock.Object
             };
             return testClass;
         }

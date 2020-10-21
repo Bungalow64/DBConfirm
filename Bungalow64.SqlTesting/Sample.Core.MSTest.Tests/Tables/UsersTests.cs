@@ -1,10 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Models.DataResults;
+using SQLConfirm.Core.DataResults;
 using System.Threading.Tasks;
-using Frameworks.MSTest2;
-using Models.Data;
+using SQLConfirm.Core.Data;
+using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Core.Parameters;
 
 namespace Sample.Core.MSTest.Tests.Tables
 {
@@ -26,12 +26,12 @@ namespace Sample.Core.MSTest.Tests.Tables
         public async Task Users_OneRow_OneUserReturned()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
-                new SqlParameter("FirstName", "Jamie"),
-                new SqlParameter("LastName", "Burns"),
-                new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
-                new SqlParameter("StartDate", DateTime.Parse("01-Mar-2020")),
-                new SqlParameter("NumberOfHats", 14),
-                new SqlParameter("Cost", 15.87));
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
 
             QueryResult results = await TestRunner.ExecuteTableAsync("dbo.Users");
 
@@ -49,20 +49,20 @@ namespace Sample.Core.MSTest.Tests.Tables
         public async Task Users_TwoRows_TwoUsersReturned()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
-                new SqlParameter("FirstName", "Jamie"),
-                new SqlParameter("LastName", "Burns"),
-                new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
-                new SqlParameter("StartDate", DateTime.Parse("01-Mar-2020")),
-                new SqlParameter("NumberOfHats", 14),
-                new SqlParameter("Cost", 15.87));
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
 
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
-                new SqlParameter("FirstName", "Stuart"),
-                new SqlParameter("LastName", "Burns"),
-                new SqlParameter("EmailAddress", "stuart@bungalow64.co.uk"),
-                new SqlParameter("StartDate", DateTime.Parse("01-Mar-2020")),
-                new SqlParameter("NumberOfHats", 14),
-                new SqlParameter("Cost", 15.87));
+                new SqlQueryParameter("FirstName", "Stuart"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "stuart@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
 
             QueryResult results = await TestRunner.ExecuteTableAsync("dbo.Users");
 
@@ -82,12 +82,12 @@ namespace Sample.Core.MSTest.Tests.Tables
         public async Task Users_OneRow_OneUserReturned_ByCommand()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
-                new SqlParameter("FirstName", "Jamie"),
-                new SqlParameter("LastName", "Burns"),
-                new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
-                new SqlParameter("StartDate", DateTime.Parse("01-Mar-2020")),
-                new SqlParameter("NumberOfHats", 14),
-                new SqlParameter("Cost", 15.87));
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
 
             QueryResult results = await TestRunner.ExecuteCommandAsync("SELECT * FROM dbo.Users");
 

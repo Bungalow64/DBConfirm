@@ -1,6 +1,6 @@
-﻿using Models.Data;
-using Models.Templates;
-using Models.Templates.Placeholders;
+﻿using SQLConfirm.Core.Data;
+using SQLConfirm.Core.Templates;
+using SQLConfirm.Core.Templates.Placeholders;
 
 namespace Sample.Core.MSTest.Tests.Templates
 {

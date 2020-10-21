@@ -2,11 +2,11 @@
 
   <PropertyGroup>
 	  <TargetFramework>netstandard2.0</TargetFramework>
-	  <PackageId>Bungalow64.SqlTesting.NUnit</PackageId>
+	  <PackageId>SQLConfirm.Frameworks.NUnit</PackageId>
 	  <Version>0.1.0</Version>
 	  <Authors>Bungalow64</Authors>
 	  <Company>Bungalow64 Technologies Ltd</Company>
-	  <Product>Bungalow64 SqlTesting (NUnit framework)</Product>
+	  <Product>SQLConfirm (NUnit framework)</Product>
 	  <Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
@@ -14,6 +14,8 @@ This library allows you to write SQL unit tests in code alongside all your other
 This package is the test runner for NUnit.</Description>
 	  <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;MSTest;MSTest2</PackageTags>
 	  <PackageIcon>Package\RawLogo.png</PackageIcon>
+	  <RootNamespace>SQLConfirm.Frameworks.NUnit</RootNamespace>
+	  <AssemblyName>SQLConfirm.Frameworks.NUnit</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,16 +28,17 @@ This package is the test runner for NUnit.</Description>
     <PackageReference Include="NUnit" Version="3.12.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<None Include="Package\RawLogo.png" Pack="true" Visible="true" PackagePath="Package\RawLogo.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Documentation\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Core\Core.csproj" />
+	  <ProjectReference Include="..\Databases.SqlServer\Databases.SqlServer.csproj" />
 	</ItemGroup>
 
 </Project>

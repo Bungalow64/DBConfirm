@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Frameworks.MSTest2\Frameworks.MSTest2.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
 </Project>

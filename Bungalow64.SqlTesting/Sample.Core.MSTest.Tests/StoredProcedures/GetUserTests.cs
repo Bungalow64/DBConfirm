@@ -1,13 +1,13 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sample.Core.MSTest.Tests.Templates;
 using Sample.Core.MSTest.Tests.Templates.Complex;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.DataResults;
-using Frameworks.MSTest2;
-using Models.Data;
+using SQLConfirm.Core.DataResults;
+using SQLConfirm.Core.Data;
+using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Core.Parameters;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {
@@ -17,7 +17,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_NoData_ReturnNoRows()
         {
-            QueryResult result = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            QueryResult result = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result
                 .AssertRowCount(0);
@@ -27,14 +27,14 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         public async Task GetUser_MatchEmailAddress_ReturnNames()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
-                new SqlParameter("FirstName", "Jamie"),
-                new SqlParameter("LastName", "Burns"),
-                new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
-                new SqlParameter("StartDate", DateTime.Parse("01-Mar-2020")),
-                new SqlParameter("NumberOfHats", 14),
-                new SqlParameter("Cost", 15.87));
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
 
-            QueryResult result = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            QueryResult result = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result
                 .AssertRowCount(1)
@@ -50,14 +50,14 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         public async Task GetUser_MatchEmailAddress_ReturnNamesAndCount()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
-                new SqlParameter("FirstName", "Jamie"),
-                new SqlParameter("LastName", "Burns"),
-                new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
-                new SqlParameter("StartDate", DateTime.Parse("01-Mar-2020")),
-                new SqlParameter("NumberOfHats", 14),
-                new SqlParameter("Cost", 15.87));
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result[0]
                 .AssertRowCount(1)
@@ -78,14 +78,14 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         public async Task GetUser_MatchEmailAddress_ReturnNamesAndCount_ByCommand()
         {
             await TestRunner.ExecuteCommandNoResultsAsync("EXEC dbo.AddUser @FirstName, @LastName, @EmailAddress, @StartDate, @NumberOfHats, @Cost",
-                new SqlParameter("FirstName", "Jamie"),
-                new SqlParameter("LastName", "Burns"),
-                new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"),
-                new SqlParameter("StartDate", DateTime.Parse("01-Mar-2020")),
-                new SqlParameter("NumberOfHats", 14),
-                new SqlParameter("Cost", 15.87));
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
 
-            IList<QueryResult> result = await TestRunner.ExecuteCommandMultipleDataSetAsync("EXEC dbo.GetUser @EmailAddress", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteCommandMultipleDataSetAsync("EXEC dbo.GetUser @EmailAddress", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result[0]
                 .AssertRowCount(1)
@@ -110,7 +110,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
             await TestRunner.InsertTemplateAsync(user);
             await TestRunner.InsertTemplateAsync(userA);
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result[0]
                 .AssertRowCount(1)
@@ -143,7 +143,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 { "Postcode", "HD6 4UB" }
             });
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result[0]
                 .AssertRowCount(2)
@@ -191,7 +191,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 { "Postcode", "HD6 4UB" }
             });
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "user1@b64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "user1@b64.co.uk"));
 
             result[0]
                 .AssertRowCount(2)
@@ -244,7 +244,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 }
             });
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "user1@b64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "user1@b64.co.uk"));
 
             result[0]
                 .AssertRowCount(2)
@@ -289,7 +289,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 }
             });
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "user1@b64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "user1@b64.co.uk"));
 
             result[0]
                 .AssertRowCount(2)
@@ -319,7 +319,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
             await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate());
             await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate());
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result[0]
                 .AssertRowCount(2)
@@ -348,7 +348,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
         {
             await TestRunner.InsertTemplateAsync(new UserWithTwoAddressesTemplate());
 
-            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+            IList<QueryResult> result = await TestRunner.ExecuteStoredProcedureMultipleDataSetAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
 
             result[0]
                 .AssertRowCount(2)
