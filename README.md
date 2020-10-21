@@ -54,7 +54,7 @@ In the root of your test project, add an appsettings.json file with the connecti
 }
 ```
 
-Add a new test file, and inherit from the SQLConfirmTestBase class:
+Add a new test file, and inherit from the base class for the framework (either `MSTestBase` or `NUnitBase`):
 
 ```csharp
 // For MSTest
@@ -128,7 +128,7 @@ You can also use the SQLConfirm API to query the data in tables, and run the sam
 
 The SQLConfirm API is accessed via the `TestRunner` property, on the test's base class.  Most of the API methods are awaitable, so make sure your test is marked as **async** and return a `Task`.
 
-## `CountRowsInTableAsync`
+## CountRowsInTableAsync
 
 Returns the total number of rows in the table
 
@@ -142,7 +142,7 @@ Parameters:
 Returns:
 * the total number of rows
 
-## `CountRowsInViewAsync`
+## CountRowsInViewAsync
 
 Returns the total number of rows in the view
 
@@ -156,7 +156,7 @@ Parameters:
 Returns:
 * the total number of rows
 
-## `ExecuteCommandAsync`
+## ExecuteCommandAsync
 
 Executes a command, returning a single data table
 
@@ -173,7 +173,7 @@ Parameters:
 Returns:
 * Where the command returns a data set, the first table is returned, otherwise an empty data set is returned
 
-## `ExecuteCommandMultipleDataSetAsync`
+## ExecuteCommandMultipleDataSetAsync
 
 Executes a command, returning all data tables
 
@@ -190,7 +190,7 @@ Parameters:
 Returns:
 * Returns all tables returned from the command
 
-## `ExecuteCommandNoResultsAsync`
+## ExecuteCommandNoResultsAsync
 
 Executes a command, returning no data
 
@@ -207,7 +207,7 @@ Parameters:
 Returns:
 * Nothing
 
-## `ExecuteCommandScalarAsync<T>`
+## ExecuteCommandScalarAsync
 
 Executes a command, returning a single object
 
@@ -227,7 +227,7 @@ Parameters:
 Returns:
 * Returns the object returned from the command
 
-## `ExecuteStoredProcedureMultipleDataSetAsync`
+## ExecuteStoredProcedureMultipleDataSetAsync
 
 Executes a stored procedure, returning all data tables
 
@@ -244,7 +244,7 @@ Parameters:
 Returns:
 * Returns all tables returned from the stored procedure
 
-## `ExecuteStoredProcedureNonQueryAsync`
+## ExecuteStoredProcedureNonQueryAsync
 
 Executes a stored procedure, returning nothing
 
@@ -261,7 +261,7 @@ Parameters:
 Returns:
 * Nothing
 
-## `ExecuteStoredProcedureQueryAsync`
+## ExecuteStoredProcedureQueryAsync
 
 Executes a stored procedure, returning a single data table
 
@@ -278,7 +278,7 @@ Parameters:
 Returns:
 * Where the stored procedure returns a data set, the first table is returned, otherwise an empty data set is returned
 
-## `ExecuteStoredProcedureScalarAsync<T>`
+## ExecuteStoredProcedureScalarAsync
 
 Executes a stored procedure, returning a single object
 
@@ -298,7 +298,7 @@ Parameters:
 Returns:
 * Returns the object returned from the stored procedure
 
-## `ExecuteTableAsync`
+## ExecuteTableAsync
 
 Returns all data for a specific table
 
@@ -312,7 +312,7 @@ Parameters:
 Returns:
 * Returns all columns and values found
 
-## `ExecuteViewAsync`
+## ExecuteViewAsync
 
 Returns all data for a specific view
 
@@ -326,7 +326,7 @@ Parameters:
 Returns:
 * Returns all columns and values found
 
-## `InsertDataAsync`
+## InsertDataAsync
 
 Inserts data into a table.
 
@@ -347,7 +347,7 @@ Parameters:
 Returns:
 * Returns the data inserted, including the identity value (if applicable)
 
-## `InsertTemplateAsync<T>` (default values)
+## InsertTemplateAsync (default values)
 
 Inserts data based on the default values defined in the template
 
@@ -363,7 +363,7 @@ Types:
 Returns:
 * Returns the template object, including the identity value (if applicable)
 
-## `InsertTemplateAsync<T>`
+## InsertTemplateAsync
 
 Inserts data based on the supplied template
 
@@ -391,7 +391,7 @@ Returns:
 A set of data (columns and rows) is returned in a `QueryResult` object.  This object has a number of properties and assertion methods which can be used to test the data.  Alternatively, the data itself can be accessed vua the `RawData` property, to return the data as a `DataTable`.
 
 
-## `TotalRows`
+## TotalRows
 
 The total number of rows in the data set
 
@@ -402,7 +402,7 @@ int TotalRows { get; }
 Returns:
 * Returns the total number of rows in the data set
 
-## `TotalColumns`
+## TotalColumns
 
 The total number of columns in the data set
 
@@ -413,7 +413,7 @@ int TotalColumns { get; }
 Returns:
 * Returns the total number of columns in the data set
 
-## `ColumnNames`
+## ColumnNames
 
 The collection of columns in the data set, in the order they appear in the data set
 
@@ -424,7 +424,7 @@ ICollection<string> ColumnNames { get; }
 Returns:
 * Returns the collection of columns in the data set, in the order they appear in the data set
 
-## `AssertRowCount`
+## AssertRowCount
 
 Asserts the number of rows
 
@@ -438,7 +438,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertRowCount`
+## AssertRowCount
 
 Asserts the number of columns
 
@@ -452,7 +452,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertColumnExists`
+## AssertColumnExists
 
 Asserts that a specific column exists in the data set
 
@@ -466,7 +466,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertColumnNotExists`
+## AssertColumnNotExists
 
 Asserts that a specific column does not exist in the data set
 
@@ -480,7 +480,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertColumnsExist`
+## AssertColumnsExist
 
 Asserts that a number of columns all exist in the data set
 
@@ -494,7 +494,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertColumnsNotExist`
+## AssertColumnsNotExist
 
 Asserts that a number of columns all do not exist in the data set
 
@@ -508,7 +508,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertRowPositionExists`
+## AssertRowPositionExists
 
 Asserts that a row exists at a specific position (zero-based)
 
@@ -522,7 +522,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertValue`
+## AssertValue
 
 Asserts that a specific value exists for the given row and column.  Also asserts that the row and column exists
 
@@ -538,7 +538,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `ValidateRow`
+## ValidateRow
 
 Returns a `RowResult` object, representing the specific row on which further assertions can be made.  Validates that the row number exists in the data set
 
@@ -552,7 +552,7 @@ Parameters:
 Returns:
 * Returns the `RowResult` for the row
 
-## `AssertRowValues`
+## AssertRowValues
 
 Asserts that the row at the given position matches the expected data.  Also asserts that all columns in the expected data exist
 
@@ -567,7 +567,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertRowExists`
+## AssertRowExists
 
 Asserts that at least one row matches the expected data.  Also asserts that all columns in the expected data exist
 
@@ -581,7 +581,7 @@ Parameters:
 Returns:
 * Returns the same `QueryResult` object
 
-## `AssertRowDoesNotExist`
+## AssertRowDoesNotExist
 
 Asserts that no rows match the supplied data.  Also asserts that all columns in the supplied data exist
 
@@ -600,7 +600,7 @@ Returns:
 
 A single row of values is returned in a `RowResult` object, accessed via the `QueryResult.ValidateRow` method.  This object has a number of assertion methods which can be used to test the data in that specific row.
 
-## `AssertValue`
+## AssertValue
 
 Asserts that a specific value exists for the given column.  Also asserts that the column exists
 
@@ -615,7 +615,7 @@ Parameters:
 Returns:
 * Returns the same `RowResult` object
 
-## `AssertValues`
+## AssertValues
 
 Asserts that the row matches the expected data.  Also asserts that all columns in the expected data exist
 
@@ -629,7 +629,7 @@ Parameters:
 Returns:
 * Returns the same `RowResult` object
 
-## `ValidateRow`
+## ValidateRow
 
 Returns a `RowResult` object, representing the specific row on which further assertions can be made.  Validates that the row number exists in the data set
 
@@ -648,7 +648,7 @@ Returns:
 
 A single value is returned in a `ScalarResult<T>` object, accessed via a scalar method in `TestRunner`.  This object has an assertion method which can be used to test the value.
 
-## `AssertValue`
+## AssertValue
 
 Asserts that the value matches the expected value
 
