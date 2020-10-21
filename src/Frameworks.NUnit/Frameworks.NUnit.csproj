@@ -19,7 +19,7 @@ This package is the test runner for NUnit.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\Bungalow64.SqlTesting\Frameworks.NUnit\Documentation\Frameworks.NUnit.xml</DocumentationFile>
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.NUnit\Documentation\SQLConfirm.Frameworks.NUnit.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

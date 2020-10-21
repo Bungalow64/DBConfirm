@@ -18,7 +18,7 @@ This package contains the data access to Microsoft SQL Server.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\Bungalow64.SqlTesting\Databases.SqlServer\Documentation\Bungalow64.SqlConfirm.Databases.SqlServer.xml</DocumentationFile>
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Databases.SQLServer\Documentation\SQLConfirm.Databases.SQLServer.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

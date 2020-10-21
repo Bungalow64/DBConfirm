@@ -17,7 +17,7 @@ This library allows you to write SQL unit tests in code alongside all your other
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\Bungalow64.SqlTesting\Packages.SQLServer.MSTest\Documentation\Packages.SQLServer.MSTest.xml</DocumentationFile>
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Packages.SQLServer.MSTest\Documentation\SQLConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

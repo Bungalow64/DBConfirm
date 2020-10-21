@@ -20,7 +20,7 @@ This package is the test runner for MSTest.
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DocumentationFile>C:\Git\Bungalow64.SqlTesting\Bungalow64.SqlTesting\Frameworks.MSTest\Documentation\Frameworks.MSTest.xml</DocumentationFile>
+	  <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.MSTest\Documentation\SQLConfirm.Frameworks.MSTest.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
