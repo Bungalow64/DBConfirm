@@ -2,7 +2,7 @@
 using SQLConfirm.Core.DataResults;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using System.Data;
 using System.Linq;
 
@@ -13,7 +13,7 @@ namespace SqlConfirm.Core.Tests.DataResults
     {
         #region Setup
 
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
 
         private DataTable CreateDefaultTable()
         {

@@ -1,7 +1,7 @@
 ﻿using SQLConfirm.Core.Comparisons.Strings;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using System;
 using System.Text.RegularExpressions;
 
@@ -10,7 +10,7 @@ namespace SqlConfirm.Core.Tests.Strings
     [TestFixture]
     public class MatchRegexTests
     {
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
 
         [Test]
         public void MatchRegex_Ctor_WithRegex_StoreRegex()

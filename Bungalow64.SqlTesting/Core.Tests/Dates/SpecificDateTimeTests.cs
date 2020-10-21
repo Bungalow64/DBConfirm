@@ -1,7 +1,7 @@
 ﻿using SQLConfirm.Core.Comparisons.Dates;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -11,7 +11,7 @@ namespace SqlConfirm.Core.Tests.Dates
     [TestFixture]
     public class SpecificDateTimeTests
     {
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
 
         [OneTimeSetUp]
         public void Setup()

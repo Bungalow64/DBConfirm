@@ -3,7 +3,7 @@ using SQLConfirm.Core.Factories.Abstract;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using Moq;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -13,7 +13,7 @@ namespace SqlConfirm.Core.Tests.Dates
     [TestFixture]
     public class UtcNowDateTests
     {
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
         private Mock<IDateUtcNowFactory> _dateUtcNowFactoryMock;
 
         [OneTimeSetUp]

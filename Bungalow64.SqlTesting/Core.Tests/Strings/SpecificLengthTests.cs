@@ -1,7 +1,7 @@
 ﻿using SQLConfirm.Core.Comparisons.Strings;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using System;
 
 namespace SqlConfirm.Core.Tests.Strings
@@ -9,7 +9,7 @@ namespace SqlConfirm.Core.Tests.Strings
     [TestFixture]
     public class SpecificLengthTests
     {
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
 
         [Test]
         public void SpecificLength_Ctor_SetExpectedLength_LengthSet()

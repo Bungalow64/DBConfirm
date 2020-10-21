@@ -5,6 +5,7 @@ using System;
 using Models.DataResults;
 using System.Threading.Tasks;
 using Frameworks.MSTest2;
+using Models.Data;
 
 namespace Sample.Core.MSTest.Nuget.Tests.Views
 {

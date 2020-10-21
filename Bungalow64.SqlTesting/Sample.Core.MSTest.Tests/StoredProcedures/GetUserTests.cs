@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SQLConfirm.Core.DataResults;
 using SQLConfirm.Core.Data;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using SQLConfirm.Core.Parameters;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures

@@ -2,7 +2,7 @@
 using SQLConfirm.Core.DataResults;
 using System.Threading.Tasks;
 using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 
 namespace Sample.Core.MSTest.Tests.Views
 {

@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SQLConfirm.Frameworks.MSTest2
+namespace SQLConfirm.Frameworks.MSTest
 {
     /// <summary>
-    /// The test framework using MSTest2
+    /// The test framework using MSTest
     /// </summary>
-    public class MSTest2Framework : ITestFramework
+    public class MSTestFramework : ITestFramework
     {
         /// <inheritdoc/>
         public void AreEqual(object expected, object actual, string message, params string[] parameters)

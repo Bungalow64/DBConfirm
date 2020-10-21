@@ -1,14 +1,14 @@
 ﻿using SQLConfirm.Core.DataResults;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 
 namespace SqlConfirm.Core.Tests.DataResults
 {
     [TestFixture]
     public class ScalarResultTests
     {
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
 
         [Test]
         public void ScalarResult_Ctor_ValueSet()

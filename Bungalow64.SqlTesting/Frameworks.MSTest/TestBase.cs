@@ -5,10 +5,10 @@ using SQLConfirm.Core.Runners.Abstract;
 using SQLConfirm.Core.Factories.Abstract;
 using SQLConfirm.Databases.SQLServer.Factories;
 
-namespace SQLConfirm.Frameworks.MSTest2
+namespace SQLConfirm.Frameworks.MSTest
 {
     /// <summary>
-    /// The abstract base class for test classes using MSTest2
+    /// The abstract base class for test classes using MSTest
     /// </summary>
     public abstract class TestBase : BaseTestBase
     {
@@ -18,9 +18,9 @@ namespace SQLConfirm.Frameworks.MSTest2
         protected static TestContext Context { get; set; }
 
         /// <summary>
-        /// Gets and sets the <see cref="ITestFramework"/> to be used for assertions, by default using <see cref="MSTest2Framework"/> 
+        /// Gets and sets the <see cref="ITestFramework"/> to be used for assertions, by default using <see cref="MSTestFramework"/> 
         /// </summary>
-        protected override ITestFramework TestFramework { get; set; } = new MSTest2Framework();
+        protected override ITestFramework TestFramework { get; set; } = new MSTestFramework();
 
         /// <inheritdoc/>
         protected override ITestRunnerFactory TestRunnerFactory { get; set; } = new TestRunnerFactory();

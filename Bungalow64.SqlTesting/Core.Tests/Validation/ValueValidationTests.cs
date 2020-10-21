@@ -4,7 +4,7 @@ using SQLConfirm.Core.TestFrameworks.Abstract;
 using SQLConfirm.Core.Validation;
 using Moq;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using System;
 
 namespace SqlConfirm.Core.Tests.Validation
@@ -12,7 +12,7 @@ namespace SqlConfirm.Core.Tests.Validation
     [TestFixture]
     public class ValueValidationTests
     {
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
 
         [TestCase(123, 123)]
         [TestCase(123.5, 123.5)]

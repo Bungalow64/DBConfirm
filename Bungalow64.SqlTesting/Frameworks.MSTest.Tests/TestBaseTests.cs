@@ -1,12 +1,12 @@
 using SQLConfirm.Core.Factories.Abstract;
-using Frameworks.MSTest2.Tests.TestHelpers;
+using Frameworks.MSTest.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using SQLConfirm.Core.Runners.Abstract;
 
-namespace Frameworks.MSTest2.Tests
+namespace Frameworks.MSTest.Tests
 {
     [TestClass]
     public class TestBaseTests

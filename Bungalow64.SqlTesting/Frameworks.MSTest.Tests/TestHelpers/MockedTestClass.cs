@@ -1,8 +1,8 @@
 ﻿using SQLConfirm.Core.Factories.Abstract;
 using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 
-namespace Frameworks.MSTest2.Tests.TestHelpers
+namespace Frameworks.MSTest.Tests.TestHelpers
 {
     public class MockedTestClass : TestBase
     {

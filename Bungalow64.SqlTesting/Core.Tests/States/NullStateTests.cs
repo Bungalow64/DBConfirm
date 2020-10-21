@@ -1,7 +1,7 @@
 ﻿using SQLConfirm.Core.Comparisons.States;
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest2;
+using SQLConfirm.Frameworks.MSTest;
 using System;
 
 namespace SqlConfirm.Core.Tests.States
@@ -9,7 +9,7 @@ namespace SqlConfirm.Core.Tests.States
     [TestFixture]
     public class NullStateTests
     {
-        private readonly ITestFramework _testFramework = new MSTest2Framework();
+        private readonly ITestFramework _testFramework = new MSTestFramework();
 
         [Test]
         public void NullState_HasValue_Error()
