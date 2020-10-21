@@ -9,37 +9,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Tests", "4.Tests", "{2C61
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.SampleSolutions", "5.SampleSolutions", "{FC314E9D-E36F-460C-949E-9556D2D3451E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Tests", "Sample.Core.MSTest.Tests\Sample.Core.MSTest.Tests.csproj", "{219A1871-A079-4AE9-BE52-00088B9C5D7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Tests", "tests\Sample.Core.MSTest.Tests\Sample.Core.MSTest.Tests.csproj", "{219A1871-A079-4AE9-BE52-00088B9C5D7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.MSTest", "Frameworks.MSTest\Frameworks.MSTest.csproj", "{FB4326A8-C542-416B-9CCF-72026E00868A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.MSTest", "src\Frameworks.MSTest\Frameworks.MSTest.csproj", "{FB4326A8-C542-416B-9CCF-72026E00868A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.MSTest.Tests", "Frameworks.MSTest.Tests\Frameworks.MSTest.Tests.csproj", "{7FFB0F7D-5408-4990-9100-E0DFE4835F01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.MSTest.Tests", "tests\Frameworks.MSTest.Tests\Frameworks.MSTest.Tests.csproj", "{7FFB0F7D-5408-4990-9100-E0DFE4835F01}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.NUnit", "Frameworks.NUnit\Frameworks.NUnit.csproj", "{B7B91F0A-B06A-48B5-96BF-8E55312B9CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.NUnit", "src\Frameworks.NUnit\Frameworks.NUnit.csproj", "{B7B91F0A-B06A-48B5-96BF-8E55312B9CCE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.NUnit.Tests", "Sample.Core.NUnit.Tests\Sample.Core.NUnit.Tests.csproj", "{720FB59B-288C-4809-BAC7-E839D87190FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.NUnit.Tests", "tests\Sample.Core.NUnit.Tests\Sample.Core.NUnit.Tests.csproj", "{720FB59B-288C-4809-BAC7-E839D87190FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Frameworks", "2.Frameworks", "{CDC9E680-83AA-4670-AF5D-FD3504EEADB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.SampleSolutionsNuget", "6.SampleSolutionsNuget", "{B5A41050-89AD-40F3-8220-116D1042A0A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Nuget.Tests", "Sample.Core.MSTest.Nuget.Tests\Sample.Core.MSTest.Nuget.Tests.csproj", "{F21804F3-CC3A-4F18-9EBE-D947D40193D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Nuget.Tests", "tests\Sample.Core.MSTest.Nuget.Tests\Sample.Core.MSTest.Nuget.Tests.csproj", "{F21804F3-CC3A-4F18-9EBE-D947D40193D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Databases", "2.Databases", "{414B269E-6A51-4800-B92B-0271C8139441}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Databases.SQLServer", "Databases.SQLServer\Databases.SQLServer.csproj", "{0252E888-A388-4BFC-895C-34A0F614E0ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Databases.SQLServer", "src\Databases.SQLServer\Databases.SQLServer.csproj", "{0252E888-A388-4BFC-895C-34A0F614E0ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{954838CF-436B-4BD9-906B-8B93772ACBA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{954838CF-436B-4BD9-906B-8B93772ACBA6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "Core.Tests\Core.Tests.csproj", "{D323A111-C3F9-4C06-9585-76DB8F7DA8CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "tests\Core.Tests\Core.Tests.csproj", "{D323A111-C3F9-4C06-9585-76DB8F7DA8CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Databases.SQLServer.Tests", "Databases.SQLServer.Tests\Databases.SQLServer.Tests.csproj", "{D4E0674D-AFC5-4CA7-9321-F29AFADB6626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Databases.SQLServer.Tests", "tests\Databases.SQLServer.Tests\Databases.SQLServer.Tests.csproj", "{D4E0674D-AFC5-4CA7-9321-F29AFADB6626}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Packages", "3.Packages", "{2638F6A0-CC65-46E8-8FD6-0E50ECF6242C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.SQLServer.MSTest", "Packages.SQLServer.MSTest\Packages.SQLServer.MSTest.csproj", "{E71810C3-A47F-4BDD-A73D-CCC930345038}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.SQLServer.MSTest", "src\Packages.SQLServer.MSTest\Packages.SQLServer.MSTest.csproj", "{E71810C3-A47F-4BDD-A73D-CCC930345038}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.SQLServer.NUnit", "Packages.SQLServer.NUnit\Packages.SQLServer.NUnit.csproj", "{B6C38BFC-8B07-462B-A94D-45EE299A4E8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.SQLServer.NUnit", "src\Packages.SQLServer.NUnit\Packages.SQLServer.NUnit.csproj", "{B6C38BFC-8B07-462B-A94D-45EE299A4E8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
