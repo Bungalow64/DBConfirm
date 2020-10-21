@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SQLConfirm.Frameworks.NUnit</name>
+    </assembly>
+    <members>
+        <member name="T:SQLConfirm.Frameworks.NUnit.NUnitFramework">
+            <summary>
+            The test framework using NUnit
+            </summary>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.AreEqual(System.Object,System.Object,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.AreNotEqual(System.Object,System.Object,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.Contains``1(System.Collections.Generic.List{``0},``0,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.DoesNotContain``1(System.Collections.Generic.List{``0},``0,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.Matches(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.DoesNotMatch(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.Fail(System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.IsInstanceOfType(System.Object,System.Type,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFramework.IsTrue(System.Boolean,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:SQLConfirm.Frameworks.NUnit.NUnitFrameworkBase">
+            <summary>
+            The abstract base class for test classes using NUnit
+            </summary>
+        </member>
+        <member name="P:SQLConfirm.Frameworks.NUnit.NUnitFrameworkBase.TestFramework">
+            <summary>
+            Gets and sets the <see cref="T:SQLConfirm.Core.TestFrameworks.Abstract.ITestFramework"/> to be used for assertions, by default using <see cref="T:SQLConfirm.Frameworks.NUnit.NUnitFramework"/> 
+            </summary>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFrameworkBase.GetParameter(System.String)">
+            <summary>
+            Gets the value of the parameter from <see cref="T:NUnit.Framework.TestContext"/>.  If the parameter does not exist, null is returned
+            </summary>
+            <param name="parameterName">The name of the parameter</param>
+            <returns>Returns the value of the parameter, or null if the parameter is not found</returns>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFrameworkBase.Init">
+            <summary>
+            The initialisation called before each test, to set up the <see cref="T:SQLConfirm.Core.Runners.Abstract.ITestRunner"/> for the test, and making the initial connection to the target database
+            </summary>
+            <returns>A task representing the asynchronous operation</returns>
+        </member>
+        <member name="M:SQLConfirm.Frameworks.NUnit.NUnitFrameworkBase.Cleanup">
+            <summary>
+            The cleaup called after each test, to dispose the current instance of <see cref="T:SQLConfirm.Core.Runners.Abstract.ITestRunner"/>, rolling back the transaction and closing the connection
+            </summary>
+        </member>
+    </members>
+</doc>

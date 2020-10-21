@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>SQLConfirm.Packages.SQLServer.MSTest</AssemblyName>
+    <RootNamespace>SQLConfirm.Packages.SQLServer.MSTest</RootNamespace>
+    <PackageId>SQLConfirm.Packages.SQLServer.MSTest</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Bungalow64</Authors>
+    <Company>Bungalow64 Technologies Ltd</Company>
+    <Product>SQLConfirm (SQLServer/MSTest package)</Product>
+    <Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases, using MSTest as the test framework.
+
+This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.</Description>
+    <PackageIcon>RawLogo.png</PackageIcon>
+    <PackageTags>SQL;SQL-Server;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;MSTest</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Packages.SQLServer.MSTest\Documentation\SQLConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Databases.SQLServer\Databases.SQLServer.csproj" />
+    <ProjectReference Include="..\Frameworks.MSTest\Frameworks.MSTest.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Package\RawLogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
