@@ -3,7 +3,7 @@ using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
 using SQLConfirm.Core.Runners.Abstract;
 using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Databases.SqlServer.Factories;
+using SQLConfirm.Databases.SQLServer.Factories;
 
 namespace SQLConfirm.Frameworks.NUnit
 {

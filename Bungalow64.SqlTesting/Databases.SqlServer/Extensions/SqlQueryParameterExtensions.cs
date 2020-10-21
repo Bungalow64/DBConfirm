@@ -6,7 +6,7 @@ using SQLConfirm.Core.Templates.Placeholders;
 using System;
 using System.Linq;
 
-namespace SQLConfirm.Databases.SqlServer.Extensions
+namespace SQLConfirm.Databases.SQLServer.Extensions
 {
     /// <summary>
     /// Defines extensions to <see cref="SqlQueryParameter"/>

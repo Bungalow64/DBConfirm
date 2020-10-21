@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SQLConfirm.Databases.SqlServer.Extensions
+namespace SQLConfirm.Databases.SQLServer.Extensions
 {
     /// <summary>
     /// Defines extensions to <see cref="IDictionary{TKey, TValue}"/>

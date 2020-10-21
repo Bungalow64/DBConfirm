@@ -1,13 +1,13 @@
 ﻿using Microsoft.Data.SqlClient;
 using NUnit.Framework;
 using System.Collections.Generic;
-using SQLConfirm.Databases.SqlServer.Extensions;
+using SQLConfirm.Databases.SQLServer.Extensions;
 using SQLConfirm.Core.Templates.Placeholders;
 using SQLConfirm.Core.Exceptions;
 using SQLConfirm.Core.Templates;
 using System;
 
-namespace SQLConfirm.Databases.SqlServer.Tests.Extensions
+namespace SQLConfirm.Databases.SQLServer.Tests.Extensions
 {
     [TestFixture]
     public class IDictionaryExtensionsTests

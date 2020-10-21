@@ -2,19 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>SQLConfirm.Databases.SqlServer</AssemblyName>
+    <AssemblyName>SQLConfirm.Databases.SQLServer</AssemblyName>
     <Version>0.1.0</Version>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
     <Authors>Bungalow64</Authors>
     <Company>Bungalow64 Technologies Ltd</Company>
-    <Product>SQLConfirm (Sql Server database)</Product>
+    <Product>SQLConfirm (SQL Server database)</Product>
     <Description>A testing library written to easily add unit tests to cover behaviour held in SQL databases.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
 
 This package contains the data access to Microsoft SQL Server.</Description>
     <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;SqlConfirm</PackageTags>
-    <RootNamespace>SQLConfirm.Databases.SqlServer</RootNamespace>
+    <RootNamespace>SQLConfirm.Databases.SQLServer</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

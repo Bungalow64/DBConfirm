@@ -39,7 +39,7 @@ This package is the test runner for MSTest2.
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Core\Core.csproj" />
-	  <ProjectReference Include="..\Databases.SqlServer\Databases.SqlServer.csproj" />
+	  <ProjectReference Include="..\Databases.SqlServer\Databases.SQLServer.csproj" />
 	</ItemGroup>
 
 </Project>

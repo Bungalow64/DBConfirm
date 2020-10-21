@@ -1,8 +1,8 @@
 ﻿using SQLConfirm.Core.Factories.Abstract;
 using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Databases.SqlServer.Runners;
+using SQLConfirm.Databases.SQLServer.Runners;
 
-namespace SQLConfirm.Databases.SqlServer.Factories
+namespace SQLConfirm.Databases.SQLServer.Factories
 {
     /// <summary>
     /// The default <see cref="ITestRunner"/> factory, using <see cref="TestRunner"/>

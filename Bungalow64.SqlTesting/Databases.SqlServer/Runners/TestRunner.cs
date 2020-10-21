@@ -11,10 +11,10 @@ using SQLConfirm.Core.TestFrameworks.Abstract;
 using SQLConfirm.Core.Templates.Abstract;
 using SQLConfirm.Core.Runners.Abstract;
 using SQLConfirm.Core.Data;
-using SQLConfirm.Databases.SqlServer.Extensions;
 using SQLConfirm.Core.Parameters;
+using SQLConfirm.Databases.SQLServer.Extensions;
 
-namespace SQLConfirm.Databases.SqlServer.Runners
+namespace SQLConfirm.Databases.SQLServer.Runners
 {
     /// <summary>
     /// The the standard test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
