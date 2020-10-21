@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Frameworks.MSTest\Frameworks.MSTest.csproj" />
+    <ProjectReference Include="..\Packages.SQLServer.MSTest\Packages.SQLServer.MSTest.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Sample.Core.MSTest.Tests.Templates;
 using Sample.Core.MSTest.Tests.Templates.Complex;
 using SQLConfirm.Core.Data;
-using SQLConfirm.Frameworks.MSTest;
 using SQLConfirm.Core.Parameters;
+using SQLConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.Views
 {
     [TestClass]
-    public class AllUsersTests : TestBase
+    public class AllUsersTests : MSTestBase
     {
         [TestMethod]
         public async Task AllUsers_NoData_NothingReturned()

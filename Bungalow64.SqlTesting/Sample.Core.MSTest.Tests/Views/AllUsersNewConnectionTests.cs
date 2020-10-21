@@ -2,12 +2,12 @@
 using SQLConfirm.Core.DataResults;
 using System.Threading.Tasks;
 using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Frameworks.MSTest;
+using SQLConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.Views
 {
     [TestClass]
-    public class AllUsersNewConnectionTests : TestBase
+    public class AllUsersNewConnectionTests : MSTestBase
     {
         [TestMethod]
         public async Task AllUsersNewConnection_NoData_NothingReturned()

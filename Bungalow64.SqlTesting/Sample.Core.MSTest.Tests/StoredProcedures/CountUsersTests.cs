@@ -5,13 +5,13 @@ using SQLConfirm.Core.DataResults;
 using System.Threading.Tasks;
 using SQLConfirm.Core.Comparisons;
 using SQLConfirm.Core.Data;
-using SQLConfirm.Frameworks.MSTest;
 using SQLConfirm.Core.Parameters;
+using SQLConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {
     [TestClass]
-    public class CountUsersTests : TestBase
+    public class CountUsersTests : MSTestBase
     {
         [TestMethod]
         public async Task CountUsers_NoData_ReturnNoRows()

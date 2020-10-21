@@ -2,23 +2,18 @@
 using SQLConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
 using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Databases.SQLServer.Factories;
 
 namespace SQLConfirm.Frameworks.NUnit
 {
     /// <summary>
     /// The abstract base class for test classes using NUnit
     /// </summary>
-    public abstract class TestBase : BaseTestBase
+    public abstract class NUnitFrameworkBase : BaseTestBase
     {
         /// <summary>
         /// Gets and sets the <see cref="ITestFramework"/> to be used for assertions, by default using <see cref="NUnitFramework"/> 
         /// </summary>
         protected override ITestFramework TestFramework { get; set; } = new NUnitFramework();
-
-        /// <inheritdoc/>
-        protected override ITestRunnerFactory TestRunnerFactory { get; set; } = new TestRunnerFactory();
 
         /// <summary>
         /// Gets the value of the parameter from <see cref="TestContext"/>.  If the parameter does not exist, null is returned

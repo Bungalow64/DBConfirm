@@ -1,10 +1,10 @@
 ﻿using SQLConfirm.Core.Factories.Abstract;
 using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Frameworks.MSTest;
+using SQLConfirm.Packages.SQLServer.MSTest;
 
 namespace Frameworks.MSTest.Tests.TestHelpers
 {
-    public class MockedTestClass : TestBase
+    public class MockedTestClass : MSTestBase
     {
         public ITestRunner ExposedTestRunner => TestRunner;
 

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Frameworks.NUnit\Frameworks.NUnit.csproj" />
+    <ProjectReference Include="..\Packages.SQLServer.NUnit\Packages.SQLServer.NUnit.csproj" />
   </ItemGroup>
 
 </Project>

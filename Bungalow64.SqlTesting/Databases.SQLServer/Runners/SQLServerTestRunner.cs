@@ -17,9 +17,9 @@ using SQLConfirm.Databases.SQLServer.Extensions;
 namespace SQLConfirm.Databases.SQLServer.Runners
 {
     /// <summary>
-    /// The the standard test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
+    /// The SQL Server test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
     /// </summary>
-    public class TestRunner : ITestRunner
+    public class SQLServerTestRunner : ITestRunner
     {
         #region Setup
 
@@ -35,7 +35,7 @@ namespace SQLConfirm.Databases.SQLServer.Runners
         /// Constructor, setting the connection string of the target database
         /// </summary>
         /// <param name="connectionString">The connection string to use</param>
-        public TestRunner(string connectionString)
+        public SQLServerTestRunner(string connectionString)
         {
             ConnectionString = connectionString;
         }

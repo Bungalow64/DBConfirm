@@ -1,15 +1,15 @@
 ﻿using System;
 using SQLConfirm.Core.DataResults;
 using System.Threading.Tasks;
-using SQLConfirm.Frameworks.NUnit;
 using NUnit.Framework;
 using SQLConfirm.Core.Data;
 using SQLConfirm.Core.Parameters;
+using SQLConfirm.Packages.SQLServer.NUnit;
 
 namespace Sample.Core.NUnit.Tests.Views
 {
     [TestFixture]
-    public class AllUsersTests : TestBase
+    public class AllUsersTests : NUnitBase
     {
         [Test]
         public async Task AllUsers_NoData_NothingReturned()

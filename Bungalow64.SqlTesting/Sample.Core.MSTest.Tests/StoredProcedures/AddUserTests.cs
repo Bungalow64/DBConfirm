@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using SQLConfirm.Core.DataResults;
 using SQLConfirm.Core.Comparisons;
 using SQLConfirm.Core.Data;
-using SQLConfirm.Frameworks.MSTest;
 using SQLConfirm.Core.Parameters;
+using SQLConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {
     [TestClass]
-    public class AddUserTests : TestBase
+    public class AddUserTests : MSTestBase
     {
         [TestMethod]
         public async Task AddUser_ValidData_UserAdded()

@@ -3,13 +3,13 @@ using System;
 using SQLConfirm.Core.DataResults;
 using System.Threading.Tasks;
 using SQLConfirm.Core.Data;
-using SQLConfirm.Frameworks.MSTest;
 using SQLConfirm.Core.Parameters;
+using SQLConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.Tables
 {
     [TestClass]
-    public class UsersTests : TestBase
+    public class UsersTests : MSTestBase
     {
         [TestMethod]
         public async Task Users_NoData_NothingReturned()
