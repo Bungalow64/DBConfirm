@@ -15,6 +15,12 @@ namespace SQLConfirm.Core.Templates
         /// <inheritdoc/>
         public void RecordInsertion() => IsInserted = true;
 
+        /// <summary>
+        /// Generates the next identity for the test
+        /// </summary>
+        /// <returns>Returns the next identity value</returns>
+        protected int GetNextIdentity() => CustomIdentityService.GenerateNextIdentity();
+
         /// <inheritdoc/>
         public abstract Task InsertAsync(ITestRunner testRunner);
     }

@@ -231,5 +231,11 @@ namespace SQLConfirm.Core.Runners.Abstract
         /// <returns>Returns the template object, including the identity value (if applicable)</returns>
         /// <exception cref="System.Data.Common.DbException"></exception>
         Task<ITemplate> InsertTemplateAsync(ITemplate template);
+
+        /// <summary>
+        /// Generates the next identity, unique to the test
+        /// </summary>
+        /// <returns>Returns the next identity value</returns>
+        int GenerateNextIdentity();
     }
 }

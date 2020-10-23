@@ -371,5 +371,34 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 .AssertColumnsExist("TotalUsers")
                 .AssertValue(0, "TotalUsers", 1);
         }
+
+        [TestMethod]
+        public async Task GetUser_ComplexTemplate_SetIdsDirectly()
+        {
+            CountriesTemplate country = new CountriesTemplate()
+                .WithCountryCode($"Country{TestRunner.GenerateNextIdentity()}");
+
+            UserWithAddressAndCountryTemplate template1 = await TestRunner.InsertTemplateAsync(new UserWithAddressAndCountryTemplate
+            {
+                User = new UserTemplate().WithId(1001).WithEmailAddress("jamie@bungalow64.co.uk"),
+                Country = country
+            });
+
+            await TestRunner.InsertTemplateAsync(new UserWithAddressAndCountryTemplate
+            {
+                User = new UserTemplate().WithId(1002).WithEmailAddress("jimmy@bungalow64.co.uk"),
+                Country = country
+            });
+
+            QueryResult result = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.GetUser", new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"));
+
+            result
+                .AssertRowCount(1)
+                .AssertRowValues(0, new DataSetRow
+                {
+                    { "FirstName", template1.User.DefaultData["FirstName"] },
+                    { "Postcode", "HD6 3UB" }
+                });
+        }
     }
 }
