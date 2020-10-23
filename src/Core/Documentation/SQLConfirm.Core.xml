@@ -975,6 +975,12 @@
             <returns>Returns the template object, including the identity value (if applicable)</returns>
             <exception cref="T:System.Data.Common.DbException"></exception>
         </member>
+        <member name="M:SQLConfirm.Core.Runners.Abstract.ITestRunner.GenerateNextIdentity">
+            <summary>
+            Generates the next identity, unique to the test
+            </summary>
+            <returns>Returns the next identity value</returns>
+        </member>
         <member name="T:SQLConfirm.Core.Templates.Abstract.IResolver">
             <summary>
             The interface for a deferred action
@@ -1043,6 +1049,12 @@
         </member>
         <member name="M:SQLConfirm.Core.Templates.BaseComplexTemplate.RecordInsertion">
             <inheritdoc/>
+        </member>
+        <member name="M:SQLConfirm.Core.Templates.BaseComplexTemplate.GetNextIdentity">
+            <summary>
+            Generates the next identity for the test
+            </summary>
+            <returns>Returns the next identity value</returns>
         </member>
         <member name="M:SQLConfirm.Core.Templates.BaseComplexTemplate.InsertAsync(SQLConfirm.Core.Runners.Abstract.ITestRunner)">
             <inheritdoc/>
@@ -1113,6 +1125,17 @@
         </member>
         <member name="M:SQLConfirm.Core.Templates.BaseSimpleTemplate`1.InsertAsync(SQLConfirm.Core.Runners.Abstract.ITestRunner)">
             <inheritdoc/>
+        </member>
+        <member name="T:SQLConfirm.Core.Templates.CustomIdentityService">
+            <summary>
+            A service to generate a unique identity for the test
+            </summary>
+        </member>
+        <member name="M:SQLConfirm.Core.Templates.CustomIdentityService.GenerateNextIdentity">
+            <summary>
+            Generates the next identity
+            </summary>
+            <returns>Returns the next identity value</returns>
         </member>
         <member name="T:SQLConfirm.Core.Templates.Placeholders.Placeholders">
             <summary>

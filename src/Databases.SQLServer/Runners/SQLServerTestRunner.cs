@@ -13,6 +13,7 @@ using SQLConfirm.Core.Runners.Abstract;
 using SQLConfirm.Core.Data;
 using SQLConfirm.Core.Parameters;
 using SQLConfirm.Databases.SQLServer.Extensions;
+using SQLConfirm.Core.Templates;
 
 namespace SQLConfirm.Databases.SQLServer.Runners
 {
@@ -452,6 +453,9 @@ namespace SQLConfirm.Databases.SQLServer.Runners
 
             return data;
         }
+
+        /// <inheritdoc/>
+        public int GenerateNextIdentity() => CustomIdentityService.GenerateNextIdentity();
 
         private static string DelimitColumnName(string name)
         {

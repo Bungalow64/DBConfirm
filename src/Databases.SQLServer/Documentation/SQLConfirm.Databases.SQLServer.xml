@@ -129,6 +129,9 @@
         <member name="M:SQLConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.InsertDataAsync(System.String,SQLConfirm.Core.Data.DataSetRow,SQLConfirm.Core.Data.DataSetRow)">
             <inheritdoc/>
         </member>
+        <member name="M:SQLConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.GenerateNextIdentity">
+            <inheritdoc/>
+        </member>
         <member name="M:SQLConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.Dispose(System.Boolean)">
             <summary>
             Rolls back the active transaction, and closes the connection to the target database
