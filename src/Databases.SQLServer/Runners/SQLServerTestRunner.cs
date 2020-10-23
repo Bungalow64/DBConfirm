@@ -386,6 +386,12 @@ namespace SQLConfirm.Databases.SQLServer.Runners
 		                sys.identity_columns
 	                WHERE
 		                OBJECT_SCHEMA_NAME(object_id) + '.' + OBJECT_NAME(object_id) = '{tableName}'
+                    OR
+		                '[' + OBJECT_SCHEMA_NAME(object_id) + '].' + OBJECT_NAME(object_id) = '{tableName}'
+                    OR
+		                OBJECT_SCHEMA_NAME(object_id) + '.[' + OBJECT_NAME(object_id) + ']' = '{tableName}'
+                    OR
+		                '[' + OBJECT_SCHEMA_NAME(object_id) + '].[' + OBJECT_NAME(object_id) + ']' = '{tableName}'
                 END
 
                 IF (@HasIdentity = 1)
