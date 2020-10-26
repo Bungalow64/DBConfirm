@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CommandLine;
-using SQLConfirm.Tools.TemplateGeneration.SQLServer.Logic;
-using static SQLConfirm.Tools.TemplateGeneration.SQLServer.Logic.OutputHelper;
+using SQLConfirm.TemplateGeneration.Logic;
+using static SQLConfirm.TemplateGeneration.Logic.OutputHelper;
 
-namespace SQLConfirm.Tools.TemplateGeneration.SQLServer
+namespace SQLConfirm.TemplateGeneration
 {
     class Program
     {

@@ -6,16 +6,16 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
-using static SQLConfirm.Tools.TemplateGeneration.SQLServer.Logic.OutputHelper;
+using static SQLConfirm.TemplateGeneration.Logic.OutputHelper;
 using System.Linq;
-using SQLConfirm.Tools.TemplateGeneration.SQLServer.Models;
+using SQLConfirm.TemplateGeneration.Models;
 
-namespace SQLConfirm.Tools.TemplateGeneration.SQLServer.Logic
+namespace SQLConfirm.TemplateGeneration.Logic
 {
     public class Generator
     {
         private readonly Options _options;
-        private const string _getColumnsScript = "SQLConfirm.Tools.TemplateGeneration.SQLServer.Scripts.GetColumns.sql";
+        private const string _getColumnsScript = "SQLConfirm.TemplateGeneration.Scripts.GetColumns.sql";
 
         public Generator(Options options) => _options = options;
 

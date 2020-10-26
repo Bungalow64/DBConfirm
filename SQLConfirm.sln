@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Packages.SQLServer.NUnit", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Tools", "0.Tools", "{068FCD6B-9DA6-4AEB-93E8-B019867278EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration.SQLServer", "tools\TemplateGeneration.SQLServer\TemplateGeneration.SQLServer.csproj", "{5FC9A8DE-85E4-455F-9DB3-97BC00937A2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration", "tools\TemplateGeneration.SQLServer\TemplateGeneration.csproj", "{5FC9A8DE-85E4-455F-9DB3-97BC00937A2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
