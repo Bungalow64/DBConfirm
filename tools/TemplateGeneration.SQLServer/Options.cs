@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace SQLConfirm.Tools.TemplateGeneration.SQLServer
+namespace SQLConfirm.TemplateGeneration
 {
     public class Options
     {
