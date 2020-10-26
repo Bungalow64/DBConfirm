@@ -13,8 +13,9 @@
 		<PackageIcon>Bungalow64.png</PackageIcon>
 		<Description>A code-generation tool for use with SQLConfirm, to generate template files based on existing tables within a SQL Server database.</Description>
 		<PackAsTool>true</PackAsTool>
-		<PackageId>sqlconfirmtemplategeneratorsqlserver</PackageId>
+		<PackageId>SQLConfirm.Tools.TemplateGeneration.SQLServer</PackageId>
 		<ToolCommandName>GenerateTemplatesSQLServer</ToolCommandName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,6 +33,10 @@
 
 	<ItemGroup>
 		<None Include="..\..\src\Bungalow64.png" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="nupkg\" />
 	</ItemGroup>
 
 </Project>
