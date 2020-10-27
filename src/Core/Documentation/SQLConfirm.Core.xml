@@ -624,6 +624,11 @@
             The name of the required column missing a value
             </summary>
         </member>
+        <member name="P:SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException.TableName">
+            <summary>
+            The name of the table missing a value
+            </summary>
+        </member>
         <member name="M:SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException.#ctor">
             <summary>
             Initializes a new instance of the RequiredPlaceholderIsNullException class
@@ -644,10 +649,10 @@
         </member>
         <member name="M:SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException.#ctor(System.String,System.String)">
             <summary>
-            Initializes a new instance of the RequiredPlaceholderIsNullException class with a specified error message that explains the reason for this exception
+            Initializes a new instance of the RequiredPlaceholderIsNullException class with the name of the column and table missing a value
             </summary>
-            <param name="message">The error message that explains the reason for this exception</param>
             <param name="columnName">The name of the column missing a value</param>
+            <param name="tableName">The name of the table missing a value</param>
         </member>
         <member name="M:SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException.#ctor(System.String,System.String,System.Exception)">
             <summary>

@@ -12,12 +12,20 @@ namespace SQLConfirm.Core.Exceptions
     public class RequiredPlaceholderIsNullException : Exception
     {
         private readonly string _columnName;
+        private readonly string _tableName;
         private const string _message = "The column is marked as required but has had no value set";
+        private const string _columnPlaceholderMessage = "The value for {0} is required but has not been set";
+        private const string _columnTablePlaceholderMessage = "The value for {0} in table {1} is required but has not been set";
 
         /// <summary>
         /// The name of the required column missing a value
         /// </summary>
         public string ColumnName => _columnName;
+
+        /// <summary>
+        /// The name of the table missing a value
+        /// </summary>
+        public string TableName => _tableName;
 
         /// <summary>
         /// Initializes a new instance of the RequiredPlaceholderIsNullException class
@@ -32,7 +40,7 @@ namespace SQLConfirm.Core.Exceptions
         /// </summary>
         /// <param name="columnName">The name of the column missing a value</param>
         public RequiredPlaceholderIsNullException(string columnName)
-            : base()
+            : base(string.Format(_columnPlaceholderMessage, columnName ?? string.Empty))
         {
             _columnName = columnName;
         }
@@ -48,14 +56,15 @@ namespace SQLConfirm.Core.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the RequiredPlaceholderIsNullException class with a specified error message that explains the reason for this exception
+        /// Initializes a new instance of the RequiredPlaceholderIsNullException class with the name of the column and table missing a value
         /// </summary>
-        /// <param name="message">The error message that explains the reason for this exception</param>
         /// <param name="columnName">The name of the column missing a value</param>
-        public RequiredPlaceholderIsNullException(string message, string columnName)
-            : base(message)
+        /// <param name="tableName">The name of the table missing a value</param>
+        public RequiredPlaceholderIsNullException(string columnName, string tableName)
+            : base(string.Format(_columnTablePlaceholderMessage, columnName ?? string.Empty, tableName ?? string.Empty))
         {
             _columnName = columnName;
+            _tableName = tableName;
         }
 
         /// <summary>
@@ -78,6 +87,7 @@ namespace SQLConfirm.Core.Exceptions
         protected RequiredPlaceholderIsNullException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             _columnName = info.GetString("RequiredPlaceholderIsNull_ColumnName");
+            _tableName = info.GetString("RequiredPlaceholderIsNull_TableName");
         }
 
         /// <inheritdoc/>
@@ -88,6 +98,10 @@ namespace SQLConfirm.Core.Exceptions
             if (_columnName != null && _columnName.Length != 0)
             {
                 s += Environment.NewLine + "ColumnName: " + _columnName;
+                if (!string.IsNullOrWhiteSpace(_tableName))
+                {
+                    s += Environment.NewLine + "TableName: " + _tableName;
+                }
             }
 
             if (InnerException != null)
@@ -109,6 +123,7 @@ namespace SQLConfirm.Core.Exceptions
             base.GetObjectData(info, context);
 
             info.AddValue("RequiredPlaceholderIsNull_ColumnName", _columnName, typeof(string));
+            info.AddValue("RequiredPlaceholderIsNull_TableName", _tableName, typeof(string));
         }
     }
 }
