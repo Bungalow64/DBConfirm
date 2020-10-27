@@ -14,6 +14,7 @@ using SQLConfirm.Core.Data;
 using SQLConfirm.Core.Parameters;
 using SQLConfirm.Databases.SQLServer.Extensions;
 using SQLConfirm.Core.Templates;
+using SQLConfirm.Core.Exceptions;
 
 namespace SQLConfirm.Databases.SQLServer.Runners
 {
@@ -439,19 +440,27 @@ namespace SQLConfirm.Databases.SQLServer.Runners
 	                END
                 END";
 
-            QueryResult results = await ExecuteCommandAsync(command, data.ToSqlParameters());
-
-            if (results.TotalRows == 0)
+            try
             {
+                QueryResult results = await ExecuteCommandAsync(command, data.ToSqlParameters(tableName));
+
+                if (results.TotalRows == 0)
+                {
+                    return data;
+                }
+
+                int insertedIdentityValue = Convert.ToInt32(results.RawData.Rows[0]["IdentityValue"]);
+                string insertedIdentityColumnName = results.RawData.Rows[0]["IdentityColumnName"].ToString();
+
+                (overrideData ?? data)[insertedIdentityColumnName] = insertedIdentityValue;
+
                 return data;
             }
-
-            int insertedIdentityValue = Convert.ToInt32(results.RawData.Rows[0]["IdentityValue"]);
-            string insertedIdentityColumnName = results.RawData.Rows[0]["IdentityColumnName"].ToString();
-
-            (overrideData ?? data)[insertedIdentityColumnName] = insertedIdentityValue;
-
-            return data;
+            catch (RequiredPlaceholderIsNullException ex)
+            {
+                _testFramework.Fail(ex.Message);
+                return null;
+            }
         }
 
         /// <inheritdoc/>

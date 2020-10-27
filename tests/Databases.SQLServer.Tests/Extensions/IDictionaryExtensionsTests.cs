@@ -57,7 +57,22 @@ namespace SQLConfirm.Databases.SQLServer.Tests.Extensions
             };
             RequiredPlaceholderIsNullException exception = Assert.Throws<RequiredPlaceholderIsNullException>(() => dictionary.ToSqlParameters());
             Assert.AreEqual("ColumnB", exception.ColumnName);
+            Assert.AreEqual(null, exception.TableName);
             Assert.AreEqual("The value for ColumnB is required but has not been set", exception.Message);
+        }
+
+        [Test]
+        public void IDictionaryExtensions_DictionaryWithRequiredPlaceholder_WithTableName_ThrowError()
+        {
+            IDictionary<string, object> dictionary = new Dictionary<string, object>
+            {
+                { "ColumnA", 123 },
+                { "ColumnB", Placeholders.IsRequired() }
+            };
+            RequiredPlaceholderIsNullException exception = Assert.Throws<RequiredPlaceholderIsNullException>(() => dictionary.ToSqlParameters("TableA"));
+            Assert.AreEqual("ColumnB", exception.ColumnName);
+            Assert.AreEqual("TableA", exception.TableName);
+            Assert.AreEqual("The value for ColumnB in table TableA is required but has not been set", exception.Message);
         }
 
         [Test]

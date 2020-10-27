@@ -29,7 +29,7 @@ namespace SQLConfirm.Databases.SQLServer.Extensions
             {
                 if (value.Value is RequiredPlaceholder)
                 {
-                    throw new RequiredPlaceholderIsNullException($"The value for {value.ParameterName} is required but has not been set", value.ParameterName);
+                    throw new RequiredPlaceholderIsNullException(value.ParameterName);
                 }
                 if (value.Value is IResolver resolverValue)
                 {
