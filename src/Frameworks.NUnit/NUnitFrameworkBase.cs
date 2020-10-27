@@ -8,6 +8,7 @@ namespace SQLConfirm.Frameworks.NUnit
     /// <summary>
     /// The abstract base class for test classes using NUnit
     /// </summary>
+    [NonParallelizable]
     public abstract class NUnitFrameworkBase : BaseTestBase
     {
         /// <summary>
