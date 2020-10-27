@@ -8,6 +8,7 @@ namespace SQLConfirm.Frameworks.MSTest
     /// <summary>
     /// The abstract base class for test classes using MSTest
     /// </summary>
+    [DoNotParallelize]
     public abstract class MSTestFrameworkBase : BaseTestBase
     {
         /// <summary>
