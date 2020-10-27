@@ -1,0 +1,104 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>SQLConfirm - Quick Start</title>
+    <meta name="description"
+        content="The official documentation for SQLConfirm, the unit testing framework for SQL databases.">
+    <meta name="author" content="Bungalow64 Technologies Ltd">
+
+    <link rel="stylesheet" href="/styles/main.css?v=1.0">
+</head>
+
+<body>
+
+    <div id="sidebar">
+        <div id="sidebar-heading">
+            SQLConfirm
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Overview</a></li>
+                <li class="active"><a href="quickstart.html">Quick Start</a></li>
+                <li><a href="#">Examples</a></li>
+                <li><a href="#">NuGet Packages</a></li>
+                <li><a href="#">Continuous Integration</a></li>
+                <li><a href="api.html">API Reference</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="content">
+
+        <h1>SQLConfirm - Documentation</h1>
+
+        <h2 id="getting-started">Quick Start</h2>
+        <p>Install the NuGet package for the test framework you&#39;re currently using, either MSTest or NUnit:</p>
+        <ul>
+            <li>Install-Package <a
+                    href="https://www.nuget.org/packages/SQLConfirm.Packages.SQLServer.MSTest/">SQLConfirm.Packages.SQLServer.MSTest</a>
+            </li>
+            <li>Install-Package <a
+                    href="https://www.nuget.org/packages/SQLConfirm.Packages.SQLServer.NUnit/">SQLConfirm.Packages.SQLServer.NUnit</a>
+            </li>
+        </ul>
+        <p>In the root of your test project, add an appsettings.json file with the connection string to the database to
+            be
+            tested:</p>
+        <pre><code class="lang-json">{
+  <span class="hljs-attr">"ConnectionStrings"</span>: {
+    <span class="hljs-attr">"TestDatabase"</span>: <span class="hljs-string">"SERVER=(local);DATABASE=TestDB;Integrated Security=true;Connection Timeout=30;"</span>
+  }
+}
+</code></pre>
+        <p>Add a new test file, and inherit from the base class for the framework (either <code>MSTestBase</code> or
+            <code>NUnitBase</code>):</p>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For MSTest</span>
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
+<span class="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
+<span class="hljs-keyword">using</span> SQLConfirm.Packages.SQLServer.MSTest;
+
+[<span class="hljs-type">TestClass</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">GetUserTests</span> : <span class="hljs-type">MSTestBase</span>
+{
+    ...
+}
+</code></pre>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For NUnit</span>
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
+<span class="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
+<span class="hljs-keyword">using</span> SQLConfirm.Packages.SQLServer.NUnit;
+
+[<span class="hljs-type">TestFixture</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">GetUserTests</span> : <span class="hljs-type">NUnitBase</span>
+{
+    ...
+}
+</code></pre>
+        <p>Add a new test method, and start testing:</p>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For MSTest</span>
+[<span class="hljs-type">TestMethod</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-type">Task</span> <span class="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> results = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">ExecuteTableAsync</span>(<span class="hljs-string">"dbo.GetUsers"</span>);
+
+    results
+        .<span class="hljs-title">AssertColumnExists</span>(<span class="hljs-string">"FirstName"</span>);
+}
+</code></pre>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For NUnit</span>
+[<span class="hljs-type">Test</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-type">Task</span> <span class="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> results = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">ExecuteTableAsync</span>(<span class="hljs-string">"dbo.GetUsers"</span>);
+
+    results
+        .<span class="hljs-title">AssertColumnExists</span>(<span class="hljs-string">"FirstName"</span>);
+}
+</code></pre>
+    </div>
+</body>
+
+</html>

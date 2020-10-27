@@ -1,0 +1,162 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#sidebar{
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    box-shadow: -1px 0 0 0 #e3e8ee inset;
+}
+
+#sidebar nav::-webkit-scrollbar {
+    padding: 2px;
+    width: 12px;
+    height: 12px;
+    background: transparent
+}
+
+#sidebar nav::-webkit-scrollbar-thumb {
+    background: #e0e4e9;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+#sidebar nav:hover::-webkit-scrollbar-thumb {
+    background: #c1c9d2;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+#sidebar nav{
+    top: 40px;
+    overflow-y: scroll;
+    bottom: 0;
+    overflow-x: auto;
+    position: absolute;
+    width: 100%;
+}
+
+#sidebar-heading{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 30px;
+    box-shadow: 0 -1px 0 0 #e3e8ee inset;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: 500;
+}
+
+#menu{
+    padding-left: 15px;
+    font-size: 0.9em;
+}
+
+#menu li{
+    list-style-type: none;
+    display: list-item;
+    margin-left: 0;
+    margin-bottom: 10px;
+}
+
+#menu a{
+    color: #71798a;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+#menu .active a, #menu .active a:hover{
+    color: #3955d3;
+}
+
+#menu a:hover{
+    color: #1e2231;
+}
+
+#content{
+    position: absolute;
+    top: 0;
+    left: 200px;
+    bottom: 0px;
+    right: 0px;
+    overflow-y: scroll;
+    padding: 15px;
+}
+
+#content h1,#content h2,#content h3,#content h4{
+    margin:0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#content h1{
+    font-size: 1.5em;
+    color: #1f2333;
+    line-height: 40px;
+    font-weight: 500;
+}
+
+#content h2{
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+#content h3{
+    font-size: 1em;
+    font-weight: 500;
+}
+
+#content p, #content li{
+    font-size: 0.875em;
+}
+
+#content pre{
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+    color: #DCDCDC;
+}
+
+#content pre .hljs-keyword{
+    color: #569CD6;
+}
+
+#content pre .hljs-comment{
+    color: #608B4E;
+}
+
+#content pre .hljs-type{
+    color: #4EC9B0;
+}
+
+#content pre .hljs-string{
+    color: #D69D85;
+}
+
+#content pre .hljs-number{
+    color: #B5CEA8;
+}
+
+#content pre .hljs-title{
+    color: #DCDCAA;
+}
+
+#content pre .hljs-interface{
+    color: #B8D7A3;
+}
+
+#content pre .lang-json .hljs-attr{
+    color: #D19D4D;
+}
+
+#content pre .lang-json .hljs-string{
+    color: #D39B68;
+}
+

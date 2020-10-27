@@ -1,0 +1,26 @@
+{
+  "name": "sqlconfirm.documentation",
+  "version": "0.1.0",
+  "description": "Documentation for SQLConfirm",
+  "main": "index.js",
+  "private": "true",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start:dev": "webpack-dev-server"
+  },
+  "keywords": [],
+  "author": "Bungalow64 Technologies Ltd",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "copy-webpack-plugin": "^6.0.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+  }
+}
