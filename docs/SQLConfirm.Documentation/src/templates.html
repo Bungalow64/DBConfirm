@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8">
 
-    <title>SQLConfirm - Templates</title>
+    <title>DBConfirm - Templates</title>
     <meta name="description"
-        content="The official documentation for SQLConfirm, the unit testing framework for SQL databases.">
+        content="The official documentation for DBConfirm, the unit testing framework for SQL databases.">
     <meta name="author" content="Bungalow64 Technologies Ltd">
 
     <link rel="stylesheet" href="/styles/main.css?v=1.0">
@@ -17,27 +17,26 @@
 
     <div id="sidebar">
         <div id="sidebar-heading">
-            SQLConfirm
+            DBConfirm
         </div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Overview</a></li>
                 <li><a href="quickstart.html">Quick Start</a></li>
-                <li><a href="#">Examples</a></li>
                 <li><a href="nuget.html">NuGet Packages</a></li>
-                <li><a href="#">Continuous Integration</a></li>
-                <li><a href="api.html">API Reference</a></li>
                 <li class="active"><a href="templates.html">Templates</a></li>
+                <li><a href="continuousintegration.html">Continuous Integration</a></li>
+                <li><a href="api.html">API Reference</a></li>
             </ul>
         </nav>
     </div>
     <div id="content">
 
-        <h1>SQLConfirm - Documentation</h1>
+        <h1>DBConfirm - Documentation</h1>
 
-        <h2 id="getting-started">Templates</h2>
+        <h2 id="templates">Templates</h2>
         <h3>What are templates?</h3>
-        <p>A template is a pattern used by SQLConfirm to easily insert data into a database as part of a test.</p>
+        <p>A template is a pattern used by DBConfirm to easily insert data into a database as part of a test.</p>
         <p>Since each test runs in isolation, all test data needs to be set up at the start of each test.  With large and complex
             databases, this could easily become unmanageable.  Templates are a way of abstracting the setup of data into strongly-typed and reusable components,
             which can be used by multiple tests.  This helps keep the tests focussed, and makes maintenance easier when changes are made to the database.
@@ -67,8 +66,8 @@
         <div class="content-split">
             <div class="content-split-primary">
 
-                <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> SQLConfirm.Core.Data;
-<span class="hljs-keyword">using</span> SQLConfirm.Core.Templates;
+                <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> DBConfirm.Core.Data;
+<span class="hljs-keyword">using</span> DBConfirm.Core.Templates;
 
 <span class="hljs-keyword">namespace</span> Sample.Tests.Templates
 {
@@ -213,8 +212,8 @@
         <div class="content-split">
             <div class="content-split-primary">
 
-                <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> SQLConfirm.Core.Runners.Abstract;
-<span class="hljs-keyword">using</span> SQLConfirm.Core.Templates;
+                <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> DBConfirm.Core.Runners.Abstract;
+<span class="hljs-keyword">using</span> DBConfirm.Core.Templates;
 <span class="hljs-keyword">using</span> System.Threading.Tasks;
 
 <span class="hljs-keyword">namespace</span> Sample.Tests.Templates.Complex

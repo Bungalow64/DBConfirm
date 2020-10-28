@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8">
 
-    <title>SQLConfirm - Quick Start</title>
+    <title>DBConfirm - Quick Start</title>
     <meta name="description"
-        content="The official documentation for SQLConfirm, the unit testing framework for SQL databases.">
+        content="The official documentation for DBConfirm, the unit testing framework for SQL databases.">
     <meta name="author" content="Bungalow64 Technologies Ltd">
 
     <link rel="stylesheet" href="/styles/main.css?v=1.0">
@@ -17,33 +17,32 @@
 
     <div id="sidebar">
         <div id="sidebar-heading">
-            SQLConfirm
+            DBConfirm
         </div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Overview</a></li>
                 <li class="active"><a href="quickstart.html">Quick Start</a></li>
-                <li><a href="#">Examples</a></li>
                 <li><a href="nuget.html">NuGet Packages</a></li>
-                <li><a href="#">Continuous Integration</a></li>
-                <li><a href="api.html">API Reference</a></li>
                 <li><a href="templates.html">Templates</a></li>
+                <li><a href="continuousintegration.html">Continuous Integration</a></li>
+                <li><a href="api.html">API Reference</a></li>
             </ul>
         </nav>
     </div>
     <div id="content">
 
-        <h1>SQLConfirm - Documentation</h1>
+        <h1>DBConfirm - Documentation</h1>
 
         <h2 id="getting-started">Quick Start</h2>
         <h3>Install packages</h3>
         <p>Install the NuGet package for the test framework you&#39;re currently using, either MSTest or NUnit:</p>
         <ul>
             <li>Install-Package <a target="_blank"
-                    href="https://www.nuget.org/packages/SQLConfirm.Packages.SQLServer.MSTest/">SQLConfirm.Packages.SQLServer.MSTest</a>
+                    href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
             </li>
             <li>Install-Package <a target="_blank"
-                    href="https://www.nuget.org/packages/SQLConfirm.Packages.SQLServer.NUnit/">SQLConfirm.Packages.SQLServer.NUnit</a>
+                    href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/">DBConfirm.Packages.SQLServer.NUnit</a>
             </li>
         </ul>
         <h3>Set test database configuration</h3>
@@ -78,7 +77,7 @@
         <pre><code class="lang-csharp"><span class="hljs-comment">// For MSTest</span>
 <span class="hljs-keyword">using</span> System.Threading.Tasks;
 <span class="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
-<span class="hljs-keyword">using</span> SQLConfirm.Packages.SQLServer.MSTest;
+<span class="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.MSTest;
 
 [<span class="hljs-type">TestClass</span>]
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">GetUserTests</span> : <span class="hljs-type">MSTestBase</span>
@@ -89,7 +88,7 @@
         <pre><code class="lang-csharp"><span class="hljs-comment">// For NUnit</span>
 <span class="hljs-keyword">using</span> System.Threading.Tasks;
 <span class="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
-<span class="hljs-keyword">using</span> SQLConfirm.Packages.SQLServer.NUnit;
+<span class="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.NUnit;
 
 [<span class="hljs-type">TestFixture</span>]
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">GetUserTests</span> : <span class="hljs-type">NUnitBase</span>

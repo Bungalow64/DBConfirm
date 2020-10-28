@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8">
 
-    <title>SQLConfirm - API Reference</title>
+    <title>DBConfirm - API Reference</title>
     <meta name="description"
-        content="The official documentation for SQLConfirm, the unit testing framework for SQL databases.">
+        content="The official documentation for DBConfirm, the unit testing framework for SQL databases.">
     <meta name="author" content="Bungalow64 Technologies Ltd">
 
     <link rel="stylesheet" href="/styles/main.css?v=1.0">
@@ -17,23 +17,22 @@
 
     <div id="sidebar">
         <div id="sidebar-heading">
-            SQLConfirm
+            DBConfirm
         </div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Overview</a></li>
                 <li><a href="quickstart.html">Quick Start</a></li>
-                <li><a href="#">Examples</a></li>
                 <li><a href="nuget.html">NuGet Packages</a></li>
-                <li><a href="#">Continuous Integration</a></li>
-                <li class="active"><a href="api.html">API Reference</a></li>
                 <li><a href="templates.html">Templates</a></li>
+                <li><a href="continuousintegration.html">Continuous Integration</a></li>
+                <li class="active"><a href="api.html">API Reference</a></li>
             </ul>
         </nav>
     </div>
     <div id="content">
 
-        <h1>SQLConfirm - Documentation</h1>
+        <h1>DBConfirm - Documentation</h1>
         <ul>
             <li><a href="#testrunner">TestRunner API</a></li>
             <li><a href="#queryresult">QueryResult object</a></li>
@@ -42,7 +41,7 @@
         </ul>
 
         <h2 id="testrunner">TestRunner API</h2>
-        <p>The SQLConfirm API is accessed via the <code>TestRunner</code> property, on the test&#39;s base class. Most
+        <p>The DBConfirm API is accessed via the <code>TestRunner</code> property, on the test&#39;s base class. Most
             of
             the API methods are awaitable, so make sure your test is marked as <strong>async</strong> and return a
             <code>Task</code>.</p>
