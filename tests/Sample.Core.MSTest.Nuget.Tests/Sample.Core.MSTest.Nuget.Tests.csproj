@@ -17,10 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DBConfirm.Packages.SQLServer.MSTest" Version="0.1.0-CI-20201028-152238" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
-    <PackageReference Include="SQLConfirm.Packages.SQLServer.MSTest" Version="0.1.0-CI-20201021-104655" />
   </ItemGroup>
 
 </Project>

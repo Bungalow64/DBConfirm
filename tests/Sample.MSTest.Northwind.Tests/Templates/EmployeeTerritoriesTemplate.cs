@@ -1,7 +1,7 @@
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Templates;
-using SQLConfirm.Core.Templates.Abstract;
-using SQLConfirm.Core.Templates.Placeholders;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
+using DBConfirm.Core.Templates.Abstract;
+using DBConfirm.Core.Templates.Placeholders;
 
 namespace Sample.MSTest.Northwind.Tests.Templates
 {

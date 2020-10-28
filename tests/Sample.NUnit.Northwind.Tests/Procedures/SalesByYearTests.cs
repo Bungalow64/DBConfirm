@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using Sample.NUnit.Northwind.Tests.Templates;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.DataResults;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Packages.SQLServer.NUnit;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.DataResults;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Packages.SQLServer.NUnit;
 using System;
 using System.Threading.Tasks;
 

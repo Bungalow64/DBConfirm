@@ -1,6 +1,6 @@
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Templates;
-using SQLConfirm.Core.Templates.Abstract;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
+using DBConfirm.Core.Templates.Abstract;
 
 namespace Sample.NUnit.Northwind.Tests.Templates
 {
