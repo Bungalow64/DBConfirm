@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
-using SQLConfirm.Core.DataResults;
-using SQLConfirm.Core.Comparisons;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Packages.SQLServer.MSTest;
+using DBConfirm.Core.DataResults;
+using DBConfirm.Core.Comparisons;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {

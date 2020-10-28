@@ -1,9 +1,9 @@
-﻿using SQLConfirm.Core.Comparisons.Dates;
-using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Dates;
+using DBConfirm.Core.Factories.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using Moq;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest;
+using DBConfirm.Frameworks.MSTest;
 using System;
 using System.Globalization;
 using System.Threading;

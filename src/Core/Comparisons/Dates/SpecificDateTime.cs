@@ -1,8 +1,8 @@
-﻿using SQLConfirm.Core.Comparisons.Dates.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Dates.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Comparisons.Dates
+namespace DBConfirm.Core.Comparisons.Dates
 {
     /// <summary>
     /// Asserts that a value matches a specific date and time.  The precision (default 1 second) is used to match values within a certain limit

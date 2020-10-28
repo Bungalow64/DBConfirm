@@ -2,22 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>SQLConfirm.Packages.SQLServer.MSTest</AssemblyName>
-    <RootNamespace>SQLConfirm.Packages.SQLServer.MSTest</RootNamespace>
-    <PackageId>SQLConfirm.Packages.SQLServer.MSTest</PackageId>
+    <AssemblyName>DBConfirm.Packages.SQLServer.MSTest</AssemblyName>
+    <RootNamespace>DBConfirm.Packages.SQLServer.MSTest</RootNamespace>
+    <PackageId>DBConfirm.Packages.SQLServer.MSTest</PackageId>
     <Version>0.1.0</Version>
     <Authors>Bungalow64</Authors>
     <Company>Bungalow64 Technologies Ltd</Company>
-    <Product>SQLConfirm (SQLServer/MSTest package)</Product>
+    <Product>DBConfirm (SQLServer/MSTest package)</Product>
     <Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases, using MSTest as the test framework.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.</Description>
 	  <PackageIcon>Bungalow64.png</PackageIcon>
-    <PackageTags>SQL;SQL-Server;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;MSTest;SQLConfirm</PackageTags>
+    <PackageTags>SQL;SQL-Server;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;MSTest;DBConfirm</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Packages.SQLServer.MSTest\Documentation\SQLConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Packages.SQLServer.MSTest\Documentation\DBConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +27,10 @@ This library allows you to write SQL unit tests in code alongside all your other
 
 	<ItemGroup>
 		<None Include="..\Bungalow64.png" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Documentation\" />
 	</ItemGroup>
 
 </Project>

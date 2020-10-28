@@ -1,10 +1,10 @@
-﻿using SQLConfirm.Core.Comparisons.Dates.Abstract;
-using SQLConfirm.Core.Factories;
-using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Dates.Abstract;
+using DBConfirm.Core.Factories;
+using DBConfirm.Core.Factories.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Comparisons.Dates
+namespace DBConfirm.Core.Comparisons.Dates
 {
     /// <summary>
     /// Asserts that a value matches UtcNow.  The precision (default 1 second) is used to match values within a certain limit

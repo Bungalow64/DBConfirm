@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SQLConfirm.Core.DataResults;
+using DBConfirm.Core.DataResults;
 using System.Threading.Tasks;
-using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Packages.SQLServer.MSTest;
+using DBConfirm.Core.Runners.Abstract;
+using DBConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.Views
 {

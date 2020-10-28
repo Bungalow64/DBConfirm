@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-namespace SQLConfirm.Core.Exceptions
+namespace DBConfirm.Core.Exceptions
 {
     /// <summary>
     /// The exception that is thrown when a required placeholder has not been replaced by a value

@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.DataResults;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.DataResults;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest;
+using DBConfirm.Frameworks.MSTest;
 
 namespace SqlConfirm.Core.Tests.DataResults
 {

@@ -1,5 +1,5 @@
-﻿using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Core.Templates;
+﻿using DBConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.Templates;
 using System.Threading.Tasks;
 
 namespace Sample.Core.MSTest.Tests.Templates.Complex

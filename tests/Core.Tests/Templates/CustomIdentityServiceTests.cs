@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SQLConfirm.Core.Templates;
+using DBConfirm.Core.Templates;
 
 namespace Core.Tests.Templates
 {

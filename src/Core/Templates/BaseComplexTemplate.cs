@@ -1,8 +1,8 @@
-﻿using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Core.Templates.Abstract;
+﻿using DBConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.Templates.Abstract;
 using System.Threading.Tasks;
 
-namespace SQLConfirm.Core.Templates
+namespace DBConfirm.Core.Templates
 {
     /// <summary>
     /// The abstract template class used as the base for complex templates.  Complex templates are used to build templates that insert data into multiple tables, including setting foreign keys

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SQLConfirm.Core.TestFrameworks.Abstract
+namespace DBConfirm.Core.TestFrameworks.Abstract
 {
     /// <summary>
     /// The interface for a test framework, used to allow framework-dependent assertions and errors to be used

@@ -1,6 +1,6 @@
-﻿using SQLConfirm.Core.Runners.Abstract;
+﻿using DBConfirm.Core.Runners.Abstract;
 
-namespace SQLConfirm.Core.Factories.Abstract
+namespace DBConfirm.Core.Factories.Abstract
 {
     /// <summary>
     /// The interface for ITestRunner factories, to generate a new instance of <see cref="ITestRunner"/> according to the factory logic

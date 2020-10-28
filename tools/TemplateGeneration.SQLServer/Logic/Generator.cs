@@ -6,16 +6,16 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
-using static SQLConfirm.TemplateGeneration.Logic.OutputHelper;
+using static DBConfirm.TemplateGeneration.Logic.OutputHelper;
 using System.Linq;
-using SQLConfirm.TemplateGeneration.Models;
+using DBConfirm.TemplateGeneration.Models;
 
-namespace SQLConfirm.TemplateGeneration.Logic
+namespace DBConfirm.TemplateGeneration.Logic
 {
     public class Generator
     {
         private readonly Options _options;
-        private const string _getColumnsScript = "SQLConfirm.TemplateGeneration.Scripts.GetColumns.sql";
+        private const string _getColumnsScript = "DBConfirm.TemplateGeneration.Scripts.GetColumns.sql";
 
         public Generator(Options options) => _options = options;
 
@@ -164,8 +164,8 @@ namespace SQLConfirm.TemplateGeneration.Logic
 
             List<string> usings = new List<string>
             {
-                "using SQLConfirm.Core.Data;",
-                "using SQLConfirm.Core.Templates;"
+                "using DBConfirm.Core.Data;",
+                "using DBConfirm.Core.Templates;"
             };
 
             if (processedColumns.Any(p => p.TypeRequiresSystem))
@@ -175,17 +175,17 @@ namespace SQLConfirm.TemplateGeneration.Logic
 
             if (processedColumns.Any(p => p.ReferencesIdentity))
             {
-                usings.Add("using SQLConfirm.Core.Templates.Abstract;");
+                usings.Add("using DBConfirm.Core.Templates.Abstract;");
             }
 
             if (processedColumns.Any(p => p.RequiredPlaceholder))
             {
-                usings.Add("using SQLConfirm.Core.Templates.Placeholders;");
+                usings.Add("using DBConfirm.Core.Templates.Placeholders;");
             }
 
             string output = $@"{string.Join($"{Environment.NewLine}", usings)}
 
-namespace {_options.Namespace ?? "SQLConfirm.Templates"}
+namespace {_options.Namespace ?? "DBConfirm.Templates"}
 {{
     public class {className} : Base{(identityColumn != null ? "Identity" : "Simple")}Template<{className}>
     {{

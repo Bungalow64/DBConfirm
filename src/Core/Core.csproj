@@ -2,23 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>SQLConfirm.Core</RootNamespace>
-    <AssemblyName>SQLConfirm.Core</AssemblyName>
+    <RootNamespace>DBConfirm.Core</RootNamespace>
+    <AssemblyName>DBConfirm.Core</AssemblyName>
     <Version>0.1.0</Version>
     <Authors>Bungalow64</Authors>
     <Company>Bungalow64 Technologies Ltd</Company>
-    <Product>SQLConfirm (Core)</Product>
+    <Product>DBConfirm (Core)</Product>
     <Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
 
 This package is the core logic; see the MSTest/NUnit packages for the framework-dependent runners.</Description>
-    <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;SQLConfirm</PackageTags>
+    <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;DBConfirm</PackageTags>
     <PackageIcon>Bungalow64.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Core\Documentation\SQLConfirm.Core.xml</DocumentationFile>
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Core\Documentation\DBConfirm.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,5 +28,9 @@ This package is the core logic; see the MSTest/NUnit packages for the framework-
 
 	<ItemGroup>
 		<None Include="..\Bungalow64.png" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Documentation\" />
 	</ItemGroup>
 </Project>

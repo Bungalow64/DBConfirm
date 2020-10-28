@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SQLConfirm.TemplateGeneration.Logic
+namespace DBConfirm.TemplateGeneration.Logic
 {
     public static class OutputHelper
     {

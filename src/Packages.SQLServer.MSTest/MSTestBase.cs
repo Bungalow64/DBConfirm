@@ -1,9 +1,9 @@
-﻿using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Databases.SQLServer.Factories;
-using SQLConfirm.Databases.SQLServer.Runners;
-using SQLConfirm.Frameworks.MSTest;
+﻿using DBConfirm.Core.Factories.Abstract;
+using DBConfirm.Databases.SQLServer.Factories;
+using DBConfirm.Databases.SQLServer.Runners;
+using DBConfirm.Frameworks.MSTest;
 
-namespace SQLConfirm.Packages.SQLServer.MSTest
+namespace DBConfirm.Packages.SQLServer.MSTest
 {
     /// <summary>
     /// The abstract base class for test classes using MSTest and SQL Server

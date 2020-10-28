@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SQLConfirm.Core.TestFrameworks.Abstract;
-using SQLConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.Runners.Abstract;
 
-namespace SQLConfirm.Frameworks.MSTest
+namespace DBConfirm.Frameworks.MSTest
 {
     /// <summary>
     /// The abstract base class for test classes using MSTest

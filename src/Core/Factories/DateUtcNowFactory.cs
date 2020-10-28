@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.Factories.Abstract;
+﻿using DBConfirm.Core.Factories.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Factories
+namespace DBConfirm.Core.Factories
 {
     /// <summary>
     /// The default UtcNow factory, using <see cref="DateTime.UtcNow"/>

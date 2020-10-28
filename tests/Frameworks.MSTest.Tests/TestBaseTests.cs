@@ -1,10 +1,10 @@
-using SQLConfirm.Core.Factories.Abstract;
+using DBConfirm.Core.Factories.Abstract;
 using Frameworks.MSTest.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
-using SQLConfirm.Core.TestFrameworks.Abstract;
-using SQLConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.Runners.Abstract;
 
 namespace Frameworks.MSTest.Tests
 {

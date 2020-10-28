@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.Comparisons.Strings;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Strings;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest;
+using DBConfirm.Frameworks.MSTest;
 using System;
 using System.Text.RegularExpressions;
 

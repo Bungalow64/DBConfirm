@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SQLConfirm.Frameworks.MSTest
+namespace DBConfirm.Frameworks.MSTest
 {
     /// <summary>
     /// The test framework using MSTest

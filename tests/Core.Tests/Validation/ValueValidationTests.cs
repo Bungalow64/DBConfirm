@@ -1,10 +1,10 @@
-﻿using SQLConfirm.Core.Comparisons.Abstract;
-using SQLConfirm.Core.Comparisons.Dates.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
-using SQLConfirm.Core.Validation;
+﻿using DBConfirm.Core.Comparisons.Abstract;
+using DBConfirm.Core.Comparisons.Dates.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.Validation;
 using Moq;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest;
+using DBConfirm.Frameworks.MSTest;
 using System;
 
 namespace SqlConfirm.Core.Tests.Validation

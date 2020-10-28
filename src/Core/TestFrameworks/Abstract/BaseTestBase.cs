@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.Factories.Abstract;
+using DBConfirm.Core.Runners.Abstract;
 using System;
 using System.Threading.Tasks;
 
-namespace SQLConfirm.Core.TestFrameworks.Abstract
+namespace DBConfirm.Core.TestFrameworks.Abstract
 {
     /// <summary>
     /// The abstract framework-agnostic base class for test classes, used to manage the <see cref="ITestRunner"/> instance

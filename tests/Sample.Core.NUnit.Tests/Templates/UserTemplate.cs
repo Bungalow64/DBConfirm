@@ -1,5 +1,5 @@
-﻿using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Templates;
+﻿using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
 using System;
 
 namespace Sample.Core.NUnit.Tests.Templates

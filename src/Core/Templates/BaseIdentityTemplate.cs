@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.Templates.Abstract;
-using SQLConfirm.Core.Runners.Abstract;
+﻿using DBConfirm.Core.Templates.Abstract;
+using DBConfirm.Core.Runners.Abstract;
 
-namespace SQLConfirm.Core.Templates
+namespace DBConfirm.Core.Templates
 {
     /// <summary>
     /// The abstract template class used as the base for simple templates for tables that have an identity column

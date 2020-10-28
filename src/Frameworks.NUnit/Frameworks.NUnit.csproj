@@ -2,24 +2,24 @@
 
   <PropertyGroup>
 	  <TargetFramework>netstandard2.0</TargetFramework>
-	  <PackageId>SQLConfirm.Frameworks.NUnit</PackageId>
+	  <PackageId>DBConfirm.Frameworks.NUnit</PackageId>
 	  <Version>0.1.0</Version>
 	  <Authors>Bungalow64</Authors>
 	  <Company>Bungalow64 Technologies Ltd</Company>
-	  <Product>SQLConfirm (NUnit framework)</Product>
+	  <Product>DBConfirm (NUnit framework)</Product>
 	  <Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.
 
 This package is the test runner for NUnit.</Description>
-	  <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;MSTest;SQLConfirm</PackageTags>
+	  <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;MSTest;DBConfirm</PackageTags>
 	  <PackageIcon>Bungalow64.png</PackageIcon>
-	  <RootNamespace>SQLConfirm.Frameworks.NUnit</RootNamespace>
-	  <AssemblyName>SQLConfirm.Frameworks.NUnit</AssemblyName>
+	  <RootNamespace>DBConfirm.Frameworks.NUnit</RootNamespace>
+	  <AssemblyName>DBConfirm.Frameworks.NUnit</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.NUnit\Documentation\SQLConfirm.Frameworks.NUnit.xml</DocumentationFile>
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.NUnit\Documentation\DBConfirm.Frameworks.NUnit.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

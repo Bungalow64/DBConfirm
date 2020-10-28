@@ -1,13 +1,13 @@
 ﻿using Microsoft.Data.SqlClient;
 using NUnit.Framework;
-using SQLConfirm.Core.Templates.Placeholders;
-using SQLConfirm.Core.Exceptions;
-using SQLConfirm.Core.Templates;
+using DBConfirm.Core.Templates.Placeholders;
+using DBConfirm.Core.Exceptions;
+using DBConfirm.Core.Templates;
 using System;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Databases.SQLServer.Extensions;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Databases.SQLServer.Extensions;
 
-namespace SQLConfirm.Databases.SQLServer.Tests.Extensions
+namespace DBConfirm.Databases.SQLServer.Tests.Extensions
 {
     [TestFixture]
     public class SqlQueryParameterExtensionsTests

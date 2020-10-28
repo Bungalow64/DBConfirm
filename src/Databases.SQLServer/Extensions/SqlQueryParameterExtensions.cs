@@ -1,12 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
-using SQLConfirm.Core.Exceptions;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Core.Templates.Abstract;
-using SQLConfirm.Core.Templates.Placeholders;
+using DBConfirm.Core.Exceptions;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Core.Templates.Abstract;
+using DBConfirm.Core.Templates.Placeholders;
 using System;
 using System.Linq;
 
-namespace SQLConfirm.Databases.SQLServer.Extensions
+namespace DBConfirm.Databases.SQLServer.Extensions
 {
     /// <summary>
     /// Defines extensions to <see cref="SqlQueryParameter"/>

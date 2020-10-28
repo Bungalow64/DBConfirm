@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.TestFrameworks.Abstract;
-using SQLConfirm.Core.Validation;
+﻿using DBConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.Validation;
 
-namespace SQLConfirm.Core.DataResults
+namespace DBConfirm.Core.DataResults
 {
     /// <summary>
     /// The data for a specific object

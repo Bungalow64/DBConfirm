@@ -1,4 +1,4 @@
-﻿using SQLConfirm.Core.Data;
+﻿using DBConfirm.Core.Data;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

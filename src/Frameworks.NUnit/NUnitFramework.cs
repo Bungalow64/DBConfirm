@@ -1,10 +1,10 @@
-﻿using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SQLConfirm.Frameworks.NUnit
+namespace DBConfirm.Frameworks.NUnit
 {
     /// <summary>
     /// The test framework using NUnit

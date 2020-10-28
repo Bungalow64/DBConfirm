@@ -1,11 +1,11 @@
-﻿using SQLConfirm.Core.Data;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Data;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace SQLConfirm.Core.DataResults
+namespace DBConfirm.Core.DataResults
 {
     /// <summary>
     /// The results of a query execution, representing the data returned

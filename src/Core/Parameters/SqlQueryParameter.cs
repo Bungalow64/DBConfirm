@@ -1,4 +1,4 @@
-﻿namespace SQLConfirm.Core.Parameters
+﻿namespace DBConfirm.Core.Parameters
 {
     /// <summary>
     /// Defines a parameter to be used during SQL execution

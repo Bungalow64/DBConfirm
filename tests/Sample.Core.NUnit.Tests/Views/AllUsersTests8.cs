@@ -1,10 +1,10 @@
 ﻿using System;
-using SQLConfirm.Core.DataResults;
+using DBConfirm.Core.DataResults;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Packages.SQLServer.NUnit;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Packages.SQLServer.NUnit;
 
 namespace Sample.Core.NUnit.Tests.Views
 {
