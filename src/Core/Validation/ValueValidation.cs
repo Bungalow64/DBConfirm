@@ -1,8 +1,8 @@
-﻿using SQLConfirm.Core.Comparisons.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Validation
+namespace DBConfirm.Core.Validation
 {
     /// <summary>
     /// Static class to handle all assertions and validations

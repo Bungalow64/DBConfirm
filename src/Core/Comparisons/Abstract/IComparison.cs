@@ -1,6 +1,6 @@
-﻿using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.TestFrameworks.Abstract;
 
-namespace SQLConfirm.Core.Comparisons.Abstract
+namespace DBConfirm.Core.Comparisons.Abstract
 {
     /// <summary>
     /// Defines the interface for comparison objects, to implement advanced assertion logic

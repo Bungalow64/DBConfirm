@@ -1,9 +1,9 @@
-﻿using SQLConfirm.Core.Comparisons.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 using System.Text.RegularExpressions;
 
-namespace SQLConfirm.Core.Comparisons.Strings
+namespace DBConfirm.Core.Comparisons.Strings
 {
     /// <summary>
     /// Asserts that a value matches a regex pattern

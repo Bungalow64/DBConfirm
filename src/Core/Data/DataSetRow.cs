@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SQLConfirm.Core.Data
+namespace DBConfirm.Core.Data
 {
     /// <summary>
     /// Defines the data for a single row, in a single table

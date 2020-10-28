@@ -1,8 +1,8 @@
-﻿using SQLConfirm.Core.Comparisons.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Comparisons.Strings
+namespace DBConfirm.Core.Comparisons.Strings
 {
     /// <summary>
     /// Asserts that a string is of a specific length

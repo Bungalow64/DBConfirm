@@ -1,6 +1,6 @@
-﻿using SQLConfirm.Core.Data;
+﻿using DBConfirm.Core.Data;
 
-namespace SQLConfirm.Core.Templates.Abstract
+namespace DBConfirm.Core.Templates.Abstract
 {
     /// <summary>
     /// The interface for templates that relate to a single table

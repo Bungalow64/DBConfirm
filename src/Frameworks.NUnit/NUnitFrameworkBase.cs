@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.Runners.Abstract;
 
-namespace SQLConfirm.Frameworks.NUnit
+namespace DBConfirm.Frameworks.NUnit
 {
     /// <summary>
     /// The abstract base class for test classes using NUnit

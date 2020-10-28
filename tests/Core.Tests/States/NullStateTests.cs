@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.Comparisons.States;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.States;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
-using SQLConfirm.Frameworks.MSTest;
+using DBConfirm.Frameworks.MSTest;
 using System;
 
 namespace SqlConfirm.Core.Tests.States

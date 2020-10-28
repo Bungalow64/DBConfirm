@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace SQLConfirm.TemplateGeneration
+namespace DBConfirm.TemplateGeneration
 {
     public class Options
     {
@@ -16,7 +16,7 @@ namespace SQLConfirm.TemplateGeneration
         [Option('s', "schemaName", Required = false, HelpText = "The schema of the table to process.  Defaults to dbo")]
         public string SchemaName { get; set; }
 
-        [Option('n', "namespace", Required = false, HelpText = "The namespace to use for the generated class (defaults to SQLConfirm.Templates)")]
+        [Option('n', "namespace", Required = false, HelpText = "The namespace to use for the generated class (defaults to DBConfirm.Templates)")]
         public string Namespace { get; set; }
 
         [Option("dry-run", Required = false, HelpText = "Outputs the generated file to the console instead of creating a file")]

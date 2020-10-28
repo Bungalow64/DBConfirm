@@ -1,4 +1,4 @@
-﻿namespace SQLConfirm.Core.Templates.Abstract
+﻿namespace DBConfirm.Core.Templates.Abstract
 {
     /// <summary>
     /// The interface for a deferred action

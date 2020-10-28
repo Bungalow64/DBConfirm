@@ -1,4 +1,4 @@
-﻿using SQLConfirm.Core.Exceptions;
+﻿using DBConfirm.Core.Exceptions;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -56,7 +56,7 @@ namespace SqlConfirm.Core.Tests.Exceptions
         public void RequiredPlaceholderIsNullException_ToString_ReturnFullDetails()
         {
             RequiredPlaceholderIsNullException exception = new RequiredPlaceholderIsNullException("ColumnA");
-            Assert.AreEqual(@"SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for ColumnA is required but has not been set
+            Assert.AreEqual(@"DBConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for ColumnA is required but has not been set
 ColumnName: ColumnA", exception.ToString());
         }
 
@@ -65,7 +65,7 @@ ColumnName: ColumnA", exception.ToString());
         {
             Exception inner = new ArgumentNullException();
             RequiredPlaceholderIsNullException exception = new RequiredPlaceholderIsNullException("Custom message", "ColumnA", inner);
-            Assert.AreEqual(@"SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: Custom message
+            Assert.AreEqual(@"DBConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: Custom message
 ColumnName: ColumnA ---> System.ArgumentNullException: Value cannot be null.", exception.ToString());
         }
 
@@ -102,7 +102,7 @@ ColumnName: ColumnA ---> System.ArgumentNullException: Value cannot be null.", e
 
             Assert.AreEqual("The value for ColumnA is required but has not been set", newException.Message);
             Assert.AreEqual("ColumnA", newException.ColumnName);
-            Assert.AreEqual(@"SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for ColumnA is required but has not been set
+            Assert.AreEqual(@"DBConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for ColumnA is required but has not been set
 ColumnName: ColumnA", newException.ToString());
         }
 
@@ -140,7 +140,7 @@ ColumnName: ColumnA", newException.ToString());
             Assert.AreEqual("The value for ColumnA in table Table1 is required but has not been set", newException.Message);
             Assert.AreEqual("ColumnA", newException.ColumnName);
             Assert.AreEqual("Table1", newException.TableName);
-            Assert.AreEqual(@"SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for ColumnA in table Table1 is required but has not been set
+            Assert.AreEqual(@"DBConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for ColumnA in table Table1 is required but has not been set
 ColumnName: ColumnA
 TableName: Table1", newException.ToString());
         }

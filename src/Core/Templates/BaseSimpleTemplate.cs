@@ -1,9 +1,9 @@
-﻿using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Core.Templates.Abstract;
+﻿using DBConfirm.Core.Data;
+using DBConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.Templates.Abstract;
 using System.Threading.Tasks;
 
-namespace SQLConfirm.Core.Templates
+namespace DBConfirm.Core.Templates
 {
     /// <summary>
     /// The abstract template class used as the base for simple templates.  Simple templates are used to set up data in a single table

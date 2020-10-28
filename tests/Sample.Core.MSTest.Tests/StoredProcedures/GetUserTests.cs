@@ -4,10 +4,10 @@ using Sample.Core.MSTest.Tests.Templates.Complex;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SQLConfirm.Core.DataResults;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Packages.SQLServer.MSTest;
+using DBConfirm.Core.DataResults;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Packages.SQLServer.MSTest;
 
 namespace Sample.Core.MSTest.Tests.StoredProcedures
 {

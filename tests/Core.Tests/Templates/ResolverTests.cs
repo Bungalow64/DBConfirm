@@ -1,4 +1,4 @@
-﻿using SQLConfirm.Core.Templates;
+﻿using DBConfirm.Core.Templates;
 using NUnit.Framework;
 using System;
 

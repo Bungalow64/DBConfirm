@@ -1,4 +1,4 @@
-﻿namespace SQLConfirm.Core.Templates.Placeholders
+﻿namespace DBConfirm.Core.Templates.Placeholders
 {
     /// <summary>
     /// Facade to build placeholder objects, used to configure how specific columns should behave

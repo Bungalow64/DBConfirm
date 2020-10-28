@@ -1,9 +1,9 @@
-﻿using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Databases.SQLServer.Factories;
-using SQLConfirm.Databases.SQLServer.Runners;
-using SQLConfirm.Frameworks.NUnit;
+﻿using DBConfirm.Core.Factories.Abstract;
+using DBConfirm.Databases.SQLServer.Factories;
+using DBConfirm.Databases.SQLServer.Runners;
+using DBConfirm.Frameworks.NUnit;
 
-namespace SQLConfirm.Packages.SQLServer.NUnit
+namespace DBConfirm.Packages.SQLServer.NUnit
 {
     /// <summary>
     /// The abstract base class for test classes using NUnit and SQL Server

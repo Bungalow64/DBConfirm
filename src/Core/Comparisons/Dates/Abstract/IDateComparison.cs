@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.Comparisons.Abstract;
+﻿using DBConfirm.Core.Comparisons.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Comparisons.Dates.Abstract
+namespace DBConfirm.Core.Comparisons.Dates.Abstract
 {
     /// <summary>
     /// The interface for date comparison objects

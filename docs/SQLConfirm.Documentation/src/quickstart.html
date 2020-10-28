@@ -1,0 +1,127 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>DBConfirm - Quick Start</title>
+    <meta name="description"
+        content="The official documentation for DBConfirm, the unit testing framework for SQL databases.">
+    <meta name="author" content="Bungalow64 Technologies Ltd">
+
+    <link rel="stylesheet" href="/styles/main.css?v=1.0">
+</head>
+
+<body>
+
+    <div id="sidebar">
+        <div id="sidebar-heading">
+            DBConfirm
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Overview</a></li>
+                <li class="active"><a href="quickstart.html">Quick Start</a></li>
+                <li><a href="nuget.html">NuGet Packages</a></li>
+                <li><a href="templates.html">Templates</a></li>
+                <li><a href="continuousintegration.html">Continuous Integration</a></li>
+                <li><a href="api.html">API Reference</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="content">
+
+        <h1>DBConfirm - Documentation</h1>
+
+        <h2 id="getting-started">Quick Start</h2>
+        <h3>Install packages</h3>
+        <p>Install the NuGet package for the test framework you&#39;re currently using, either MSTest or NUnit:</p>
+        <ul>
+            <li>Install-Package <a target="_blank"
+                    href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
+            </li>
+            <li>Install-Package <a target="_blank"
+                    href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/">DBConfirm.Packages.SQLServer.NUnit</a>
+            </li>
+        </ul>
+        <h3>Set test database configuration</h3>
+
+        <div class="content-split">
+
+            <div class="content-split-primary">
+                <p>In the root of your test project, add an <strong>appsettings.json</strong> file with a connection
+                    string
+                    called '<strong>TestDatabase</strong>' to
+                    point to the database to be tested:</p>
+                <pre><code class="lang-json">{
+  <span class="hljs-attr">"ConnectionStrings"</span>: {
+    <span class="hljs-attr">"TestDatabase"</span>: <span class="hljs-string">"SERVER=(local);DATABASE=TestDB;Integrated Security=true;Connection Timeout=30;"</span>
+  }
+}
+</code></pre>
+            </div>
+            <aside>
+                <header>appsettings.json</header>
+                <div class="aside-body">
+                    <p>Note, this <strong>appsettings.json</strong> file needs to be copied to the output directory.</p>
+                    <img src="images/appsettings_properties.png"
+                        alt="appsettings.json file set with Build Action = Content, Copy to Output Directory = Copy if newer" />
+                </div>
+            </aside>
+        </div>
+
+        <h3>Add test class</h3>
+        <p>Add a new test file, and inherit from the base class for the framework (either <code>MSTestBase</code> or
+            <code>NUnitBase</code>):</p>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For MSTest</span>
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
+<span class="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
+<span class="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.MSTest;
+
+[<span class="hljs-type">TestClass</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">GetUserTests</span> : <span class="hljs-type">MSTestBase</span>
+{
+    ...
+}
+</code></pre>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For NUnit</span>
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
+<span class="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
+<span class="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.NUnit;
+
+[<span class="hljs-type">TestFixture</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">GetUserTests</span> : <span class="hljs-type">NUnitBase</span>
+{
+    ...
+}
+</code></pre>
+        <h3>Add test method</h3>
+        <p>Add a new test method, and start testing:</p>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For MSTest</span>
+[<span class="hljs-type">TestMethod</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-type">Task</span> <span class="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> results = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">ExecuteTableAsync</span>(<span class="hljs-string">"dbo.GetUsers"</span>);
+
+    results
+        .<span class="hljs-title">AssertColumnExists</span>(<span class="hljs-string">"FirstName"</span>);
+}
+</code></pre>
+        <pre><code class="lang-csharp"><span class="hljs-comment">// For NUnit</span>
+[<span class="hljs-type">Test</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-type">Task</span> <span class="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> results = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">ExecuteTableAsync</span>(<span class="hljs-string">"dbo.GetUsers"</span>);
+
+    results
+        .<span class="hljs-title">AssertColumnExists</span>(<span class="hljs-string">"FirstName"</span>);
+}
+</code></pre>
+
+        <p>For the full details of how to insert data, execute database logic and verify results, see the <a
+                href="/api.html">API Reference</a>.</p>
+    </div>
+</body>
+
+</html>

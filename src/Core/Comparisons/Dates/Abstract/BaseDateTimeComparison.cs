@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Comparisons.Dates.Abstract
+namespace DBConfirm.Core.Comparisons.Dates.Abstract
 {
     /// <summary>
     /// Abstract base class for DateTime comparisons.  Defines a default precision of 1 second

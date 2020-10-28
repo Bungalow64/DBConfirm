@@ -1,13 +1,13 @@
-﻿using SQLConfirm.Core.DataResults;
+﻿using DBConfirm.Core.DataResults;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SQLConfirm.Core.TestFrameworks.Abstract;
-using SQLConfirm.Core.Templates.Abstract;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Parameters;
+using DBConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.Templates.Abstract;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Parameters;
 
-namespace SQLConfirm.Core.Runners.Abstract
+namespace DBConfirm.Core.Runners.Abstract
 {
     /// <summary>
     /// The interface for the test runner, handling all SQL connections for a single database

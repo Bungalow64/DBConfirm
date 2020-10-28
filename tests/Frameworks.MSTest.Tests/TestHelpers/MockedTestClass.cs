@@ -1,6 +1,6 @@
-﻿using SQLConfirm.Core.Factories.Abstract;
-using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Packages.SQLServer.MSTest;
+﻿using DBConfirm.Core.Factories.Abstract;
+using DBConfirm.Core.Runners.Abstract;
+using DBConfirm.Packages.SQLServer.MSTest;
 
 namespace Frameworks.MSTest.Tests.TestHelpers
 {

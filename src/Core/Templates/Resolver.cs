@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.Templates.Abstract;
+﻿using DBConfirm.Core.Templates.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Templates
+namespace DBConfirm.Core.Templates
 {
     /// <summary>
     /// A deferred action, which only evaluates the result when the <see cref="Resolver{T}.Resolve"/> method is called

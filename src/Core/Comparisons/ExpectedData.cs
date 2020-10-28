@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using SQLConfirm.Core.Comparisons.Abstract;
-using SQLConfirm.Core.Comparisons.Strings;
-using SQLConfirm.Core.Comparisons.Dates.Abstract;
-using SQLConfirm.Core.Comparisons.Dates;
-using SQLConfirm.Core.Comparisons.States;
+using DBConfirm.Core.Comparisons.Abstract;
+using DBConfirm.Core.Comparisons.Strings;
+using DBConfirm.Core.Comparisons.Dates.Abstract;
+using DBConfirm.Core.Comparisons.Dates;
+using DBConfirm.Core.Comparisons.States;
 
-namespace SQLConfirm.Core.Comparisons
+namespace DBConfirm.Core.Comparisons
 {
     /// <summary>
     /// Facade to build data comparison objects, used to test comparisons with more flexibility

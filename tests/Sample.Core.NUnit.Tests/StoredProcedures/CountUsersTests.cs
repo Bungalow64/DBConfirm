@@ -1,11 +1,11 @@
 ﻿using System;
-using SQLConfirm.Core.DataResults;
+using DBConfirm.Core.DataResults;
 using System.Threading.Tasks;
-using SQLConfirm.Core.Comparisons;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Parameters;
+using DBConfirm.Core.Comparisons;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Parameters;
 using NUnit.Framework;
-using SQLConfirm.Packages.SQLServer.NUnit;
+using DBConfirm.Packages.SQLServer.NUnit;
 using Sample.Core.NUnit.Tests.Templates;
 
 namespace Sample.Core.NUnit.Tests.StoredProcedures

@@ -1,0 +1,378 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>DBConfirm - Templates</title>
+    <meta name="description"
+        content="The official documentation for DBConfirm, the unit testing framework for SQL databases.">
+    <meta name="author" content="Bungalow64 Technologies Ltd">
+
+    <link rel="stylesheet" href="/styles/main.css?v=1.0">
+</head>
+
+<body>
+
+    <div id="sidebar">
+        <div id="sidebar-heading">
+            DBConfirm
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="quickstart.html">Quick Start</a></li>
+                <li><a href="nuget.html">NuGet Packages</a></li>
+                <li class="active"><a href="templates.html">Templates</a></li>
+                <li><a href="continuousintegration.html">Continuous Integration</a></li>
+                <li><a href="api.html">API Reference</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="content">
+
+        <h1>DBConfirm - Documentation</h1>
+
+        <h2 id="templates">Templates</h2>
+        <h3>What are templates?</h3>
+        <p>A template is a pattern used by DBConfirm to easily insert data into a database as part of a test.</p>
+        <p>Since each test runs in isolation, all test data needs to be set up at the start of each test.  With large and complex
+            databases, this could easily become unmanageable.  Templates are a way of abstracting the setup of data into strongly-typed and reusable components,
+            which can be used by multiple tests.  This helps keep the tests focussed, and makes maintenance easier when changes are made to the database.
+        </p>
+        <p>Basic tests may require single rows of data to be inserted into tables, however as the complexity of a
+            database grows,
+            it may be useful to be able to represent a specific scenario or state.  This may require data to be inserted into
+            multiple tables, with dependencies and foreign keys
+            set.</p>
+        <p>Therefore, there are two kinds of templates:
+        <ul>
+            <li>A <a href="#simpletemplates">simple template</a> represents a single table, and allows for rows to be
+                inserted into
+                that
+                table.</li>
+            <li>A <a href="#complextemplates">complex template</a> represents a combination of other templates, allowing
+                for multiple
+                rows
+                to be inserted across many tables at the same time.</li>
+        </ul>
+        </p>
+
+        <h3 id="simpletemplates">Simple Templates</h3>
+
+        <p>A simple template, representing a single table looks like this:</p>
+
+        <div class="content-split">
+            <div class="content-split-primary">
+
+                <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> DBConfirm.Core.Data;
+<span class="hljs-keyword">using</span> DBConfirm.Core.Templates;
+
+<span class="hljs-keyword">namespace</span> Sample.Tests.Templates
+{
+    <span class="hljs-comment">// The class inherits from BaseIdentityTemplate, indicating the table has an identity column</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">EmployeesTemplate</span> : <span class="hljs-type">BaseIdentityTemplate</span>&lt;<span class="hljs-type">EmployeesTemplate</span>&gt;
+    {
+        <span class="hljs-comment">// Sets the schema and name of the table</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">string</span> TableName =&gt; <span class="hljs-string">"[dbo].[Employees]"</span>;
+
+        <span class="hljs-comment">// Sets the name of the identity column</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">string</span> IdentityColumnName =&gt; <span class="hljs-string">"EmployeeID"</span>;
+
+        <span class="hljs-comment">// Defines default data that's used when this template is inserted</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-type">DataSetRow</span> DefaultData =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">DataSetRow</span>
+        {
+            [<span class="hljs-string">"FirstName"</span>] = <span class="hljs-string">"DefaultFirstName"</span>,
+            [<span class="hljs-string">"LastName"</span>] = <span class="hljs-string">"DefaultLastName"</span>
+        };
+
+        <span class="hljs-comment">// Optional fluent methods to make it easier to override specific values in the template</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">EmployeesTemplate</span> <span class="hljs-title">WithEmployeeID</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>=&gt; <span class="hljs-title">SetValue</span>(<span class="hljs-string">"EmployeeID"</span>, value);
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">EmployeesTemplate</span> <span class="hljs-title">WithFirstName</span><span class="hljs-params">(<span class="hljs-keyword">string</span> value)</span> </span>=&gt; <span class="hljs-title">SetValue</span>(<span class="hljs-string">"FirstName"</span>, value);
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">EmployeesTemplate</span> <span class="hljs-title">WithLastName</span><span class="hljs-params">(<span class="hljs-keyword">string</span> value)</span> </span>=&gt; <span class="hljs-title">SetValue</span>(<span class="hljs-string">"LastName"</span>, value);
+    }
+}
+            </code></pre>
+            </div>
+            <div class="content-split-secondary">
+                <aside>
+                    <header>Original SQL table</header>
+                    <div class="aside-body">
+                        <p>This example represents the <strong>dbo.Employees</strong> table in the SQL database:</p>
+                        <table>
+                            <thead>
+                                <td>Column Name</td>
+                                <td>Data Type</td>
+                                <td>Properties</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>EmployeeID</td>
+                                    <td>int</td>
+                                    <td>Primary Key, Identity</td>
+                                </tr>
+                                <tr>
+                                    <td>FirstName</td>
+                                    <td>nvarchar(50)</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>LastName</td>
+                                    <td>nvarchar(50)</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <p>This template can then be used in a test to insert data:</p>
+
+        <div class="content-split">
+            <div class="content-split-primary">
+
+                <pre><code class="lang-csharp">[<span class="hljs-type">TestMethod</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-type">Task</span> <span class="hljs-title">InsertEmployeesTest</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-comment">// Inserts the template, using the default data</span>
+    <span class="hljs-type">EmployeesTemplate</span> defaultEmployee = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">InsertTemplateAsync</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">EmployeesTemplate</span>());
+
+    <span class="hljs-comment">// Inserts the template, overriding the FirstName value in the constructor</span>
+    <span class="hljs-type">EmployeesTemplate</span> customEmployee1 = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">InsertTemplateAsync</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">EmployeesTemplate</span>
+    {
+        [<span class="hljs-string">"FirstName"</span>] = <span class="hljs-string">"Custom1"</span>
+    });
+
+    <span class="hljs-comment">// Inserts the template, overriding the FirstName value using a fluent method</span>
+    <span class="hljs-type">EmployeesTemplate</span> customEmployee2 = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">InsertTemplateAsync</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">EmployeesTemplate</span>()
+        .<span class="hljs-title">WithLastName</span>(<span class="hljs-string">"Custom2"</span>));
+}
+            </code></pre>
+
+            </div>
+            <div class="content-split-secondary">
+                <aside>
+                    <header>Inserted SQL data</header>
+                    <div class="aside-body">
+                        <p>Running this test would insert these rows into the <strong>dbo.Employees</strong> table:</p>
+                        <table>
+                            <thead>
+                                <td>EmployeeID</td>
+                                <td>FirstName</td>
+                                <td>LastName</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DefaultFirstName</td>
+                                    <td>DefaultLastName</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Custom1</td>
+                                    <td>DefaultLastName</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>DefaultFirstName</td>
+                                    <td>Custom2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+                <aside>
+                    <header>Note: Identities</header>
+                    <div class="aside-body">
+                        <p>By default, the next Identity value is generated by the SQL database, so running this test a
+                            second time would result in the EmployeeIDs being 4, 5 and 6.</p>
+                        <p>When a template is inserted, the generated Identity value is added back into the template, so
+                            you can reference it in the rest of the test (e.g., <code>defaultEmployee.Identity</code>).
+                        </p>
+                        <p>Alternative, you can specify an Identity value in the test itself, and that value will be
+                            used instead of generating one.</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <h3 id="complextemplates">Complex Templates</h3>
+
+        <p>Complex templates are an easy way of combining multiple templates together, so that dependent tables can be
+            inserted into at the same time.</p>
+
+        <p>A good use case for complex templates is inserting into a table that has non-nullable foreign keys, so that
+            the dependent tables don't need to be set up in each individual test.</p>
+
+        <p>A complex template, representing a scenario containing multiple tables looks like this:</p>
+
+        <div class="content-split">
+            <div class="content-split-primary">
+
+                <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> DBConfirm.Core.Runners.Abstract;
+<span class="hljs-keyword">using</span> DBConfirm.Core.Templates;
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
+
+<span class="hljs-keyword">namespace</span> Sample.Tests.Templates.Complex
+{
+    <span class="hljs-comment">// The class inherits from BaseComplexTemplate</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">UserWithAddressTemplate</span> : <span class="hljs-type">BaseComplexTemplate</span>
+    {
+        <span class="hljs-comment">// Defines a template for the User table</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-type">UserTemplate</span> User { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> <span class="hljs-type">UserTemplate</span>();
+
+        <span class="hljs-comment">// Defines a template for the UserAddress table</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-type">UserAddressTemplate</span> UserAddress { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> <span class="hljs-type">UserAddressTemplate</span>();
+
+        <span class="hljs-comment">// Inserts the data based on the templates</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-type">Task</span> <span class="hljs-title">InsertAsync</span>(<span class="hljs-params"><span class="hljs-interface">ITestRunner</span> testRunner</span>)
+        </span>{
+            <span class="hljs-comment">// Inserts the User template</span>
+            <span class="hljs-keyword">await</span> testRunner.<span class="hljs-title">InsertTemplateAsync</span>(User);
+
+            <span class="hljs-comment">// Sets the User foreign key (UserId) in the UserAddress template</span>
+            <span class="hljs-comment">// with the Identity in the User template (User.Identity)</span>
+            UserAddress.<span class="hljs-title">WithUserId</span>(User.Identity);
+
+            <span class="hljs-comment">// Inserts the UserAddress template</span>
+            <span class="hljs-keyword">await</span> testRunner.<span class="hljs-title">InsertTemplateAsync</span>(UserAddress);
+        }
+    }
+}
+                    </code></pre>
+            </div>
+            <div class="content-split-secondary">
+                <aside>
+                    <header>Original SQL tables</header>
+                    <div class="aside-body">
+                        <p>This example represents inserting data into 2 tables, where <strong>dbo.UserAddress</strong>
+                            has a required foreign key to the <strong>dbo.Users</strong> table.</p>
+                        <p>The <strong>dbo.Users</strong> table in the SQL database looks like this:</p>
+                        <table>
+                            <thead>
+                                <td>Column Name</td>
+                                <td>Data Type</td>
+                                <td>Properties</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>UserId</td>
+                                    <td>int</td>
+                                    <td>Primary Key, Identity</td>
+                                </tr>
+                                <tr>
+                                    <td>Username</td>
+                                    <td>nvarchar(50)</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>The <strong>dbo.UserAddresses</strong> table in the SQL database looks like this:</p>
+                        <table>
+                            <thead>
+                                <td>Column Name</td>
+                                <td>Data Type</td>
+                                <td>Properties</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>UserAddressId</td>
+                                    <td>int</td>
+                                    <td>Primary Key, Identity</td>
+                                </tr>
+                                <tr>
+                                    <td>UserId</td>
+                                    <td>int</td>
+                                    <td>Foreign Key, Required</td>
+                                </tr>
+                                <tr>
+                                    <td>Address1</td>
+                                    <td>nvarchar(50)</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+
+        <p>This template can then be used in a test to insert data:</p>
+
+        <div class="content-split">
+            <div class="content-split-primary">
+
+                <pre><code class="lang-csharp">[<span class="hljs-type">TestMethod</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-type">Task</span> <span class="hljs-title">InsertUserAddressesTest</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-comment">// Inserts the template, using the default data for dbo.Users and dbo.UserAddresses</span>
+    <span class="hljs-type">UserWithAddressTemplate</span> defaultAddress = 
+        <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">InsertTemplateAsync</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">UserWithAddressTemplate</span>());
+
+    <span class="hljs-comment">// Inserts the template, with custom templates</span>
+    <span class="hljs-type">UserWithAddressTemplate</span> customAddress = 
+        <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">InsertTemplateAsync</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">UserWithAddressTemplate</span>
+        {
+            User = <span class="hljs-keyword">new</span> <span class="hljs-type">UserTemplate</span>().<span class="hljs-title">WithUsername</span>(<span class="hljs-string">"CustomUsername1"</span>),
+            UserAddress = <span class="hljs-keyword">new</span> <span class="hljs-type">UserAddressTemplate</span>().<span class="hljs-title">WithAddress1</span>(<span class="hljs-string">"CustomAddress1"</span>)
+        });
+}
+            </code></pre>
+
+
+            </div>
+            <div class="content-split-secondary">
+                <aside>
+                    <header>Inserted SQL data</header>
+                    <div class="aside-body">
+                        <p>Running this test would insert these rows into the <strong>dbo.Users</strong> table:</p>
+                        <table>
+                            <thead>
+                                <td>UserId</td>
+                                <td>Username</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DefaultUsername</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>CustomUsername1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Also, this test would insert these rows into the <strong>dbo.UserAddresses</strong> table:
+                        </p>
+                        <table>
+                            <thead>
+                                <td>UserAddressId</td>
+                                <td>UserId</td>
+                                <td>Address1</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>DefaultAddress1</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>CustomAddress1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

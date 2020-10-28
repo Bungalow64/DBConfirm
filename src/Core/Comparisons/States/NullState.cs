@@ -1,8 +1,8 @@
-﻿using SQLConfirm.Core.Comparisons.Abstract;
-using SQLConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.Comparisons.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 
-namespace SQLConfirm.Core.Comparisons.States
+namespace DBConfirm.Core.Comparisons.States
 {
     /// <summary>
     /// Asserts that a value is null

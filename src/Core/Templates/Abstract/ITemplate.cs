@@ -1,7 +1,7 @@
-﻿using SQLConfirm.Core.Runners.Abstract;
+﻿using DBConfirm.Core.Runners.Abstract;
 using System.Threading.Tasks;
 
-namespace SQLConfirm.Core.Templates.Abstract
+namespace DBConfirm.Core.Templates.Abstract
 {
     /// <summary>
     /// The interface for a template, used to set up precondition data in the target database

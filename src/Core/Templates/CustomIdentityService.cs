@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace SQLConfirm.Core.Templates
+namespace DBConfirm.Core.Templates
 {
     /// <summary>
     /// A service to generate a unique identity for the test

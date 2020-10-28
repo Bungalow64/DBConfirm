@@ -6,17 +6,17 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
-using SQLConfirm.Core.DataResults;
-using SQLConfirm.Core.TestFrameworks.Abstract;
-using SQLConfirm.Core.Templates.Abstract;
-using SQLConfirm.Core.Runners.Abstract;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Databases.SQLServer.Extensions;
-using SQLConfirm.Core.Templates;
-using SQLConfirm.Core.Exceptions;
+using DBConfirm.Core.DataResults;
+using DBConfirm.Core.TestFrameworks.Abstract;
+using DBConfirm.Core.Templates.Abstract;
+using DBConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Databases.SQLServer.Extensions;
+using DBConfirm.Core.Templates;
+using DBConfirm.Core.Exceptions;
 
-namespace SQLConfirm.Databases.SQLServer.Runners
+namespace DBConfirm.Databases.SQLServer.Runners
 {
     /// <summary>
     /// The SQL Server test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.

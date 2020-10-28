@@ -4,14 +4,14 @@
         <name>Packages.SQLServer.NUnit</name>
     </assembly>
     <members>
-        <member name="T:SQLConfirm.Packages.SQLServer.NUnit.NUnitBase">
+        <member name="T:DBConfirm.Packages.SQLServer.NUnit.NUnitBase">
             <summary>
             The abstract base class for test classes using NUnit and SQL Server
             </summary>
         </member>
-        <member name="P:SQLConfirm.Packages.SQLServer.NUnit.NUnitBase.TestRunnerFactory">
+        <member name="P:DBConfirm.Packages.SQLServer.NUnit.NUnitBase.TestRunnerFactory">
             <summary>
-            Uses <see cref="T:SQLConfirm.Databases.SQLServer.Factories.SQLServerTestRunnerFactory"/> to generate <see cref="T:SQLConfirm.Databases.SQLServer.Runners.SQLServerTestRunner"/> as the test runner
+            Uses <see cref="T:DBConfirm.Databases.SQLServer.Factories.SQLServerTestRunnerFactory"/> to generate <see cref="T:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner"/> as the test runner
             </summary>
         </member>
     </members>

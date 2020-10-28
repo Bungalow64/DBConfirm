@@ -1,11 +1,11 @@
-﻿using SQLConfirm.Core.Data;
-using SQLConfirm.Core.Validation;
+﻿using DBConfirm.Core.Data;
+using DBConfirm.Core.Validation;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace SQLConfirm.Core.DataResults
+namespace DBConfirm.Core.DataResults
 {
     /// <summary>
     /// The data for a specific row
