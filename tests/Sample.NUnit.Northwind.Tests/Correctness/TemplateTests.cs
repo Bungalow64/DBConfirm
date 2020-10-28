@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Sample.NUnit.Northwind.Tests.Templates;
 using Sample.NUnit.Northwind.Tests.Templates.Complex;
-using SQLConfirm.Packages.SQLServer.NUnit;
+using DBConfirm.Packages.SQLServer.NUnit;
 using System.Threading.Tasks;
 
 namespace Sample.NUnit.Northwind.Tests.Correctness

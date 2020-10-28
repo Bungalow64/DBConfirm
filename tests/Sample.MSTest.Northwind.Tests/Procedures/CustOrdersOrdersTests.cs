@@ -1,9 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sample.MSTest.Northwind.Tests.Templates;
 using Sample.MSTest.Northwind.Tests.Templates.Complex;
-using SQLConfirm.Core.Data;
-using SQLConfirm.Core.DataResults;
-using SQLConfirm.Packages.SQLServer.MSTest;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.DataResults;
+using DBConfirm.Packages.SQLServer.MSTest;
 using System;
 using System.Threading.Tasks;
 

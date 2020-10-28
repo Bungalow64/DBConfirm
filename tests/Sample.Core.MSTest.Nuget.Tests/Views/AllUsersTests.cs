@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
-using SQLConfirm.Packages.SQLServer.MSTest;
-using SQLConfirm.Core.Parameters;
-using SQLConfirm.Core.DataResults;
-using SQLConfirm.Core.Data;
+using DBConfirm.Packages.SQLServer.MSTest;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Core.DataResults;
+using DBConfirm.Core.Data;
 
 namespace Sample.Core.MSTest.Nuget.Tests.Views
 {

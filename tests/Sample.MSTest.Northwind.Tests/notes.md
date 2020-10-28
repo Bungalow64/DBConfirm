@@ -10,7 +10,7 @@ This is the message when a required property hasn't been set.  Need to include t
 
               Message: 
                 Test method NorthwindTests.Correctness.TemplateTests.Templates_CanAllBeAdded threw exception: 
-                SQLConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for TerritoryID is required but has not been set
+                DBConfirm.Core.Exceptions.RequiredPlaceholderIsNullException: The value for TerritoryID is required but has not been set
               Stack Trace: 
                 IDictionaryExtensions.<ToSqlParameters>g__getValue|0_0(KeyValuePair`2 value)
                 <>c.<ToSqlParameters>b__0_1(KeyValuePair`2 p)
