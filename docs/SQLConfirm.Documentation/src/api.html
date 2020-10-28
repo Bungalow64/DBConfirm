@@ -24,22 +24,29 @@
                 <li><a href="index.html">Overview</a></li>
                 <li><a href="quickstart.html">Quick Start</a></li>
                 <li><a href="#">Examples</a></li>
-                <li><a href="#">NuGet Packages</a></li>
+                <li><a href="nuget.html">NuGet Packages</a></li>
                 <li><a href="#">Continuous Integration</a></li>
                 <li class="active"><a href="api.html">API Reference</a></li>
+                <li><a href="templates.html">Templates</a></li>
             </ul>
         </nav>
     </div>
     <div id="content">
 
         <h1>SQLConfirm - Documentation</h1>
+        <ul>
+            <li><a href="#testrunner">TestRunner API</a></li>
+            <li><a href="#queryresult">QueryResult object</a></li>
+            <li><a href="#rowresult">RowResult object</a></li>
+            <li><a href="#scalarresult">ScalarResult object</a></li>
+        </ul>
 
-        <h2 id="the-sqlconfirm-api">The SQLConfirm API</h2>
+        <h2 id="testrunner">TestRunner API</h2>
         <p>The SQLConfirm API is accessed via the <code>TestRunner</code> property, on the test&#39;s base class. Most
             of
             the API methods are awaitable, so make sure your test is marked as <strong>async</strong> and return a
             <code>Task</code>.</p>
-        <h2 id="countrowsintableasync">CountRowsInTableAsync</h2>
+        <h3 id="countrowsintableasync">CountRowsInTableAsync</h3>
         <p>Returns the total number of rows in the table</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-keyword">int</span>&gt; CountRowsInTableAsync(<span class="hljs-keyword">string</span> tableName)
 </code></pre>
@@ -51,7 +58,7 @@
         <ul>
             <li>the total number of rows</li>
         </ul>
-        <h2 id="countrowsinviewasync">CountRowsInViewAsync</h2>
+        <h3 id="countrowsinviewasync">CountRowsInViewAsync</h3>
         <p>Returns the total number of rows in the view</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-keyword">int</span>&gt; CountRowsInViewAsync(<span class="hljs-keyword">string</span> viewName)
 </code></pre>
@@ -63,7 +70,7 @@
         <ul>
             <li>the total number of rows</li>
         </ul>
-        <h2 id="executecommandasync">ExecuteCommandAsync</h2>
+        <h3 id="executecommandasync">ExecuteCommandAsync</h3>
         <p>Executes a command, returning a single data table</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-type">QueryResult</span>&gt; ExecuteCommandAsync(<span class="hljs-keyword">string</span> commandText, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -82,7 +89,7 @@
                 returned
             </li>
         </ul>
-        <h2 id="executecommandmultipledatasetasync">ExecuteCommandMultipleDataSetAsync</h2>
+        <h3 id="executecommandmultipledatasetasync">ExecuteCommandMultipleDataSetAsync</h3>
         <p>Executes a command, returning all data tables</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-interface">IList</span>&lt;<span class="hljs-type">QueryResult</span>&gt;&gt; ExecuteCommandMultipleDataSetAsync(<span class="hljs-keyword">string</span> commandText, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -99,7 +106,7 @@
         <ul>
             <li>Returns all tables returned from the command</li>
         </ul>
-        <h2 id="executecommandnoresultsasync">ExecuteCommandNoResultsAsync</h2>
+        <h3 id="executecommandnoresultsasync">ExecuteCommandNoResultsAsync</h3>
         <p>Executes a command, returning no data</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span> ExecuteCommandNoResultsAsync(<span class="hljs-keyword">string</span> commandText, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -116,7 +123,7 @@
         <ul>
             <li>Nothing</li>
         </ul>
-        <h2 id="executecommandscalarasync">ExecuteCommandScalarAsync</h2>
+        <h3 id="executecommandscalarasync">ExecuteCommandScalarAsync</h3>
         <p>Executes a command, returning a single object</p>
         <pre><code class="lang-csharp"><span class="hljs-type">Task</span>&lt;<span class="hljs-type">ScalarResult</span><span class="hljs-symbol">&lt;T&gt;</span>&gt; ExecuteCommandScalarAsync<span class="hljs-symbol">&lt;T&gt;</span>(<span class="hljs-keyword">string</span> commandText, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -137,7 +144,7 @@
         <ul>
             <li>Returns the object returned from the command</li>
         </ul>
-        <h2 id="executestoredproceduremultipledatasetasync">ExecuteStoredProcedureMultipleDataSetAsync</h2>
+        <h3 id="executestoredproceduremultipledatasetasync">ExecuteStoredProcedureMultipleDataSetAsync</h3>
         <p>Executes a stored procedure, returning all data tables</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-interface">IList</span>&lt;<span class="hljs-type">QueryResult</span>&gt;&gt; ExecuteStoredProcedureMultipleDataSetAsync(<span class="hljs-keyword">string</span> procedureName, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -154,7 +161,7 @@
         <ul>
             <li>Returns all tables returned from the stored procedure</li>
         </ul>
-        <h2 id="executestoredprocedurenonqueryasync">ExecuteStoredProcedureNonQueryAsync</h2>
+        <h3 id="executestoredprocedurenonqueryasync">ExecuteStoredProcedureNonQueryAsync</h3>
         <p>Executes a stored procedure, returning nothing</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span> ExecuteStoredProcedureNonQueryAsync(<span class="hljs-keyword">string</span> procedureName, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -171,7 +178,7 @@
         <ul>
             <li>Nothing</li>
         </ul>
-        <h2 id="executestoredprocedurequeryasync">ExecuteStoredProcedureQueryAsync</h2>
+        <h3 id="executestoredprocedurequeryasync">ExecuteStoredProcedureQueryAsync</h3>
         <p>Executes a stored procedure, returning a single data table</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-type">QueryResult</span>&gt; ExecuteStoredProcedureQueryAsync(<span class="hljs-keyword">string</span> procedureName, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -190,7 +197,7 @@
                 is
                 returned</li>
         </ul>
-        <h2 id="executestoredprocedurescalarasync">ExecuteStoredProcedureScalarAsync</h2>
+        <h3 id="executestoredprocedurescalarasync">ExecuteStoredProcedureScalarAsync</h3>
         <p>Executes a stored procedure, returning a single object</p>
         <pre><code class="lang-csharp"><span class="hljs-type">Task</span>&lt;<span class="hljs-type">ScalarResult</span><span class="hljs-symbol">&lt;T&gt;</span>&gt; ExecuteStoredProcedureScalarAsync<span class="hljs-symbol">&lt;T&gt;</span>(<span class="hljs-keyword">string</span> procedureName, <span class="hljs-interface">IDictionary</span>&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters)
 
@@ -211,7 +218,7 @@
         <ul>
             <li>Returns the object returned from the stored procedure</li>
         </ul>
-        <h2 id="executetableasync">ExecuteTableAsync</h2>
+        <h3 id="executetableasync">ExecuteTableAsync</h3>
         <p>Returns all data for a specific table</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-type">QueryResult</span>&gt; ExecuteTableAsync(<span class="hljs-keyword">string</span> tableName)
 </code></pre>
@@ -223,7 +230,7 @@
         <ul>
             <li>Returns all columns and values found</li>
         </ul>
-        <h2 id="executeviewasync">ExecuteViewAsync</h2>
+        <h3 id="executeviewasync">ExecuteViewAsync</h3>
         <p>Returns all data for a specific view</p>
         <pre><code class="lang-csharp"><span class="hljs-built_in"><span class="hljs-type">Task</span></span>&lt;<span class="hljs-type">QueryResult</span>&gt; ExecuteViewAsync(<span class="hljs-keyword">string</span> viewName)
 </code></pre>
@@ -235,7 +242,7 @@
         <ul>
             <li>Returns all columns and values found</li>
         </ul>
-        <h2 id="insertdataasync">InsertDataAsync</h2>
+        <h3 id="insertdataasync">InsertDataAsync</h3>
         <p>Inserts data into a table.</p>
         <p>Where the table has an identity column, and is not set as part of the input data, then the identity value
             used is
@@ -255,7 +262,7 @@
         <ul>
             <li>Returns the data inserted, including the identity value (if applicable)</li>
         </ul>
-        <h2 id="inserttemplateasync-default-values-">InsertTemplateAsync (default values)</h2>
+        <h3 id="inserttemplateasync-default-values-">InsertTemplateAsync (default values)</h3>
         <p>Inserts data based on the default values defined in the template</p>
         <p>Where the table has an identity column, and is not set as part of the input data, then the identity value
             used is
@@ -270,7 +277,7 @@
         <ul>
             <li>Returns the template object, including the identity value (if applicable)</li>
         </ul>
-        <h2 id="inserttemplateasync">InsertTemplateAsync</h2>
+        <h3 id="inserttemplateasync">InsertTemplateAsync</h3>
         <p>Inserts data based on the supplied template</p>
         <p>Where the table has an identity column, and is not set as part of the input data, then the identity value
             used is
@@ -296,7 +303,7 @@
             of
             properties and assertion methods which can be used to test the data. Alternatively, the data itself can be
             accessed vua the <code>RawData</code> property, to return the data as a <code>DataTable</code>.</p>
-        <h2 id="totalrows">TotalRows</h2>
+        <h3 id="totalrows">TotalRows</h3>
         <p>The total number of rows in the data set</p>
         <pre><code class="lang-csharp"><span class="hljs-keyword">int</span> TotalRows { <span class="hljs-keyword">get</span>; }
 </code></pre>
@@ -304,7 +311,7 @@
         <ul>
             <li>Returns the total number of rows in the data set</li>
         </ul>
-        <h2 id="totalcolumns">TotalColumns</h2>
+        <h3 id="totalcolumns">TotalColumns</h3>
         <p>The total number of columns in the data set</p>
         <pre><code class="lang-csharp"><span class="hljs-keyword">int</span> TotalColumns { <span class="hljs-keyword">get</span>; }
 </code></pre>
@@ -312,7 +319,7 @@
         <ul>
             <li>Returns the total number of columns in the data set</li>
         </ul>
-        <h2 id="columnnames">ColumnNames</h2>
+        <h3 id="columnnames">ColumnNames</h3>
         <p>The collection of columns in the data set, in the order they appear in the data set</p>
         <pre><code class="lang-csharp"><span class="hljs-interface">ICollection</span>&lt;<span class="hljs-keyword">string</span>&gt; ColumnNames { <span class="hljs-keyword">get</span>; }
 </code></pre>
@@ -320,7 +327,7 @@
         <ul>
             <li>Returns the collection of columns in the data set, in the order they appear in the data set</li>
         </ul>
-        <h2 id="assertrowcount">AssertRowCount</h2>
+        <h3 id="assertrowcount">AssertRowCount</h3>
         <p>Asserts the number of rows</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertRowCount(<span class="hljs-keyword">int</span> expected)
 </code></pre>
@@ -332,7 +339,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertrowcount">AssertRowCount</h2>
+        <h3 id="assertrowcount">AssertRowCount</h3>
         <p>Asserts the number of columns</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertColumnCount(<span class="hljs-keyword">int</span> expected)
 </code></pre>
@@ -344,7 +351,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertcolumnexists">AssertColumnExists</h2>
+        <h3 id="assertcolumnexists">AssertColumnExists</h3>
         <p>Asserts that a specific column exists in the data set</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertColumnExists(<span class="hljs-keyword">string</span> expectedColumnName)
 </code></pre>
@@ -356,7 +363,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertcolumnnotexists">AssertColumnNotExists</h2>
+        <h3 id="assertcolumnnotexists">AssertColumnNotExists</h3>
         <p>Asserts that a specific column does not exist in the data set</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertColumnNotExists(<span class="hljs-keyword">string</span> notExpectedColumnName)
 </code></pre>
@@ -368,7 +375,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertcolumnsexist">AssertColumnsExist</h2>
+        <h3 id="assertcolumnsexist">AssertColumnsExist</h3>
         <p>Asserts that a number of columns all exist in the data set</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertColumnsExist(<span class="hljs-keyword">params</span> <span class="hljs-keyword">string</span>[] expectedColumnNames)
 </code></pre>
@@ -380,7 +387,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertcolumnsnotexist">AssertColumnsNotExist</h2>
+        <h3 id="assertcolumnsnotexist">AssertColumnsNotExist</h3>
         <p>Asserts that a number of columns all do not exist in the data set</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertColumnsNotExist(<span class="hljs-keyword">params</span> <span class="hljs-keyword">string</span>[] notExpectedColumnNames)
 </code></pre>
@@ -392,7 +399,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertrowpositionexists">AssertRowPositionExists</h2>
+        <h3 id="assertrowpositionexists">AssertRowPositionExists</h3>
         <p>Asserts that a row exists at a specific position (zero-based)</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertRowPositionExists(<span class="hljs-keyword">int</span> expectedRowPosition)
 </code></pre>
@@ -404,7 +411,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertvalue">AssertValue</h2>
+        <h3 id="assertvalue">AssertValue</h3>
         <p>Asserts that a specific value exists for the given row and column. Also asserts that the row and column
             exists
         </p>
@@ -420,7 +427,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="validaterow">ValidateRow</h2>
+        <h3 id="validaterow">ValidateRow</h3>
         <p>Returns a <code>RowResult</code> object, representing the specific row on which further assertions can be
             made.
             Validates that the row number exists in the data set</p>
@@ -434,7 +441,7 @@
         <ul>
             <li>Returns the <code>RowResult</code> for the row</li>
         </ul>
-        <h2 id="assertrowvalues">AssertRowValues</h2>
+        <h3 id="assertrowvalues">AssertRowValues</h3>
         <p>Asserts that the row at the given position matches the expected data. Also asserts that all columns in the
             expected data exist</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertRowValues(<span class="hljs-keyword">int</span> rowNumber, <span class="hljs-type">DataSetRow</span> expectedData)
@@ -449,7 +456,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertrowexists">AssertRowExists</h2>
+        <h3 id="assertrowexists">AssertRowExists</h3>
         <p>Asserts that at least one row matches the expected data. Also asserts that all columns in the expected data
             exist
         </p>
@@ -464,7 +471,7 @@
         <ul>
             <li>Returns the same <code>QueryResult</code> object</li>
         </ul>
-        <h2 id="assertrowdoesnotexist">AssertRowDoesNotExist</h2>
+        <h3 id="assertrowdoesnotexist">AssertRowDoesNotExist</h3>
         <p>Asserts that no rows match the supplied data. Also asserts that all columns in the supplied data exist</p>
         <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> AssertRowDoesNotExist(<span class="hljs-type">DataSetRow</span> unexpectedData)
 </code></pre>
@@ -481,7 +488,7 @@
             <code>QueryResult.ValidateRow</code> method. This object has a number of assertion methods which can be used
             to
             test the data in that specific row.</p>
-        <h2 id="assertvalue">AssertValue</h2>
+        <h3 id="assertvalue">AssertValue</h3>
         <p>Asserts that a specific value exists for the given column. Also asserts that the column exists</p>
         <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-type">RowResult</span> <span class="hljs-title">AssertValue</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> columnName, <span class="hljs-keyword">object</span> expectedValue</span>)</span>
 </code></pre>
@@ -494,7 +501,7 @@
         <ul>
             <li>Returns the same <code>RowResult</code> object</li>
         </ul>
-        <h2 id="assertvalues">AssertValues</h2>
+        <h3 id="assertvalues">AssertValues</h3>
         <p>Asserts that the row matches the expected data. Also asserts that all columns in the expected data exist</p>
         <pre><code class="lang-csharp"><span class="hljs-type">RowResult</span> AssertValues(<span class="hljs-type">DataSetRow</span> expectedData)
 </code></pre>
@@ -507,7 +514,7 @@
         <ul>
             <li>Returns the same <code>RowResult</code> object</li>
         </ul>
-        <h2 id="validaterow">ValidateRow</h2>
+        <h3 id="validaterow">ValidateRow</h3>
         <p>Returns a <code>RowResult</code> object, representing the specific row on which further assertions can be
             made.
             Validates that the row number exists in the data set</p>
@@ -524,7 +531,7 @@
         <h2 id="scalarresult">ScalarResult</h2>
         <p>A single value is returned in a <code>ScalarResult&lt;T&gt;</code> object, accessed via a scalar method in
             <code>TestRunner</code>. This object has an assertion method which can be used to test the value.</p>
-        <h2 id="assertvalue">AssertValue</h2>
+        <h3 id="assertvalue">AssertValue</h3>
         <p>Asserts that the value matches the expected value</p>
         <pre><code class="lang-csharp"><span class="hljs-type">ScalarResult</span>&lt;T&gt; AssertValue(<span class="hljs-keyword">object</span> expectedValue)
 </code></pre>

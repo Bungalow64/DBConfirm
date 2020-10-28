@@ -187,7 +187,7 @@ namespace SQLConfirm.TemplateGeneration.Logic
 
 namespace {_options.Namespace ?? "SQLConfirm.Templates"}
 {{
-    public class {className}: Base{(identityColumn != null ? "Identity" : "Simple")}Template<{className}>
+    public class {className} : Base{(identityColumn != null ? "Identity" : "Simple")}Template<{className}>
     {{
         public override string TableName => ""[{schemaName}].[{tableName}]"";
         {(identityColumn != null ? @$"{Environment.NewLine}        public override string IdentityColumnName => ""{identityColumn.ColumnName}"";{Environment.NewLine}" : "")}

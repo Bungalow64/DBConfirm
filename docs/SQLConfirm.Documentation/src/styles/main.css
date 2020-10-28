@@ -87,7 +87,7 @@ body {
     bottom: 0px;
     right: 0px;
     overflow-y: scroll;
-    padding: 15px;
+    padding: 5vw;
 }
 
 #content h1,#content h2,#content h3,#content h4{
@@ -122,7 +122,34 @@ body {
     border-radius: 10px;
     padding: 10px;
     color: #DCDCDC;
+
+    flex-grow: 1;
+    overflow-x: auto;
 }
+
+
+
+#content pre::-webkit-scrollbar {
+    width: 12px;
+    height: 8px;
+    background: transparent;
+    margin:10px;
+}
+
+#content pre::-webkit-scrollbar-thumb {
+    background: #e0e4e9;
+    border-radius: 12px;
+    background-clip: content-box;
+    border: 1px solid transparent;
+}
+
+#content pre:hover::-webkit-scrollbar-thumb {
+    background: #c1c9d2;
+    border-radius: 12px;
+    background-clip: content-box;
+}
+
+
 
 #content pre .hljs-keyword{
     color: #569CD6;
@@ -160,3 +187,83 @@ body {
     color: #D39B68;
 }
 
+#content a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #3955d3;
+}
+
+#content a:hover{
+    color: #1e2231;
+}
+
+#content ul{
+    display: flex;
+    flex-direction: column;
+}
+
+#content ul li span {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    list-style-type: square;
+}
+
+#content ul li span img{
+    margin:5px 0 0 4px;
+}
+
+#content aside{
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+#content aside p {
+    margin-top:0;
+}
+
+#content aside header{
+    border-bottom: solid 1px #e3e8ee;
+    padding-left:10px;
+    padding-right:10px;
+    padding-bottom:8px;
+    padding-top:5px;
+    font-weight: 500;
+    background-color: #e3e8ee;
+    border-radius: 10px 10px 0 0;
+}
+
+#content aside .aside-body{
+    padding:10px;
+    border:solid 1px #e3e8ee;
+    border-radius: 0 0 10px 10px;
+    background-color: #f7fafc;
+}
+
+#content aside .aside-body table{
+    font-size: 0.9em;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#content aside .aside-body table thead{
+    font-weight: 500;
+}
+
+#content aside .aside-body table td{
+    padding: 3px;
+}
+
+
+#content .content-split{
+    display: flex;
+}
+
+#content .content-split-primary{
+    margin-right: 5vw;
+    width: 40vw;
+}
+
+#content .content-split-secondary{
+    max-width:500px;
+}
