@@ -27,6 +27,7 @@ export default function Templates() {
                 to be inserted across many tables at the same time.</li>
             </ul>
 
+            <p>Simple templates can also be automatically generated based on an existing database by using <a href="#templategeneration">DBConfirm.TemplateGeneration</a>.</p>
 
             <h3 id="simpletemplates">Simple Templates</h3>
 
@@ -95,6 +96,12 @@ export default function Templates() {
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </aside>
+                    <aside>
+                        <header>Automatic template generation</header>
+                        <div className="aside-body">
+                            <p>Note that these templates can be automatically generated for you.  See <a href="#templategeneration">DBConfirm.TemplateGeneration</a> below.</p>
                         </div>
                     </aside>
                 </div>
@@ -353,6 +360,94 @@ export default function Templates() {
                 </div>
             </div>
 
+            <h3 id="templategeneration">Template Generation</h3>
+
+            <p>Simple templates are designed to exactly match their corresponding tables in the database,
+                so the dotnet tool <a href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/" target="_black">DBConfirm.TemplateGeneration</a> can
+                be used to generate the C# classes for you.  These classes include all required properties for the table, and add a fluent method for each column found.</p>
+
+            <p>To get started, you need to have created your test project, and added the relevant DBConfirm.Packages.* NuGet package.</p>
+            <p>Next, using the Package Manager Console (or command line) install the tool by executing the following:</p>
+            <pre><code>dotnet tool install --global DBConfirm.TemplateGeneration</code></pre>
+            <p>Once installed, you can run the tool by executing <strong>GenerateTemplatesSQLServer</strong>.  There are a number of parameters you can set:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style={{ width: "170px" }}>Property</th>
+                        <th style={{ width: "70px" }}>Data Type</th>
+                        <th style={{ width: "500px" }}>Description</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--databaseName (or -d)</td>
+                        <td>String</td>
+                        <td>The name of the database to use</td>
+                        <td>Optional, if not specified, --connectionString must be used</td>
+                    </tr>
+                    <tr>
+                        <td>--connectionString (or -c)</td>
+                        <td>String</td>
+                        <td>The connection string to use</td>
+                        <td>Optional, if not specified, --databaseName is used, pointing to (local) and integrated security</td>
+                    </tr>
+                    <tr>
+                        <td>--tableName (or -t)</td>
+                        <td>String</td>
+                        <td>The name of the table to process.  The name can contain wildcard characters (*) to match multiple tables within the same schema</td>
+                        <td>Required</td>
+                    </tr>
+                    <tr>
+                        <td>--schemaName (or -s)</td>
+                        <td>String</td>
+                        <td>The schema of the table to process</td>
+                        <td>Optional, defaults to <strong>dbo</strong></td>
+                    </tr>
+                    <tr>
+                        <td>--namespace (or -n)</td>
+                        <td>String</td>
+                        <td>The namespace to use for the generated class</td>
+                        <td>Optional, defaults to <strong>DBConfirm.Templates</strong></td>
+                    </tr>
+                    <tr>
+                        <td>--destination</td>
+                        <td>string</td>
+                        <td>The path to where the file is to be saved</td>
+                        <td>Optional, defaults to the current location</td>
+                    </tr>
+                    <tr>
+                        <td>--overwrite (or -o)</td>
+                        <td>Boolean</td>
+                        <td>Sets whether the target file can be overwritten if it already exists</td>
+                        <td>Optional, defaults to <strong>false</strong></td>
+                    </tr>
+                    <tr>
+                        <td>--dry-run</td>
+                        <td>Boolean</td>
+                        <td>Outputs the generated file to the console instead of creating a file</td>
+                        <td>Optional, defaults to <strong>false</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example commands</h4>
+            <p>To generate all tables for the local database called <strong>Northwind</strong>, outputting all files in the same location, execute:</p>
+            <pre><code>GenerateTemplatesSQLServer --databaseName "Northwind" --tableName "*"</code></pre>
+
+            <p>To generate the file for the <strong>dbo.Users</strong> table, using a custom connection string, execute:</p>
+            <pre><code>GenerateTemplatesSQLServer --connectionString "SERVER=(local);DATABASE=Northwind;Integrated Security=true;Connection Timeout=30;" --tableName "Users"</code></pre>
+
+            <p>To generate all tables into a specific directory with a custom namespace, but not overwriting existing templates, execute:</p>
+            <pre><code>GenerateTemplatesSQLServer --databaseName "Northwind" --tableName "*" --destination "C:\git\SQLTests\Templates" --namespace "SQLTests.Templates" --overwrite false</code></pre>
+
+            <h4>Updating the tool</h4>
+            <p>To update the tool to the latest version, execute:</p>
+            <pre><code>dotnet tool update --global DBConfirm.TemplateGeneration</code></pre>
+
+            <h4>Uninstalling the tool</h4>
+            <p>To uninstall the tool, execute:</p>
+            <pre><code>dotnet tool uninstall --global DBConfirm.TemplateGeneration</code></pre>
         </>
     );
 }
