@@ -6,7 +6,7 @@ export default function ScrollToTop({scrollContent}) {
 
   useEffect(() => {
     scrollContent.current.scrollTop = 0;
-  }, [pathname]);
+  }, [pathname, scrollContent]);
 
   return null;
 }

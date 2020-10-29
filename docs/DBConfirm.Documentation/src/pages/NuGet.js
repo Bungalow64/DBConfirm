@@ -13,13 +13,13 @@ export default function NuGet() {
             <p>Therefore, there are 2 packages to choose from, one for MSTest and NUnit.  Install the one that you want, and you'll have everything you need.</p>
 
             <ul>
-                <li><span>For integrating with MSTest and SQL Server, use&nbsp;<a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/"><img src="https://img.shields.io/nuget/v/DBConfirm.Packages.SQLServer.MSTest" alt="" /></a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Packages.SQLServer.MSTest" alt="" /></a></span>
+                <li><span>For integrating with MSTest and SQL Server, use&nbsp;<a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/"><img src="https://img.shields.io/nuget/v/DBConfirm.Packages.SQLServer.MSTest" alt="" /></a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Packages.SQLServer.MSTest" alt="" /></a></span>
                 </li>
-                <li><span>For integrating with NUnit and SQL Server, use&nbsp;<a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/">DBConfirm.Packages.SQLServer.NUnit</a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/"><img src="https://img.shields.io/nuget/v/DBConfirm.Packages.SQLServer.NUnit" alt="" /></a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Packages.SQLServer.NUnit" alt="" /></a></span>
+                <li><span>For integrating with NUnit and SQL Server, use&nbsp;<a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/">DBConfirm.Packages.SQLServer.NUnit</a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/"><img src="https://img.shields.io/nuget/v/DBConfirm.Packages.SQLServer.NUnit" alt="" /></a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Packages.SQLServer.NUnit" alt="" /></a></span>
                 </li>
             </ul>
 
@@ -28,9 +28,9 @@ export default function NuGet() {
             <p>DBConfirm.Core is the core library that handles all the DBConfirm logic.  This is common logic across all test frameworks and database engines.</p>
 
             <ul>
-                <li><span><a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Core/">DBConfirm.Core</a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Core/"><img src="https://img.shields.io/nuget/v/DBConfirm.Core" alt="" /></a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Core/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Core" alt="" /></a></span>
+                <li><span><a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Core/">DBConfirm.Core</a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Core/"><img src="https://img.shields.io/nuget/v/DBConfirm.Core" alt="" /></a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Core/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Core" alt="" /></a></span>
                 </li>
             </ul>
 
@@ -39,13 +39,13 @@ export default function NuGet() {
             <p>DBConfirm must run with a testing framework, currently either MSTest or NUnit.  These DBConfirm.Frameworks.* packages contain the integration logic.</p>
 
             <ul>
-                <li><span>For integrating with MSTest, use&nbsp;<a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Frameworks.MSTest/">DBConfirm.Frameworks.MSTest</a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Frameworks.MSTest/"><img src="https://img.shields.io/nuget/v/DBConfirm.Frameworks.MSTest" alt="" /></a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Frameworks.MSTest/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Frameworks.MSTest" alt="" /></a></span>
+                <li><span>For integrating with MSTest, use&nbsp;<a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Frameworks.MSTest/">DBConfirm.Frameworks.MSTest</a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Frameworks.MSTest/"><img src="https://img.shields.io/nuget/v/DBConfirm.Frameworks.MSTest" alt="" /></a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Frameworks.MSTest/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Frameworks.MSTest" alt="" /></a></span>
                 </li>
-                <li><span>For integrating with NUnit, use&nbsp;<a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Frameworks.NUnit/">DBConfirm.Frameworks.NUnit</a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Frameworks.NUnit/"><img src="https://img.shields.io/nuget/v/DBConfirm.Frameworks.NUnit" alt="" /></a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Frameworks.NUnit/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Frameworks.NUnit" alt="" /></a></span>
+                <li><span>For integrating with NUnit, use&nbsp;<a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Frameworks.NUnit/">DBConfirm.Frameworks.NUnit</a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Frameworks.NUnit/"><img src="https://img.shields.io/nuget/v/DBConfirm.Frameworks.NUnit" alt="" /></a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Frameworks.NUnit/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Frameworks.NUnit" alt="" /></a></span>
                 </li>
             </ul>
 
@@ -54,9 +54,9 @@ export default function NuGet() {
             <p>DBConfirm currently can only use SQL Server as a database engine.  This package handles the logic to insert and retrieve data from the database.</p>
 
             <ul>
-                <li><span>For integrating with SQL Server, use&nbsp;<a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Databases.SQLServer/">DBConfirm.Databases.SQLServer</a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Databases.SQLServer/"><img src="https://img.shields.io/nuget/v/DBConfirm.Databases.SQLServer" alt="" /></a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.Databases.SQLServer/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Databases.SQLServer" alt="" /></a></span>
+                <li><span>For integrating with SQL Server, use&nbsp;<a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Databases.SQLServer/">DBConfirm.Databases.SQLServer</a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Databases.SQLServer/"><img src="https://img.shields.io/nuget/v/DBConfirm.Databases.SQLServer" alt="" /></a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Databases.SQLServer/"><img src="https://img.shields.io/nuget/dt/DBConfirm.Databases.SQLServer" alt="" /></a></span>
                 </li>
             </ul>
 
@@ -66,9 +66,9 @@ export default function NuGet() {
             <p>This tool outputs ready-to-go classes directly into your test project, referencing all columns that exist in the tables.</p>
 
             <ul>
-                <li><span>To run the tool, use&nbsp;<a target="_blank" href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/">DBConfirm.TemplateGeneration</a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/"><img src="https://img.shields.io/nuget/v/DBConfirm.TemplateGeneration" alt="" /></a>
-                    <a target="_blank" href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/"><img src="https://img.shields.io/nuget/dt/DBConfirm.TemplateGeneration" alt="" /></a></span>
+                <li><span>To run the tool, use&nbsp;<a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/">DBConfirm.TemplateGeneration</a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/"><img src="https://img.shields.io/nuget/v/DBConfirm.TemplateGeneration" alt="" /></a>
+                    <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/"><img src="https://img.shields.io/nuget/dt/DBConfirm.TemplateGeneration" alt="" /></a></span>
                 </li>
             </ul>
         </>

@@ -8,10 +8,10 @@ export default function QuickStart() {
             <h3>Install packages</h3>
             <p>Install the NuGet package for the test framework you&#39;re currently using, either MSTest or NUnit:</p>
             <ul>
-                <li>Install-Package <a target="_blank"
+                <li>Install-Package <a target="_blank" rel="noreferrer"
                     href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
                 </li>
-                <li>Install-Package <a target="_blank"
+                <li>Install-Package <a target="_blank" rel="noreferrer"
                     href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/">DBConfirm.Packages.SQLServer.NUnit</a>
                 </li>
             </ul>
@@ -43,7 +43,7 @@ export default function QuickStart() {
 
             <h3>Add test class</h3>
             <p>Add a new test file, and inherit from the base class for the framework (either <code>MSTestBase</code> or <code>NUnitBase</code>):</p>
-            <pre><code className="lang-csharp"><span className="hljs-comment">// For MSTest</span>
+            <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For MSTest</span>
             {"\n"}<span className="hljs-keyword">using</span> System.Threading.Tasks;
             {"\n"}<span className="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
             {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.MSTest;
@@ -54,7 +54,7 @@ export default function QuickStart() {
             {"\n"}    ...
             {"\n"}{"}"}
             </code></pre>
-            <pre><code className="lang-csharp"><span className="hljs-comment">// For NUnit</span>
+            <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For NUnit</span>
                 {"\n"}<span className="hljs-keyword">using</span> System.Threading.Tasks;
                 {"\n"}<span className="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
                 {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.NUnit;
@@ -67,7 +67,7 @@ export default function QuickStart() {
             </code></pre>
             <h3>Add test method</h3>
             <p>Add a new test method, and start testing:</p>
-            <pre><code className="lang-csharp"><span className="hljs-comment">// For MSTest</span>
+            <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For MSTest</span>
             {"\n"}[<span className="hljs-type">TestMethod</span>]
             {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span className="hljs-params"></span>)
             {"\n"}</span>{"{"}
@@ -77,7 +77,7 @@ export default function QuickStart() {
             {"\n"}        .<span className="hljs-title">AssertColumnExists</span>(<span className="hljs-string">"FirstName"</span>);
             {"\n"}{"}"}
             </code></pre>
-            <pre><code className="lang-csharp"><span className="hljs-comment">// For NUnit</span>
+            <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For NUnit</span>
             {"\n"}[<span className="hljs-type">Test</span>]
             {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span className="hljs-params"></span>)
             {"\n"}</span>{"{"}
