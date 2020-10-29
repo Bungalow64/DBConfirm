@@ -41,23 +41,23 @@ export default function Templates() {
                 {"\n"}
                         {"\n"}<span className="hljs-keyword">namespace</span> Sample.Tests.Templates
                 {"\n"}{"{"}
-                        {"\n"}    <span className="hljs-comment">// The class inherits from BaseIdentityTemplate, indicating the table has an identity column</span>
+                        {"\n"}    <span className="hljs-comment">{'//'} The class inherits from BaseIdentityTemplate, indicating the table has an identity column</span>
                         {"\n"}    <span className="hljs-keyword">public</span> <span className="hljs-keyword">class</span> <span className="hljs-type">EmployeesTemplate</span> : <span className="hljs-type">BaseIdentityTemplate</span>&lt;<span className="hljs-type">EmployeesTemplate</span>&gt;
                 {"\n"}    {"{"}
-                        {"\n"}        <span className="hljs-comment">// Sets the schema and name of the table</span>
+                        {"\n"}        <span className="hljs-comment">{'//'} Sets the schema and name of the table</span>
                         {"\n"}        <span className="hljs-keyword">public</span> <span className="hljs-keyword">override</span> <span className="hljs-keyword">string</span> TableName =&gt; <span className="hljs-string">"[dbo].[Employees]"</span>;
                 {"\n"}
-                        {"\n"}        <span className="hljs-comment">// Sets the name of the identity column</span>
+                        {"\n"}        <span className="hljs-comment">{'//'} Sets the name of the identity column</span>
                         {"\n"}        <span className="hljs-keyword">public</span> <span className="hljs-keyword">override</span> <span className="hljs-keyword">string</span> IdentityColumnName =&gt; <span className="hljs-string">"EmployeeID"</span>;
                 {"\n"}
-                        {"\n"}        <span className="hljs-comment">// Defines default data that's used when this template is inserted</span>
+                        {"\n"}        <span className="hljs-comment">{'//'} Defines default data that's used when this template is inserted</span>
                         {"\n"}        <span className="hljs-keyword">public</span> <span className="hljs-keyword">override</span> <span className="hljs-type">DataSetRow</span> DefaultData =&gt; <span className="hljs-keyword">new</span> <span className="hljs-type">DataSetRow</span>
                         {"\n"}        {"{"}
                         {"\n"}            [<span className="hljs-string">"FirstName"</span>] = <span className="hljs-string">"DefaultFirstName"</span>,
                 {"\n"}            [<span className="hljs-string">"LastName"</span>] = <span className="hljs-string">"DefaultLastName"</span>
                         {"\n"}        {"}"};
                 {"\n"}
-                        {"\n"}        <span className="hljs-comment">// Optional fluent methods to make it easier to override specific values in the template</span>
+                        {"\n"}        <span className="hljs-comment">{'//'} Optional fluent methods to make it easier to override specific values in the template</span>
                         {"\n"}        <span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-type">EmployeesTemplate</span> <span className="hljs-title">WithEmployeeID</span><span className="hljs-params">(<span className="hljs-keyword">int</span> value)</span> </span>=&gt; <span className="hljs-title">SetValue</span>(<span className="hljs-string">"EmployeeID"</span>, value);
                 {"\n"}        <span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-type">EmployeesTemplate</span> <span className="hljs-title">WithFirstName</span><span className="hljs-params">(<span className="hljs-keyword">string</span> value)</span> </span>=&gt; <span className="hljs-title">SetValue</span>(<span className="hljs-string">"FirstName"</span>, value);
                 {"\n"}        <span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-type">EmployeesTemplate</span> <span className="hljs-title">WithLastName</span><span className="hljs-params">(<span className="hljs-keyword">string</span> value)</span> </span>=&gt; <span className="hljs-title">SetValue</span>(<span className="hljs-string">"LastName"</span>, value);
@@ -115,16 +115,16 @@ export default function Templates() {
                     <pre><code className="lang-csharp">[<span className="hljs-type">TestMethod</span>]
                 {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">InsertEmployeesTest</span>(<span className="hljs-params"></span>)
                 {"\n"}</span>{"{"}
-                        {"\n"}    <span className="hljs-comment">// Inserts the template, using the default data</span>
+                        {"\n"}    <span className="hljs-comment">{'//'} Inserts the template, using the default data</span>
                         {"\n"}    <span className="hljs-type">EmployeesTemplate</span> defaultEmployee = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">InsertTemplateAsync</span>(<span className="hljs-keyword">new</span> <span className="hljs-type">EmployeesTemplate</span>());
                 {"\n"}
-                        {"\n"}    <span className="hljs-comment">// Inserts the template, overriding the FirstName value in the constructor</span>
+                        {"\n"}    <span className="hljs-comment">{'//'} Inserts the template, overriding the FirstName value in the constructor</span>
                         {"\n"}    <span className="hljs-type">EmployeesTemplate</span> customEmployee1 = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">InsertTemplateAsync</span>(<span className="hljs-keyword">new</span> <span className="hljs-type">EmployeesTemplate</span>
                         {"\n"}    {"{"}
                         {"\n"}        [<span className="hljs-string">"FirstName"</span>] = <span className="hljs-string">"Custom1"</span>
                         {"\n"}    {"}"});
                 {"\n"}
-                        {"\n"}    <span className="hljs-comment">// Inserts the template, overriding the FirstName value using a fluent method</span>
+                        {"\n"}    <span className="hljs-comment">{'//'} Inserts the template, overriding the FirstName value using a fluent method</span>
                         {"\n"}    <span className="hljs-type">EmployeesTemplate</span> customEmployee2 = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">InsertTemplateAsync</span>(<span className="hljs-keyword">new</span> <span className="hljs-type">EmployeesTemplate</span>()
                 {"\n"}        .<span className="hljs-title">WithLastName</span>(<span className="hljs-string">"Custom2"</span>));
                 {"\n"}    {"}"}
@@ -198,26 +198,26 @@ export default function Templates() {
                 {"\n"}
                         {"\n"}<span className="hljs-keyword">namespace</span> Sample.Tests.Templates.Complex
                 {"\n"}{"{"}
-                        {"\n"}    <span className="hljs-comment">// The class inherits from BaseComplexTemplate</span>
+                        {"\n"}    <span className="hljs-comment">{'//'} The class inherits from BaseComplexTemplate</span>
                         {"\n"}    <span className="hljs-keyword">public</span> <span className="hljs-keyword">class</span> <span className="hljs-type">UserWithAddressTemplate</span> : <span className="hljs-type">BaseComplexTemplate</span>
                         {"\n"}    {"{"}
-                        {"\n"}        <span className="hljs-comment">// Defines a template for the User table</span>
+                        {"\n"}        <span className="hljs-comment">{'//'} Defines a template for the User table</span>
                         {"\n"}        <span className="hljs-keyword">public</span> <span className="hljs-type">UserTemplate</span> User {"{"} <span className="hljs-keyword">get</span>; <span className="hljs-keyword">set</span>; {"}"} = <span className="hljs-keyword">new</span> <span className="hljs-type">UserTemplate</span>();
                 {"\n"}
-                        {"\n"}        <span className="hljs-comment">// Defines a template for the UserAddress table</span>
+                        {"\n"}        <span className="hljs-comment">{'//'} Defines a template for the UserAddress table</span>
                         {"\n"}        <span className="hljs-keyword">public</span> <span className="hljs-type">UserAddressTemplate</span> UserAddress {"{"} <span className="hljs-keyword">get</span>; <span className="hljs-keyword">set</span>; {"}"} = <span className="hljs-keyword">new</span> <span className="hljs-type">UserAddressTemplate</span>();
                 {"\n"}
-                        {"\n"}        <span className="hljs-comment">// Inserts the data based on the templates</span>
+                        {"\n"}        <span className="hljs-comment">{'//'} Inserts the data based on the templates</span>
                         {"\n"}        <span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">override</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">InsertAsync</span>(<span className="hljs-params"><span className="hljs-interface">ITestRunner</span> testRunner</span>)
                 {"\n"}        </span>{"{"}
-                        {"\n"}            <span className="hljs-comment">// Inserts the User template</span>
+                        {"\n"}            <span className="hljs-comment">{'//'} Inserts the User template</span>
                         {"\n"}            <span className="hljs-keyword">await</span> testRunner.<span className="hljs-title">InsertTemplateAsync</span>(User);
                 {"\n"}
-                        {"\n"}            <span className="hljs-comment">// Sets the User foreign key (UserId) in the UserAddress template</span>
-                        {"\n"}            <span className="hljs-comment">// with the Identity in the User template (User.Identity)</span>
+                        {"\n"}            <span className="hljs-comment">{'//'} Sets the User foreign key (UserId) in the UserAddress template</span>
+                        {"\n"}            <span className="hljs-comment">{'//'} with the Identity in the User template (User.Identity)</span>
                         {"\n"}            UserAddress.<span className="hljs-title">WithUserId</span>(User.Identity);
                 {"\n"}
-                        {"\n"}            <span className="hljs-comment">// Inserts the UserAddress template</span>
+                        {"\n"}            <span className="hljs-comment">{'//'} Inserts the UserAddress template</span>
                         {"\n"}            <span className="hljs-keyword">await</span> testRunner.<span className="hljs-title">InsertTemplateAsync</span>(UserAddress);
                 {"\n"}        {"}"}
                         {"\n"}    {"}"}
@@ -293,11 +293,11 @@ export default function Templates() {
                     <pre><code className="lang-csharp">[<span className="hljs-type">TestMethod</span>]
                 {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">InsertUserAddressesTest</span>(<span className="hljs-params"></span>)
                 {"\n"}</span>{"{"}
-                        {"\n"}    <span className="hljs-comment">// Inserts the template, using the default data for dbo.Users and dbo.UserAddresses</span>
+                        {"\n"}    <span className="hljs-comment">{'//'} Inserts the template, using the default data for dbo.Users and dbo.UserAddresses</span>
                         {"\n"}    <span className="hljs-type">UserWithAddressTemplate</span> defaultAddress =
                 {"\n"}        <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">InsertTemplateAsync</span>(<span className="hljs-keyword">new</span> <span className="hljs-type">UserWithAddressTemplate</span>());
                 {"\n"}
-                        {"\n"}    <span className="hljs-comment">// Inserts the template, with custom templates</span>
+                        {"\n"}    <span className="hljs-comment">{'//'} Inserts the template, with custom templates</span>
                         {"\n"}    <span className="hljs-type">UserWithAddressTemplate</span> customAddress =
                 {"\n"}        <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">InsertTemplateAsync</span>(<span className="hljs-keyword">new</span> <span className="hljs-type">UserWithAddressTemplate</span>
                         {"\n"}        {"{"}
