@@ -1,39 +1,9 @@
-<!doctype html>
+import React from 'react';
+import ci_connectionstring from './images/ci_connectionstring.png';
 
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-
-    <title>DBConfirm - Documentation</title>
-    <meta name="description"
-        content="The official documentation for DBConfirm, the unit testing framework for SQL databases.">
-    <meta name="author" content="Bungalow64 Technologies Ltd">
-
-    <link rel="stylesheet" href="/styles/main.css?v=1.0">
-</head>
-
-<body>
-
-    <div id="sidebar">
-        <div id="sidebar-heading">
-            DBConfirm
-        </div>
-        <nav>
-            <ul id="menu">
-                <li><a href="index.html">Overview</a></li>
-                <li><a href="quickstart.html">Quick Start</a></li>
-                <li><a href="nuget.html">NuGet Packages</a></li>
-                <li><a href="templates.html">Templates</a></li>
-                <li class="active"><a href="continuousintegration.html">Continuous Integration</a></li>
-                <li><a href="api.html">API Reference</a></li>
-            </ul>
-        </nav>
-    </div>
-    <div id="content">
-
-        <h1>DBConfirm - Documentation</h1>
-
+export default function ContinuousIntegration(){
+    return (
+        <>
         <h2 id="continuousintegration">Continuous Integration</h2>
         <p>DBConfirm tests are integrated with existing test frameworks, so tests will be run by any Continuous
             Integration (CI) build that
@@ -56,9 +26,9 @@
         <p>To set this environment variable, see the configuration for the CI build itself.</p>
         <p>For example, in Azure DevOps, the environment variables are listed as '<strong>Variables</strong>':
         </p>
-        <p><img src="images/ci_connectionstring.png"
+        <p><img src={ci_connectionstring}
                 alt="The ConnectionString environment variable added to a Pipeline build in Azure DevOps"
-                style="width: 100%; min-width: 700px; max-width: 1481px;" /></p>
+                style={{width: '100%', minWidth: '700px', maxWidth: '1481px'}} /></p>
 
 
         <h3 id="runsettings">Configure using a .runsettings file</h3>
@@ -67,12 +37,12 @@
         <p>If a .runsettings file is found, a parameter called '<strong>ConnectionString</strong>' is checked, and used
             if found.</p>
         <p>An example .runsettings file is:</p>
-        <pre><code class="lang-xml"><span class="hljs-meta">&lt;?</span><span class="hljs-tag">xml</span> <span class="hljs-attr">version</span>="<span class="hljs-string">1.0</span>" <span class="hljs-attr">encoding</span>="<span class="hljs-string">utf-8</span>"<span class="hljs-meta">?&gt;</span>
-&lt;<span class="hljs-tag">RunSettings</span>&gt;
-    &lt;<span class="hljs-tag">TestRunParameters</span>&gt;
-        &lt;<span class="hljs-tag">Parameter</span> <span class="hljs-attr">name</span>="<span class="hljs-string">ConnectionString</span>" <span class="hljs-attr">value</span>="<span class="hljs-string">SERVER=B64-BUILD-DB;DATABASE=Northwind;Integrated Security=true;Connection Timeout=30;</span>" /&gt;
-    &lt;/<span class="hljs-tag">TestRunParameters</span>&gt;
-&lt;/<span class="hljs-tag">RunSettings</span>&gt;
+        <pre><code className="lang-xml"><span className="hljs-meta">&lt;?</span><span className="hljs-tag">xml</span> <span className="hljs-attr">version</span>="<span className="hljs-string">1.0</span>" <span className="hljs-attr">encoding</span>="<span className="hljs-string">utf-8</span>"<span className="hljs-meta">?&gt;</span>
+        {"\n"}&lt;<span className="hljs-tag">RunSettings</span>&gt;
+        {"\n"}    &lt;<span className="hljs-tag">TestRunParameters</span>&gt;
+        {"\n"}        &lt;<span className="hljs-tag">Parameter</span> <span className="hljs-attr">name</span>="<span className="hljs-string">ConnectionString</span>" <span className="hljs-attr">value</span>="<span className="hljs-string">SERVER=B64-BUILD-DB;DATABASE=Northwind;Integrated Security=true;Connection Timeout=30;</span>" /&gt;
+        {"\n"}    &lt;/<span className="hljs-tag">TestRunParameters</span>&gt;
+        {"\n"}&lt;/<span className="hljs-tag">RunSettings</span>&gt;
 </code></pre>
 
         <h3 id="appsettings">Configure using appsettings.json</h3>
@@ -81,14 +51,12 @@
             with a name of '<strong>TestDatabase</strong>'.
         </p>
         <p>An example appsettings.json file is:</p>
-        <pre><code class="lang-json">{
-    <span class="hljs-attr">"ConnectionStrings"</span>: {
-        <span class="hljs-attr">"TestDatabase"</span>: <span class="hljs-string">"SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;"</span>
-    }
-}
+        <pre><code className="lang-json">{"{"}
+        {"\n"}    <span className="hljs-attr">"ConnectionStrings"</span>: {"{"}
+        {"\n"}        <span className="hljs-attr">"TestDatabase"</span>: <span className="hljs-string">"SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;"</span>
+        {"\n"}    {"}"}
+        {"\n"}{"}"}
 </code></pre>
-          
-    </div>
-</body>
-
-</html>
+        </>
+    );
+}
