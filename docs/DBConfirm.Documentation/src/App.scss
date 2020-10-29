@@ -64,6 +64,10 @@ body {
     font-size: 1em;
   }
 
+  h4 {
+    font-weight: normal;
+  }
+
   p,
   li {
     font-size: 0.875em;
@@ -211,6 +215,7 @@ body {
       font-size: 0.9em;
       width: 100%;
       margin-bottom: 5px;
+      table-layout: auto;
 
       td,
       th {
@@ -243,5 +248,19 @@ body {
     @include for-desktop-up {
       max-width: 500px;
     }
+  }
+
+  table{
+    font-size: 0.9em;
+    table-layout: fixed;
+
+    thead{
+      font-weight: 500;
+      background-color: #e3e8ee;
+    }
+
+    tr:nth-child(even) {
+      background-color: #e3e8ee;
+  }
   }
 }
