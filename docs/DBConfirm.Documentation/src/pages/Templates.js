@@ -64,6 +64,7 @@ export default function Templates() {
                 {"\n"}    {"}"}
                         {"\n"}{"}"}
                     </code></pre>
+
                 </div>
                 <div className="content-split-secondary">
                     <aside>
@@ -106,6 +107,7 @@ export default function Templates() {
                     </aside>
                 </div>
             </div>
+
 
             <p>This template can then be used in a test to insert data:</p>
 
@@ -178,6 +180,24 @@ export default function Templates() {
                     </aside>
                 </div>
             </div>
+
+            
+            <p>The <strong>DefaultData</strong> property is intended to provide enough default data to allow the template to be added, without any extra
+            data being provided.  The only exception to this is when the table has required foreign keys to other tables - these related rows will have
+            to be added before this temmplate can be inserted (either by other simple templates, or via a complex template).  In situations like this, the
+            required foreign key can be marked as <coode>IsRequired</coode>, so that it is obvious what the dependent data is.  Also, by using
+            the <code>IsRequired</code> placeholder, if a template is attempted to be inserted without a value having been set, you will get a specific
+            test failure showing you which table and which column still requires a value.</p>
+
+                    <p>The placeholders can be found in the <code>DBConfirm.Core.Templates.Placeholders</code> namespace, and
+            to mark a column as required is <code>Placeholders.IsRequired()</code>:</p>
+
+                    <pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-type">DataSetRow</span> DefaultData =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">DataSetRow</span>
+                        {"\n"}{"{"}
+                        {"\n"}    [<span class="hljs-string">"OrderID"</span>] = <span class="hljs-type">Placeholders</span>.<span class="hljs-title">IsRequired</span>(), <span class="hljs-comment">// Sets the OrderID column as required</span>
+                        {"\n"}    [<span class="hljs-string">"UnitPrice"</span>] = <span class="hljs-string">"123.45"</span>
+                        {"\n"}{"}"};
+</code></pre>
 
             <h3 id="complextemplates">Complex Templates</h3>
 
