@@ -114,37 +114,23 @@ namespace DBConfirm.TemplateGeneration.Models
             {
                 return "Placeholders.IsRequired()";
             }
-            switch (ActualType)
+            return ActualType switch
             {
-                case "string":
-                    return $"\"{TruncateLongString($"Sample{ColumnName}")}\"";
-                case "int":
-                    return "50";
-                case "long":
-                    return "50";
-                case "byte[]":
-                    return "new byte[] { 0x68, 0x65, 0x6c, 0x6c, 0x29 }";
-                case "bool":
-                    return "true";
-                case "decimal":
-                    return "50.5";
-                case "double":
-                    return "50.5";
-                case "DateTime":
-                    return "DateTime.Parse(\"22-Oct-2020\")";
-                case "TimeSpan":
-                    return "TimeSpan.FromMinutes(10)";
-                case "Single":
-                    return "50";
-                case "byte":
-                    return "0x65";
-                case "Guid":
-                    return "Guid.Parse(\"729e8f2e-5101-4ab7-a7ed-52e58c8cf9b1\")";
-                case "object":
-                    return "\"<object>\"";
-                default:
-                    return string.Empty;
-            }
+                "string" => $"\"{TruncateLongString($"Sample{ColumnName}")}\"",
+                "int" => "50",
+                "long" => "50",
+                "byte[]" => "new byte[] { 0x68, 0x65, 0x6c, 0x6c, 0x29 }",
+                "bool" => "true",
+                "decimal" => "50.5",
+                "double" => "50.5",
+                "DateTime" => "DateTime.Parse(\"22-Oct-2020\")",
+                "TimeSpan" => "TimeSpan.FromMinutes(10)",
+                "Single" => "50",
+                "byte" => "0x65",
+                "Guid" => "Guid.Parse(\"729e8f2e-5101-4ab7-a7ed-52e58c8cf9b1\")",
+                "object" => "\"<object>\"",
+                _ => string.Empty,
+            };
         }
 
         private string TruncateLongString(string value)

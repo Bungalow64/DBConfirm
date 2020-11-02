@@ -235,7 +235,7 @@
             </summary>
             <returns>Returns the comparison object</returns>
         </member>
-        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDate(System.DateTime)">
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDay(System.DateTime)">
             <summary>
             Gets the state to test for the data to be a specific day (ignoring time), with a custom precision
             </summary>
