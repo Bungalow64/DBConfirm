@@ -16,9 +16,10 @@ This package is the test runner for NUnit.</Description>
 	  <PackageIcon>Bungalow64.png</PackageIcon>
 	  <RootNamespace>DBConfirm.Frameworks.NUnit</RootNamespace>
 	  <AssemblyName>DBConfirm.Frameworks.NUnit</AssemblyName>
+	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.NUnit\Documentation\DBConfirm.Frameworks.NUnit.xml</DocumentationFile>
   </PropertyGroup>
 
