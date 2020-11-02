@@ -12,6 +12,7 @@ export default function Menu() {
                 <li><NavLink to="/nuget" activeClassName="active">NuGet Packages</NavLink></li>
                 <li><NavLink to="/continuousintegration" activeClassName="active">Continuous Integration</NavLink></li>
                 <li><NavLink to="/api" activeClassName="active">API Reference</NavLink></li>
+                <li><NavLink to="/faq" activeClassName="active">FAQ</NavLink></li>
             </ul>
         </nav>
     )

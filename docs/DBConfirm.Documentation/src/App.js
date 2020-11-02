@@ -8,6 +8,7 @@ import NuGet from './pages/NuGet';
 import Templates from './pages/Templates';
 import ContinuousIntegration from './pages/ContinuousIntegration';
 import Api from './pages/Api'
+import FAQ from './pages/FAQ';
 import ScrollToTop from './components/ScrollToTop';
 import './App.scss';
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/templates"><Templates /></Route>
             <Route path="/continuousintegration"><ContinuousIntegration /></Route>
             <Route path="/api"><Api /></Route>
+            <Route path="/faq"><FAQ /></Route>
             <Route path="/"><Overview /></Route>
           </Switch>
       </div>

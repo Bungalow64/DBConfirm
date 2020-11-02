@@ -3,21 +3,33 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 using static DBConfirm.TemplateGeneration.Logic.OutputHelper;
 using System.Linq;
 using DBConfirm.TemplateGeneration.Models;
+using DBConfirm.TemplateGeneration.Logic.Abstract;
+using System.IO;
 
 namespace DBConfirm.TemplateGeneration.Logic
 {
     public class Generator
     {
         private readonly Options _options;
+        private readonly IFileHelper _fileHelper;
+        private readonly IDatabaseHelper _databaseHelper;
         private const string _getColumnsScript = "DBConfirm.TemplateGeneration.Scripts.GetColumns.sql";
 
-        public Generator(Options options) => _options = options;
+        public Generator(
+            Options options,
+            IFileHelper fileHelper,
+            IDatabaseHelper databaseHelper
+            )
+        {
+            _options = options;
+            _fileHelper = fileHelper;
+            _databaseHelper = databaseHelper;
+        }
 
         public async Task GenerateFileAsync()
         {
@@ -89,15 +101,15 @@ namespace DBConfirm.TemplateGeneration.Logic
             {
                 WriteSuccess("Class definition generated.  Saving...");
 
-                string target = (_options.Destination ?? Directory.GetCurrentDirectory()) + $@"\{className}.cs";
+                string target = (_options.Destination ?? _fileHelper.GetCurrentDirectory()) + $@"\{className}.cs";
 
-                if (File.Exists(target) && !_options.Overwrite)
+                if (_fileHelper.Exists(target) && !_options.Overwrite)
                 {
                     WriteError($"The file ({target}) already exists");
                     return;
                 }
 
-                File.WriteAllText(target, classDefinition);
+                _fileHelper.WriteAllText(target, classDefinition);
 
                 WriteSuccess($"File written to {target}");
             }
@@ -120,32 +132,7 @@ namespace DBConfirm.TemplateGeneration.Logic
 
         private async Task<DataTable> GetColumnsAsync(string connectionString, string schemaName, string tableName)
         {
-            using SqlConnection sqlConnection = new SqlConnection(connectionString);
-            await sqlConnection.OpenAsync();
-            using DataSet ds = new DataSet
-            {
-                Locale = CultureInfo.InvariantCulture
-            };
-
-            using (SqlCommand command = new SqlCommand(await ReadResource(_getColumnsScript), sqlConnection))
-            {
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(new SqlParameter("SchemaName", schemaName));
-                command.Parameters.Add(new SqlParameter("TableName", tableName));
-
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    adapter.Fill(ds);
-                }
-            }
-            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            {
-                return ds.Tables[0];
-            }
-
-            await sqlConnection.CloseAsync();
-
-            return null;
+            return await _databaseHelper.GetColumnsAsync(connectionString, schemaName, tableName, await ReadResource(_getColumnsScript));
         }
 
         private async Task<string> ReadResource(string resourceName)

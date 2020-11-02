@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.MSTest.Northwind.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.NUnit.Northwind.Tests", "tests\Sample.NUnit.Northwind.Tests\Sample.NUnit.Northwind.Tests.csproj", "{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGeneration.Tests", "tests\TemplateGeneration.Tests\TemplateGeneration.Tests.csproj", "{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +141,7 @@ Global
 		{5FC9A8DE-85E4-455F-9DB3-97BC00937A2E} = {068FCD6B-9DA6-4AEB-93E8-B019867278EE}
 		{C0982F5D-57A2-49DD-B19D-0BE690BF80B3} = {B5A41050-89AD-40F3-8220-116D1042A0A1}
 		{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE} = {B5A41050-89AD-40F3-8220-116D1042A0A1}
+		{D3118EF1-A158-40B2-9D55-80A68BE7C8EA} = {2C61BE28-D178-4B16-AEC4-E144803A871E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED27D3CD-4261-418B-BC4D-1F33D285E5C2}

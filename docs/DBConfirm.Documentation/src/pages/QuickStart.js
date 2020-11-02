@@ -54,17 +54,9 @@ export default function QuickStart() {
             {"\n"}    ...
             {"\n"}{"}"}
             </code></pre>
-            <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For NUnit</span>
-                {"\n"}<span className="hljs-keyword">using</span> System.Threading.Tasks;
-                {"\n"}<span className="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
-                {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.NUnit;
-                {"\n"}
-                {"\n"}[<span className="hljs-type">TestFixture</span>]
-                {"\n"}<span className="hljs-keyword">public</span> <span className="hljs-keyword">class</span> <span className="hljs-type">GetUserTests</span> : <span className="hljs-type">NUnitBase</span>
-                {"\n"}{"{"}
-                {"\n"}    ...
-                {"\n"}{"}"}
-            </code></pre>
+            
+            <p>For NUnit, use <code>[TestFixture]</code> instead of <code>[TestClass]</code>, and inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
+
             <h3>Add test method</h3>
             <p>Add a new test method, and start testing:</p>
             <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For MSTest</span>
@@ -77,19 +69,11 @@ export default function QuickStart() {
             {"\n"}        .<span className="hljs-title">AssertColumnExists</span>(<span className="hljs-string">"FirstName"</span>);
             {"\n"}{"}"}
             </code></pre>
-            <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For NUnit</span>
-            {"\n"}[<span className="hljs-type">Test</span>]
-            {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span className="hljs-params"></span>)
-            {"\n"}</span>{"{"}
-            {"\n"}    <span className="hljs-keyword">var</span> results = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteTableAsync</span>(<span className="hljs-string">"dbo.GetUsers"</span>);
-            {"\n"}
-            {"\n"}    results
-            {"\n"}        .<span className="hljs-title">AssertColumnExists</span>(<span className="hljs-string">"FirstName"</span>);
-            {"\n"}{"}"}
-            </code></pre>
+
+            <p>For NUnit, use <code>[Test]</code> instead of <code>[TestMethod]</code>.</p>
 
             <p>For the full details of how to insert data, execute database logic and verify results, see the <a
-                href="/api.html">API Reference</a>.</p>
+                href="/writingtests">Writing Tests</a> guide.</p>
         </>
     );
 }

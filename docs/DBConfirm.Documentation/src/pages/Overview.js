@@ -29,6 +29,10 @@ export default function Overview() {
             ensures that each test run is accurate and repeatable by making sure all effects of a test are rolled back
             when
                         the test has finished.</p>
+                        <p>DBConfirm also provides a number of ways to easily assert the results of your tests.</p>
+
+            <h2>Is it free?</h2>
+            <p>Yes.</p>
 
             <h2 id="what-does-a-DBConfirm-test-look-like-">What does a DBConfirm test look like?</h2>
             <div className="content-split">
@@ -40,20 +44,20 @@ export default function Overview() {
                     <pre><code className="lang-csharp">[<span className="hljs-type">TestMethod</span>]
                     {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">AddUserProcedure_UserIsAdded</span>(<span className="hljs-params"></span>)
                     {"\n"}</span>{"{"}
-                    {"\n"}    <span className="hljs-comment">{'//'} Call a stored procedure with some parameters</span>
-                    {"\n"}    <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureNonQueryAsync</span>(<span className="hljs-string">"dbo.AddUser"</span>,
+                        {"\n"}    <span className="hljs-comment">{'//'} Call a stored procedure with some parameters</span>
+                        {"\n"}    <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureNonQueryAsync</span>(<span className="hljs-string">"dbo.AddUser"</span>,
                     {"\n"}        <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"Jamie"</span>),
                     {"\n"}        <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"LastName"</span>, <span className="hljs-string">"Burns"</span>),
                     {"\n"}        <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"EmailAddress"</span>, <span className="hljs-string">"jamie@example.com"</span>));
                     {"\n"}
-                    {"\n"}    <span className="hljs-comment">{'//'} Get all the data in a table</span>
-                    {"\n"}    <span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteTableAsync</span>(<span className="hljs-string">"dbo.Users"</span>);
+                        {"\n"}    <span className="hljs-comment">{'//'} Get all the data in a table</span>
+                        {"\n"}    <span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteTableAsync</span>(<span className="hljs-string">"dbo.Users"</span>);
                     {"\n"}
-                    {"\n"}    <span className="hljs-comment">{'//'} Make some assertions on the data</span>
-                    {"\n"}    data
+                        {"\n"}    <span className="hljs-comment">{'//'} Make some assertions on the data</span>
+                        {"\n"}    data
                     {"\n"}        .<span className="hljs-title">AssertRowCount</span>(<span className="hljs-number">1</span>) <span className="hljs-comment">{'//'} Asserts that there is only 1 row</span>
-                    {"\n"}        .<span className="hljs-title">AssertValue</span>(<span className="hljs-number">0</span>, <span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"Jamie"</span>); <span className="hljs-comment">{'//'} Asserts that "FirstName" is "Jamie" in the first row</span>
-                    {"\n"}{"}"}
+                        {"\n"}        .<span className="hljs-title">AssertValue</span>(<span className="hljs-number">0</span>, <span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"Jamie"</span>); <span className="hljs-comment">{'//'} Asserts that "FirstName" is "Jamie" in the first row</span>
+                        {"\n"}{"}"}
                     </code></pre>
                 </div>
                 <aside>
