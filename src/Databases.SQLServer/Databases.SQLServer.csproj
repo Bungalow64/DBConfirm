@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -16,9 +16,10 @@ This package contains the data access to Microsoft SQL Server.</Description>
     <PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;DBConfirm</PackageTags>
     <RootNamespace>DBConfirm.Databases.SQLServer</RootNamespace>
 	  <PackageIcon>Bungalow64.png</PackageIcon>
+	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Databases.SQLServer\Documentation\DBConfirm.Databases.SQLServer.xml</DocumentationFile>
   </PropertyGroup>
 

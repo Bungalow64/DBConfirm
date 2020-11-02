@@ -17,9 +17,10 @@ This package is the test runner for MSTest.
 		<PackageIcon>Bungalow64.png</PackageIcon>
 		<RootNamespace>DBConfirm.Frameworks.MSTest</RootNamespace>
 		<AssemblyName>DBConfirm.Frameworks.MSTest</AssemblyName>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup>
 	  <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.MSTest\Documentation\DBConfirm.Frameworks.MSTest.xml</DocumentationFile>
 	</PropertyGroup>
 

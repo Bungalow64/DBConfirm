@@ -16,6 +16,7 @@
 		<PackageId>DBConfirm.TemplateGeneration</PackageId>
 		<ToolCommandName>GenerateTemplatesSQLServer</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<ItemGroup>

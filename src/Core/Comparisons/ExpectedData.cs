@@ -63,7 +63,7 @@ namespace DBConfirm.Core.Comparisons
         /// Gets the state to test for the data to be a specific day (ignoring time), with a custom precision
         /// </summary>
         /// <returns>Returns the comparison object</returns>
-        public static IDateComparison IsDate(DateTime expectedDate) => new SpecificDate(expectedDate);
+        public static IDateComparison IsDay(DateTime expectedDate) => new SpecificDate(expectedDate);
 
         /// <summary>
         /// Gets the state to test for the data to be a specific length
