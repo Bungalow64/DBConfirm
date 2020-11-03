@@ -4,6 +4,8 @@ using DBConfirm.Core.Runners.Abstract;
 using System;
 using System.Threading.Tasks;
 using DBConfirm.Core.Comparisons;
+using DBConfirm.Core.Attributes;
+using System.Reflection;
 
 namespace DBConfirm.Core.TestFrameworks.Abstract
 {
@@ -12,9 +14,14 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
     /// </summary>
     public abstract class BaseTestBase
     {
-        private const string RunSettingsParameterName = "ConnectionString";
-        private const string EnvironmentVariableName = "ConnectionString";
-        private const string AppConfigConnectionStringName = "TestDatabase";
+        private const string _defaultParameterName = "DefaultConnectionString";
+
+        /// <summary>
+        /// The name of the parameter to use for finding the connection string.  
+        /// </summary>
+        /// <remarks>The tests will search for a connection string in environment variables, 
+        /// TestContext and appsettings.json that matches this name</remarks>
+        protected virtual string ParameterName => null;
 
         /// <summary>
         /// The current instance of <see cref="ITestRunner"/>
@@ -43,7 +50,7 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
             get
             {
                 return new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile("appsettings.json", true)
                     .Build();
             }
         }
@@ -54,15 +61,25 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         /// <returns>A task representing the asynchronous operation</returns>
         protected async Task BaseInit()
         {
+            IConfiguration configuration = Configuration;
+
+            ConnectionStringNameAttribute attribute = GetType().GetCustomAttribute<ConnectionStringNameAttribute>();
+
+            string variable = 
+                attribute?.ConnectionStringName 
+                ?? ParameterName 
+                ?? configuration["DefaultConnectionStringName"] 
+                ?? _defaultParameterName;
+            
             string connectionString =
-                Environment.GetEnvironmentVariable(EnvironmentVariableName)
-                ?? GetParameter(RunSettingsParameterName)
-                ?? Configuration.GetConnectionString(AppConfigConnectionStringName)
+                Environment.GetEnvironmentVariable(variable)
+                ?? GetParameter(variable)
+                ?? configuration.GetConnectionString(variable)
                 ?? null;
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                TestFramework.Fail($@"Cannot find connection string.  Looked in EnvironmentVariables ('{EnvironmentVariableName}'), TestContext ('{RunSettingsParameterName}' property) and appsettings.json ('{AppConfigConnectionStringName}' connection string)");
+                TestFramework.Fail($@"Cannot find connection string.  Looked in EnvironmentVariables ('{variable}'), TestContext ('{variable}' property) and appsettings.json ('{variable}' connection string)");
             }
 
             TestRunner = await NewConnectionAsync(connectionString);
