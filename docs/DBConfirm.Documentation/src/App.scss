@@ -58,10 +58,12 @@ body {
 
   h2 {
     font-size: 1.2em;
+    border-bottom: solid 2px #e3e8ee;
   }
 
   h3 {
     font-size: 1em;
+    border-bottom: solid 1px #e3e8ee;
   }
 
   h4 {
@@ -268,7 +270,17 @@ body {
     }
   }
 
-  q{
+  q {
     font-style: italic;
+  }
+
+  p code {
+    font-size: 1.1em;
+    border-top: solid 1px #e3e8ee;
+    border-bottom: solid 1px #e3e8ee;
+
+    &:hover{
+      font-weight: bold;
+    }
   }
 }
