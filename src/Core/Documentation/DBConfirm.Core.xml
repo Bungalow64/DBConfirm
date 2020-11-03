@@ -1234,11 +1234,18 @@
             </summary>
             <returns>A task representing the asynchronous operation</returns>
         </member>
-        <member name="M:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.NewConnectionAsync(System.String)">
+        <member name="M:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.NewConnectionByConnectionStringAsync(System.String)">
             <summary>
             Creates a new connection to the target database, allowing a test to communicate with other databases.  The returned <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> must be disposed, so it is recommended to wrap it in a using statement
             </summary>
             <param name="connectionString">The connection string of the database to connect to</param>
+            <returns>Returns the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the new database</returns>
+        </member>
+        <member name="M:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.NewConnectionByConnectionStringNameAsync(System.String)">
+            <summary>
+            Creates a new connection to the target database, allowing a test to communicate with other databases.  The returned <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> must be disposed, so it is recommended to wrap it in a using statement
+            </summary>
+            <param name="connectionStringName">The name of the connection string of the database to connect to</param>
             <returns>Returns the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the new database</returns>
         </member>
         <member name="M:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.BaseCleanup">

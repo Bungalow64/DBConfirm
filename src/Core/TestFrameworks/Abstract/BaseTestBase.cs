@@ -61,28 +61,17 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         /// <returns>A task representing the asynchronous operation</returns>
         protected async Task BaseInit()
         {
-            IConfiguration configuration = Configuration;
-
             ConnectionStringNameAttribute attribute = GetType().GetCustomAttribute<ConnectionStringNameAttribute>();
 
-            string variable = 
-                attribute?.ConnectionStringName 
-                ?? ParameterName 
-                ?? configuration["DefaultConnectionStringName"] 
+            string variable =
+                attribute?.ConnectionStringName
+                ?? ParameterName
+                ?? Configuration["DefaultConnectionStringName"]
                 ?? _defaultParameterName;
-            
-            string connectionString =
-                Environment.GetEnvironmentVariable(variable)
-                ?? GetParameter(variable)
-                ?? configuration.GetConnectionString(variable)
-                ?? null;
 
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                TestFramework.Fail($@"Cannot find connection string.  Looked in EnvironmentVariables ('{variable}'), TestContext ('{variable}' property) and appsettings.json ('{variable}' connection string)");
-            }
+            string connectionString = GetConnectionStringByName(variable);
 
-            TestRunner = await NewConnectionAsync(connectionString);
+            TestRunner = await NewConnectionByConnectionStringAsync(connectionString);
         }
 
         /// <summary>
@@ -90,12 +79,31 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         /// </summary>
         /// <param name="connectionString">The connection string of the database to connect to</param>
         /// <returns>Returns the <see cref="ITestRunner"/> for the new database</returns>
-        protected async Task<ITestRunner> NewConnectionAsync(string connectionString)
+        protected async Task<ITestRunner> NewConnectionByConnectionStringAsync(string connectionString)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw new ArgumentNullException(nameof(connectionString));
             }
+
+            ITestRunner testRunner = TestRunnerFactory.BuildTestRunner(connectionString);
+            await testRunner.InitialiseAsync(TestFramework);
+            return testRunner;
+        }
+
+        /// <summary>
+        /// Creates a new connection to the target database, allowing a test to communicate with other databases.  The returned <see cref="ITestRunner"/> must be disposed, so it is recommended to wrap it in a using statement
+        /// </summary>
+        /// <param name="connectionStringName">The name of the connection string of the database to connect to</param>
+        /// <returns>Returns the <see cref="ITestRunner"/> for the new database</returns>
+        protected async Task<ITestRunner> NewConnectionByConnectionStringNameAsync(string connectionStringName)
+        {
+            if (string.IsNullOrWhiteSpace(connectionStringName))
+            {
+                throw new ArgumentNullException(nameof(connectionStringName));
+            }
+
+            string connectionString = GetConnectionStringByName(connectionStringName);
 
             ITestRunner testRunner = TestRunnerFactory.BuildTestRunner(connectionString);
             await testRunner.InitialiseAsync(TestFramework);
@@ -114,5 +122,18 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         /// Facade to build data comparison objects, used to test comparisons with more flexibility
         /// </summary>
         protected ExpectedData Comparisons { get; } = new ExpectedData();
+        
+        private string GetConnectionStringByName(string connectionStringName)
+        {
+            string connectionString= Environment.GetEnvironmentVariable(connectionStringName)
+                            ?? GetParameter(connectionStringName)
+                            ?? Configuration.GetConnectionString(connectionStringName);
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                TestFramework.Fail($@"Cannot find connection string.  Looked in EnvironmentVariables ('{connectionStringName}'), TestContext ('{connectionStringName}' property) and appsettings.json ('{connectionStringName}' connection string)");
+            }
+            return connectionString;
+        }
     }
 }

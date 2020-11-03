@@ -6,6 +6,7 @@ import WritingTests from './pages/WritingTests';
 import QuickStart from './pages/QuickStart';
 import NuGet from './pages/NuGet';
 import Templates from './pages/Templates';
+import ConnectionStrings from './pages/ConnectionStrings';
 import ContinuousIntegration from './pages/ContinuousIntegration';
 import Debugging from './pages/Debugging'
 import Api from './pages/Api'
@@ -28,6 +29,7 @@ function App() {
             <Route path="/writingtests"><WritingTests /></Route>
             <Route path="/nuget"><NuGet /></Route>
             <Route path="/templates"><Templates /></Route>
+            <Route path="/connectionstrings"><ConnectionStrings /></Route>
             <Route path="/continuousintegration"><ContinuousIntegration /></Route>
             <Route path="/debugging"><Debugging /></Route>
             <Route path="/api"><Api /></Route>

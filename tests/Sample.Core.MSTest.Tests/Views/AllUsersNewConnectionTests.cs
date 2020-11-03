@@ -12,7 +12,21 @@ namespace Sample.Core.MSTest.Tests.Views
         [TestMethod]
         public async Task AllUsersNewConnection_NoData_NothingReturned()
         {
-            using (ITestRunner testRunner = await NewConnectionAsync("SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;"))
+            using (ITestRunner testRunner = await NewConnectionByConnectionStringAsync("SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;"))
+            {
+                QueryResult results = await testRunner.ExecuteViewAsync("dbo.AllUsers");
+
+                results
+                    .AssertRowCount(0);
+
+                Assert.AreEqual(0, await testRunner.CountRowsInViewAsync("dbo.AllUsers"));
+            }
+        }
+
+        [TestMethod]
+        public async Task AllUsersNewConnectionByName_NoData_NothingReturned()
+        {
+            using (ITestRunner testRunner = await NewConnectionByConnectionStringNameAsync("SampleDBConnection"))
             {
                 QueryResult results = await testRunner.ExecuteViewAsync("dbo.AllUsers");
 
