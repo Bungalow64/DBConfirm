@@ -7,6 +7,7 @@ import QuickStart from './pages/QuickStart';
 import NuGet from './pages/NuGet';
 import Templates from './pages/Templates';
 import ContinuousIntegration from './pages/ContinuousIntegration';
+import Debugging from './pages/Debugging'
 import Api from './pages/Api'
 import FAQ from './pages/FAQ';
 import ScrollToTop from './components/ScrollToTop';
@@ -28,6 +29,7 @@ function App() {
             <Route path="/nuget"><NuGet /></Route>
             <Route path="/templates"><Templates /></Route>
             <Route path="/continuousintegration"><ContinuousIntegration /></Route>
+            <Route path="/debugging"><Debugging /></Route>
             <Route path="/api"><Api /></Route>
             <Route path="/faq"><FAQ /></Route>
             <Route path="/"><Overview /></Route>

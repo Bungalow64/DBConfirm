@@ -192,10 +192,10 @@ export default function Templates() {
                     <p>The placeholders can be found in the <code>DBConfirm.Core.Templates.Placeholders</code> namespace, and
             to mark a column as required is <code>Placeholders.IsRequired()</code>:</p>
 
-                    <pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-type">DataSetRow</span> DefaultData =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">DataSetRow</span>
+                    <pre><code className="lang-csharp"><span className="hljs-keyword">public</span> <span className="hljs-keyword">override</span> <span className="hljs-type">DataSetRow</span> DefaultData =&gt; <span className="hljs-keyword">new</span> <span className="hljs-type">DataSetRow</span>
                         {"\n"}{"{"}
-                        {"\n"}    [<span class="hljs-string">"OrderID"</span>] = <span class="hljs-type">Placeholders</span>.<span class="hljs-title">IsRequired</span>(), <span class="hljs-comment">{'//'} Sets the OrderID column as required</span>
-                        {"\n"}    [<span class="hljs-string">"UnitPrice"</span>] = <span class="hljs-string">"123.45"</span>
+                        {"\n"}    [<span className="hljs-string">"OrderID"</span>] = <span className="hljs-type">Placeholders</span>.<span className="hljs-title">IsRequired</span>(), <span className="hljs-comment">{'//'} Sets the OrderID column as required</span>
+                        {"\n"}    [<span className="hljs-string">"UnitPrice"</span>] = <span className="hljs-string">"123.45"</span>
                         {"\n"}{"}"};
 </code></pre>
 

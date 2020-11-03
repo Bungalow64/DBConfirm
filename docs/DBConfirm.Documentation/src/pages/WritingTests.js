@@ -308,21 +308,21 @@ export default function WritingTests() {
                 <li><strong>AssertValues</strong> - asserts the values of specific columns match the expected values</li>
             </ul>
 
-            <pre><code class="lang-csharp"><span className="hljs-type">QueryResult</span> <span class="hljs-built_in">data</span> = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span class="hljs-string">"dbo.GetCustomerData"</span>);
+            <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> <span className="hljs-built_in">data</span> = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCustomerData"</span>);
             {"\n"}
-                {"\n"}<span class="hljs-built_in">data</span>
-                {"\n"}    .<span className="hljs-title">ValidateRow</span>(<span class="hljs-number">2</span>) <span className="hljs-comment">{'//'} Focusses the assertions on row number 2</span>
-                {"\n"}        .<span className="hljs-title">AssertValue</span>(<span class="hljs-string">"FirstName"</span>, <span class="hljs-string">"Jamie"</span>)  <span className="hljs-comment">{'//'} Asserts that the 'FirstName' column has a value of 'Jamie'</span>
-                {"\n"}        .<span className="hljs-title">AssertValues</span>(<span class="hljs-keyword">new</span> <span className="hljs-type">DataSetRow</span>
+                {"\n"}<span className="hljs-built_in">data</span>
+                {"\n"}    .<span className="hljs-title">ValidateRow</span>(<span className="hljs-number">2</span>) <span className="hljs-comment">{'//'} Focusses the assertions on row number 2</span>
+                {"\n"}        .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"Jamie"</span>)  <span className="hljs-comment">{'//'} Asserts that the 'FirstName' column has a value of 'Jamie'</span>
+                {"\n"}        .<span className="hljs-title">AssertValues</span>(<span className="hljs-keyword">new</span> <span className="hljs-type">DataSetRow</span>
                 {"\n"}        {"{"}
-                {"\n"}            {"{"} <span class="hljs-string">"FirstName"</span>, <span class="hljs-string">"Jamie"</span> {"}"},
-            {"\n"}            {"{"} <span class="hljs-string">"LastName"</span>, <span class="hljs-string">"Burns"</span> {"}"}  <span className="hljs-comment">{'//'} Asserts that the 'FirstName' and 'LastName' columns have values of 'Jamie' and 'Burns'</span>
+                {"\n"}            {"{"} <span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"Jamie"</span> {"}"},
+            {"\n"}            {"{"} <span className="hljs-string">"LastName"</span>, <span className="hljs-string">"Burns"</span> {"}"}  <span className="hljs-comment">{'//'} Asserts that the 'FirstName' and 'LastName' columns have values of 'Jamie' and 'Burns'</span>
                 {"\n"}        {"}"});
 </code></pre>
 
             <p>To access the actual data within a <code>QueryResult</code> itself, you can call <code>RawData</code>, which returns the actual DataTable in case you need to do further assertions on it.</p>
 
-            <pre><code class="lang-csharp"><span className="hljs-type">QueryResult</span> <span class="hljs-built_in">data</span> = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span class="hljs-string">"dbo.GetCustomerData"</span>);
+            <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> <span className="hljs-built_in">data</span> = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCustomerData"</span>);
             {"\n"}<span className="hljs-comment">{'//'} Gets the data as a DataTable</span>
                 {"\n"}<span className="hljs-type">DataTable</span> actualData = data.RawData;
 </code></pre>
@@ -351,30 +351,30 @@ export default function WritingTests() {
             <li><strong>NotMatchesRegex</strong> - Asserts that the value does not match the Regex value</li>
         </ul>
 
-        <pre><code class="lang-csharp"><span class="hljs-type">QueryResult</span> data = <span class="hljs-keyword">await</span> TestRunner.<span class="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span class="hljs-string">"dbo.GetCount"</span>);
+        <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCount"</span>);
         {"\n"}
         {"\n"}data
-        {"\n"}    .<span class="hljs-title">ValidateRow</span>(<span class="hljs-number">2</span>) <span class="hljs-comment">{'//'} Focusses the assertions on row number 2</span>
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the value is 5 characters long</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"FirstName"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">HasLength</span>(<span class="hljs-number">5</span>))
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 (ignoring time)</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"StartDate"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">IsDay</span>(<span class="hljs-type">DateTime</span>.<span class="hljs-title">Parse</span>(<span class="hljs-string">"01-Feb-2020"</span>)))
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 at 9am, with a default precision of 1 second</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"StartDate"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">IsDateTime</span>(<span class="hljs-type">DateTime</span>.<span class="hljs-title">Parse</span>(<span class="hljs-string">"01-Feb-2020 09:00:00"</span>)))
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 at 9am, with a precision of 10 seconds</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"StartDate"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">IsDateTime</span>(<span class="hljs-type">DateTime</span>.<span class="hljs-title">Parse</span>(<span class="hljs-string">"01-Feb-2020 09:00:00"</span>), <span class="hljs-type">TimeSpan</span>.<span class="hljs-title">FromSeconds</span>(<span class="hljs-number">10</span>)))
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the date matches UtcNow, with a default precision of 1 second</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"StartDate"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">IsUtcNow</span>())
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the date matches UtcNow, with a precision of 10 seconds</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"StartDate"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">IsUtcNow</span>(<span class="hljs-type">TimeSpan</span>.<span class="hljs-title">FromSeconds</span>(<span class="hljs-number">10</span>)))
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the value is null</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"FirstName"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">IsNull</span>())
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the value is not null</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"FirstName"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">IsNotNull</span>())
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the value matches the Regex value</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"EmailAddress"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">MatchesRegex</span>(<span class="hljs-string">".*@.*"</span>))
-        {"\n"}    <span class="hljs-comment">{'//'} Asserts that the value does not match the Regex value</span>
-        {"\n"}    .<span class="hljs-title">AssertValue</span>(<span class="hljs-string">"FirstName"</span>, <span class="hljs-type">ExpectedData</span>.<span class="hljs-title">NotMatchesRegex</span>(<span class="hljs-string">".*@.*"</span>));
+        {"\n"}    .<span className="hljs-title">ValidateRow</span>(<span className="hljs-number">2</span>) <span className="hljs-comment">{'//'} Focusses the assertions on row number 2</span>
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value is 5 characters long</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">HasLength</span>(<span className="hljs-number">5</span>))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 (ignoring time)</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">IsDay</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020"</span>)))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 at 9am, with a default precision of 1 second</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">IsDateTime</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020 09:00:00"</span>)))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 at 9am, with a precision of 10 seconds</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">IsDateTime</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020 09:00:00"</span>), <span className="hljs-type">TimeSpan</span>.<span className="hljs-title">FromSeconds</span>(<span className="hljs-number">10</span>)))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date matches UtcNow, with a default precision of 1 second</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">IsUtcNow</span>())
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date matches UtcNow, with a precision of 10 seconds</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">IsUtcNow</span>(<span className="hljs-type">TimeSpan</span>.<span className="hljs-title">FromSeconds</span>(<span className="hljs-number">10</span>)))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value is null</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">IsNull</span>())
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value is not null</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">IsNotNull</span>())
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value matches the Regex value</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"EmailAddress"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">MatchesRegex</span>(<span className="hljs-string">".*@.*"</span>))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value does not match the Regex value</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-type">ExpectedData</span>.<span className="hljs-title">NotMatchesRegex</span>(<span className="hljs-string">".*@.*"</span>));
 </code></pre>
 
         </>
