@@ -3,7 +3,6 @@ using Sample.Core.MSTest.Tests.Templates;
 using System;
 using DBConfirm.Core.DataResults;
 using System.Threading.Tasks;
-using DBConfirm.Core.Comparisons;
 using DBConfirm.Core.Data;
 using DBConfirm.Core.Parameters;
 using DBConfirm.Packages.SQLServer.MSTest;
@@ -56,7 +55,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 .AssertValue(0);
 
             result
-                .AssertValue(ExpectedData.IsNotNull());
+                .AssertValue(Comparisons.IsNotNull());
         }
 
         [TestMethod]

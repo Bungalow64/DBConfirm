@@ -1223,6 +1223,11 @@
             Disposes the current instance of <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/>, rolling back the transaction and closing the connection
             </summary>
         </member>
+        <member name="P:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.Comparisons">
+            <summary>
+            Facade to build data comparison objects, used to test comparisons with more flexibility
+            </summary>
+        </member>
         <member name="T:DBConfirm.Core.TestFrameworks.Abstract.ITestFramework">
             <summary>
             The interface for a test framework, used to allow framework-dependent assertions and errors to be used

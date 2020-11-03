@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using DBConfirm.Core.DataResults;
-using DBConfirm.Core.Comparisons;
 using DBConfirm.Core.Data;
 using DBConfirm.Core.Parameters;
 using DBConfirm.Packages.SQLServer.MSTest;
@@ -18,10 +17,10 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
             var expectedData = new DataSetRow
             {
                 ["FirstName"] = "Jamie",
-                ["LastName"] = ExpectedData.NotMatchesRegex(".*@.*"),
-                ["EmailAddress"] = ExpectedData.MatchesRegex(".*@.*"),
-                ["CreatedDate"] = ExpectedData.IsUtcNow(),
-                ["StartDate"] = ExpectedData.IsDay("01-Mar-2020 00:10:00"),
+                ["LastName"] = Comparisons.NotMatchesRegex(".*@.*"),
+                ["EmailAddress"] = Comparisons.MatchesRegex(".*@.*"),
+                ["CreatedDate"] = Comparisons.IsUtcNow(),
+                ["StartDate"] = Comparisons.IsDay("01-Mar-2020 00:10:00"),
                 ["IsActive"] = true,
                 ["NumberOfHats"] = 14L,
                 ["HatType"] = null,
@@ -64,7 +63,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
 
             data
                 .ValidateRow(0)
-                .AssertValue("FirstName", ExpectedData.HasLength(5));
+                .AssertValue("FirstName", Comparisons.HasLength(5));
 
             data
                 .AssertRowValues(0, new DataSetRow

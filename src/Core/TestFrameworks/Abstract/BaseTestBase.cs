@@ -3,6 +3,7 @@ using DBConfirm.Core.Factories.Abstract;
 using DBConfirm.Core.Runners.Abstract;
 using System;
 using System.Threading.Tasks;
+using DBConfirm.Core.Comparisons;
 
 namespace DBConfirm.Core.TestFrameworks.Abstract
 {
@@ -91,5 +92,10 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         {
             TestRunner?.Dispose();
         }
+
+        /// <summary>
+        /// Facade to build data comparison objects, used to test comparisons with more flexibility
+        /// </summary>
+        protected ExpectedData Comparisons { get; } = new ExpectedData();
     }
 }

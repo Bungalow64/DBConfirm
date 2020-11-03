@@ -1,7 +1,6 @@
 ﻿using System;
 using DBConfirm.Core.DataResults;
 using System.Threading.Tasks;
-using DBConfirm.Core.Comparisons;
 using DBConfirm.Core.Data;
 using DBConfirm.Core.Parameters;
 using NUnit.Framework;
@@ -56,7 +55,7 @@ namespace Sample.Core.NUnit.Tests.StoredProcedures
                 .AssertValue(0);
 
             result
-                .AssertValue(ExpectedData.IsNotNull());
+                .AssertValue(Comparisons.IsNotNull());
         }
 
         [Test]
