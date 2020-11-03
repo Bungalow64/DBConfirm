@@ -16,6 +16,9 @@ export default function FAQ() {
             <p>Gray-box testing.  You need to know how the tables in the database are structured, but you don't need to know how the rest of the database is put together.</p>
             <h3>Can I use data-driven tests?</h3>
             <p>Yes.  DBConfirm works really well with <code>[DataTestMethod]</code> (MSTest) and <code>[TestCase]</code> (NUnit).</p>
+            <h3>Do I need to reset the database after a test run?</h3>
+            <p>No.  DBConfirm rolls all changes back for you.  The only lasting effect will be that identity values will have increased - the only risk with this is after a <i>lot</i> of
+            test runs, you might hit the limit of your <code>int</code> identity values - if/when you do, you'll need to manually reset the identity values back to 1.</p>
         </>
     );
 }
