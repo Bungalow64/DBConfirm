@@ -19,6 +19,8 @@ export default function FAQ() {
             <h3>Do I need to reset the database after a test run?</h3>
             <p>No.  DBConfirm rolls all changes back for you.  The only lasting effect will be that identity values will have increased - the only risk with this is after a <i>lot</i> of
             test runs, you might hit the limit of your <code>int</code> identity values - if/when you do, you'll need to manually reset the identity values back to 1.</p>
+            <h3>Can I run DBConfirm tests against a live/production database?</h3>
+            <p>Please, no.  <q>Your scientists were so preoccupied with whether or not they could, they didn't stop to think if they should.</q> - I.Malcolm, 1993</p>
         </>
     );
 }

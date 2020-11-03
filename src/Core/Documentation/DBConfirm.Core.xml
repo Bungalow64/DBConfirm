@@ -4,6 +4,22 @@
         <name>DBConfirm.Core</name>
     </assembly>
     <members>
+        <member name="T:DBConfirm.Core.Attributes.ConnectionStringNameAttribute">
+            <summary>
+            Configures the connection string name to use for all tests within the class
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Core.Attributes.ConnectionStringNameAttribute.#ctor(System.String)">
+            <summary>
+            Contructor, setting the connection string name to use for all tests within the class
+            </summary>
+            <param name="connectionStringName">The name of the connection string to use</param>
+        </member>
+        <member name="P:DBConfirm.Core.Attributes.ConnectionStringNameAttribute.ConnectionStringName">
+            <summary>
+            Gets the name of the connection string to use for all tests within the class
+            </summary>
+        </member>
         <member name="T:DBConfirm.Core.Comparisons.Abstract.IComparison">
             <summary>
             Defines the interface for comparison objects, to implement advanced assertion logic
@@ -1182,6 +1198,13 @@
             <summary>
             The abstract framework-agnostic base class for test classes, used to manage the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> instance
             </summary>
+        </member>
+        <member name="P:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.ParameterName">
+            <summary>
+            The name of the parameter to use for finding the connection string.  
+            </summary>
+            <remarks>The tests will search for a connection string in environment variables, 
+            TestContext and appsettings.json that matches this name</remarks>
         </member>
         <member name="F:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.TestRunner">
             <summary>

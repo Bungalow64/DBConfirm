@@ -254,17 +254,21 @@ body {
     }
   }
 
-  table{
+  table {
     font-size: 0.9em;
     table-layout: fixed;
 
-    thead{
+    thead {
       font-weight: 500;
       background-color: #e3e8ee;
     }
 
     tr:nth-child(even) {
       background-color: #e3e8ee;
+    }
   }
+
+  q{
+    font-style: italic;
   }
 }

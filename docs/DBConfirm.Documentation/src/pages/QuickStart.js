@@ -24,11 +24,11 @@ export default function QuickStart() {
                 <div className="content-split-primary">
                     <p>In the root of your test project, add an <strong>appsettings.json</strong> file with a connection
             string
-            called '<strong>TestDatabase</strong>' to
+            called '<strong>DefaultConnectionString</strong>' to
             point to the database to be tested:</p>
                     <pre><code className="lang-json">{"{"}
                     {"\n"}  <span className="hljs-attr">"ConnectionStrings"</span>: {"{"}
-                    {"\n"}    <span className="hljs-attr">"TestDatabase"</span>: <span className="hljs-string">"SERVER=(local);DATABASE=TestDB;Integrated Security=true;Connection Timeout=30;"</span>
+                    {"\n"}    <span className="hljs-attr">"DefaultConnectionString"</span>: <span className="hljs-string">"SERVER=(local);DATABASE=TestDB;Integrated Security=true;Connection Timeout=30;"</span>
                     {"\n"}  {"}"}
                     {"\n"}{"}"}
                     </code></pre>

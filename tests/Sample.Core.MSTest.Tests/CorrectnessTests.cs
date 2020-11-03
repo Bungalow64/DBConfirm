@@ -10,7 +10,7 @@ namespace Sample.Core.MSTest.Tests
         [TestMethod]
         public void Correctness_VerifyConnectionString()
         {
-            string connection = Initialisation.InitConfiguration().GetConnectionString("TestDatabase");
+            string connection = Initialisation.InitConfiguration().GetConnectionString("SampleDBConnection");
             Assert.AreEqual("SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;", connection);
         }
     }

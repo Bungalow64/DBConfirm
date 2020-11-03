@@ -10,7 +10,7 @@ namespace Sample.Core.NUnit.Tests
         [Test]
         public void Correctness_VerifyConnectionString()
         {
-            string connection = Initialisation.InitConfiguration().GetConnectionString("TestDatabase");
+            string connection = Initialisation.InitConfiguration().GetConnectionString("DefaultConnectionString");
             Assert.AreEqual("SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;", connection);
         }
     }
