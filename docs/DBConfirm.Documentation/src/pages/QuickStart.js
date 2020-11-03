@@ -5,8 +5,10 @@ export default function QuickStart() {
     return (
         <>
             <h2 id="getting-started">Quick Start</h2>
+            <h3>Create a new unit test project</h3>
+            <p>Create a new unit test project, using the test framework you want to use (either MSTest or NUnit).</p>
             <h3>Install packages</h3>
-            <p>Install the NuGet package for the test framework you&#39;re currently using, either MSTest or NUnit:</p>
+            <p>Install the NuGet package for the test framework you&apos;re using, either MSTest or NUnit:</p>
             <ul>
                 <li>Install-Package <a target="_blank" rel="noreferrer"
                     href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
