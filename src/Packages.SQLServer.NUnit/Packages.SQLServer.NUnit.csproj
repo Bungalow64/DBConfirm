@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>DBConfirm.Packages.SQLServer.NUnit</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Bungalow64</Authors>
+    <Company>Bungalow64 Technologies Ltd</Company>
+    <Product>DBConfirm (SQLServer/NUnit package)</Product>
+    <Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases, using NUnit as the test framework.
+
+This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.</Description>
+	  <PackageIcon>Bungalow64.png</PackageIcon>
+    <PackageTags>SQL;SQL-Server;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;NUnit;DBConfirm</PackageTags>
+	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	  <SignAssembly>true</SignAssembly>
+	  <AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Packages.SQLServer.NUnit\Documentation\Packages.SQLServer.NUnit.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Databases.SQLServer\Databases.SQLServer.csproj" />
+    <ProjectReference Include="..\Frameworks.NUnit\Frameworks.NUnit.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\Bungalow64.png" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
+
+</Project>

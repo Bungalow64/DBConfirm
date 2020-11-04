@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<AssemblyName>DBConfirm.TemplateGeneration</AssemblyName>
+		<RootNamespace>DBConfirm.TemplateGeneration</RootNamespace>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Version>0.1.0</Version>
+		<Authors>Bungalow64</Authors>
+		<Company>Bungalow64 Technologies Ltd</Company>
+		<Product>DBConfirm Tools (TemplateGeneration)</Product>
+		<PackageTags>SQL;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;Server;DBConfirm;Tool</PackageTags>
+		<PackageIcon>Bungalow64.png</PackageIcon>
+		<Description>A code-generation tool for use with DBConfirm, to generate template files based on existing tables within a SQL Server database.</Description>
+		<PackAsTool>true</PackAsTool>
+		<PackageId>DBConfirm.TemplateGeneration</PackageId>
+		<ToolCommandName>GenerateTemplatesSQLServer</ToolCommandName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Scripts\GetColumns.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Scripts\GetColumns.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommandLineParser" Version="2.8.0" />
+		<PackageReference Include="Moq" Version="4.14.7" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\src\Bungalow64.png" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="nupkg\" />
+	</ItemGroup>
+
+</Project>
