@@ -18,6 +18,8 @@ This package is the test runner for MSTest.
 		<RootNamespace>DBConfirm.Frameworks.MSTest</RootNamespace>
 		<AssemblyName>DBConfirm.Frameworks.MSTest</AssemblyName>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
 	<PropertyGroup>
