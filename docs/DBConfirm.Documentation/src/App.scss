@@ -1,0 +1,286 @@
+@mixin for-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#content {
+  position: absolute;
+  top: 0;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow-y: scroll;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  padding-bottom: 50px;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-size: 1.5em;
+    color: #1f2333;
+    line-height: 40px;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    border-bottom: solid 2px #e3e8ee;
+  }
+
+  h3 {
+    font-size: 1em;
+    border-bottom: solid 1px #e3e8ee;
+  }
+
+  h4 {
+    font-weight: normal;
+  }
+
+  p,
+  li {
+    font-size: 0.875em;
+  }
+
+  img {
+    margin-right: 4px;
+  }
+
+  pre {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+    color: #dcdcdc;
+
+    flex-grow: 1;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      width: 12px;
+      height: 8px;
+      background: transparent;
+      margin: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #e0e4e9;
+      border-radius: 12px;
+      background-clip: content-box;
+      border: 1px solid transparent;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      background: #c1c9d2;
+      border-radius: 12px;
+      background-clip: content-box;
+    }
+
+    .hljs-keyword {
+      color: #569cd6;
+    }
+
+    .hljs-comment {
+      color: #608b4e;
+    }
+
+    .hljs-type {
+      color: #4ec9b0;
+    }
+
+    .hljs-string {
+      color: #d69d85;
+    }
+
+    .hljs-number {
+      color: #b5cea8;
+    }
+
+    .hljs-title {
+      color: #dcdcaa;
+    }
+
+    .hljs-interface {
+      color: #b8d7a3;
+    }
+
+    .lang-json .hljs-attr {
+      color: #d19d4d;
+    }
+
+    .lang-json .hljs-string {
+      color: #d39b68;
+    }
+
+    .lang-xml .hljs-tag {
+      color: #569cd6;
+    }
+
+    .lang-xml {
+      color: #7e7e7e;
+    }
+
+    .lang-xml .hljs-attr {
+      color: #83c7f1;
+    }
+
+    .lang-xml .hljs-string {
+      color: white;
+    }
+
+    .lang-sql {
+      color: white;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #3955d3;
+
+    &:hover {
+      color: #1e2231;
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+
+    li span {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      list-style-type: square;
+
+      img {
+        margin: 5px 0 0 4px;
+      }
+    }
+  }
+
+  aside {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+
+    p {
+      margin-top: 0;
+    }
+
+    header {
+      border-bottom: solid 1px #e3e8ee;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 8px;
+      padding-top: 5px;
+      font-weight: 500;
+      background-color: #e3e8ee;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .aside-body {
+      padding: 10px;
+      border: solid 1px #e3e8ee;
+      border-radius: 0 0 10px 10px;
+      background-color: #f7fafc;
+    }
+
+    .aside-body table {
+      font-size: 0.9em;
+      width: 100%;
+      margin-bottom: 5px;
+      table-layout: auto;
+
+      td,
+      th {
+        padding: 3px;
+        text-align: left;
+      }
+    }
+  }
+
+  .content-split {
+    display: block;
+
+    @include for-desktop-up {
+      display: flex;
+    }
+  }
+
+  .content-split-primary {
+    width: 100%;
+
+    @include for-desktop-up {
+      margin-right: 5vw;
+      width: 40vw;
+    }
+  }
+
+  .content-split-secondary {
+    width: 100%;
+
+    @include for-desktop-up {
+      max-width: 500px;
+    }
+  }
+
+  table {
+    font-size: 0.9em;
+    table-layout: fixed;
+
+    thead {
+      font-weight: 500;
+      background-color: #e3e8ee;
+    }
+
+    tr:nth-child(even) {
+      background-color: #e3e8ee;
+    }
+  }
+
+  q {
+    font-style: italic;
+  }
+
+  p code {
+    font-size: 1.1em;
+    border-top: solid 1px #e3e8ee;
+    border-bottom: solid 1px #e3e8ee;
+
+    &:hover{
+      font-weight: bold;
+    }
+  }
+}

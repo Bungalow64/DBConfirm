@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+	  <SignAssembly>true</SignAssembly>
+	  <AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Logic\ExpectedClasses\Generator_IncludeDateTimeColumn_FileGenerated_WithSystem.txt" />
+    <None Remove="Logic\ExpectedClasses\Generator_IncludeRequiredForeignKeyAsIdentity_FileGenerated_WithPlaceholder.txt" />
+    <None Remove="Logic\ExpectedClasses\Generator_IncludeRequiredForeignKey_FileGenerated_WithPlaceholder.txt" />
+    <None Remove="Logic\ExpectedClasses\Generator_SingleIdentityTableWithColumns_LowercaseNames_FileGeneratedWithPascalCaseColumns.txt" />
+    <None Remove="Logic\ExpectedClasses\Generator_SingleNonIdentityTableWithColumns_FileGenerated.txt" />
+    <None Remove="Logic\ExpectedClasses\Generator_SingleTableWithColumns_FileGenerated.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_IncludeRequiredForeignKeyAsIdentity_FileGenerated_WithPlaceholder.txt" />
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_IncludeRequiredForeignKey_FileGenerated_WithPlaceholder.txt" />
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleNonIdentityTableWithColumns_FileGenerated.txt" />
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_IncludeDateTimeColumn_FileGenerated_WithSystem.txt" />
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleIdentityTableWithColumns_LowercaseNames_FileGeneratedWithPascalCaseColumns.txt" />
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleTableWithColumns_FileGenerated.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\tools\TemplateGeneration.SQLServer\TemplateGeneration.csproj" />
+  </ItemGroup>
+
+</Project>

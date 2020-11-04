@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DBConfirm.Frameworks.MSTest</name>
+    </assembly>
+    <members>
+        <member name="T:DBConfirm.Frameworks.MSTest.MSTestFramework">
+            <summary>
+            The test framework using MSTest
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.AreEqual(System.Object,System.Object,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.AreNotEqual(System.Object,System.Object,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.Contains``1(System.Collections.Generic.List{``0},``0,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.DoesNotContain``1(System.Collections.Generic.List{``0},``0,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.Matches(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.DoesNotMatch(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.Fail(System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.IsInstanceOfType(System.Object,System.Type,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.IsTrue(System.Boolean,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:DBConfirm.Frameworks.MSTest.MSTestFrameworkBase">
+            <summary>
+            The abstract base class for test classes using MSTest
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Frameworks.MSTest.MSTestFrameworkBase.Context">
+            <summary>
+            The current <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> instance
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Frameworks.MSTest.MSTestFrameworkBase.TestFramework">
+            <summary>
+            Gets and sets the <see cref="T:DBConfirm.Core.TestFrameworks.Abstract.ITestFramework"/> to be used for assertions, by default using <see cref="T:DBConfirm.Frameworks.MSTest.MSTestFramework"/> 
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFrameworkBase.ClassInitialise(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext)">
+            <summary>
+            The initialisation called once before all tests are run in a class, to set the current <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> object
+            </summary>
+            <param name="testContext">The current <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> instance</param>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFrameworkBase.GetParameter(System.String)">
+            <summary>
+            Gets the value of the parameter from the current <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext"/> instance.  If the parameter does not exist, null is returned
+            </summary>
+            <param name="parameterName">The name of the parameter</param>
+            <returns>Returns the value of the parameter, or null if the parameter is not found</returns>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFrameworkBase.Init">
+            <summary>
+            The initialisation called before each test, to set up the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the test, and making the initial connection to the target database
+            </summary>
+            <returns>A task representing the asynchronous operation</returns>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFrameworkBase.Cleanup">
+            <summary>
+            The cleaup called after each test, to dispose the current instance of <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/>, rolling back the transaction and closing the connection
+            </summary>
+        </member>
+    </members>
+</doc>

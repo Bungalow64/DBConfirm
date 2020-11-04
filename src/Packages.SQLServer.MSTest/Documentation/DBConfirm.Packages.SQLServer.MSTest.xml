@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DBConfirm.Packages.SQLServer.MSTest</name>
+    </assembly>
+    <members>
+        <member name="T:DBConfirm.Packages.SQLServer.MSTest.MSTestBase">
+            <summary>
+            The abstract base class for test classes using MSTest and SQL Server
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Packages.SQLServer.MSTest.MSTestBase.TestRunnerFactory">
+            <summary>
+            Uses <see cref="T:DBConfirm.Databases.SQLServer.Factories.SQLServerTestRunnerFactory"/> to generate <see cref="T:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner"/> as the test runner
+            </summary>
+        </member>
+    </members>
+</doc>

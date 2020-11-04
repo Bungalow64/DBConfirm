@@ -1,0 +1,23 @@
+﻿using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
+using DBConfirm.Core.Templates.Placeholders;
+
+namespace DBConfirm.Templates
+{
+    public class UsersTemplate : BaseIdentityTemplate<UsersTemplate>
+    {
+        public override string TableName => "[dbo].[Users]";
+        
+        public override string IdentityColumnName => "UserId";
+
+        public override DataSetRow DefaultData => new DataSetRow
+        {
+            ["CountryId"] = Placeholders.IsRequired(),
+            ["FirstName"] = "SampleFirstName"
+        };
+
+        public UsersTemplate WithUserId(int value) => SetValue("UserId", value);
+        public UsersTemplate WithCountryId(int value) => SetValue("CountryId", value);
+        public UsersTemplate WithFirstName(string value) => SetValue("FirstName", value);
+    }
+}
