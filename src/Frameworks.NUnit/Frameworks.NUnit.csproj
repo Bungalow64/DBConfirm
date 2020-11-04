@@ -17,6 +17,8 @@ This package is the test runner for NUnit.</Description>
 	  <RootNamespace>DBConfirm.Frameworks.NUnit</RootNamespace>
 	  <AssemblyName>DBConfirm.Frameworks.NUnit</AssemblyName>
 	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	  <SignAssembly>true</SignAssembly>
+	  <AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup>
