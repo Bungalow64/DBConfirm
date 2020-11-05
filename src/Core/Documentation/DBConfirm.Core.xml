@@ -303,7 +303,7 @@
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsType(System.Type)">
             <summary>
-            Gets the state to test for the data to not match a specific regex
+            Gets the state to test for the data to match a specific type
             </summary>
             <param name="expectedType">The expected type</param>
             <returns>Returns the comparison object</returns>
