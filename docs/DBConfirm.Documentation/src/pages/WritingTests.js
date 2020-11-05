@@ -349,6 +349,7 @@ export default function WritingTests() {
             <li><strong>IsNotNull</strong> - Asserts the value is not null</li>
             <li><strong>MatchesRegex</strong> - Asserts the value matches the Regex value</li>
             <li><strong>NotMatchesRegex</strong> - Asserts that the value does not match the Regex value</li>
+            <li><strong>IsType</strong> - Asserts that the value matches a specific type</li>
         </ul>
 
         <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCount"</span>);
@@ -374,7 +375,9 @@ export default function WritingTests() {
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value matches the Regex value</span>
         {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"EmailAddress"</span>, Comparisons.<span className="hljs-title">MatchesRegex</span>(<span className="hljs-string">".*@.*"</span>))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value does not match the Regex value</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">NotMatchesRegex</span>(<span className="hljs-string">".*@.*"</span>));
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">NotMatchesRegex</span>(<span className="hljs-string">".*@.*"</span>))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value matches a specific type</span>
+        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsType</span>(<span className="hljs-keyword">typeof</span>(<span className="hljs-keyword">string</span>)));
 </code></pre>
 
         </>

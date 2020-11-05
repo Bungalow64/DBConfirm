@@ -106,7 +106,7 @@ namespace DBConfirm.Core.Comparisons
         /// <returns>Returns the comparison object</returns>
         public IComparison NotMatchesRegex(string unexpectedRegex) => new NoMatchRegex(unexpectedRegex);
         /// <summary>
-        /// Gets the state to test for the data to not match a specific regex
+        /// Gets the state to test for the data to match a specific type
         /// </summary>
         /// <param name="expectedType">The expected type</param>
         /// <returns>Returns the comparison object</returns>
