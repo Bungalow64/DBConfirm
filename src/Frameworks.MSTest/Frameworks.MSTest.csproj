@@ -23,7 +23,7 @@ This package is the test runner for MSTest.
 	</PropertyGroup>
 
 	<PropertyGroup>
-	  <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.MSTest\Documentation\DBConfirm.Frameworks.MSTest.xml</DocumentationFile>
+	  <DocumentationFile>Documentation\DBConfirm.Frameworks.MSTest.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

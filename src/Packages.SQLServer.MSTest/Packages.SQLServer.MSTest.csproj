@@ -20,7 +20,7 @@ This library allows you to write SQL unit tests in code alongside all your other
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Packages.SQLServer.MSTest\Documentation\DBConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
+    <DocumentationFile>Documentation\DBConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
