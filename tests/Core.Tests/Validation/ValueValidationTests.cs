@@ -63,6 +63,16 @@ namespace Core.Tests.Validation
             Assert.AreEqual($"Assert.AreEqual failed. Expected:<123 (System.String)>. Actual:<123 (System.Int32)>. Custom assertion has an unexpected value", exception.Message);
         }
 
+        [TestCase(123, 123.0f, "Expected:<123 (System.Int32)>. Actual:<123 (System.Single)>")]
+        [TestCase(123, 123.0d, "Expected:<123 (System.Int32)>. Actual:<123 (System.Double)>")]
+        public void ValueValidation_Assert_DifferentTypes_AreNotEqual(object expectedValue, object actualValue, string expectedMessage)
+        {
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                ValueValidation.Assert(_testFramework, expectedValue, actualValue, "Custom assertion"));
+
+            Assert.AreEqual($"Assert.AreEqual failed. {expectedMessage}. Custom assertion has an unexpected value", exception.Message);
+        }
+
         [Test]
         public void ValueValidation_Assert_AssertState_AreNotEqual_ThrowError()
         {
