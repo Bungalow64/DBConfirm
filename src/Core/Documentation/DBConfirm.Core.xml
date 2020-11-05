@@ -673,6 +673,18 @@
             <param name="dictionary">The new data set to merge with</param>
             <returns>Returns a single data set, representing the merge of the two data sets</returns>
         </member>
+        <member name="M:DBConfirm.Core.Data.DataSetRow.Apply(DBConfirm.Core.Data.DataSetRow)">
+            <summary>
+            Applies all values within the supplied <see cref="T:DBConfirm.Core.Data.DataSetRow"/> to the current <see cref="T:DBConfirm.Core.Data.DataSetRow"/>, overwriting all keys
+            </summary>
+            <param name="dictionary">The new data set to apply from</param>
+        </member>
+        <member name="M:DBConfirm.Core.Data.DataSetRow.Copy">
+            <summary>
+            Copies the <see cref="T:DBConfirm.Core.Data.DataSetRow"/> to a new instance.  Uses a shallow copy.
+            </summary>
+            <returns>Returns the copied <see cref="T:DBConfirm.Core.Data.DataSetRow"/></returns>
+        </member>
         <member name="T:DBConfirm.Core.Exceptions.RequiredPlaceholderIsNullException">
             <summary>
             The exception that is thrown when a required placeholder has not been replaced by a value
