@@ -43,7 +43,9 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 {
                     { "FirstName", "Jamie" },
                     { "LastName", "Burns" }
-                });
+                })
+                .ValidateRow(0)
+                .AssertValue("FirstName", Comparisons.IsType(typeof(string)));
         }
 
         [TestMethod]

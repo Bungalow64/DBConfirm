@@ -6,7 +6,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-namespace SqlConfirm.Core.Tests.Dates
+namespace Core.Tests.Comparisons.Dates
 {
     [TestFixture]
     public class SpecificDateTimeTests

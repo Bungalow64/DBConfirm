@@ -3,7 +3,7 @@ using DBConfirm.Core.Templates;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace SqlConfirm.Core.Tests.Templates
+namespace Core.Tests.Templates
 {
     [TestFixture]
     public class BaseIdentityTemplateTests

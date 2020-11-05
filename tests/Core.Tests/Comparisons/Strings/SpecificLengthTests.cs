@@ -4,7 +4,7 @@ using NUnit.Framework;
 using DBConfirm.Frameworks.MSTest;
 using System;
 
-namespace SqlConfirm.Core.Tests.Strings
+namespace Core.Tests.Comparisons.Strings
 {
     [TestFixture]
     public class SpecificLengthTests
@@ -51,7 +51,7 @@ namespace SqlConfirm.Core.Tests.Strings
         {
             SpecificLength specificLength = new SpecificLength(length);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() 
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(()
                 => specificLength.Assert(_testFramework, value, "Custom message"));
 
             Assert.AreEqual($"Assert.AreEqual failed. Expected:<{length}>. Actual:<{value?.Length ?? 0}>. Custom message has an unexpected length", exception.Message);

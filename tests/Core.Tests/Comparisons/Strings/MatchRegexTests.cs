@@ -5,7 +5,7 @@ using DBConfirm.Frameworks.MSTest;
 using System;
 using System.Text.RegularExpressions;
 
-namespace SqlConfirm.Core.Tests.Strings
+namespace Core.Tests.Comparisons.Strings
 {
     [TestFixture]
     public class MatchRegexTests

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using DBConfirm.Frameworks.MSTest;
 using System;
 
-namespace SqlConfirm.Core.Tests.States
+namespace Core.Tests.Comparisons.States
 {
     [TestFixture]
     public class NullStateTests
