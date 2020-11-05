@@ -63,10 +63,29 @@ namespace DBConfirm.Core.Data
         /// <returns>Returns a single data set, representing the merge of the two data sets</returns>
         public DataSetRow Merge(DataSetRow dictionary)
         {
-            DataSetRow merged = new DataSetRow();
-            this.ToList().ForEach(p => merged.Add(p.Key, p.Value));
+            DataSetRow merged = Copy();
             dictionary?.ToList().ForEach(p => merged[p.Key] = p.Value);
             return merged;
+        }
+
+        /// <summary>
+        /// Applies all values within the supplied <see cref="DataSetRow"/> to the current <see cref="DataSetRow"/>, overwriting all keys
+        /// </summary>
+        /// <param name="dictionary">The new data set to apply from</param>
+        public void Apply(DataSetRow dictionary)
+        {
+            dictionary?.ToList().ForEach(p => this[p.Key] = p.Value);
+        }
+
+        /// <summary>
+        /// Copies the <see cref="DataSetRow"/> to a new instance.  Uses a shallow copy.
+        /// </summary>
+        /// <returns>Returns the copied <see cref="DataSetRow"/></returns>
+        public DataSetRow Copy()
+        {
+            DataSetRow copy = new DataSetRow();
+            this.ToList().ForEach(p => copy.Add(p.Key, p.Value));
+            return copy;
         }
     }
 }

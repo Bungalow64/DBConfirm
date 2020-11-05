@@ -53,6 +53,11 @@ namespace DBConfirm.Core.Templates
         }
 
         /// <inheritdoc/>
-        public Task InsertAsync(ITestRunner testRunner) => testRunner.InsertDataAsync(TableName, DefaultData, CustomData);
+        public async Task InsertAsync(ITestRunner testRunner)
+        {
+            DataSetRow newRow = await testRunner.InsertDataAsync(TableName, DefaultData, CustomData);
+
+            Apply(newRow);
+        }
     }
 }
