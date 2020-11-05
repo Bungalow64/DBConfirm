@@ -22,7 +22,7 @@ This package contains the data access to Microsoft SQL Server.</Description>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Databases.SQLServer\Documentation\DBConfirm.Databases.SQLServer.xml</DocumentationFile>
+    <DocumentationFile>Documentation\DBConfirm.Databases.SQLServer.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
