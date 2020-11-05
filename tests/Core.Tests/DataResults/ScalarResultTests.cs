@@ -3,7 +3,7 @@ using DBConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
 using DBConfirm.Frameworks.MSTest;
 
-namespace SqlConfirm.Core.Tests.DataResults
+namespace Core.Tests.DataResults
 {
     [TestFixture]
     public class ScalarResultTests
@@ -23,7 +23,7 @@ namespace SqlConfirm.Core.Tests.DataResults
         {
             ScalarResult<int> result = new ScalarResult<int>(_testFramework, 1001);
 
-            Assert.DoesNotThrow(() => 
+            Assert.DoesNotThrow(() =>
                 result.AssertValue(1001));
         }
 

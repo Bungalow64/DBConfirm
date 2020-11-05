@@ -6,7 +6,7 @@ using DBConfirm.Frameworks.MSTest;
 using System.Data;
 using System.Linq;
 
-namespace SqlConfirm.Core.Tests.DataResults
+namespace Core.Tests.DataResults
 {
     [TestFixture]
     public class QueryResultTests
@@ -970,7 +970,7 @@ namespace SqlConfirm.Core.Tests.DataResults
                 { "DomainId", expectedDomainId }
             };
 
-            Assert.DoesNotThrow(() => 
+            Assert.DoesNotThrow(() =>
                 queryResult.AssertRowValues(rowNumber, expectedData));
         }
 

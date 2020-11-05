@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace SqlConfirm.Core.Tests
+namespace Core.Tests.Data
 {
     [TestFixture]
     public class DataSetRowTests
