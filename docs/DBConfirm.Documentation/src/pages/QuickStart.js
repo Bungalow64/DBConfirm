@@ -49,9 +49,40 @@ export default function QuickStart() {
             </div>
 
             <p>This will add a new project, with the required NuGet packages installed.  There will be a sample test class (inheriting from the correct base class),
-            containing a single test method (already marked as async).  There will also be an appsettings.json file with a default connection string,
-            which will need to be updated to point to your own database.
+            containing a single test method (already marked as async):
             </p>
+
+            <div className="content-split">
+
+                <div className="content-split-primary">
+                    <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For MSTest</span>
+                        {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Core.Data;
+            {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Core.DataResults;
+            {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Core.Parameters;
+            {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.MSTest;
+            {"\n"}<span className="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
+            {"\n"}<span className="hljs-keyword">using</span> System.Threading.Tasks;
+            {"\n"}
+                        {"\n"}[<span className="hljs-type">TestClass</span>]
+                        {"\n"}<span className="hljs-keyword">public</span> <span className="hljs-keyword">class</span> <span className="hljs-type">GetUserTests</span> : <span className="hljs-type">MSTestBase</span>
+                        {"\n"}{"{"}
+                        {"\n"}    [<span className="hljs-type">TestMethod</span>]
+                        {"\n"}    <span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">TestMethod1</span>(<span className="hljs-params"></span>)
+                        {"\n"}    {"{"}
+                        {"\n"}
+                        {"\n"}    {"}"}
+                        {"\n"}{"}"}
+                    </code></pre>
+                </div>
+                <aside>
+                    <header>For NUnit</header>
+                    <div className="aside-body">
+                        <p>For NUnit, <code>[TestFixture]</code> is used instead of <code>[TestClass]</code>, and the class will inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
+                    </div>
+                </aside>
+            </div>
+
+            <p>There will also be an appsettings.json file with a default connection string, which will need to be updated to point to your own database.</p>
 
             <h3>Upating the default connection string</h3>
 
