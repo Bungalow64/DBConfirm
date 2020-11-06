@@ -8,6 +8,7 @@ import NuGet from './pages/NuGet';
 import Templates from './pages/Templates';
 import ConnectionStrings from './pages/ConnectionStrings';
 import ContinuousIntegration from './pages/ContinuousIntegration';
+import ManualSetup from './pages/ManualSetup';
 import Debugging from './pages/Debugging'
 import Api from './pages/Api'
 import FAQ from './pages/FAQ';
@@ -31,6 +32,7 @@ function App() {
             <Route path="/templates"><Templates /></Route>
             <Route path="/connectionstrings"><ConnectionStrings /></Route>
             <Route path="/continuousintegration"><ContinuousIntegration /></Route>
+            <Route path="/manualsetup"><ManualSetup /></Route>
             <Route path="/debugging"><Debugging /></Route>
             <Route path="/api"><Api /></Route>
             <Route path="/faq"><FAQ /></Route>

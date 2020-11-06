@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Bungalow64",
+  "classifications": [ "Test", "NUnit", "DBConfirm", "SQLServer" ],
+  "identity": "DBConfirm.SQLServer.NUnit",
+  "name": "DBConfirm: NUnit project for SQL Server",
+  "shortName": "dbconfirm-sqlserver-nunit",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Templates.SQLServer.NUnit",
+  "preferNameDirectory": true
+}

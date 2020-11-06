@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageType>Template</PackageType>
+		<PackageVersion>0.1.0</PackageVersion>
+		<PackageId>DBConfirm.Templates.SQLServer.NUnit</PackageId>
+		<Title>DBConfirm project template for NUnit and SQL Server</Title>
+		<Authors>Bungalow64</Authors>
+		<Company>Bungalow64 Technologies Ltd</Company>
+		<Description>Project template for getting started using DBConfirm with NUnit and SQL Server</Description>
+		<PackageTags>dotnet-new;templates;bungalow64;dbconfirm;sqlserver;nunit;testing;unit-test</PackageTags>
+
+		<TargetFramework>netstandard2.0</TargetFramework>
+
+		<IncludeContentInPack>true</IncludeContentInPack>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<ContentTargetFolders>content</ContentTargetFolders>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+		<Compile Remove="**\*"/>
+	</ItemGroup>
+</Project>
