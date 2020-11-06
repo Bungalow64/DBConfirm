@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Bungalow64",
+  "classifications": [ "Test", "MSTest", "DBConfirm", "SQLServer" ],
+  "identity": "DBConfirm.SQLServer.MSTest",
+  "name": "DBConfirm: MSTest project for SQL Server",
+  "shortName": "dbconfirm-sqlserver-mstest",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Templates.SQLServer.MSTest",
+  "preferNameDirectory": true
+}
