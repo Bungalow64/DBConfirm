@@ -5,7 +5,7 @@ using DBConfirm.Packages.SQLServer.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace Templates.SQLServer.MSTest
+namespace Default.Templates.SQLServer.MSTest
 {
     [TestClass]
     public class UnitTest1 : MSTestBase

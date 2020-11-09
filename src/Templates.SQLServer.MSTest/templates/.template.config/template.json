@@ -9,6 +9,6 @@
     "language": "C#",
     "type": "project"
   },
-  "sourceName": "Templates.SQLServer.MSTest",
+  "sourceName": "Default.Templates.SQLServer.MSTest",
   "preferNameDirectory": true
 }

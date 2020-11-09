@@ -5,7 +5,7 @@ using DBConfirm.Packages.SQLServer.NUnit;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace Templates.SQLServer.NUnit
+namespace Default.Templates.SQLServer.NUnit
 {
     [TestFixture]
     public class Tests : NUnitBase
