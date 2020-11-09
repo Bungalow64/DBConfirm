@@ -9,6 +9,6 @@
     "language": "C#",
     "type": "project"
   },
-  "sourceName": "Templates.SQLServer.NUnit",
+  "sourceName": "Default.Templates.SQLServer.NUnit",
   "preferNameDirectory": true
 }
