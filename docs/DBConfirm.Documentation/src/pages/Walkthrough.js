@@ -24,6 +24,7 @@ import vstemplatesadded from './images/walkthrough/vs-templates-added.png';
 import vstemplateaddedclass from './images/walkthrough/vs-template-added-class.png';
 import vscomplextemplateadd from './images/walkthrough/vs-complextemplate-add.png';
 import vsdatadriventestpass from './images/walkthrough/vs-data-driven-test-pass.png';
+import azurecipass from './images/walkthrough/azure-ci-pass.png';
 
 export default function Walkthrough() {
     return (
@@ -44,6 +45,7 @@ export default function Walkthrough() {
                 <li><a href="#automatically-generating-templates">Automatically generating templates</a></li>
                 <li><a href="#add-test-data-complex-templates">Adding test data (with complex templates)</a></li>
                 <li><a href="#data-driven-tests">Adding a data-driven test</a></li>
+                <li><a href="#including-in-ci">Including in a Continuous Integration (CI) build</a></li>
             </ul>
             <h3 id="the-database-to-test">The database to test</h3>
 
@@ -1123,6 +1125,51 @@ export default function Walkthrough() {
             <p>Now, if you run the tests, you should see the test pass all 4 scenarios:</p>
 
             <img src={vsdatadriventestpass} alt="Data-driven tests have passed" />
+
+            <p>Next, we're going to want to run these tests as part of an Azure DevOps CI build.</p>
+
+            <h3 id="including-in-ci">Including in a Continuous Integration (CI) build</h3>
+
+            <p>Since the DBConfirm tests we've written so far are all using MSTest, a CI build will run the tests during a standard .NET Core test task.  However, we will
+                still need to configure the build to use the correct connection string.
+            </p>
+            <p>For this walkthrough I'm using Azure DevOps, so I'll go ahead and commit this testing project in.</p>
+            <p>Now, I'm going to set up a CI build purely to build and run this test project.  I'll use a YAML build:</p>
+
+            <pre>
+                <code className="lang-yaml">
+                <span className="hljs-attr">trigger</span>:
+                {"\n"}- <span className="hljs-value">master</span>
+                {"\n"}
+                {"\n"}<span className="hljs-attr">variables</span>:
+                {"\n"}  <span className="hljs-attr">DefaultConnectionString</span>: <span className="hljs-value">'SERVER=B64-VM-BUILD;DATABASE=Northwind;Integrated Security=true;Connection Timeout=30;'</span>
+                {"\n"}  <span className="hljs-attr">BuildConfiguration</span>: <span className="hljs-value">'Debug'</span>
+                {"\n"}
+                {"\n"}<span className="hljs-attr">pool</span>: <span className="hljs-value">'Default'</span>
+                {"\n"}
+                {"\n"}<span className="hljs-attr">steps</span>:
+                {"\n"}- <span className="hljs-attr">task</span>: <span className="hljs-value">DotNetCoreCLI@2</span>
+                {"\n"}  <span className="hljs-attr">displayName</span>: <span className="hljs-value">Build</span>
+                {"\n"}  <span className="hljs-attr">inputs</span>:
+                {"\n"}    <span className="hljs-attr">projects</span>: <span className="hljs-value">'**/*.csproj'</span>
+                {"\n"}    <span className="hljs-attr">arguments</span>: <span className="hljs-value">'--configuration $(BuildConfiguration)'</span>
+                {"\n"}
+                {"\n"}- <span className="hljs-attr">task</span>: <span className="hljs-value">DotNetCoreCLI@2</span>
+                {"\n"}  <span className="hljs-attr">displayName</span>: <span className="hljs-value">Test</span>
+                {"\n"}  <span className="hljs-attr">inputs</span>:
+                {"\n"}    <span className="hljs-attr">command</span>: <span className="hljs-value">test</span>
+                {"\n"}    <span className="hljs-attr">projects</span>: <span className="hljs-value">'**/*Tests/*.csproj'</span>
+                {"\n"}    <span className="hljs-attr">arguments</span>: <span className="hljs-value">'--configuration $(BuildConfiguration)'</span>
+                </code>
+            </pre>
+
+            <p>The key part of this build is the <code>DefaultConnectionString</code> variable.  This tells DBConfirm where it can find the database to test against.  In
+            this case, it's looking for the Northwind database on the B64-VM-BUILD server.  Running this build executes all tests, and they pass:</p>
+
+            <img src={azurecipass} alt="CI build has completed, passing 3 tests"/>
+
+            <p>And that's it!  We've set a testing project up, added tests that have arrange, act and assert steps, and included the tests as part of a CI build.</p>
+            <p>Hopefully this will give you an idea of how you can approach database testing using DBConfirm.</p>
         </div >
     );
 }

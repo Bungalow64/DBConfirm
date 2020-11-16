@@ -47,7 +47,7 @@ export default function WritingTests() {
 
             <p><Link to={{ pathname: "/templates", hash: "#complextemplates" }}>Complex templates</Link> are inserted in the same way.
             Since a template can only be inserted once, that means we can reuse the same template if we want to refer to the same row in the database.
-            For example, say we have a complex template that inserts one Address row and one Country row.  If we wanted to add 2 Address rows for the same country,
+            For example, say we have a complex template that inserts one Address row and one Country row.  If we wanted to add 2 Address rows for the same Country,
             we can insert the data like this:</p>
 
             <pre>

@@ -45,10 +45,12 @@ export default function Overview() {
                     {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">AddUserProcedure_UserIsAdded</span>(<span className="hljs-params"></span>)
                     {"\n"}</span>{"{"}
                         {"\n"}    <span className="hljs-comment">{'//'} Call a stored procedure with some parameters</span>
-                        {"\n"}    <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureNonQueryAsync</span>(<span className="hljs-string">"dbo.AddUser"</span>,
-                    {"\n"}        <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"Jamie"</span>),
-                    {"\n"}        <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"LastName"</span>, <span className="hljs-string">"Burns"</span>),
-                    {"\n"}        <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"EmailAddress"</span>, <span className="hljs-string">"jamie@example.com"</span>));
+                        {"\n"}    <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureNonQueryAsync</span>(<span className="hljs-string">"dbo.AddUser"</span>, <span className="hljs-keyword">new</span> <span className="hljs-type">DataSetRow</span>
+                    {"\n"}    {"{"}
+                    {"\n"}        [<span className="hljs-string">"FirstName"</span>] = <span className="hljs-string">"Jamie"</span>,
+                    {"\n"}        [<span className="hljs-string">"LastName"</span>] = <span className="hljs-string">"Burns"</span>,
+                    {"\n"}        [<span className="hljs-string">"EmailAddress"</span>] = <span className="hljs-string">"jamie@example.com"</span>
+                    {"\n"}    {"}"});
                     {"\n"}
                         {"\n"}    <span className="hljs-comment">{'//'} Get all the data in a table</span>
                         {"\n"}    <span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteTableAsync</span>(<span className="hljs-string">"dbo.Users"</span>);

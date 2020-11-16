@@ -31,7 +31,7 @@ export default function Templates() {
 
             <h3 id="simpletemplates">Simple Templates</h3>
 
-            <p>A simple template, representing a single table looks like this:</p>
+            <p>A simple template, representing a single table (which contains an Identity column) looks like this:</p>
 
             <div className="content-split">
                 <div className="content-split-primary">
@@ -181,6 +181,7 @@ export default function Templates() {
                 </div>
             </div>
 
+            <h4>Default Data</h4>
 
             <p>The <strong>DefaultData</strong> property is intended to provide enough default data to allow the template to be added, without any extra
             data being provided.  The only exception to this is when the table has required foreign keys to other tables - these related rows will have
@@ -202,6 +203,72 @@ export default function Templates() {
             <p>Once the template has been inserted, all values that were used from <strong>DefaultData</strong> are applied to the main
 template dictionary, so they can be accessed via <code>insertedTemplate["DefaultDataColumn"]</code>.  If this column has been
 overridden, then the latest value will be returned, not the original default.</p>
+
+            <h4>Non-Identity templates</h4>
+
+            <p>If a table does not contain an Identity column, then the template class should inherit from <code>BaseSimpleTemplate{"<"}T{">"}</code>, and doesn't have an <code>IdentityColumnName</code> property:</p>
+
+
+            <div className="content-split">
+                <div className="content-split-primary">
+
+                    <pre><code className="lang-csharp"><span className="hljs-keyword">using</span> DBConfirm.Core.Data;
+    {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Core.Templates;
+    {"\n"}
+                        {"\n"}<span className="hljs-keyword">namespace</span> Sample.Tests.Templates
+    {"\n"}{"{"}
+                        {"\n"}    <span className="hljs-comment">{'//'} The class inherits from BaseSimpleTemplate</span>
+                        {"\n"}    <span className="hljs-keyword">public</span> <span className="hljs-keyword">class</span> <span className="hljs-type">CustomersTemplate</span> : <span className="hljs-type">BaseSimpleTemplate</span>&lt;<span className="hljs-type">CustomersTemplate</span>&gt;
+    {"\n"}    {"{"}
+                        {"\n"}        <span className="hljs-comment">{'//'} Sets the schema and name of the table</span>
+                        {"\n"}        <span className="hljs-keyword">public</span> <span className="hljs-keyword">override</span> <span className="hljs-keyword">string</span> TableName =&gt; <span className="hljs-string">"[dbo].[Customers]"</span>;
+    {"\n"}
+                        {"\n"}        <span className="hljs-comment">{'//'} Defines default data that's used when this template is inserted</span>
+                        {"\n"}        <span className="hljs-keyword">public</span> <span className="hljs-keyword">override</span> <span className="hljs-type">DataSetRow</span> DefaultData =&gt; <span className="hljs-keyword">new</span> <span className="hljs-type">DataSetRow</span>
+                        {"\n"}        {"{"}
+                        {"\n"}            [<span className="hljs-string">"CustomerID"</span>] = <span className="hljs-string">"C1234"</span>,
+    {"\n"}            [<span className="hljs-string">"CompanyName"</span>] = <span className="hljs-string">"SampleCompanyName"</span>
+                        {"\n"}        {"}"};
+    {"\n"}
+                        {"\n"}        <span className="hljs-comment">{'//'} Optional fluent methods to make it easier to override specific values in the template</span>
+                        {"\n"}        <span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-type">CustomersTemplate</span> <span className="hljs-title">WithCustomerID</span><span className="hljs-params">(<span className="hljs-keyword">string</span> value)</span> </span>=&gt; <span className="hljs-title">SetValue</span>(<span className="hljs-string">"CustomerID"</span>, value);
+                {"\n"}        <span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-type">CustomersTemplate</span> <span className="hljs-title">WithCompanyName</span><span className="hljs-params">(<span className="hljs-keyword">string</span> value)</span> </span>=&gt; <span className="hljs-title">SetValue</span>(<span className="hljs-string">"CompanyName"</span>, value);
+                {"\n"}    {"}"}
+                        {"\n"}{"}"}
+                    </code></pre>
+
+                </div>
+                <div className="content-split-secondary">
+                    <aside>
+                        <header>Original SQL table</header>
+                        <div className="aside-body">
+                            <p>This example represents the <strong>dbo.Customers</strong> table in the SQL database:</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Column Name</th>
+                                        <th>Data Type</th>
+                                        <th>Properties</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CustomerID</td>
+                                        <td>nchar(5)</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CompanyName</td>
+                                        <td>nvarchar(50)</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
 
             <h3 id="complextemplates">Complex Templates</h3>
 
