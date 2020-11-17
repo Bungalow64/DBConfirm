@@ -22,7 +22,7 @@ This package is the test runner for NUnit.</Description>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Frameworks.NUnit\Documentation\DBConfirm.Frameworks.NUnit.xml</DocumentationFile>
+    <DocumentationFile>Documentation\DBConfirm.Frameworks.NUnit.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

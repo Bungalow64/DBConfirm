@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 
-namespace SqlConfirm.Core.Tests.Templates
+namespace Core.Tests.Templates
 {
     [TestFixture]
     public class ResolverTests

@@ -21,7 +21,7 @@ This package is the core logic; see the MSTest/NUnit packages for the framework-
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Core\Documentation\DBConfirm.Core.xml</DocumentationFile>
+    <DocumentationFile>Documentation\DBConfirm.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

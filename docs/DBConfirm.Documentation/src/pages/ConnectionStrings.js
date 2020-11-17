@@ -12,7 +12,7 @@ export default function ConnectionStrings() {
             <p>There are 2 elements that can be configured - the <strong>connection string name</strong>, and the <strong>connection string value</strong>.</p>
 
             <p>By default, the <strong>connection string name</strong> is set as "DefaultConnectionString".  Unless this is overridden, the tests will
-            search for a connection string using that name.  If you're only ever testing one database, then there's no need to change this value.  However,
+            search for a connection string using that name.  If you're only ever testing one database, then there's no need to change this name.  However,
             if you want to test multiple databases within the same test project or CI build, then you'll need to change this name so that you can refer to the different
             connection strings.</p>
 

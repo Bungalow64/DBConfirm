@@ -18,7 +18,7 @@ This library allows you to write SQL unit tests in code alongside all your other
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>C:\Git\Bungalow64.SqlTesting\src\Packages.SQLServer.NUnit\Documentation\Packages.SQLServer.NUnit.xml</DocumentationFile>
+    <DocumentationFile>Documentation\Packages.SQLServer.NUnit.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

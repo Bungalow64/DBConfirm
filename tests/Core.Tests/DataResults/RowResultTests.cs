@@ -5,7 +5,7 @@ using NUnit.Framework;
 using DBConfirm.Frameworks.MSTest;
 using System.Data;
 
-namespace SqlConfirm.Core.Tests.DataResults
+namespace Core.Tests.DataResults
 {
     [TestFixture]
     public class RowResultTests

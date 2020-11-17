@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace SqlConfirm.Core.Tests.Exceptions
+namespace Core.Tests.Exceptions
 {
     [TestFixture]
     public class RequiredPlaceholderIsNullExceptionTests
