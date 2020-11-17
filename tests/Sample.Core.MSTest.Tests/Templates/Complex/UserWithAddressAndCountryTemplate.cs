@@ -22,7 +22,7 @@ namespace Sample.Core.MSTest.Tests.Templates.Complex
             }
 
             UserAddress["UserId"] = User.Identity;
-            UserAddress["CountryCode"] = Country.MergedData["CountryCode"];
+            UserAddress["CountryCode"] = Country["CountryCode"];
             await testRunner.InsertTemplateAsync(UserAddress);
         }
     }

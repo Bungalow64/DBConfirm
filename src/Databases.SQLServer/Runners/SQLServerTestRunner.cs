@@ -359,10 +359,10 @@ namespace DBConfirm.Databases.SQLServer.Runners
         /// <inheritdoc/>
         public async Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow defaultData, DataSetRow overrideData)
         {
-            DataSetRow data = defaultData;
+            DataSetRow data = defaultData.Copy();
             if (overrideData != null)
             {
-                data = data.Merge(overrideData);
+                data.Apply(overrideData);
             }
 
             if (data.All(p => p.Value == null))
@@ -452,7 +452,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
                 int insertedIdentityValue = Convert.ToInt32(results.RawData.Rows[0]["IdentityValue"]);
                 string insertedIdentityColumnName = results.RawData.Rows[0]["IdentityColumnName"].ToString();
 
-                (overrideData ?? data)[insertedIdentityColumnName] = insertedIdentityValue;
+                data[insertedIdentityColumnName] = insertedIdentityValue;
 
                 return data;
             }

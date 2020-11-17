@@ -7,7 +7,7 @@ using NUnit.Framework;
 using DBConfirm.Frameworks.MSTest;
 using System;
 
-namespace SqlConfirm.Core.Tests.Validation
+namespace Core.Tests.Validation
 {
     [TestFixture]
     public class ValueValidationTests
@@ -30,7 +30,7 @@ namespace SqlConfirm.Core.Tests.Validation
         [TestCase(true, false)]
         public void ValueValidation_Assert_BasicObjects_AreNotEqual(object expectedValue, object actualValue)
         {
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => 
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 ValueValidation.Assert(_testFramework, expectedValue, actualValue, "Custom assertion"));
 
             Assert.AreEqual($"Assert.AreEqual failed. Expected:<{ expectedValue }>. Actual:<{ actualValue }>. Custom assertion has an unexpected value", exception.Message);
@@ -57,10 +57,20 @@ namespace SqlConfirm.Core.Tests.Validation
         [Test]
         public void ValueValidation_Assert_ExpectStringActualInt_AreNotEqual()
         {
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => 
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 ValueValidation.Assert(_testFramework, "123", 123, "Custom assertion"));
 
             Assert.AreEqual($"Assert.AreEqual failed. Expected:<123 (System.String)>. Actual:<123 (System.Int32)>. Custom assertion has an unexpected value", exception.Message);
+        }
+
+        [TestCase(123, 123.0f, "Expected:<123 (System.Int32)>. Actual:<123 (System.Single)>")]
+        [TestCase(123, 123.0d, "Expected:<123 (System.Int32)>. Actual:<123 (System.Double)>")]
+        public void ValueValidation_Assert_DifferentTypes_AreNotEqual(object expectedValue, object actualValue, string expectedMessage)
+        {
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                ValueValidation.Assert(_testFramework, expectedValue, actualValue, "Custom assertion"));
+
+            Assert.AreEqual($"Assert.AreEqual failed. {expectedMessage}. Custom assertion has an unexpected value", exception.Message);
         }
 
         [Test]
@@ -80,7 +90,7 @@ namespace SqlConfirm.Core.Tests.Validation
                 })
                 .Throws(new Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException());
 
-            Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() => 
+            Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 ValueValidation.Assert(_testFramework, state.Object, "ValueA", "Custom assertion"));
 
             state
@@ -106,7 +116,7 @@ namespace SqlConfirm.Core.Tests.Validation
                     requestedMessage = q;
                 });
 
-            Assert.DoesNotThrow(() => 
+            Assert.DoesNotThrow(() =>
                 ValueValidation.Assert(_testFramework, state.Object, "ValueA", "Custom assertion"));
 
             state

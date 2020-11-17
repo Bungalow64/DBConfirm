@@ -1,100 +1,111 @@
 import React from 'react';
-import appsettings_properties from './images/appsettings_properties.png';
 
 export default function QuickStart() {
     return (
         <>
             <h2 id="getting-started">Quick Start</h2>
-            <h3>Create a new unit test project</h3>
-            <p>Create a new unit test project, using the test framework you want to use (either MSTest or NUnit).</p>
-            <h3>Install packages</h3>
-            <p>Install the NuGet package for the test framework you&apos;re using, either MSTest or NUnit:</p>
-            <ul>
-                <li>Install-Package <a target="_blank" rel="noreferrer"
-                    href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
-                </li>
-                <li>Install-Package <a target="_blank" rel="noreferrer"
-                    href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/">DBConfirm.Packages.SQLServer.NUnit</a>
-                </li>
-            </ul>
-            <h3>Set test database configuration</h3>
+
+            <p>The quickest (and recommended) way to get started is to install and run one of the DBConfirm template packages.  Alternatively, you can follow the <a href="/manualsetup">Manual Setup</a> guide.</p>
+            <p>These template packages are provided to quickly set up new test projects, including all the depdendencies and required configuration.</p>
+            <p>They are provided as NuGet packages, and need to be installed before new projects can be created.</p>
+
+            <h3>Template package installation</h3>
 
             <div className="content-split">
-
                 <div className="content-split-primary">
-                    <p>In the root of your test project, add an <strong>appsettings.json</strong> file with a connection
-            string
-            called '<strong>DefaultConnectionString</strong>' to
-            point to the database to be tested:</p>
-                    <pre><code className="lang-json">{"{"}
-                        {"\n"}  <span className="hljs-attr">"ConnectionStrings"</span>: {"{"}
-                        {"\n"}    <span className="hljs-attr">"DefaultConnectionString"</span>: <span className="hljs-string">"SERVER=(local);DATABASE=TestDB;Integrated Security=true;Connection Timeout=30;"</span>
-                        {"\n"}  {"}"}
-                        {"\n"}{"}"}
-                    </code></pre>
-
-                    <p>For more details on how to set the connection strings, see the <a href="/connectionstrings">Connection Strings</a> guide.</p>
+                    <p>To install the package (using MSTest as the test framework), execute this command from a command prompt:</p>
+                    <pre>
+                        <code>
+                            dotnet new -i DBConfirm.Templates.SQLServer.MSTest
+                        </code>
+                    </pre>
                 </div>
                 <aside>
-                    <header>appsettings.json</header>
+                    <header>Package for NUnit</header>
                     <div className="aside-body">
-                        <p>Note, this <strong>appsettings.json</strong> file needs to be copied to the output directory.</p>
-                        <img src={appsettings_properties}
-                            alt="appsettings.json file set with Build Action = Content, Copy to Output Directory = Copy if newer" />
+                        <p>To use NUnit as the test framework, use <code>DBConfirm.Templates.SQLServer.NUnit</code> instead.</p>
                     </div>
                 </aside>
             </div>
 
-            <h3>Add test class</h3>
-            <p>Add a new test file, and inherit from the base class for the framework (either <code>MSTestBase</code> or <code>NUnitBase</code>):</p>
+            <h3>Creating a new project</h3>
+            <div className="content-split">
+                <div className="content-split-primary">
+                    <p>Once installed, navigate to the directory where you want to add the new project, and execute this command from a command prompt:</p>
+                    <pre>
+                        <code>
+                            dotnet new dbconfirm-sqlserver-mstest
+                </code>
+                    </pre>
+
+                    <p>If you want to use a custom name for the new project, supply the <code>-n NewProjectName</code> argument, to set the name.</p>
+                </div>
+                <aside>
+                    <header>Command for NUnit</header>
+                    <div className="aside-body">
+                        <p>To add an NUnit test project, use <code>dbconfirm-sqlserver-nunit</code> instead.</p>
+                    </div>
+                </aside>
+            </div>
+
+            <p>This will add a new project, with the required NuGet packages installed.  There will be a sample test class (inheriting from the correct base class),
+            containing a single test method (already marked as async):
+            </p>
+
             <div className="content-split">
 
                 <div className="content-split-primary">
                     <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For MSTest</span>
-                        {"\n"}<span className="hljs-keyword">using</span> System.Threading.Tasks;
-            {"\n"}<span className="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
+                        {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Core.Data;
+            {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Core.DataResults;
+            {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Core.Parameters;
             {"\n"}<span className="hljs-keyword">using</span> DBConfirm.Packages.SQLServer.MSTest;
+            {"\n"}<span className="hljs-keyword">using</span> Microsoft.VisualStudio.TestTools.UnitTesting;
+            {"\n"}<span className="hljs-keyword">using</span> System.Threading.Tasks;
             {"\n"}
                         {"\n"}[<span className="hljs-type">TestClass</span>]
-            {"\n"}<span className="hljs-keyword">public</span> <span className="hljs-keyword">class</span> <span className="hljs-type">GetUserTests</span> : <span className="hljs-type">MSTestBase</span>
+                        {"\n"}<span className="hljs-keyword">public</span> <span className="hljs-keyword">class</span> <span className="hljs-type">GetUserTests</span> : <span className="hljs-type">MSTestBase</span>
                         {"\n"}{"{"}
-                        {"\n"}    ...
-            {"\n"}{"}"}
+                        {"\n"}    [<span className="hljs-type">TestMethod</span>]
+                        {"\n"}    <span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">TestMethod1</span>(<span className="hljs-params"></span>)
+                        {"\n"}    {"{"}
+                        {"\n"}
+                        {"\n"}    {"}"}
+                        {"\n"}{"}"}
                     </code></pre>
                 </div>
                 <aside>
                     <header>For NUnit</header>
                     <div className="aside-body">
-                        <p>For NUnit, use <code>[TestFixture]</code> instead of <code>[TestClass]</code>, and inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
+                        <p>For NUnit, <code>[TestFixture]</code> is used instead of <code>[TestClass]</code>, and the class will inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
                     </div>
                 </aside>
             </div>
 
-            <h3>Add test method</h3>
-            <p>Add a new test method, and start testing:</p>
-            <div className="content-split">
+            <p>There will also be an appsettings.json file with a default connection string, which will need to be updated to point to your own database.</p>
 
-                <div className="content-split-primary">
-                    <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} For MSTest</span>
-                        {"\n"}[<span className="hljs-type">TestMethod</span>]
-            {"\n"}<span className="hljs-function"><span className="hljs-keyword">public</span> <span className="hljs-keyword">async</span> <span className="hljs-type">Task</span> <span className="hljs-title">GetUsersView_ContainsFirstNameColumn</span>(<span className="hljs-params"></span>)
-            {"\n"}</span>{"{"}
-                        {"\n"}    <span className="hljs-keyword">var</span> results = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteTableAsync</span>(<span className="hljs-string">"dbo.GetUsers"</span>);
-            {"\n"}
-                        {"\n"}    results
-            {"\n"}        .<span className="hljs-title">AssertColumnExists</span>(<span className="hljs-string">"FirstName"</span>);
-            {"\n"}{"}"}
-                    </code></pre>
-                </div>
-                <aside>
-                    <header>For NUnit</header>
-                    <div className="aside-body">
-                        <p>For NUnit, use <code>[Test]</code> instead of <code>[TestMethod]</code>.</p>
-                    </div>
-                </aside>
-            </div>
+            <h3>Upating the default connection string</h3>
 
+            <p>DBConfirm requires a database instance to run its tests against.  This database needs to have the correct schema, but it is recommended to use a database
+            that contains no data (or only static data that never changes) - all test data will be added as part of the tests themselves.
+    </p>
 
+            <p>In the root of your test project, find the <strong>appsettings.json</strong> file.  This file will contain
+                    a connection string called '<strong>DefaultConnectionString</strong>', which is used to point to the database to be tested:</p>
+            <pre><code className="lang-json">{"{"}
+                {"\n"}  <span className="hljs-attr">"ConnectionStrings"</span>: {"{"}
+                {"\n"}    <span className="hljs-attr">"DefaultConnectionString"</span>: <span className="hljs-string">"SERVER=(local);DATABASE=TestDatabaseName;Integrated Security=true;Connection Timeout=30;"</span>
+                {"\n"}  {"}"}
+                {"\n"}{"}"}
+            </code></pre>
+
+            <p>This connection string needs to be updated to point to the database that is to be used whilst running the tests.</p>
+
+            <p>For more details on how to set the connection strings, see the <a href="/connectionstrings">Connection Strings</a> guide.</p>
+
+            <h3>Writing your first test</h3>
+
+            <p>Congratulations, you're now ready to start writing tests.</p>
 
             <p>For the full details of how to insert data, execute database logic and verify results, see the <a
                 href="/writingtests">Writing Tests</a> guide.</p>

@@ -18,7 +18,9 @@ export default function WritingTests() {
             <h3 id="arrange">Arrange - set up any prerequisite test data</h3>
 
             <p>Most tests will need some kind of prerequisite or existing state that needs to be set up.
-                In DBConfirm this is usually handled by inserting <a href="/templates">templates</a>, but can be done manually.</p>
+                In DBConfirm this is usually handled by inserting templates, but can be done manually.</p>
+
+            <p>See the <a href="/templates">Templates</a> guide to see how to create the templates you need.</p>
 
             <h4>Inserting a template</h4>
 
@@ -45,7 +47,7 @@ export default function WritingTests() {
 
             <p><Link to={{ pathname: "/templates", hash: "#complextemplates" }}>Complex templates</Link> are inserted in the same way.
             Since a template can only be inserted once, that means we can reuse the same template if we want to refer to the same row in the database.
-            For example, say we have a complex template that inserts one Address row and one Country row.  If we wanted to add 2 Address rows for the same country,
+            For example, say we have a complex template that inserts one Address row and one Country row.  If we wanted to add 2 Address rows for the same Country,
             we can insert the data like this:</p>
 
             <pre>
@@ -327,55 +329,80 @@ export default function WritingTests() {
                 {"\n"}<span className="hljs-type">DataTable</span> actualData = data.RawData;
 </code></pre>
 
-        <p>By default, all assertions use object equality comparisons, which are case sensitive and type dependent.  For example, when asserting that a value matches a specific string, the assertion
-            will fail if the case is different.  Also, when asserting that a value matches an integer, the assertion will fail if the data type returned from the database is any other type than an 
+            <p>By default, all assertions use object equality comparisons, which are case sensitive and type dependent.  For example, when asserting that a value matches a specific string, the assertion
+            will fail if the case is different.  Also, when asserting that a value matches an integer, the assertion will fail if the data type returned from the database is any other type than an
             integer (e.g., decimal).  In these cases, make sure the value you are asserting with is of the same type (e.g., use a decimal value when comparing a value returned as a decimal).
         </p>
 
-        <p>You can customise how a comparison is made, by using an instance of an object that inherits from <code>DBConfirm.Core.Comparisons.Abstract.IComparison</code>.  This interface
+            <p>You can customise how a comparison is made, by using an instance of an object that inherits from <code>DBConfirm.Core.Comparisons.Abstract.IComparison</code>.  This interface
         specifies an <code>Assert</code> and <code>Validate</code> method, which should perform the desired comparison.  The <code>Assert</code> method should trigger the framework-dependent Assert methods, so
         that the test fails immediately if the comparison conditions are not met.  The <code>Validate</code> method should not fail the test, but instead return <code>true</code>/<code>false</code> depending
         on whether the conditions are met.</p>
 
-        <p>DBConfirm provides a number of comparisons that can be used directly, accessed via the <code>Comparisons</code> property on the test base class.  These
+            <p>DBConfirm provides a number of comparisons that can be used directly, accessed via the <code>Comparisons</code> property on the test base class.  These
         comparison objects can be used in any assertion method, including within <code>DataSetRow</code> objects.</p>
 
-        <ul>
-            <li><strong>HasLength</strong> - Asserts the length of a string value</li>
-            <li><strong>IsDay</strong> - Asserts that a date matches a specific day, ignoring time.  There's one overload for a <code>DateTime</code> object, and one for a <code>string</code> which is parsed using <code>DateTime.Parse</code></li>
-            <li><strong>IsDateTime</strong> - Asserts that a date matches a specific day, including time.  A default precision of 1 second is used, which can be overridden, which provides room for variance.  There's one overload for a <code>DateTime</code> object, and one for a <code>string</code> which is parsed using <code>DateTime.Parse</code></li>
-            <li><strong>IsUtcNow</strong> - Asserts that a date matches the current UTC date and time.  A default precision of 1 second is used, which can be overridden, which provides room for variance.</li>
-            <li><strong>IsNull</strong> - Asserts the value is null</li>
-            <li><strong>IsNotNull</strong> - Asserts the value is not null</li>
-            <li><strong>MatchesRegex</strong> - Asserts the value matches the Regex value</li>
-            <li><strong>NotMatchesRegex</strong> - Asserts that the value does not match the Regex value</li>
-        </ul>
+            <ul>
+                <li><strong>HasLength</strong> - Asserts the length of a string value</li>
+                <li><strong>IsDay</strong> - Asserts that a date matches a specific day, ignoring time.  There's one overload for a <code>DateTime</code> object, and one for a <code>string</code> which is parsed using <code>DateTime.Parse</code></li>
+                <li><strong>IsDateTime</strong> - Asserts that a date matches a specific day, including time.  A default precision of 1 second is used, which can be overridden, which provides room for variance.  There's one overload for a <code>DateTime</code> object, and one for a <code>string</code> which is parsed using <code>DateTime.Parse</code></li>
+                <li><strong>IsUtcNow</strong> - Asserts that a date matches the current UTC date and time.  A default precision of 1 second is used, which can be overridden, which provides room for variance.</li>
+                <li><strong>IsNull</strong> - Asserts the value is null</li>
+                <li><strong>IsNotNull</strong> - Asserts the value is not null</li>
+                <li><strong>MatchesRegex</strong> - Asserts the value matches the Regex value</li>
+                <li><strong>NotMatchesRegex</strong> - Asserts that the value does not match the Regex value</li>
+                <li><strong>IsType</strong> - Asserts that the value matches a specific type</li>
+            </ul>
 
-        <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCount"</span>);
+            <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCount"</span>);
         {"\n"}
-        {"\n"}data
+                {"\n"}data
         {"\n"}    .<span className="hljs-title">ValidateRow</span>(<span className="hljs-number">2</span>) <span className="hljs-comment">{'//'} Focusses the assertions on row number 2</span>
-        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value is 5 characters long</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">HasLength</span>(<span className="hljs-number">5</span>))
+                {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value is 5 characters long</span>
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">HasLength</span>(<span className="hljs-number">5</span>))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 (ignoring time)</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsDay</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020"</span>)))
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsDay</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020"</span>)))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 at 9am, with a default precision of 1 second</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsDateTime</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020 09:00:00"</span>)))
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsDateTime</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020 09:00:00"</span>)))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date is 01-Feb-2020 at 9am, with a precision of 10 seconds</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsDateTime</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020 09:00:00"</span>), <span className="hljs-type">TimeSpan</span>.<span className="hljs-title">FromSeconds</span>(<span className="hljs-number">10</span>)))
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsDateTime</span>(<span className="hljs-type">DateTime</span>.<span className="hljs-title">Parse</span>(<span className="hljs-string">"01-Feb-2020 09:00:00"</span>), <span className="hljs-type">TimeSpan</span>.<span className="hljs-title">FromSeconds</span>(<span className="hljs-number">10</span>)))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date matches UtcNow, with a default precision of 1 second</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsUtcNow</span>())
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsUtcNow</span>())
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the date matches UtcNow, with a precision of 10 seconds</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsUtcNow</span>(<span className="hljs-type">TimeSpan</span>.<span className="hljs-title">FromSeconds</span>(<span className="hljs-number">10</span>)))
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"StartDate"</span>, Comparisons.<span className="hljs-title">IsUtcNow</span>(<span className="hljs-type">TimeSpan</span>.<span className="hljs-title">FromSeconds</span>(<span className="hljs-number">10</span>)))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value is null</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsNull</span>())
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsNull</span>())
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value is not null</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsNotNull</span>())
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsNotNull</span>())
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value matches the Regex value</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"EmailAddress"</span>, Comparisons.<span className="hljs-title">MatchesRegex</span>(<span className="hljs-string">".*@.*"</span>))
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"EmailAddress"</span>, Comparisons.<span className="hljs-title">MatchesRegex</span>(<span className="hljs-string">".*@.*"</span>))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value does not match the Regex value</span>
-        {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">NotMatchesRegex</span>(<span className="hljs-string">".*@.*"</span>));
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">NotMatchesRegex</span>(<span className="hljs-string">".*@.*"</span>))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value matches a specific type</span>
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsType</span>(<span className="hljs-keyword">typeof</span>(<span className="hljs-keyword">string</span>)));
 </code></pre>
+
+            <h4 id="assertingnumbers">Asserting numbers</h4>
+            <p>When you're asserting that a number is correct, you must take care to make sure the <code>Type</code> is also correct.  If the database returns a numeric value of a certain
+            type, and you assert that it matches an object of a different type, then the assertion will fail.</p>
+            <p>For example, if the database returns a decimal number and you try to assert that it matches a float, then even if the numbers are the same, the assertion will
+            fail because the types don't match.
+            </p>
+            <p>Therefore, always make sure you cast your expected values to the correct type.</p>
+
+            <pre><code class="lang-csharp">results
+            {"\n"}<span class="hljs-meta">    .<span class="hljs-title">ValidateRow</span></span>(<span class="hljs-number">0</span>)
+            {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"IntColumn"</span>, <span class="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares int/Int32 values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"SmallIntColumn"</span>, (<span class="hljs-keyword">short</span>)<span class="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares smallint/short/Int16 values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"BigIntColumn"</span>, <span class="hljs-number">10L</span>)<span className="hljs-comment"> {'//'} Compares bigint/long/Int64 values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"DecimalColumn"</span>, <span class="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares decimal values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"MoneyColumn"</span>, <span class="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares money values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"SmallMoneyColumn"</span>, <span class="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares smallmoney values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"NumericColumn"</span>, <span class="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares numeric values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"FloatColumn"</span>, <span class="hljs-number">10d</span>)<span className="hljs-comment"> {'//'} Compares float/double values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"RealColumn"</span>, <span class="hljs-number">10f</span>)<span className="hljs-comment"> {'//'} Compares real/single values</span>
+                {"\n"}<span class="hljs-meta">        .<span class="hljs-title">AssertValue</span></span>(<span class="hljs-string">"TinyIntColumn"</span>, (<span class="hljs-keyword">byte</span>)<span class="hljs-number">10</span>);<span className="hljs-comment"> {'//'} Compares tinyint/byte values</span>
+            </code></pre>
 
         </>
     );

@@ -132,6 +132,10 @@ body {
       color: #dcdcaa;
     }
 
+    .hljs-logic {
+      color: #D8A0DF;
+    }
+
     .hljs-interface {
       color: #b8d7a3;
     }
@@ -158,6 +162,14 @@ body {
 
     .lang-xml .hljs-string {
       color: white;
+    }
+
+    .lang-yaml .hljs-attr {
+      color: #569cd6;
+    }
+
+    .lang-yaml .hljs-value {
+      color: #d19d4d;
     }
 
     .lang-sql {
