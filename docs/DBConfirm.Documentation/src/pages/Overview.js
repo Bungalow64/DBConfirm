@@ -14,7 +14,8 @@ export default function Overview() {
                         src="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Bungalow64.SqlTesting/Sprint-CI"
                         alt="Build Status" /></a></p>
             <h2 id="what-is-DBConfirm-">What is DBConfirm?</h2>
-            <p>DBConfirm is a unit testing framework for SQL databases from within .Net projects.</p>
+            <p>DBConfirm is a unit testing framework for SQL databases from within .Net projects.  Tests can be written to check that stored procedures and views behave 
+			as you'd expect, and can be used to help reduce the number of bugs introduced.  DBConfirm also provides patterns and tools to easily set up prerequisite data needed for your tests.</p>
             <h2 id="why-">Why?</h2>
             <p>Developers are pretty good at writing unit tests for their application logic already, but sometimes database
             logic (stored procedures, views, etc.) can be overlooked. A big reason is that traditionally SQL unit tests
