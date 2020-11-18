@@ -16,7 +16,7 @@ The DBConfirm framework is designed to execute tests against a physical instance
 
 # Where's the full documentation?
 
-For the full documentation, see [DBConfirm.bungalow64.co.uk](https://DBConfirm.bungalow64.co.uk/).
+For the full documentation, see [DBConfirm.com](https://dbconfirm.com/).
 
 # What does a DBConfirm test look like?
 A simple test (in MSTest) to call a stored procedure then verify that the data has been added, looks like this:
@@ -107,4 +107,4 @@ The DBConfirm API provides a whole bunch of assertion methods that you can run o
 
 You can also use the DBConfirm API to query the data in tables, and run the same assertions, to make sure the data is in the exact state that you expect.
 
-For the full documentation, see [DBConfirm.bungalow64.co.uk](https://DBConfirm.bungalow64.co.uk/).
+For the full documentation, see [DBConfirm.com](https://dbconfirm.com/).

@@ -20,6 +20,9 @@ This package is the test runner for MSTest.
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
+		<PackageProjectUrl>https://www.dbconfirm.com</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Bungalow64/DBConfirm.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<PropertyGroup>
