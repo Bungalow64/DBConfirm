@@ -73,12 +73,12 @@ namespace DBConfirm.Databases.SQLServer.Runners
 
         #region Actions
 
-        private async Task ExecuteStoredProcedureNonQueryAsync(string procedureName, SqlParameter[] parameters)
+        private async Task ExecuteStoredProcedureNonQueryAsync(string procedureName, IList<SqlParameter> parameters)
         {
             using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddRange(parameters);
+                command.Parameters.AddRange(parameters.ToArray());
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -96,7 +96,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
             return ExecuteStoredProcedureNonQueryAsync(procedureName, parameters.ToSqlParameters());
         }
 
-        private Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, SqlParameter[] parameters)
+        private Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, IList<SqlParameter> parameters)
         {
             using (DataSet ds = new DataSet())
             {
@@ -105,7 +105,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
                 using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddRange(parameters);
+                    command.Parameters.AddRange(parameters.ToArray());
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
@@ -135,16 +135,16 @@ namespace DBConfirm.Databases.SQLServer.Runners
         /// <inheritdoc/>
         public Task<QueryResult> ExecuteViewAsync(string viewName)
         {
-            return ExecuteCommandAsync($"SELECT * FROM {viewName}");
+            return ExecuteCommandAsync($"SELECT * FROM {DelimitTableName(viewName)}");
         }
 
         /// <inheritdoc/>
         public async Task<int> CountRowsInViewAsync(string viewName)
         {
-            return (await ExecuteCommandScalarAsync<int>($"SELECT COUNT(*) AS [Count] FROM {viewName}")).RawData;
+            return (await ExecuteCommandScalarAsync<int>($"SELECT COUNT(*) AS [Count] FROM {DelimitTableName(viewName)}")).RawData;
         }
 
-        private Task<IList<QueryResult>> ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, SqlParameter[] parameters)
+        private Task<IList<QueryResult>> ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, IList<SqlParameter> parameters)
         {
             using (DataSet ds = new DataSet())
             {
@@ -153,7 +153,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
                 using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddRange(parameters);
+                    command.Parameters.AddRange(parameters.ToArray());
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
@@ -176,12 +176,12 @@ namespace DBConfirm.Databases.SQLServer.Runners
             return ExecuteStoredProcedureMultipleDataSetAsync(procedureName, parameters.ToSqlParameters());
         }
 
-        private async Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, SqlParameter[] parameters)
+        private async Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, IList<SqlParameter> parameters)
         {
             using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddRange(parameters);
+                command.Parameters.AddRange(parameters.ToArray());
 
                 return new ScalarResult<T>(_testFramework, (T)await command.ExecuteScalarAsync());
             }
@@ -199,12 +199,12 @@ namespace DBConfirm.Databases.SQLServer.Runners
             return ExecuteStoredProcedureScalarAsync<T>(procedureName, parameters.ToSqlParameters());
         }
 
-        private async Task ExecuteCommandNoResultsAsync(string commandText, SqlParameter[] parameters)
+        private async Task ExecuteCommandNoResultsAsync(string commandText, IList<SqlParameter> parameters)
         {
             using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
             {
                 command.CommandType = CommandType.Text;
-                command.Parameters.AddRange(parameters);
+                command.Parameters.AddRange(parameters.ToArray());
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -222,7 +222,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
             return ExecuteCommandNoResultsAsync(commandText, parameters.ToSqlParameters());
         }
 
-        private Task<QueryResult> ExecuteCommandAsync(string commandText, SqlParameter[] parameters)
+        private Task<QueryResult> ExecuteCommandAsync(string commandText, IList<SqlParameter> parameters)
         {
             using (DataSet ds = new DataSet())
             {
@@ -230,7 +230,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
 
                 using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
                 {
-                    command.Parameters.AddRange(parameters);
+                    command.Parameters.AddRange(parameters.ToArray());
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
@@ -257,12 +257,12 @@ namespace DBConfirm.Databases.SQLServer.Runners
             return ExecuteCommandAsync(commandText, parameters?.ToSqlParameters() ?? new SqlParameter[0]);
         }
 
-        private async Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, SqlParameter[] parameters)
+        private async Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, IList<SqlParameter> parameters)
         {
             using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
             {
                 command.CommandType = CommandType.Text;
-                command.Parameters.AddRange(parameters);
+                command.Parameters.AddRange(parameters.ToArray());
 
                 return new ScalarResult<T>(_testFramework, (T)await command.ExecuteScalarAsync());
             }
@@ -280,7 +280,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
             return ExecuteCommandScalarAsync<T>(commandText, parameters.ToSqlParameters());
         }
 
-        private Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, SqlParameter[] parameters)
+        private Task<IList<QueryResult>> ExecuteCommandMultipleDataSetAsync(string commandText, IList<SqlParameter> parameters)
         {
             using (DataSet ds = new DataSet())
             {
@@ -289,7 +289,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
                 using (SqlCommand command = new SqlCommand(commandText, SqlConnection, SqlTransaction))
                 {
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddRange(parameters);
+                    command.Parameters.AddRange(parameters.ToArray());
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
@@ -351,6 +351,12 @@ namespace DBConfirm.Databases.SQLServer.Runners
         }
 
         /// <inheritdoc/>
+        public Task<DataSetRow> InsertDefaultAsync(string tableName)
+        {
+            return InsertDataAsync(tableName, new DataSetRow());
+        }
+
+        /// <inheritdoc/>
         public Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow data)
         {
             return InsertDataAsync(tableName, data, null);
@@ -359,6 +365,8 @@ namespace DBConfirm.Databases.SQLServer.Runners
         /// <inheritdoc/>
         public async Task<DataSetRow> InsertDataAsync(string tableName, DataSetRow defaultData, DataSetRow overrideData)
         {
+            tableName = DelimitTableName(tableName);
+
             DataSetRow data = defaultData.Copy();
             if (overrideData != null)
             {
@@ -369,6 +377,11 @@ namespace DBConfirm.Databases.SQLServer.Runners
             {
                 (int? defaultIdentityValue, string defaultIdentityColumnName) = await InsertDefaultWithIdentity(tableName);
 
+                if (!defaultIdentityValue.HasValue)
+                {
+                    return new DataSetRow();
+                }
+
                 return new DataSetRow
                 {
                     [defaultIdentityColumnName] = defaultIdentityValue
@@ -376,41 +389,49 @@ namespace DBConfirm.Databases.SQLServer.Runners
             }
 
             string command = $@"
-                DECLARE @HasIdentity BIT = 0;
-                DECLARE @IdentityColumnNameUpdated BIT = 0;
-                DECLARE @IdentityColumnName NVARCHAR(255) = '';
-                IF OBJECTPROPERTY(OBJECT_ID('{tableName}'), 'TableHasIdentity') = 1
+                DECLARE @HasIdentityDBConfirmProperty BIT = 0;
+                DECLARE @IdentityColumnNameUpdatedDBConfirmProperty BIT = 0;
+                DECLARE @IdentityColumnNameDBConfirmProperty NVARCHAR(255) = '';
+
+                IF NOT EXISTS(
+                    SELECT
+                        *
+	                FROM 
+		                sys.tables
+	                WHERE
+		                '[' + OBJECT_SCHEMA_NAME(object_id) + '].[' + OBJECT_NAME(object_id) + ']' = @TableNameDBConfirmProperty
+                )
+                BEGIN
+                    DECLARE @ErrorDBConfirmProperty NVARCHAR(255) = 'The table cannot be found.  Table Name: ' + @TableNameDBConfirmProperty;
+	                ;THROW 51000, @ErrorDBConfirmProperty, 1;
+                END
+
+                IF OBJECTPROPERTY(OBJECT_ID(@TableNameDBConfirmProperty), 'TableHasIdentity') = 1
                 BEGIN
 	                SELECT TOP (1)
-                        @HasIdentity = 1
-		                ,@IdentityColumnName = name
+                        @HasIdentityDBConfirmProperty = 1
+		                ,@IdentityColumnNameDBConfirmProperty = name
 	                FROM 
 		                sys.identity_columns
 	                WHERE
-		                OBJECT_SCHEMA_NAME(object_id) + '.' + OBJECT_NAME(object_id) = '{tableName}'
-                    OR
-		                '[' + OBJECT_SCHEMA_NAME(object_id) + '].' + OBJECT_NAME(object_id) = '{tableName}'
-                    OR
-		                OBJECT_SCHEMA_NAME(object_id) + '.[' + OBJECT_NAME(object_id) + ']' = '{tableName}'
-                    OR
-		                '[' + OBJECT_SCHEMA_NAME(object_id) + '].[' + OBJECT_NAME(object_id) + ']' = '{tableName}'
+		                '[' + OBJECT_SCHEMA_NAME(object_id) + '].[' + OBJECT_NAME(object_id) + ']' = @TableNameDBConfirmProperty
                 END
 
-                IF (@HasIdentity = 1)
+                IF (@HasIdentityDBConfirmProperty = 1)
                 BEGIN
 
                     DECLARE @Columns TABLE (ColumnName NVARCHAR(255))
                     INSERT INTO
 	                    @Columns
                     VALUES
-	                    ({ string.Join("),(", data.Select(p => $"'{DelimitColumnName(p.Key)}'")) })
+	                    ({ string.Join("),(", data.Select(p => $"'{DelimitName(p.Key)}'")) })
 
-                    IF (EXISTS(SELECT * FROM @Columns WHERE ColumnName = '[' + @IdentityColumnName + ']'))
+                    IF (EXISTS(SELECT * FROM @Columns WHERE ColumnName = '[' + @IdentityColumnNameDBConfirmProperty + ']'))
                     BEGIN
-                        SET @IdentityColumnNameUpdated = 1;
+                        SET @IdentityColumnNameUpdatedDBConfirmProperty = 1;
                     END
 
-	                IF (@IdentityColumnNameUpdated = 1)
+	                IF (@IdentityColumnNameUpdatedDBConfirmProperty = 1)
 	                BEGIN
 		                SET IDENTITY_INSERT {tableName} ON;
 	                END
@@ -419,16 +440,16 @@ namespace DBConfirm.Databases.SQLServer.Runners
                 INSERT INTO
                     {tableName}
                 (
-                    { string.Join(",", data.Select(p => DelimitColumnName(p.Key))) }
+                    { string.Join(",", data.Select(p => DelimitName(p.Key))) }
                 )
                 VALUES
                 (
                     { string.Join(",", data.Select(p => $"@{p.Key}")) }
                 );
 
-                IF (@HasIdentity = 1)
+                IF (@HasIdentityDBConfirmProperty = 1)
                 BEGIN
-	                IF (@IdentityColumnNameUpdated = 1)
+	                IF (@IdentityColumnNameUpdatedDBConfirmProperty = 1)
 	                BEGIN
 		                SET IDENTITY_INSERT {tableName} OFF;
 	                END
@@ -436,13 +457,22 @@ namespace DBConfirm.Databases.SQLServer.Runners
 	                BEGIN
 		                SELECT 
 			                SCOPE_IDENTITY() AS IdentityValue
-			                ,@IdentityColumnName AS IdentityColumnName
+			                ,@IdentityColumnNameDBConfirmProperty AS IdentityColumnName
 	                END
                 END";
 
             try
             {
-                QueryResult results = await ExecuteCommandAsync(command, data.ToSqlParameters(tableName));
+                IList<SqlParameter> parameters = data.ToSqlParameters(tableName);
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "TableNameDBConfirmProperty",
+                    SqlDbType = SqlDbType.NVarChar,
+                    Size = 500,
+                    Value = tableName
+                });
+
+                QueryResult results = await ExecuteCommandAsync(command, parameters);
 
                 if (results.TotalRows == 0)
                 {
@@ -463,12 +493,29 @@ namespace DBConfirm.Databases.SQLServer.Runners
             }
         }
 
+        private string DelimitTableName(string tableName)
+        {
+            if (string.IsNullOrWhiteSpace(tableName))
+            {
+                throw new InvalidOperationException("The name of the table cannot be null or whitespace");
+            }
+
+            string[] parts = tableName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts.Any(p => p.Trim().Trim('[').Trim(']').Length > 128))
+            {
+                throw new InvalidOperationException("The name of the table or schema cannot be more than 128 characters");
+            }
+
+            return string.Join(".", parts.Select(DelimitName));
+        }
+
         /// <inheritdoc/>
         public int GenerateNextIdentity() => CustomIdentityService.GenerateNextIdentity();
 
-        private static string DelimitColumnName(string name)
+        private static string DelimitName(string name)
         {
-            name = name.TrimStart('[').TrimEnd(']');
+            name = name.Trim(' ').TrimStart('[').TrimEnd(']');
             return $"[{name}]";
         }
 
@@ -487,11 +534,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
                     FROM 
 		                sys.identity_columns
 	                WHERE
-		                OBJECT_SCHEMA_NAME(object_id) + '.' + OBJECT_NAME(object_id) = '{tableName}'
-                END
-                ELSE
-                BEGIN
-                    SELECT NULL
+		                '[' + OBJECT_SCHEMA_NAME(object_id) + '].[' + OBJECT_NAME(object_id) + ']' = '{tableName}'
                 END";
 
             QueryResult data = await ExecuteCommandAsync(command);
@@ -500,7 +543,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
             {
                 return (null, null);
             }
-            return ((int?)data.RawData.Rows[0]["IdentityValue"], data.RawData.Rows[0]["IdentityColumnName"].ToString());
+            return (Convert.ToInt32(data.RawData.Rows[0]["IdentityValue"]), data.RawData.Rows[0]["IdentityColumnName"].ToString());
         }
 
         #endregion
