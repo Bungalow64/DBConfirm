@@ -16,6 +16,9 @@
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<ContentTargetFolders>content</ContentTargetFolders>
+		<PackageProjectUrl>https://www.dbconfirm.com</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Bungalow64/DBConfirm.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<ItemGroup>
