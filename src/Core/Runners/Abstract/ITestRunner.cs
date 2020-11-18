@@ -187,6 +187,15 @@ namespace DBConfirm.Core.Runners.Abstract
         Task<QueryResult> ExecuteViewAsync(string viewName);
 
         /// <summary>
+        /// Inserts the default data into a table.  This can be used to insert a row into a table that only contains an Identity column, and the next Identity value is to be used
+        /// </summary>
+        /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>
+        /// <param name="tableName">The name of the table to insert into, including schema</param>
+        /// <returns>Returns the data inserted, including the identity value (if applicable)</returns>
+        /// <exception cref="System.Data.Common.DbException"></exception>
+        Task<DataSetRow> InsertDefaultAsync(string tableName);
+
+        /// <summary>
         /// Inserts data into a table
         /// </summary>
         /// <remarks>Where the table has an identity column, and is not set as part of the input data, then the identity value used is added to the returned data set</remarks>

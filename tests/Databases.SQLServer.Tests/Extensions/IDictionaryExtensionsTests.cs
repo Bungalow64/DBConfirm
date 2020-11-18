@@ -13,36 +13,36 @@ namespace DBConfirm.Databases.SQLServer.Tests.Extensions
     public class IDictionaryExtensionsTests
     {
         [Test]
-        public void IDictionaryExtensions_NullDictionary_ReturnEmptyArray()
+        public void IDictionaryExtensions_NullDictionary_ReturnEmptyList()
         {
             IDictionary<string, object> dictionary = null;
-            SqlParameter[] result = dictionary.ToSqlParameters();
+            IList<SqlParameter> result = dictionary.ToSqlParameters();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Length);
+            Assert.AreEqual(0, result.Count);
         }
 
         [Test]
-        public void IDictionaryExtensions_EmptyDictionary_ReturnEmptyArray()
+        public void IDictionaryExtensions_EmptyDictionary_ReturnEmptyList()
         {
             IDictionary<string, object> dictionary = new Dictionary<string, object>();
-            SqlParameter[] result = dictionary.ToSqlParameters();
+            IList<SqlParameter> result = dictionary.ToSqlParameters();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Length);
+            Assert.AreEqual(0, result.Count);
         }
 
         [Test]
-        public void IDictionaryExtensions_DictionaryWithItems_ReturnArrayWithItems()
+        public void IDictionaryExtensions_DictionaryWithItems_ReturnListWithItems()
         {
             IDictionary<string, object> dictionary = new Dictionary<string, object>
             {
                 { "ColumnA", 123 }
             };
-            SqlParameter[] result = dictionary.ToSqlParameters();
+            IList<SqlParameter> result = dictionary.ToSqlParameters();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(1, result.Count);
             Assert.AreEqual("@ColumnA", result[0].ParameterName);
             Assert.AreEqual(123, result[0].Value);
         }
@@ -91,16 +91,16 @@ namespace DBConfirm.Databases.SQLServer.Tests.Extensions
         [Test]
         public void IDictionaryExtensions_DictionaryWithResolver_CallResolverAndReturnResult()
         {
-            Func<int> resolveAction = () => 123;
+            static int resolveAction() => 123;
 
             IDictionary<string, object> dictionary = new Dictionary<string, object>
             {
                 { "ColumnA", new Resolver<int>(resolveAction) }
             };
-            SqlParameter[] result = dictionary.ToSqlParameters();
+            IList<SqlParameter> result = dictionary.ToSqlParameters();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(1, result.Count);
             Assert.AreEqual("@ColumnA", result[0].ParameterName);
             Assert.AreEqual(123, result[0].Value);
         }
@@ -112,10 +112,10 @@ namespace DBConfirm.Databases.SQLServer.Tests.Extensions
             {
                 { "ColumnA", null }
             };
-            SqlParameter[] result = dictionary.ToSqlParameters();
+            IList<SqlParameter> result = dictionary.ToSqlParameters();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(1, result.Count);
             Assert.AreEqual("@ColumnA", result[0].ParameterName);
             Assert.AreEqual(DBNull.Value, result[0].Value);
         }
