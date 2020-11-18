@@ -15,6 +15,9 @@ This library allows you to write SQL unit tests in code alongside all your other
 	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 	  <SignAssembly>true</SignAssembly>
 	  <AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
+	  <PackageProjectUrl>https://www.dbconfirm.com</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/Bungalow64/DBConfirm.git</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup>
