@@ -3,7 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>netstandard2.0</TargetFramework>
 	  <PackageId>DBConfirm.Frameworks.NUnit</PackageId>
-	  <Version>0.1.0</Version>
+	  <Version>0.1.1</Version>
 	  <Authors>Bungalow64</Authors>
 	  <Company>Bungalow64 Technologies Ltd</Company>
 	  <Product>DBConfirm (NUnit framework)</Product>
