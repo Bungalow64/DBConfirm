@@ -84,7 +84,7 @@ export default function Overview() {
             </div>
 
             <h2>What versions of SQL Server does DBConfirm work with?</h2>
-            <p>DBConfirm is compatible with SQL Server 2014, 2016, 2017 and 2019.</p>
+            <p>DBConfirm is compatible with SQL Server 2014, 2016, 2017, 2019 and with Azure SQL Database.</p>
 
             <h2 id="getting-started">Getting started</h2>
             <p>See the <a href="/quickstart">Quick Start</a> guide for getting started.</p>

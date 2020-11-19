@@ -19,7 +19,7 @@ The DBConfirm framework is designed to execute tests against a physical instance
 For the full documentation, see [DBConfirm.com](https://dbconfirm.com/).
 
 # What versions of SQL Server does DBConfirm work with?
-DBConfirm is compatible with SQL Server 2014, 2016, 2017 and 2019.
+DBConfirm is compatible with SQL Server 2014, 2016, 2017, 2019 and with Azure SQL Database.
 
 # What does a DBConfirm test look like?
 A simple test (in MSTest) to call a stored procedure then verify that the data has been added, looks like this:
