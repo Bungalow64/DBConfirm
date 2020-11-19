@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DBConfirm.Packages.SQLServer.NUnit" Version="0.1.0-CI-20201103-122941" />
+    <PackageReference Include="DBConfirm.Packages.SQLServer.NUnit" Version="0.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
   </ItemGroup>
