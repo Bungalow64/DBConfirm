@@ -69,9 +69,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.NuGetTests", "3.NuGetTest
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Templates", "4.Templates", "{3992A9CE-DE7E-4F8D-9B9C-2A078095C722}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.SQLServer.MSTest", "src\Templates.SQLServer.MSTest\Templates.SQLServer.MSTest.csproj", "{BD1843C0-D230-4A84-AA7C-7C4B71D2BEB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.SQLServer.MSTest", "templates\Templates.SQLServer.MSTest\Templates.SQLServer.MSTest.csproj", "{BD1843C0-D230-4A84-AA7C-7C4B71D2BEB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templates.SQLServer.NUnit", "src\Templates.SQLServer.NUnit\Templates.SQLServer.NUnit.csproj", "{46E6E065-8BAC-4598-9932-1B5D9573B31A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templates.SQLServer.NUnit", "templates\Templates.SQLServer.NUnit\Templates.SQLServer.NUnit.csproj", "{46E6E065-8BAC-4598-9932-1B5D9573B31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
