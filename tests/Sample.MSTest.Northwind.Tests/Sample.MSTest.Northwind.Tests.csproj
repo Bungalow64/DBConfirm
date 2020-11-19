@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DBConfirm.Packages.SQLServer.MSTest" Version="0.1.0-CI-20201103-122941" />
+    <PackageReference Include="DBConfirm.Packages.SQLServer.MSTest" Version="0.1.0-CI-20201118-100337" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
