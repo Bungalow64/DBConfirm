@@ -210,6 +210,21 @@ export default function Api() {
             <ul>
                 <li>Returns all columns and values found</li>
             </ul>
+            <h3 id="insertdefaultasync">InsertDefaultAsync</h3>
+            <p>Inserts the default data into a table.  This can be used to insert a row into a table that only contains an Identity column, and the next Identity value is to be used.</p>
+            <p>Where the table has an identity column, and is not set as part of the input data, then the identity value
+            used is
+            added to the returned data set</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">Task</span><span className="hljs-variable">&lt;<span className="hljs-type">DataSetRow</span>&gt;</span> InsertDefaultAsync(<span className="hljs-keyword">string</span> tableName)
+</code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>tableName</strong> - The name of the table to insert into, including schema</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the data inserted, including the identity value (if applicable)</li>
+            </ul>
             <h3 id="insertdataasync">InsertDataAsync</h3>
             <p>Inserts data into a table.</p>
             <p>Where the table has an identity column, and is not set as part of the input data, then the identity value
