@@ -3,7 +3,7 @@ A C#-based testing framework to write and run tests for logic within SQL Server
 
 [![](https://img.shields.io/nuget/v/DBConfirm.Core)](https://www.nuget.org/packages/DBConfirm.Core/)
 [![](https://img.shields.io/nuget/dt/DBConfirm.Core)](https://www.nuget.org/packages/DBConfirm.Core/)
-[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Bungalow64.SqlTesting/Sprint-CI)](https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_build/latest?definitionId=1)
+[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Master-CI%20(GitHub)?branchName=master)](https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_build/latest?definitionId=11&branchName=master)
 
 # What is DBConfirm?
 DBConfirm is a unit testing framework for SQL Server databases from within .Net projects.  Tests can be written to check that stored procedures and views behave as you'd expect, and can be used to help reduce the number of bugs introduced.  DBConfirm also provides patterns and tools to easily set up prerequisite data needed for your tests.

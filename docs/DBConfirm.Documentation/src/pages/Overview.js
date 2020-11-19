@@ -10,8 +10,8 @@ export default function Overview() {
                 <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Core/"><img
                     src="https://img.shields.io/nuget/dt/DBConfirm.Core" alt="" /></a>
                 <a target="_blank" rel="noreferrer"
-                    href="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_build/latest?definitionId=1"><img
-                        src="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Bungalow64.SqlTesting/Sprint-CI"
+                    href="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_build/latest?definitionId=11"><img
+                        src="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Master-CI%20(GitHub)?branchName=master"
                         alt="Build Status" /></a></p>
             <h2 id="what-is-DBConfirm-">What is DBConfirm?</h2>
             <p>DBConfirm is a unit testing framework for SQL Server databases from within .Net projects.  Tests can be written to check that stored procedures and views behave 
