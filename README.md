@@ -4,6 +4,9 @@ A C#-based testing framework to write and run tests for logic within SQL Server
 [![](https://img.shields.io/nuget/v/DBConfirm.Core)](https://www.nuget.org/packages/DBConfirm.Core/)
 [![](https://img.shields.io/nuget/dt/DBConfirm.Core)](https://www.nuget.org/packages/DBConfirm.Core/)
 [![Build Status](https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Master-CI%20(GitHub)?branchName=master)](https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_build/latest?definitionId=11&branchName=master)
+[![Repo Size](https://img.shields.io/github/repo-size/bungalow64/dbconfirm)](https://github.com/Bungalow64/DBConfirm)
+[![Licence](https://img.shields.io/github/license/bungalow64/dbconfirm)](https://github.com/Bungalow64/DBConfirm)
+[![Release Date](https://img.shields.io/github/release-date/bungalow64/dbconfirm?label=latest%20release)](https://github.com/Bungalow64/DBConfirm)
 
 # What is DBConfirm?
 DBConfirm is a unit testing framework for SQL Server databases from within .Net projects.  Tests can be written to check that stored procedures and views behave as you'd expect, and can be used to help reduce the number of bugs introduced.  DBConfirm also provides patterns and tools to easily set up prerequisite data needed for your tests.
@@ -16,7 +19,7 @@ The DBConfirm framework is designed to execute tests against a physical instance
 
 # Where's the full documentation?
 
-For the full documentation, see [DBConfirm.com](https://dbconfirm.com/).
+For the full documentation, see [dbconfirm.com](https://dbconfirm.com/).
 
 # What versions of SQL Server does DBConfirm work with?
 DBConfirm is compatible with SQL Server 2014, 2016, 2017, 2019 and with Azure SQL Database.
