@@ -11,18 +11,18 @@
         </member>
         <member name="M:DBConfirm.Databases.SQLServer.Extensions.IDictionaryExtensions.ToSqlParameters(System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
             <summary>
-            Converts an <see cref="T:System.Collections.Generic.IDictionary`2"/> to an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects.  The Key is used as the column name, and the Value the parameter value
+            Converts an <see cref="T:System.Collections.Generic.IDictionary`2"/> to an IList of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects.  The Key is used as the column name, and the Value the parameter value
             </summary>
             <param name="dictionary">The dictionary to convert.  A null or empty dictionary results in an empty array</param>
             <param name="tableName">The name of the table being inserted into, for more specific error messages</param>
-            <returns>Returns an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects</returns>
+            <returns>Returns an IList of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects</returns>
         </member>
         <member name="M:DBConfirm.Databases.SQLServer.Extensions.IDictionaryExtensions.ToSqlParameters(System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
-            Converts an <see cref="T:System.Collections.Generic.IDictionary`2"/> to an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects.  The Key is used as the column name, and the Value the parameter value
+            Converts an <see cref="T:System.Collections.Generic.IDictionary`2"/> to an IList of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects.  The Key is used as the column name, and the Value the parameter value
             </summary>
             <param name="dictionary">The dictionary to convert.  A null or empty dictionary results in an empty array</param>
-            <returns>Returns an array of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects</returns>
+            <returns>Returns an IList of <see cref="T:Microsoft.Data.SqlClient.SqlParameter"/> objects</returns>
         </member>
         <member name="T:DBConfirm.Databases.SQLServer.Extensions.SqlQueryParameterExtensions">
             <summary>
@@ -129,6 +129,9 @@
             <inheritdoc/>
         </member>
         <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.InsertTemplateAsync(DBConfirm.Core.Templates.Abstract.ITemplate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.InsertDefaultAsync(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.InsertDataAsync(System.String,DBConfirm.Core.Data.DataSetRow)">
