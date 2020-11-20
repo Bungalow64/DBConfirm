@@ -28,7 +28,7 @@ import azurecipass from './images/walkthrough/azure-ci-pass.png';
 
 export default function Walkthrough() {
     return (
-        <div class="image-content">
+        <div className="image-content">
             <h2 id="Walkthrough">Walkthrough</h2>
 
             <p>If you want to see how all the different parts of DBConfirm work together, this walkthrough should help.  We're going to go through every from setting up
