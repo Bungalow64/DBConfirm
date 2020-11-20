@@ -15,6 +15,7 @@ import Api from './pages/Api'
 import FAQ from './pages/FAQ';
 import ScrollToTop from './components/ScrollToTop';
 import './App.scss';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -22,24 +23,25 @@ function App() {
 
   return (
     <Router>
-      <Sidebar/>
+      <Sidebar />
       <div id="content" ref={contentRef}>
-        <ScrollToTop scrollContent={contentRef}/>
-          <h1>DBConfirm - Official Documentation</h1>
-          <Switch>
-            <Route path="/quickstart"><QuickStart /></Route>
-            <Route path="/writingtests"><WritingTests /></Route>
-            <Route path="/nuget"><NuGet /></Route>
-            <Route path="/templates"><Templates /></Route>
-            <Route path="/connectionstrings"><ConnectionStrings /></Route>
-            <Route path="/continuousintegration"><ContinuousIntegration /></Route>
-            <Route path="/manualsetup"><ManualSetup /></Route>
-            <Route path="/debugging"><Debugging /></Route>
-            <Route path="/api"><Api /></Route>
-            <Route path="/faq"><FAQ /></Route>
-            <Route path="/walkthrough"><Walkthrough /></Route>
-            <Route path="/"><Overview /></Route>
-          </Switch>
+        <ScrollToTop scrollContent={contentRef} />
+        <h1>DBConfirm - Official Documentation</h1>
+        <Switch>
+          <Route path="/quickstart"><QuickStart /></Route>
+          <Route path="/writingtests"><WritingTests /></Route>
+          <Route path="/nuget"><NuGet /></Route>
+          <Route path="/templates"><Templates /></Route>
+          <Route path="/connectionstrings"><ConnectionStrings /></Route>
+          <Route path="/continuousintegration"><ContinuousIntegration /></Route>
+          <Route path="/manualsetup"><ManualSetup /></Route>
+          <Route path="/debugging"><Debugging /></Route>
+          <Route path="/api"><Api /></Route>
+          <Route path="/faq"><FAQ /></Route>
+          <Route path="/walkthrough"><Walkthrough /></Route>
+          <Route path="/"><Overview /></Route>
+        </Switch>
+        <Footer />
       </div>
     </Router>
   );

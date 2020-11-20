@@ -33,7 +33,7 @@
 
   nav {
     top: 40px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: auto;
     width: 100%;
     height: 100%;
@@ -82,4 +82,87 @@ footer {
   padding: 5px;
   flex: 1;
   box-shadow: 0 0 0 1px #e3e8ee inset;
+
+  span{
+    display: block;
+  }
+}
+
+#small-menu {
+  display: none;
+}
+
+@media screen and (max-width: 44em) {
+
+  #small-menu {
+    display: block;
+  }
+
+  #sidebar-heading {
+    display: none;
+  }
+
+  nav {
+    display: none;
+  }
+
+  #sidebar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 40px;
+    min-height: auto;
+    box-shadow: none;
+    display: block;
+    z-index: 100;
+    width:100%;
+    box-shadow: 0  -1px 0 #e3e8ee inset;
+    background-color: white;
+
+    #menu-select-label{
+      position: absolute;
+      left: 10px;
+      z-index: 99;
+      background-color: white;
+      text-transform: uppercase;
+      font-size: 0.8em;
+      color:#697386;
+      font-weight: 500;
+      border: none;
+      box-shadow: 0  -1px 0 #e3e8ee inset;
+      height: 40px;
+      line-height: 40px;
+      cursor: hand;
+
+      .down-arrow{
+        fill: #697386;
+      }
+    }
+
+    select {
+      position: absolute;
+      left: 10px;
+      z-index: 100;
+      background: transparent;
+      appearance: none;
+      color: hsla(0,0%,100%,0);
+      height: 40px;
+      width: 100px;
+      border: none;
+      cursor: hand;
+
+      &:focus{
+        outline: none;
+      }
+
+      option{
+        color: black;
+      }
+    }
+
+    footer{
+      display: none;
+    }
+  }
 }

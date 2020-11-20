@@ -1,0 +1,25 @@
+trigger:
+- master
+
+variables:
+  BuildConfiguration: 'Release'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: |
+      **/*.csproj
+      !templates/**/templates/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: |
+      **/*[Tt]ests/*.csproj
+      !**/Sample*/**/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'

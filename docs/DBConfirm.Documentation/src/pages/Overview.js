@@ -9,12 +9,19 @@ export default function Overview() {
                 src="https://img.shields.io/nuget/v/DBConfirm.Core" alt="" /></a>
                 <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Core/"><img
                     src="https://img.shields.io/nuget/dt/DBConfirm.Core" alt="" /></a>
-                <a target="_blank" rel="noreferrer"
-                    href="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_build/latest?definitionId=1"><img
-                        src="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Bungalow64.SqlTesting/Sprint-CI"
-                        alt="Build Status" /></a></p>
+                <a target="_blank" rel="noreferrer" href="https://github.com/Bungalow64/DBConfirm">
+                    <img src="https://img.shields.io/github/repo-size/bungalow64/dbconfirm" alt="Repo Size" /></a>
+                <a target="_blank" rel="noreferrer" href="https://github.com/Bungalow64/DBConfirm">
+                    <img src="https://img.shields.io/github/license/bungalow64/dbconfirm" alt="Licence" /></a>
+                <a target="_blank" rel="noreferrer" href="https://github.com/Bungalow64/DBConfirm">
+                    <img src="https://img.shields.io/github/release-date/bungalow64/dbconfirm?label=latest%20release" alt="Latest Release Date" /></a>
+                <a target="_blank" rel="noreferrer" href="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_build/latest?definitionId=11">
+                    <img src="https://dev.azure.com/bungalow64/Bungalow64.SqlTesting/_apis/build/status/Master-CI%20(GitHub)?branchName=master" alt="Build Status" /></a>
+
+
+            </p>
             <h2 id="what-is-DBConfirm-">What is DBConfirm?</h2>
-            <p>DBConfirm is a unit testing framework for SQL Server databases from within .Net projects.  Tests can be written to check that stored procedures and views behave 
+            <p>DBConfirm is a unit testing framework for SQL Server databases from within .Net projects.  Tests can be written to check that stored procedures and views behave
 			as you'd expect, and can be used to help reduce the number of bugs introduced.  DBConfirm also provides patterns and tools to easily set up prerequisite data needed for your tests.</p>
             <h2 id="why-">Why?</h2>
             <p>Developers are pretty good at writing unit tests for their application logic already, but sometimes database
@@ -30,10 +37,11 @@ export default function Overview() {
             ensures that each test run is accurate and repeatable by making sure all effects of a test are rolled back
             when
                         the test has finished.</p>
-                        <p>DBConfirm also provides a number of ways to easily assert the results of your tests.</p>
+            <p>DBConfirm also provides a number of ways to easily assert the results of your tests.</p>
 
             <h2>Is it free?</h2>
             <p>Yes.</p>
+            <p>You can even check out the source code over at <a target="_blank" rel="noreferrer" href="https://github.com/Bungalow64/DBConfirm">github.com/Bungalow64/DBConfirm</a>.</p>
 
             <h2 id="what-does-a-DBConfirm-test-look-like-">What does a DBConfirm test look like?</h2>
             <div className="content-split">
@@ -47,11 +55,11 @@ export default function Overview() {
                     {"\n"}</span>{"{"}
                         {"\n"}    <span className="hljs-comment">{'//'} Call a stored procedure with some parameters</span>
                         {"\n"}    <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureNonQueryAsync</span>(<span className="hljs-string">"dbo.AddUser"</span>, <span className="hljs-keyword">new</span> <span className="hljs-type">DataSetRow</span>
-                    {"\n"}    {"{"}
-                    {"\n"}        [<span className="hljs-string">"FirstName"</span>] = <span className="hljs-string">"Jamie"</span>,
+                        {"\n"}    {"{"}
+                        {"\n"}        [<span className="hljs-string">"FirstName"</span>] = <span className="hljs-string">"Jamie"</span>,
                     {"\n"}        [<span className="hljs-string">"LastName"</span>] = <span className="hljs-string">"Burns"</span>,
                     {"\n"}        [<span className="hljs-string">"EmailAddress"</span>] = <span className="hljs-string">"jamie@example.com"</span>
-                    {"\n"}    {"}"});
+                        {"\n"}    {"}"});
                     {"\n"}
                         {"\n"}    <span className="hljs-comment">{'//'} Get all the data in a table</span>
                         {"\n"}    <span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteTableAsync</span>(<span className="hljs-string">"dbo.Users"</span>);
