@@ -70,6 +70,10 @@ body {
     font-weight: normal;
   }
 
+  footer {
+    display: none;
+  }
+
   p,
   li {
     font-size: 0.875em;
@@ -133,7 +137,7 @@ body {
     }
 
     .hljs-logic {
-      color: #D8A0DF;
+      color: #d8a0df;
     }
 
     .hljs-interface {
@@ -291,8 +295,31 @@ body {
     border-top: solid 1px #e3e8ee;
     border-bottom: solid 1px #e3e8ee;
 
-    &:hover{
+    &:hover {
       font-weight: bold;
+    }
+  }
+}
+
+@media screen and (max-width: 44em) {
+  #content {
+    position: absolute;
+    left: 0px;
+    overflow: auto;
+    top: 56px;
+    padding-bottom: 0;
+
+    footer {
+      display: block;
+      width: 100%;
+      box-shadow: none;
+      text-align: right;
+
+      span {
+        display: inline;
+        padding-right: 5px;
+        font-size: 0.9em;
+      }
     }
   }
 }

@@ -186,7 +186,7 @@ export default function Templates() {
             <p>The <strong>DefaultData</strong> property is intended to provide enough default data to allow the template to be added, without any extra
             data being provided.  The only exception to this is when the table has required foreign keys to other tables - these related rows will have
             to be added before this temmplate can be inserted (either by other simple templates, or via a complex template).  In situations like this, the
-            required foreign key can be marked as <coode>IsRequired</coode>, so that it is obvious what the dependent data is.  Also, by using
+            required foreign key can be marked as <code>IsRequired</code>, so that it is obvious what the dependent data is.  Also, by using
             the <code>IsRequired</code> placeholder, if a template is attempted to be inserted without a value having been set, you will get a specific
             test failure showing you which table and which column still requires a value.</p>
 
