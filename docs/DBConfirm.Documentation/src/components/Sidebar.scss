@@ -115,8 +115,6 @@ footer {
     min-height: auto;
     box-shadow: none;
     display: block;
-    padding: 1px;
-    padding-top: 15px;
     z-index: 100;
     width:100%;
     box-shadow: 0  -1px 0 #e3e8ee inset;
@@ -125,13 +123,17 @@ footer {
     #menu-select-label{
       position: absolute;
       left: 10px;
-      top: 15px;
       z-index: 99;
       background-color: white;
       text-transform: uppercase;
       font-size: 0.8em;
       color:#697386;
       font-weight: 500;
+      border: none;
+      box-shadow: 0  -1px 0 #e3e8ee inset;
+      height: 40px;
+      line-height: 40px;
+      cursor: hand;
 
       .down-arrow{
         fill: #697386;
@@ -141,14 +143,14 @@ footer {
     select {
       position: absolute;
       left: 10px;
-      top: 15px;
       z-index: 100;
       background: transparent;
       appearance: none;
       color: hsla(0,0%,100%,0);
-      height: 25px;
+      height: 40px;
       width: 100px;
       border: none;
+      cursor: hand;
 
       &:focus{
         outline: none;
