@@ -417,6 +417,10 @@ namespace TemplateGeneration.Tests.Logic
                 .Returns(@"C:\Temp");
 
             _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
+
+            _fileHelperMock
                 .Setup(p => p.Exists(It.IsAny<string>()))
                 .Returns(false);
 
@@ -460,6 +464,10 @@ namespace TemplateGeneration.Tests.Logic
             _fileHelperMock
                 .Setup(p => p.GetCurrentDirectory())
                 .Returns(@"C:\Temp");
+
+            _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
 
             _fileHelperMock
                 .Setup(p => p.Exists(It.IsAny<string>()))
@@ -508,6 +516,10 @@ namespace TemplateGeneration.Tests.Logic
                 .Returns(@"C:\Temp");
 
             _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
+
+            _fileHelperMock
                 .Setup(p => p.Exists(It.IsAny<string>()))
                 .Returns(false);
 
@@ -552,6 +564,10 @@ namespace TemplateGeneration.Tests.Logic
             _fileHelperMock
                 .Setup(p => p.GetCurrentDirectory())
                 .Returns(@"C:\Temp");
+
+            _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
 
             _fileHelperMock
                 .Setup(p => p.Exists(It.IsAny<string>()))
@@ -600,6 +616,10 @@ namespace TemplateGeneration.Tests.Logic
                 .Returns(@"C:\Temp");
 
             _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
+
+            _fileHelperMock
                 .Setup(p => p.Exists(It.IsAny<string>()))
                 .Returns(false);
 
@@ -645,6 +665,10 @@ namespace TemplateGeneration.Tests.Logic
                 .Returns(@"C:\Temp");
 
             _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
+
+            _fileHelperMock
                 .Setup(p => p.Exists(It.IsAny<string>()))
                 .Returns(false);
 
@@ -657,6 +681,244 @@ namespace TemplateGeneration.Tests.Logic
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual(await ReadResource("Generator_SingleIdentityTableWithColumns_LowercaseNames_FileGeneratedWithPascalCaseColumns"), generatedFileText);
+        }
+
+        [Test]
+        public async Task Generator_FileGeneratedForDirectoryThatExists_CreateFileNoNewDirectory()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "Users"
+            };
+
+            DataTable columns = CreateTable();
+            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId", isIdentity: false);
+            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            _fileHelperMock
+                .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((path, contents) =>
+                {
+                    Assert.AreEqual(@"C:\Temp\UsersTemplate.cs", path);
+                });
+
+            _fileHelperMock
+                .Setup(p => p.GetCurrentDirectory())
+                .Returns(@"C:\Temp");
+
+            _fileHelperMock
+                .Setup(p => p.Exists(It.IsAny<string>()))
+                .Returns(false);
+
+            _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Callback<string>((path) =>
+                {
+                    Assert.AreEqual(@"C:\Temp", path);
+                })
+                .Returns(true);
+
+            _fileHelperMock
+                .Setup(p => p.CreateDirectory(It.IsAny<string>()));
+
+            await Create(options).GenerateFileAsync();
+
+            _databaseHelperMock
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.DirectoryExists(It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.CreateDirectory(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task Generator_FileGeneratedForDirectoryThatDoesNotExists_CreateFileAndNewDirectory()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "Users"
+            };
+
+            DataTable columns = CreateTable();
+            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId", isIdentity: false);
+            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            _fileHelperMock
+                .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((path, contents) =>
+                {
+                    Assert.AreEqual(@"C:\Temp\UsersTemplate.cs", path);
+                });
+
+            _fileHelperMock
+                .Setup(p => p.GetCurrentDirectory())
+                .Returns(@"C:\Temp");
+
+            _fileHelperMock
+                .Setup(p => p.Exists(It.IsAny<string>()))
+                .Returns(false);
+
+            _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Callback<string>((path) =>
+                {
+                    Assert.AreEqual(@"C:\Temp", path);
+                })
+                .Returns(false);
+
+            _fileHelperMock
+                .Setup(p => p.CreateDirectory(It.IsAny<string>()))
+                .Callback<string>((path) =>
+                {
+                    Assert.AreEqual(@"C:\Temp", path);
+                });
+
+            await Create(options).GenerateFileAsync();
+
+            _databaseHelperMock
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.DirectoryExists(It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.CreateDirectory(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Generator_CustomDirectory_NoTrailingSlash_FileCreated()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "Users",
+                Destination = @"C:\projects\tests"
+            };
+
+            DataTable columns = CreateTable();
+            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId", isIdentity: false);
+            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            _fileHelperMock
+                .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((path, contents) =>
+                {
+                    Assert.AreEqual(@"C:\projects\tests\UsersTemplate.cs", path);
+                });
+
+            _fileHelperMock
+                .Setup(p => p.Exists(It.IsAny<string>()))
+                .Returns(false);
+
+            _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Callback<string>((path) =>
+                {
+                    Assert.AreEqual(@"C:\projects\tests", path);
+                })
+                .Returns(false);
+
+            _fileHelperMock
+                .Setup(p => p.CreateDirectory(It.IsAny<string>()))
+                .Callback<string>((path) =>
+                {
+                    Assert.AreEqual(@"C:\projects\tests", path);
+                });
+
+            await Create(options).GenerateFileAsync();
+
+            _databaseHelperMock
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.DirectoryExists(It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.CreateDirectory(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Generator_CustomDirectory_WithTrailingSlash_FileCreated()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "Users",
+                Destination = @"C:\projects\tests\"
+            };
+
+            DataTable columns = CreateTable();
+            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId", isIdentity: false);
+            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            _fileHelperMock
+                .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((path, contents) =>
+                {
+                    Assert.AreEqual(@"C:\projects\tests\UsersTemplate.cs", path);
+                });
+
+            _fileHelperMock
+                .Setup(p => p.Exists(It.IsAny<string>()))
+                .Returns(false);
+
+            _fileHelperMock
+                .Setup(p => p.DirectoryExists(It.IsAny<string>()))
+                .Callback<string>((path) =>
+                {
+                    Assert.AreEqual(@"C:\projects\tests", path);
+                })
+                .Returns(false);
+
+            _fileHelperMock
+                .Setup(p => p.CreateDirectory(It.IsAny<string>()))
+                .Callback<string>((path) =>
+                {
+                    Assert.AreEqual(@"C:\projects\tests", path);
+                });
+
+            await Create(options).GenerateFileAsync();
+
+            _databaseHelperMock
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.DirectoryExists(It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.CreateDirectory(It.IsAny<string>()), Times.Once);
         }
 
         #endregion
