@@ -9,7 +9,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2017_Sample1.xml" />
+    <None Remove="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2017_Sample2.xml" />
+    <None Remove="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2019_Sample1.xml" />
+    <None Remove="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2019_Sample2.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2017_Sample2.xml" />
+    <EmbeddedResource Include="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2017_Sample1.xml" />
+    <EmbeddedResource Include="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2019_Sample2.xml" />
+    <EmbeddedResource Include="ExecutionPlans\Factories\SampleExecutionPlans\ExecutionPlan2019_Sample1.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FastMember" Version="1.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Moq" Version="4.14.7" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
   </ItemGroup>

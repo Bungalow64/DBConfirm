@@ -5,6 +5,7 @@ using DBConfirm.Core.DataResults;
 using DBConfirm.Packages.SQLServer.MSTest;
 using System.Threading.Tasks;
 using Sample.Northwind.MSTest.Tests.Templates.Complex;
+using DBConfirm.Databases.SQLServer.Results;
 
 namespace Sample.Northwind.MSTest.Tests.Procedures
 {
@@ -131,6 +132,52 @@ namespace Sample.Northwind.MSTest.Tests.Procedures
                     ["ProductName"] = "Product2",
                     ["Total"] = 8
                 });
+        }
+
+        [TestMethod]
+        public async Task TwoOrders_ExecutionPlan_NoKeyLookups()
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                await TestRunner.InsertTemplateAsync(new CompleteOrderForCustomerTemplate
+                {
+                    CustomersTemplate = new CustomersTemplate().WithCustomerID($"C{x:D4}"),
+                    ProductsTemplate = new ProductsTemplate().WithProductName("Product1"),
+                    Order_DetailsTemplate = new Order_DetailsTemplate().WithQuantity(5)
+                });
+            }
+
+            CompleteOrderForCustomerTemplate order1 = await TestRunner.InsertTemplateAsync(new CompleteOrderForCustomerTemplate
+            {
+                CustomersTemplate = new CustomersTemplate().WithCustomerID("MYCUS"),
+                ProductsTemplate = new ProductsTemplate().WithProductName("Product1"),
+                Order_DetailsTemplate = new Order_DetailsTemplate().WithQuantity(5)
+            });
+
+            await TestRunner.InsertTemplateAsync(new CompleteOrderForCustomerTemplate
+            {
+                CustomersTemplate = order1.CustomersTemplate,
+                ProductsTemplate = new ProductsTemplate().WithProductName("Product2"),
+                Order_DetailsTemplate = new Order_DetailsTemplate().WithQuantity(8)
+            });
+
+            for (int x = 10; x < 20; x++)
+            {
+                await TestRunner.InsertTemplateAsync(new CompleteOrderForCustomerTemplate
+                {
+                    CustomersTemplate = new CustomersTemplate().WithCustomerID($"C{x:D4}"),
+                    ProductsTemplate = new ProductsTemplate().WithProductName("Product1"),
+                    Order_DetailsTemplate = new Order_DetailsTemplate().WithQuantity(5)
+                });
+            }
+
+            ExecutionPlanQueryResult<QueryResult> executionPlan = await ExecutionPlanRunner.ExecuteStoredProcedureQueryAsync("dbo.CustOrderHist", new DataSetRow
+            {
+                ["CustomerID"] = "MYCUS"
+            });
+
+            executionPlan
+                .AssertKeyLookups(0);
         }
     }
 }

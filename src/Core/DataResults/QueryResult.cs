@@ -1,4 +1,5 @@
 ﻿using DBConfirm.Core.Data;
+using DBConfirm.Core.DataResults.Abstract;
 using DBConfirm.Core.TestFrameworks.Abstract;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace DBConfirm.Core.DataResults
         /// The data returned from the query execution
         /// </summary>
         public DataTable RawData { get; private set; }
+
+        /// <summary>
+        /// The actual execution plan
+        /// </summary>
+        public IExecutionPlan ExecutionPlan { get; private set; }
 
         /// <summary>
         /// The test framework to use for assertions
@@ -41,6 +47,18 @@ namespace DBConfirm.Core.DataResults
         {
             TestFramework = testFramework;
             RawData = rawData ?? new DataTable();
+        }
+
+        /// <summary>
+        /// Constructor, including the test framework to use and the query result data
+        /// </summary>
+        /// <param name="testFramework">The test framework to use for assertions</param>
+        /// <param name="rawData">The data returned from the query execution</param>
+        /// <param name="executionPlan">The actual execution plan</param>
+        public QueryResult(ITestFramework testFramework, DataTable rawData, IExecutionPlan executionPlan)
+            :this (testFramework, rawData)
+        {
+            ExecutionPlan = executionPlan;
         }
 
         /// <summary>

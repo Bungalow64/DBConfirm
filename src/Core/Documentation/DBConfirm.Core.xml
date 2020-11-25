@@ -430,6 +430,23 @@
         <member name="M:DBConfirm.Core.Comparisons.Types.MatchType.Validate(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="T:DBConfirm.Core.DataResults.Abstract.IExecutionPlan">
+            <summary>
+            The interface for execution plans, allowing for assertions to be made on the actual plan used for a query
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.Abstract.IExecutionPlan.AssertKeyLookups(System.Int32)">
+            <summary>
+            Asserts that the number of key lookups is correct
+            </summary>
+            <param name="expectedTotal">The expected number of key lookups</param>
+            <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.Abstract.IExecutionPlan"/> instance</returns>
+        </member>
+        <member name="T:DBConfirm.Core.DataResults.NoResult">
+            <summary>
+            The results of a non-query execution, representing nothing
+            </summary>
+        </member>
         <member name="T:DBConfirm.Core.DataResults.QueryResult">
             <summary>
             The results of a query execution, representing the data returned
@@ -438,6 +455,11 @@
         <member name="P:DBConfirm.Core.DataResults.QueryResult.RawData">
             <summary>
             The data returned from the query execution
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Core.DataResults.QueryResult.ExecutionPlan">
+            <summary>
+            The actual execution plan
             </summary>
         </member>
         <member name="F:DBConfirm.Core.DataResults.QueryResult.TestFramework">
@@ -457,6 +479,14 @@
             </summary>
             <param name="testFramework">The test framework to use for assertions</param>
             <param name="rawData">The data returned from the query execution</param>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.QueryResult.#ctor(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Data.DataTable,DBConfirm.Core.DataResults.Abstract.IExecutionPlan)">
+            <summary>
+            Constructor, including the test framework to use and the query result data
+            </summary>
+            <param name="testFramework">The test framework to use for assertions</param>
+            <param name="rawData">The data returned from the query execution</param>
+            <param name="executionPlan">The actual execution plan</param>
         </member>
         <member name="P:DBConfirm.Core.DataResults.QueryResult.TotalRows">
             <summary>
@@ -620,6 +650,11 @@
             The value of the result
             </summary>
         </member>
+        <member name="P:DBConfirm.Core.DataResults.ScalarResult`1.ExecutionPlan">
+            <summary>
+            The actual execution plan
+            </summary>
+        </member>
         <member name="F:DBConfirm.Core.DataResults.ScalarResult`1.TestFramework">
             <summary>
             The test framework to use for assertions
@@ -631,6 +666,14 @@
             </summary>
             <param name="testFramework">The test framework to use for assertions</param>
             <param name="rawData">The data returned from the query execution</param>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.ScalarResult`1.#ctor(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,`0,DBConfirm.Core.DataResults.Abstract.IExecutionPlan)">
+            <summary>
+            Constructor, including the test framework and the query result data
+            </summary>
+            <param name="testFramework">The test framework to use for assertions</param>
+            <param name="rawData">The data returned from the query execution</param>
+            <param name="executionPlan">The actual execution plan</param>
         </member>
         <member name="M:DBConfirm.Core.DataResults.ScalarResult`1.AssertValue(System.Object)">
             <summary>

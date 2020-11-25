@@ -59,7 +59,7 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         /// The initialisation method to set up the <see cref="ITestRunner"/> for the test, and making the initial connection to the target database
         /// </summary>
         /// <returns>A task representing the asynchronous operation</returns>
-        protected async Task BaseInit()
+        protected virtual async Task BaseInit()
         {
             ConnectionStringNameAttribute attribute = GetType().GetCustomAttribute<ConnectionStringNameAttribute>();
 

@@ -1,0 +1,331 @@
+﻿<ShowPlanXML xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan" Version="1.6" Build="14.0.2027.2">
+	<BatchSequence>
+		<Batch>
+			<Statements>
+				<StmtSimple StatementCompId="2" StatementEstRows="1" StatementId="1" StatementOptmLevel="TRIVIAL" CardinalityEstimationModelVersion="140" StatementSubTreeCost="0.0032831" StatementText="SELECT * FROM dbo.Customers" StatementType="SELECT" QueryHash="0x384D5CDC514BD4A4" QueryPlanHash="0xAB122F1D385944BC" RetrievedFromCache="true" SecurityPolicyApplied="false">
+					<StatementSetOptions ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" ARITHABORT="true" CONCAT_NULL_YIELDS_NULL="true" NUMERIC_ROUNDABORT="false" QUOTED_IDENTIFIER="true" />
+					<QueryPlan DegreeOfParallelism="1" CachedPlanSize="16" CompileTime="55" CompileCPU="1" CompileMemory="104">
+						<MemoryGrantInfo SerialRequiredMemory="0" SerialDesiredMemory="0" />
+						<OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="255322" EstimatedPagesCached="63830" EstimatedAvailableDegreeOfParallelism="2" MaxCompileMemory="2688128" />
+						<QueryTimeStats CpuTime="0" ElapsedTime="0" />
+						<RelOp AvgRowSize="303" EstimateCPU="0.0001581" EstimateIO="0.003125" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" EstimatedRowsRead="1" LogicalOp="Clustered Index Scan" NodeId="0" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.0032831" TableCardinality="0">
+							<OutputList>
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="CustomerID" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="CompanyName" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="ContactName" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="ContactTitle" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Address" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="City" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Region" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="PostalCode" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Country" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Phone" />
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Fax" />
+							</OutputList>
+							<RunTimeInformation>
+								<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" ActualScans="1" ActualLogicalReads="2" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+							</RunTimeInformation>
+							<IndexScan Ordered="false" ForcedIndex="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+								<DefinedValues>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="CustomerID" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="CompanyName" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="ContactName" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="ContactTitle" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Address" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="City" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Region" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="PostalCode" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Country" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Phone" />
+									</DefinedValue>
+									<DefinedValue>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Column="Fax" />
+									</DefinedValue>
+								</DefinedValues>
+								<Object Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Index="[PK_Customers]" IndexKind="Clustered" Storage="RowStore" />
+							</IndexScan>
+						</RelOp>
+					</QueryPlan>
+				</StmtSimple>
+			</Statements>
+		</Batch>
+		<Batch>
+			<Statements>
+				<StmtSimple StatementCompId="5" StatementEstRows="1" StatementId="2" StatementOptmLevel="FULL" StatementOptmEarlyAbortReason="GoodEnoughPlanFound" CardinalityEstimationModelVersion="140" StatementSubTreeCost="0.0164333" StatementText="SELECT ProductName, Total=SUM(Quantity)&#xD;&#xA;FROM Products P, [Order Details] OD, Orders O, Customers C&#xD;&#xA;WHERE C.CustomerID = @CustomerID&#xD;&#xA;AND C.CustomerID = O.CustomerID AND O.OrderID = OD.OrderID AND OD.ProductID = P.ProductID&#xD;&#xA;GROUP BY ProductName" StatementType="SELECT" QueryHash="0x4CD877213F9CF726" QueryPlanHash="0xBB5236B1B34A121D" RetrievedFromCache="true" SecurityPolicyApplied="false">
+					<StatementSetOptions ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" ARITHABORT="true" CONCAT_NULL_YIELDS_NULL="true" NUMERIC_ROUNDABORT="false" QUOTED_IDENTIFIER="true" />
+					<QueryPlan DegreeOfParallelism="1" CachedPlanSize="48" CompileTime="5" CompileCPU="3" CompileMemory="568">
+						<MemoryGrantInfo SerialRequiredMemory="0" SerialDesiredMemory="0" />
+						<OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="255322" EstimatedPagesCached="63830" EstimatedAvailableDegreeOfParallelism="2" MaxCompileMemory="2688128" />
+						<QueryTimeStats CpuTime="0" ElapsedTime="0" />
+						<RelOp AvgRowSize="55" EstimateCPU="1.1E-06" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" LogicalOp="Aggregate" NodeId="0" Parallel="false" PhysicalOp="Stream Aggregate" EstimatedTotalSubtreeCost="0.0164333">
+							<OutputList>
+								<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+								<ColumnReference Column="Expr1004" />
+							</OutputList>
+							<RunTimeInformation>
+								<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" />
+							</RunTimeInformation>
+							<StreamAggregate>
+								<DefinedValues>
+									<DefinedValue>
+										<ColumnReference Column="Expr1004" />
+										<ScalarOperator ScalarString="SUM([Northwind].[dbo].[Order Details].[Quantity] as [OD].[Quantity])">
+											<Aggregate AggType="SUM" Distinct="false">
+												<ScalarOperator>
+													<Identifier>
+														<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="Quantity" />
+													</Identifier>
+												</ScalarOperator>
+											</Aggregate>
+										</ScalarOperator>
+									</DefinedValue>
+								</DefinedValues>
+								<GroupBy>
+									<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+								</GroupBy>
+								<RelOp AvgRowSize="53" EstimateCPU="4.18E-06" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" LogicalOp="Inner Join" NodeId="1" Parallel="false" PhysicalOp="Nested Loops" EstimatedTotalSubtreeCost="0.0164322">
+									<OutputList>
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+										<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="Quantity" />
+									</OutputList>
+									<RunTimeInformation>
+										<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" />
+									</RunTimeInformation>
+									<NestedLoops Optimized="false">
+										<RelOp AvgRowSize="9" EstimateCPU="0.0001581" EstimateIO="0.003125" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" EstimatedRowsRead="1" LogicalOp="Clustered Index Seek" NodeId="2" Parallel="false" PhysicalOp="Clustered Index Seek" EstimatedTotalSubtreeCost="0.0032831" TableCardinality="0">
+											<OutputList />
+											<RunTimeInformation>
+												<RunTimeCountersPerThread Thread="0" ActualRows="0" ActualRowsRead="1" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" ActualScans="0" ActualLogicalReads="2" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+											</RunTimeInformation>
+											<IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" ForceSeek="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+												<DefinedValues />
+												<Object Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Index="[PK_Customers]" Alias="[C]" IndexKind="Clustered" Storage="RowStore" />
+												<SeekPredicates>
+													<SeekPredicateNew>
+														<SeekKeys>
+															<Prefix ScanType="EQ">
+																<RangeColumns>
+																	<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Customers]" Alias="[C]" Column="CustomerID" />
+																</RangeColumns>
+																<RangeExpressions>
+																	<ScalarOperator ScalarString="[@CustomerID]">
+																		<Identifier>
+																			<ColumnReference Column="@CustomerID" />
+																		</Identifier>
+																	</ScalarOperator>
+																</RangeExpressions>
+															</Prefix>
+														</SeekKeys>
+													</SeekPredicateNew>
+												</SeekPredicates>
+											</IndexScan>
+										</RelOp>
+										<RelOp AvgRowSize="53" EstimateCPU="4.18E-06" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" LogicalOp="Inner Join" NodeId="3" Parallel="false" PhysicalOp="Nested Loops" EstimatedTotalSubtreeCost="0.0131449">
+											<OutputList>
+												<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+												<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="Quantity" />
+											</OutputList>
+											<RunTimeInformation>
+												<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="0" ActualExecutions="0" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" />
+											</RunTimeInformation>
+											<NestedLoops Optimized="false">
+												<OuterReferences>
+													<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+												</OuterReferences>
+												<RelOp AvgRowSize="57" EstimateCPU="4.18E-06" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" LogicalOp="Inner Join" NodeId="4" Parallel="false" PhysicalOp="Nested Loops" EstimatedTotalSubtreeCost="0.00985766">
+													<OutputList>
+														<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+														<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+														<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="Quantity" />
+													</OutputList>
+													<RunTimeInformation>
+														<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="0" ActualExecutions="0" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" />
+													</RunTimeInformation>
+													<NestedLoops Optimized="false">
+														<OuterReferences>
+															<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+															<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="ProductID" />
+														</OuterReferences>
+														<RelOp AvgRowSize="59" EstimateCPU="4.18E-06" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" LogicalOp="Inner Join" NodeId="5" Parallel="false" PhysicalOp="Nested Loops" EstimatedTotalSubtreeCost="0.00657038">
+															<OutputList>
+																<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+																<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+																<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="ProductID" />
+															</OutputList>
+															<RunTimeInformation>
+																<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="0" ActualExecutions="0" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" />
+															</RunTimeInformation>
+															<NestedLoops Optimized="false">
+																<OuterReferences>
+																	<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductID" />
+																</OuterReferences>
+																<RelOp AvgRowSize="55" EstimateCPU="0.0001581" EstimateIO="0.003125" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" EstimatedRowsRead="1" LogicalOp="Index Scan" NodeId="6" Parallel="false" PhysicalOp="Index Scan" EstimatedTotalSubtreeCost="0.0032831" TableCardinality="0">
+																	<OutputList>
+																		<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductID" />
+																		<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+																	</OutputList>
+																	<RunTimeInformation>
+																		<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="0" ActualExecutions="0" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+																	</RunTimeInformation>
+																	<IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" ForceSeek="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+																		<DefinedValues>
+																			<DefinedValue>
+																				<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductID" />
+																			</DefinedValue>
+																			<DefinedValue>
+																				<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductName" />
+																			</DefinedValue>
+																		</DefinedValues>
+																		<Object Database="[Northwind]" Schema="[dbo]" Table="[Products]" Index="[ProductName]" Alias="[P]" IndexKind="NonClustered" Storage="RowStore" />
+																	</IndexScan>
+																</RelOp>
+																<RelOp AvgRowSize="15" EstimateCPU="0.0001581" EstimateIO="0.003125" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" EstimatedRowsRead="1" LogicalOp="Index Seek" NodeId="7" Parallel="false" PhysicalOp="Index Seek" EstimatedTotalSubtreeCost="0.0032831" TableCardinality="0">
+																	<OutputList>
+																		<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+																		<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="ProductID" />
+																	</OutputList>
+																	<RunTimeInformation>
+																		<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="0" ActualExecutions="0" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+																	</RunTimeInformation>
+																	<IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" ForceSeek="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+																		<DefinedValues>
+																			<DefinedValue>
+																				<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+																			</DefinedValue>
+																			<DefinedValue>
+																				<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="ProductID" />
+																			</DefinedValue>
+																		</DefinedValues>
+																		<Object Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Index="[ProductID]" Alias="[OD]" IndexKind="NonClustered" Storage="RowStore" />
+																		<SeekPredicates>
+																			<SeekPredicateNew>
+																				<SeekKeys>
+																					<Prefix ScanType="EQ">
+																						<RangeColumns>
+																							<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="ProductID" />
+																						</RangeColumns>
+																						<RangeExpressions>
+																							<ScalarOperator ScalarString="[Northwind].[dbo].[Products].[ProductID] as [P].[ProductID]">
+																								<Identifier>
+																									<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Products]" Alias="[P]" Column="ProductID" />
+																								</Identifier>
+																							</ScalarOperator>
+																						</RangeExpressions>
+																					</Prefix>
+																				</SeekKeys>
+																			</SeekPredicateNew>
+																		</SeekPredicates>
+																	</IndexScan>
+																</RelOp>
+															</NestedLoops>
+														</RelOp>
+														<RelOp AvgRowSize="9" EstimateCPU="0.0001581" EstimateIO="0.003125" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" LogicalOp="Clustered Index Seek" NodeId="9" Parallel="false" PhysicalOp="Clustered Index Seek" EstimatedTotalSubtreeCost="0.0032831" TableCardinality="0">
+															<OutputList>
+																<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="Quantity" />
+															</OutputList>
+															<RunTimeInformation>
+																<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="0" ActualExecutions="0" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+															</RunTimeInformation>
+															<IndexScan Lookup="true" Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" ForceSeek="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+																<DefinedValues>
+																	<DefinedValue>
+																		<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="Quantity" />
+																	</DefinedValue>
+																</DefinedValues>
+																<Object Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Index="[PK_Order_Details]" Alias="[OD]" TableReferenceId="-1" IndexKind="Clustered" Storage="RowStore" />
+																<SeekPredicates>
+																	<SeekPredicateNew>
+																		<SeekKeys>
+																			<Prefix ScanType="EQ">
+																				<RangeColumns>
+																					<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+																					<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="ProductID" />
+																				</RangeColumns>
+																				<RangeExpressions>
+																					<ScalarOperator ScalarString="[Northwind].[dbo].[Order Details].[OrderID] as [OD].[OrderID]">
+																						<Identifier>
+																							<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+																						</Identifier>
+																					</ScalarOperator>
+																					<ScalarOperator ScalarString="[Northwind].[dbo].[Order Details].[ProductID] as [OD].[ProductID]">
+																						<Identifier>
+																							<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="ProductID" />
+																						</Identifier>
+																					</ScalarOperator>
+																				</RangeExpressions>
+																			</Prefix>
+																		</SeekKeys>
+																	</SeekPredicateNew>
+																</SeekPredicates>
+															</IndexScan>
+														</RelOp>
+													</NestedLoops>
+												</RelOp>
+												<RelOp AvgRowSize="9" EstimateCPU="0.0001581" EstimateIO="0.003125" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1" EstimatedRowsRead="1" LogicalOp="Index Seek" NodeId="10" Parallel="false" PhysicalOp="Index Seek" EstimatedTotalSubtreeCost="0.0032831" TableCardinality="0">
+													<OutputList />
+													<RunTimeInformation>
+														<RunTimeCountersPerThread Thread="0" ActualRows="0" Batches="0" ActualEndOfScans="0" ActualExecutions="0" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+													</RunTimeInformation>
+													<IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" ForceSeek="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+														<DefinedValues />
+														<Object Database="[Northwind]" Schema="[dbo]" Table="[Orders]" Index="[CustomerID]" Alias="[O]" IndexKind="NonClustered" Storage="RowStore" />
+														<SeekPredicates>
+															<SeekPredicateNew>
+																<SeekKeys>
+																	<Prefix ScanType="EQ">
+																		<RangeColumns>
+																			<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Orders]" Alias="[O]" Column="CustomerID" />
+																			<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Orders]" Alias="[O]" Column="OrderID" />
+																		</RangeColumns>
+																		<RangeExpressions>
+																			<ScalarOperator ScalarString="[@CustomerID]">
+																				<Identifier>
+																					<ColumnReference Column="@CustomerID" />
+																				</Identifier>
+																			</ScalarOperator>
+																			<ScalarOperator ScalarString="[Northwind].[dbo].[Order Details].[OrderID] as [OD].[OrderID]">
+																				<Identifier>
+																					<ColumnReference Database="[Northwind]" Schema="[dbo]" Table="[Order Details]" Alias="[OD]" Column="OrderID" />
+																				</Identifier>
+																			</ScalarOperator>
+																		</RangeExpressions>
+																	</Prefix>
+																</SeekKeys>
+															</SeekPredicateNew>
+														</SeekPredicates>
+													</IndexScan>
+												</RelOp>
+											</NestedLoops>
+										</RelOp>
+									</NestedLoops>
+								</RelOp>
+							</StreamAggregate>
+						</RelOp>
+						<ParameterList>
+							<ColumnReference Column="@CustomerID" ParameterDataType="nchar(5)" ParameterCompiledValue="N'MYCUS'" ParameterRuntimeValue="N'MYCUS'" />
+						</ParameterList>
+					</QueryPlan>
+				</StmtSimple>
+			</Statements>
+		</Batch>
+	</BatchSequence>
+</ShowPlanXML>

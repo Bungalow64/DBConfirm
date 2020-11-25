@@ -14,5 +14,17 @@
             Uses <see cref="T:DBConfirm.Databases.SQLServer.Factories.SQLServerTestRunnerFactory"/> to generate <see cref="T:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner"/> as the test runner
             </summary>
         </member>
+        <member name="P:DBConfirm.Packages.SQLServer.NUnit.NUnitBase.ExecutionPlanRunner">
+            <summary>
+            Provides the ability to execute commands and record the execution plans for analysis
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Packages.SQLServer.NUnit.NUnitBase.BaseInit">
+            <summary>
+            The initialisation method to set up the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the test, and making the initial connection to the target database.  Also sets up
+            the ExecutionPlanRunner, to use the same instance.
+            </summary>
+            <returns>A task representing the asynchronous operation</returns>
+        </member>
     </members>
 </doc>

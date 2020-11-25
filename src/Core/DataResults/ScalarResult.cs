@@ -1,4 +1,5 @@
-﻿using DBConfirm.Core.TestFrameworks.Abstract;
+﻿using DBConfirm.Core.DataResults.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using DBConfirm.Core.Validation;
 
 namespace DBConfirm.Core.DataResults
@@ -15,6 +16,11 @@ namespace DBConfirm.Core.DataResults
         public T RawData { get; private set; }
 
         /// <summary>
+        /// The actual execution plan
+        /// </summary>
+        public IExecutionPlan ExecutionPlan { get; private set; }
+
+        /// <summary>
         /// The test framework to use for assertions
         /// </summary>
         internal readonly ITestFramework TestFramework;
@@ -28,6 +34,18 @@ namespace DBConfirm.Core.DataResults
         {
             TestFramework = testFramework;
             RawData = rawData;
+        }
+
+        /// <summary>
+        /// Constructor, including the test framework and the query result data
+        /// </summary>
+        /// <param name="testFramework">The test framework to use for assertions</param>
+        /// <param name="rawData">The data returned from the query execution</param>
+        /// <param name="executionPlan">The actual execution plan</param>
+        public ScalarResult(ITestFramework testFramework, T rawData, IExecutionPlan executionPlan)
+            :this(testFramework, rawData)
+        {
+            ExecutionPlan = executionPlan;
         }
 
         /// <summary>

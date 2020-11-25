@@ -15,13 +15,18 @@ using DBConfirm.Core.Parameters;
 using DBConfirm.Databases.SQLServer.Extensions;
 using DBConfirm.Core.Templates;
 using DBConfirm.Core.Exceptions;
+using DBConfirm.Databases.SQLServer.Runners.Abstract;
+using DBConfirm.Databases.SQLServer.Results;
+using DBConfirm.Core.DataResults.Abstract;
+using DBConfirm.Databases.SQLServer.ExecutionPlans.Factories.Abstract;
+using DBConfirm.Databases.SQLServer.ExecutionPlans.Factories;
 
 namespace DBConfirm.Databases.SQLServer.Runners
 {
     /// <summary>
     /// The SQL Server test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
     /// </summary>
-    public class SQLServerTestRunner : ITestRunner
+    public class SQLServerTestRunner : ITestRunner, ISQLServerExecutionPlanRunner
     {
         #region Setup
 
@@ -30,6 +35,8 @@ namespace DBConfirm.Databases.SQLServer.Runners
         private SqlTransaction SqlTransaction { get; set; }
 
         private ITestFramework _testFramework;
+
+        internal IExecutionPlanFactory ExecutionPlanFactory { get; set; } = new ExecutionPlanFactory();
 
         private bool disposedValue;
 
@@ -96,40 +103,67 @@ namespace DBConfirm.Databases.SQLServer.Runners
             return ExecuteStoredProcedureNonQueryAsync(procedureName, parameters.ToSqlParameters());
         }
 
-        private Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, IList<SqlParameter> parameters)
+        private async Task<(QueryResult Result, IExecutionPlan ExecutionPlan)> ExecuteStoredProcedureQueryAsync(string procedureName, IList<SqlParameter> parameters, bool includeExecutionPlan = false)
         {
-            using (DataSet ds = new DataSet())
+            (QueryResult, IExecutionPlan) Execute()
             {
-                ds.Locale = CultureInfo.InvariantCulture;
-
-                using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
+                using (DataSet ds = new DataSet())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddRange(parameters.ToArray());
+                    ds.Locale = CultureInfo.InvariantCulture;
 
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    using (SqlCommand command = new SqlCommand(procedureName, SqlConnection, SqlTransaction))
                     {
-                        adapter.Fill(ds);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddRange(parameters.ToArray());
+
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            adapter.Fill(ds);
+                        }
                     }
+
+                    if (ds.Tables.Count > 0)
+                    {
+                        QueryResult result = new QueryResult(_testFramework, ds.Tables[0]);
+
+                        IExecutionPlan plan = ExecutionPlanFactory.Build(_testFramework, ds);
+
+                        return (result, plan);
+                    }
+                    return (new QueryResult(_testFramework), null);
                 }
-                if (ds.Tables.Count > 0)
-                {
-                    return Task.FromResult(new QueryResult(_testFramework, ds.Tables[0]));
-                }
-                return Task.FromResult(new QueryResult(_testFramework));
+            }
+
+            if (includeExecutionPlan)
+            {
+                SqlCommand clearCache = new SqlCommand("DBCC FREEPROCCACHE WITH NO_INFOMSGS;", SqlConnection, SqlTransaction);
+                await clearCache.ExecuteNonQueryAsync();
+                SqlCommand executionPlan = new SqlCommand("SET STATISTICS XML ON;", SqlConnection, SqlTransaction);
+                await executionPlan.ExecuteNonQueryAsync();
+
+                (QueryResult, IExecutionPlan) result = Execute();
+
+                SqlCommand executionPlanOff = new SqlCommand("SET STATISTICS XML OFF;", SqlConnection, SqlTransaction);
+                await executionPlanOff.ExecuteNonQueryAsync();
+
+                return result;
+            }
+            else
+            {
+                return Execute();
             }
         }
 
         /// <inheritdoc/>
-        public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, IDictionary<string, object> parameters)
+        public async Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, IDictionary<string, object> parameters)
         {
-            return ExecuteStoredProcedureQueryAsync(procedureName, parameters.ToSqlParameters());
+            return (await ExecuteStoredProcedureQueryAsync(procedureName, parameters.ToSqlParameters())).Result;
         }
 
         /// <inheritdoc/>
-        public Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, SqlQueryParameter[] parameters)
+        public async Task<QueryResult> ExecuteStoredProcedureQueryAsync(string procedureName, SqlQueryParameter[] parameters)
         {
-            return ExecuteStoredProcedureQueryAsync(procedureName, parameters.ToSqlParameters());
+            return (await ExecuteStoredProcedureQueryAsync(procedureName, parameters.ToSqlParameters())).Result;
         }
 
         /// <inheritdoc/>
@@ -572,6 +606,110 @@ namespace DBConfirm.Databases.SQLServer.Runners
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<QueryResult>> ISQLServerExecutionPlanRunner.ExecuteCommandAsync(string commandText, IDictionary<string, object> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<QueryResult>> ISQLServerExecutionPlanRunner.ExecuteCommandAsync(string commandText, params SqlQueryParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<IList<QueryResult>>> ISQLServerExecutionPlanRunner.ExecuteCommandMultipleDataSetAsync(string commandText, IDictionary<string, object> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<IList<QueryResult>>> ISQLServerExecutionPlanRunner.ExecuteCommandMultipleDataSetAsync(string commandText, params SqlQueryParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<NoResult>> ISQLServerExecutionPlanRunner.ExecuteCommandNoResultsAsync(string commandText, IDictionary<string, object> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<NoResult>> ISQLServerExecutionPlanRunner.ExecuteCommandNoResultsAsync(string commandText, params SqlQueryParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<ScalarResult<T>>> ISQLServerExecutionPlanRunner.ExecuteCommandScalarAsync<T>(string commandText, IDictionary<string, object> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<ScalarResult<T>>> ISQLServerExecutionPlanRunner.ExecuteCommandScalarAsync<T>(string commandText, params SqlQueryParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<IList<QueryResult>>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, IDictionary<string, object> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<IList<QueryResult>>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureMultipleDataSetAsync(string procedureName, params SqlQueryParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<NoResult>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureNonQueryAsync(string procedureName, IDictionary<string, object> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<NoResult>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureNonQueryAsync(string procedureName, params SqlQueryParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        async Task<ExecutionPlanQueryResult<QueryResult>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureQueryAsync(string procedureName, IDictionary<string, object> parameters)
+        {
+            (QueryResult result, IExecutionPlan executionPlan) = await ExecuteStoredProcedureQueryAsync(procedureName, parameters.ToSqlParameters(), includeExecutionPlan: true);
+            return new ExecutionPlanQueryResult<QueryResult>(_testFramework, result, executionPlan);
+        }
+
+        /// <inheritdoc/>
+        async Task<ExecutionPlanQueryResult<QueryResult>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureQueryAsync(string procedureName, params SqlQueryParameter[] parameters)
+        {
+            (QueryResult result, IExecutionPlan executionPlan) = await ExecuteStoredProcedureQueryAsync(procedureName, parameters.ToSqlParameters(), includeExecutionPlan: true);
+            return new ExecutionPlanQueryResult<QueryResult>(_testFramework, result, executionPlan);
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<ScalarResult<T>>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureScalarAsync<T>(string procedureName, IDictionary<string, object> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<ScalarResult<T>>> ISQLServerExecutionPlanRunner.ExecuteStoredProcedureScalarAsync<T>(string procedureName, params SqlQueryParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        Task<ExecutionPlanQueryResult<QueryResult>> ISQLServerExecutionPlanRunner.ExecuteViewAsync(string viewName)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
