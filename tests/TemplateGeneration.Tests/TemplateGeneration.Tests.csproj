@@ -24,6 +24,7 @@
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_IncludeDateTimeColumn_FileGenerated_WithSystem.txt" />
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleIdentityTableWithColumns_LowercaseNames_FileGeneratedWithPascalCaseColumns.txt" />
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleTableWithColumns_FileGenerated.txt" />
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleIdentityTableWithRequiredMaxNvarcharColumn_FileGenerated.txt" />
   </ItemGroup>
 
   <ItemGroup>

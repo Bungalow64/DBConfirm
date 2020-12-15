@@ -319,6 +319,21 @@ namespace TemplateGeneration.Tests.Logic
             row["ReferencesIdentity"] = false;
             columns.Rows.Add(row);
         }
+        
+        private void AddRequiredNvarcharMaxRow(DataTable columns, string schemaName, string tableName, string columnName)
+        {
+            DataRow row = columns.NewRow();
+            row["TableName"] = tableName;
+            row["SchemaName"] = schemaName;
+            row["ColumnName"] = columnName;
+            row["IsNullable"] = false;
+            row["DataType"] = "nvarchar";
+            row["MaxCharacterLength"] = -1;
+            row["IsIdentity"] = false;
+            row["IsForeignKey"] = false;
+            row["ReferencesIdentity"] = false;
+            columns.Rows.Add(row);
+        }
 
         private void AddNullableRow(DataTable columns, string schemaName, string tableName, string columnName, string dataType)
         {
@@ -429,6 +444,51 @@ namespace TemplateGeneration.Tests.Logic
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual(await ReadResource("Generator_SingleTableWithColumns_FileGenerated"), generatedFileText);
+        }
+        
+        [Test]
+        public async Task Generator_SingleIdentityTableWithRequiredNvarcharMaxColumn_FileGenerated()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "Users"
+            };
+
+            DataTable columns = CreateTable();
+            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId");
+            AddRequiredNvarcharMaxRow(columns, "dbo", "Users", "Notes");
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            string generatedFileText = null;
+            _fileHelperMock
+                .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((path, contents) =>
+                {
+                    Assert.AreEqual(@"C:\Temp\UsersTemplate.cs", path);
+                    generatedFileText = contents;
+                });
+
+            _fileHelperMock
+                .Setup(p => p.GetCurrentDirectory())
+                .Returns(@"C:\Temp");
+
+            _fileHelperMock
+                .Setup(p => p.Exists(It.IsAny<string>()))
+                .Returns(false);
+
+            await Create(options).GenerateFileAsync();
+
+            _databaseHelperMock
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            _fileHelperMock
+                .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+            Assert.AreEqual(await ReadResource("Generator_SingleIdentityTableWithRequiredMaxNvarcharColumn_FileGenerated"), generatedFileText);
         }
 
         [Test]

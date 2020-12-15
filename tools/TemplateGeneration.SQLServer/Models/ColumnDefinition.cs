@@ -135,7 +135,7 @@ namespace DBConfirm.TemplateGeneration.Models
 
         private string TruncateLongString(string value)
         {
-            return value.Substring(0, Math.Min(value.Length, MaxCharacterLength ?? 100));
+            return value.Substring(0, MaxCharacterLength == -1 ? Math.Min(value.Length, 100) : Math.Min(value.Length, MaxCharacterLength ?? 100));
         }
 
         private static int? ToInt(object value)
