@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>DBConfirm.Frameworks.MSTest</PackageId>
-		<Version>0.1.1</Version>
+		<Version>0.1.2</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
 		<Product>DBConfirm (MSTest framework)</Product>
