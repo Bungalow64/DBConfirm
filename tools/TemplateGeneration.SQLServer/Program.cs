@@ -15,7 +15,7 @@ namespace DBConfirm.TemplateGeneration
                    {
                        try
                        {
-                           await new Generator(o, new FileHelper(), new DatabaseHelper()).GenerateFileAsync();
+                           await new Generator(o, new FileHelper(), new DatabaseHelper(), new ConsoleLog()).GenerateFileAsync();
                        }
                        catch (Exception ex)
                        {
