@@ -101,7 +101,7 @@ namespace DBConfirm.TemplateGeneration.Logic
             {
                 WriteSuccess("Class definition generated.  Saving...");
 
-                string target = (_options.Destination ?? _fileHelper.GetCurrentDirectory()) + $@"\{className}.cs";
+                string target = (_options.Destination ?? _fileHelper.GetCurrentDirectory()).TrimEnd('\\').TrimEnd('"').Trim() + $@"\{className}.cs";
 
                 if (_fileHelper.Exists(target) && !_options.Overwrite)
                 {
