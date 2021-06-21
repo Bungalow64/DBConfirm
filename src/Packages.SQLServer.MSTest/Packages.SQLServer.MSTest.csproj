@@ -1,42 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>DBConfirm.Packages.SQLServer.MSTest</AssemblyName>
-    <RootNamespace>DBConfirm.Packages.SQLServer.MSTest</RootNamespace>
-    <PackageId>DBConfirm.Packages.SQLServer.MSTest</PackageId>
-    <Version>0.1.2</Version>
-    <Authors>Bungalow64</Authors>
-    <Company>Bungalow64 Technologies Ltd</Company>
-    <Product>DBConfirm (SQLServer/MSTest package)</Product>
-    <Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases, using MSTest as the test framework.
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<AssemblyName>DBConfirm.Packages.SQLServer.MSTest</AssemblyName>
+		<RootNamespace>DBConfirm.Packages.SQLServer.MSTest</RootNamespace>
+		<PackageId>DBConfirm.Packages.SQLServer.MSTest</PackageId>
+		<Version>0.1.3</Version>
+		<Authors>Bungalow64</Authors>
+		<Company>Bungalow64 Technologies Ltd</Company>
+		<Product>DBConfirm (SQLServer/MSTest package)</Product>
+		<Description>A testing library written to easily add unit tests to cover behaviour held in SQL Server databases, using MSTest as the test framework.
 
 This library allows you to write SQL unit tests in code alongside all your other unit tests, including running them from within your IDE and as part of CI builds.</Description>
-	  <PackageIcon>Bungalow64.png</PackageIcon>
-    <PackageTags>SQL;SQL-Server;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;MSTest;DBConfirm</PackageTags>
-	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-	  <SignAssembly>true</SignAssembly>
-	  <AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
-	  <PackageProjectUrl>https://www.dbconfirm.com</PackageProjectUrl>
-	  <RepositoryUrl>https://github.com/Bungalow64/DBConfirm.git</RepositoryUrl>
-	  <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+		<PackageIcon>Bungalow64.png</PackageIcon>
+		<PackageTags>SQL;SQL-Server;MSSQL;Unit;Integration;Test;Testing;TDD;BDD;MSTest;DBConfirm</PackageTags>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
+		<PackageProjectUrl>https://www.dbconfirm.com</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Bungalow64/DBConfirm.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <DocumentationFile>Documentation\DBConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup>
+		<DocumentationFile>Documentation\DBConfirm.Packages.SQLServer.MSTest.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Databases.SQLServer\Databases.SQLServer.csproj" />
-    <ProjectReference Include="..\Frameworks.MSTest\Frameworks.MSTest.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Databases.SQLServer\Databases.SQLServer.csproj" />
+		<ProjectReference Include="..\Frameworks.MSTest\Frameworks.MSTest.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\Bungalow64.png" Pack="true" Visible="false" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Documentation\" />
+		<Folder Include="Documentation\" />
 	</ItemGroup>
 
 </Project>
