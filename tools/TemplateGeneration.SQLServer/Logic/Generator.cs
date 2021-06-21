@@ -1,11 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
 using System.Reflection;
 using System.Collections.Generic;
-using static DBConfirm.TemplateGeneration.Logic.OutputHelper;
 using System.Linq;
 using DBConfirm.TemplateGeneration.Models;
 using DBConfirm.TemplateGeneration.Logic.Abstract;
@@ -18,17 +15,20 @@ namespace DBConfirm.TemplateGeneration.Logic
         private readonly Options _options;
         private readonly IFileHelper _fileHelper;
         private readonly IDatabaseHelper _databaseHelper;
+        private readonly IConsoleLog _consoleLog;
         private const string _getColumnsScript = "DBConfirm.TemplateGeneration.Scripts.GetColumns.sql";
 
         public Generator(
             Options options,
             IFileHelper fileHelper,
-            IDatabaseHelper databaseHelper
+            IDatabaseHelper databaseHelper,
+            IConsoleLog consoleLog
             )
         {
             _options = options;
             _fileHelper = fileHelper;
             _databaseHelper = databaseHelper;
+            _consoleLog = consoleLog;
         }
 
         public async Task GenerateFileAsync()
@@ -47,14 +47,25 @@ namespace DBConfirm.TemplateGeneration.Logic
 
             if (processedColumns == null || !processedColumns.Any())
             {
-                WriteError($"Cannot find table: {_options.SchemaName}.{_options.TableName}");
+                if (_options.TableName == "*")
+                {
+                    _consoleLog.WriteError($"Cannot find any tables in schema: {_options.SchemaName}");
+                }
+                else if (_options.TableName.Contains("*"))
+                {
+                    _consoleLog.WriteError($"Cannot find any tables that match: {_options.SchemaName}.{_options.TableName}");
+                }
+                else
+                {
+                    _consoleLog.WriteError($"Cannot find table: {_options.SchemaName}.{_options.TableName}");
+                }
                 return;
             }
 
             IEnumerable<IGrouping<string, ColumnDefinition>> grouped = processedColumns.GroupBy(p => p.TableName);
             foreach (IGrouping<string, ColumnDefinition> group in grouped)
             {
-                WriteSuccess($"Found table ({schemaName}.{group.Key}) and {group.Count()} column{(group.Count() == 1 ? "" : "s")}");
+                _consoleLog.WriteSuccess($"Found table ({schemaName}.{group.Key}) and {group.Count()} column{(group.Count() == 1 ? "" : "s")}");
             }
             foreach (IGrouping<string, ColumnDefinition> group in grouped)
             {
@@ -94,24 +105,24 @@ namespace DBConfirm.TemplateGeneration.Logic
 
             if (_options.DryRun)
             {
-                WriteSuccess("Class definition generated.  Outputting...");
-                WriteSuccess(classDefinition);
+                _consoleLog.WriteSuccess("Class definition generated.  Outputting...");
+                _consoleLog.WriteSuccess(classDefinition);
             }
             else
             {
-                WriteSuccess("Class definition generated.  Saving...");
+                _consoleLog.WriteSuccess("Class definition generated.  Saving...");
 
-                string target = (_options.Destination ?? _fileHelper.GetCurrentDirectory()) + $@"\{className}.cs";
+                string target = (_options.Destination ?? _fileHelper.GetCurrentDirectory()).TrimEnd('\\').TrimEnd('"').Trim() + $@"\{className}.cs";
 
                 if (_fileHelper.Exists(target) && !_options.Overwrite)
                 {
-                    WriteError($"The file ({target}) already exists");
+                    _consoleLog.WriteError($"The file ({target}) already exists");
                     return;
                 }
 
                 _fileHelper.WriteAllText(target, classDefinition);
 
-                WriteSuccess($"File written to {target}");
+                _consoleLog.WriteSuccess($"File written to {target}");
             }
         }
 
@@ -119,13 +130,13 @@ namespace DBConfirm.TemplateGeneration.Logic
         {
             if (string.IsNullOrWhiteSpace(_options.ConnectionString) && string.IsNullOrWhiteSpace(_options.DatabaseName))
             {
-                WriteError("Either -c, --connectionString or -d, --databaseName needs to be supplied");
+                _consoleLog.WriteError("Either -c, --connectionString or -d, --databaseName needs to be supplied");
                 return null;
             }
 
             string connectionString = _options.ConnectionString ?? $"SERVER=(local);DATABASE={_options.DatabaseName};Integrated Security=true;Connection Timeout=30;";
 
-            WriteSuccess($"Using connection: {connectionString}");
+            _consoleLog.WriteSuccess($"Using connection: {connectionString}");
 
             return connectionString;
         }
