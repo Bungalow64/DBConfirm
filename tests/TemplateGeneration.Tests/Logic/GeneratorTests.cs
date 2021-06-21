@@ -16,15 +16,17 @@ namespace TemplateGeneration.Tests.Logic
 
         private Mock<IFileHelper> _fileHelperMock;
         private Mock<IDatabaseHelper> _databaseHelperMock;
+        private Mock<IConsoleLog> _consoleLogMock;
 
         [SetUp]
         public void Init()
         {
             _fileHelperMock = new Mock<IFileHelper>(MockBehavior.Strict);
             _databaseHelperMock = new Mock<IDatabaseHelper>(MockBehavior.Strict);
+            _consoleLogMock = new Mock<IConsoleLog>(MockBehavior.Loose);
         }
 
-        private Generator Create(Options options = null) => new Generator(options ?? new Options(), _fileHelperMock.Object, _databaseHelperMock.Object);
+        private Generator Create(Options options = null) => new Generator(options ?? new Options(), _fileHelperMock.Object, _databaseHelperMock.Object, _consoleLogMock.Object);
 
         private DataTable CreateTable()
         {
@@ -717,6 +719,84 @@ namespace TemplateGeneration.Tests.Logic
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             Assert.AreEqual(await ReadResource("Generator_SingleIdentityTableWithColumns_LowercaseNames_FileGeneratedWithPascalCaseColumns"), generatedFileText);
+        }
+
+        [Test]
+        public async Task Generator_AllTablesForSchema_NoTablesFound_ReturnCorrectMessage()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "*",
+                SchemaName = "dbo2"
+            };
+
+            DataTable columns = CreateTable();
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            _consoleLogMock
+                .Setup(p => p.WriteError(It.IsAny<string>()))
+                .Callback<string>(p => Assert.AreEqual("Cannot find any tables in schema: dbo2", p));
+
+            await Create(options).GenerateFileAsync();
+
+            _consoleLogMock
+                .Verify(p => p.WriteError(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Generator_OneTableForSchema_NoColumnsFound_ReturnCorrectMessage()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "Table1",
+                SchemaName = "dbo2"
+            };
+
+            DataTable columns = CreateTable();
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            _consoleLogMock
+                .Setup(p => p.WriteError(It.IsAny<string>()))
+                .Callback<string>(p => Assert.AreEqual("Cannot find table: dbo2.Table1", p));
+
+            await Create(options).GenerateFileAsync();
+
+            _consoleLogMock
+                .Verify(p => p.WriteError(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Generator_PartialWildcardTableForSchema_NoColumnsFound_ReturnCorrectMessage()
+        {
+            Options options = new Options
+            {
+                DatabaseName = "TestDatabase1",
+                TableName = "T*",
+                SchemaName = "dbo2"
+            };
+
+            DataTable columns = CreateTable();
+
+            _databaseHelperMock
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(columns);
+
+            _consoleLogMock
+                .Setup(p => p.WriteError(It.IsAny<string>()))
+                .Callback<string>(p => Assert.AreEqual("Cannot find any tables that match: dbo2.T*", p));
+
+            await Create(options).GenerateFileAsync();
+
+            _consoleLogMock
+                .Verify(p => p.WriteError(It.IsAny<string>()), Times.Once);
         }
 
         #endregion
