@@ -199,46 +199,46 @@
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsNotNull">
             <summary>
-            Gets the state to test for not-null values
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for not-null values
             </summary>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsNull">
             <summary>
-            Gets the state to test for null values
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for null values
             </summary>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsUtcNow">
             <summary>
-            Gets the state to test for the data to be UtcNow, using the default precision of 1 second
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be UtcNow, using the default precision of 1 second
             </summary>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsUtcNow(System.TimeSpan)">
             <summary>
-            Gets the state to test for the data to be UtcNow, with a custom precision
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be UtcNow, with a custom precision
             </summary>
             <param name="precision">The precision to be used in the comparison</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDateTime(System.String)">
             <summary>
-            Gets the state to test for the data to be a specific date, using the default precision of 1 second
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be a specific date, using the default precision of 1 second
             </summary>
             <param name="expectedDate">The expected date</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDateTime(System.DateTime)">
             <summary>
-            Gets the state to test for the data to be a specific date, using the default precision of 1 second
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be a specific date, using the default precision of 1 second
             </summary>
             <param name="expectedDate">The expected date</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDateTime(System.String,System.TimeSpan)">
             <summary>
-            Gets the state to test for the data to be a specific date, with a custom precision
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be a specific date, with a custom precision
             </summary>
             <param name="expectedDate">The expected date</param>
             <param name="precision">The precision to be used in the comparison</param>
@@ -246,7 +246,7 @@
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDateTime(System.DateTime,System.TimeSpan)">
             <summary>
-            Gets the state to test for the data to be a specific date, with a custom precision
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be a specific date, with a custom precision
             </summary>
             <param name="expectedDate">The expected date</param>
             <param name="precision">The precision to be used in the comparison</param>
@@ -254,59 +254,166 @@
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDay(System.String)">
             <summary>
-            Gets the state to test for the data to be a specific day (ignoring time), using the default precision of 1 second
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be a specific day (ignoring time), using the default precision of 1 second
             </summary>
             <param name="expectedDate">The expected date</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsDay(System.DateTime)">
             <summary>
-            Gets the state to test for the data to be a specific day (ignoring time), with a custom precision
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be a specific day (ignoring time), with a custom precision
             </summary>
             <param name="expectedDate">The expected date</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.HasLength(System.Int32)">
             <summary>
-            Gets the state to test for the data to be a specific length
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to be a specific length
             </summary>
             <param name="expectedLength">The expected length</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesRegex(System.Text.RegularExpressions.Regex)">
             <summary>
-            Gets the state to test for the data to match a specific regex
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to match a specific regex
             </summary>
             <param name="expectedRegex">The expected regex</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesRegex(System.String)">
             <summary>
-            Gets the state to test for the data to match a specific regex
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to match a specific regex
             </summary>
             <param name="expectedRegex">The expected regex</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.NotMatchesRegex(System.Text.RegularExpressions.Regex)">
             <summary>
-            Gets the state to test for the data to not match a specific regex
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to not match a specific regex
             </summary>
             <param name="unexpectedRegex">The regex to not match</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.NotMatchesRegex(System.String)">
             <summary>
-            Gets the state to test for the data to not match a specific regex
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to not match a specific regex
             </summary>
             <param name="unexpectedRegex">The regex to not match</param>
             <returns>Returns the comparison object</returns>
         </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsType(System.Type)">
             <summary>
-            Gets the state to test for the data to match a specific type
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to match a specific type
             </summary>
             <param name="expectedType">The expected type</param>
             <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesNumber(System.Int32)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test that the values numerically match
+            </summary>
+            <param name="expectedValue">The expected value</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesNumber(System.Int16)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test that the values numerically match
+            </summary>
+            <param name="expectedValue">The expected value</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesNumber(System.Int64)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test that the values numerically match
+            </summary>
+            <param name="expectedValue">The expected value</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesNumber(System.Decimal)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test that the values numerically match
+            </summary>
+            <param name="expectedValue">The expected value</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesNumber(System.Double)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test that the values numerically match
+            </summary>
+            <param name="expectedValue">The expected value</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesNumber(System.Single)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test that the values numerically match
+            </summary>
+            <param name="expectedValue">The expected value</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.MatchesNumber(System.Byte)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test that the values numerically match
+            </summary>
+            <param name="expectedValue">The expected value</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="T:DBConfirm.Core.Comparisons.Numeric.NumericValue">
+            <summary>
+            Asserts that a numeric value matches another, regardless of the actual types of the values
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Core.Comparisons.Numeric.NumericValue.ExpectedValue">
+            <summary>
+            The expected value
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.#ctor(System.Int32)">
+            <summary>
+            Constructor, setting the expected value
+            </summary>
+            <param name="expectedValue">The expected value</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.#ctor(System.Int16)">
+            <summary>
+            Constructor, setting the expected value
+            </summary>
+            <param name="expectedValue">The expected value</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.#ctor(System.Int64)">
+            <summary>
+            Constructor, setting the expected value
+            </summary>
+            <param name="expectedValue">The expected value</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.#ctor(System.Decimal)">
+            <summary>
+            Constructor, setting the expected value
+            </summary>
+            <param name="expectedValue">The expected value</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.#ctor(System.Double)">
+            <summary>
+            Constructor, setting the expected value
+            </summary>
+            <param name="expectedValue">The expected value</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.#ctor(System.Single)">
+            <summary>
+            Constructor, setting the expected value
+            </summary>
+            <param name="expectedValue">The expected value</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.#ctor(System.Byte)">
+            <summary>
+            Constructor, setting the expected value
+            </summary>
+            <param name="expectedValue">The expected value</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.Assert(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Object,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Numeric.NumericValue.Validate(System.Object)">
+            <inheritdoc/>
         </member>
         <member name="T:DBConfirm.Core.Comparisons.States.NotNullState">
             <summary>

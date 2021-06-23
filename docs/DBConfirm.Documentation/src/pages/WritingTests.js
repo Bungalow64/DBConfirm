@@ -352,6 +352,7 @@ export default function WritingTests() {
                 <li><strong>MatchesRegex</strong> - Asserts the value matches the Regex value</li>
                 <li><strong>NotMatchesRegex</strong> - Asserts that the value does not match the Regex value</li>
                 <li><strong>IsType</strong> - Asserts that the value matches a specific type</li>
+                <li><strong>MatchesNumber</strong> - Asserts that the value numerically matches, regardless of type.  For example, this successfully matches 100 (int) against 100 (decimal)</li>
             </ul>
 
             <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCount"</span>);
@@ -379,7 +380,9 @@ export default function WritingTests() {
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value does not match the Regex value</span>
                 {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">NotMatchesRegex</span>(<span className="hljs-string">".*@.*"</span>))
         {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value matches a specific type</span>
-                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsType</span>(<span className="hljs-keyword">typeof</span>(<span className="hljs-keyword">string</span>)));
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"FirstName"</span>, Comparisons.<span className="hljs-title">IsType</span>(<span className="hljs-keyword">typeof</span>(<span className="hljs-keyword">string</span>)))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the value numerically matches, regardless of type</span>
+                {"\n"}    .<span className="hljs-title">AssertValue</span>(<span className="hljs-string">"Total"</span>, Comparisons.<span className="hljs-title">MatchesNumber</span>(<span className="hljs-number">5</span>));
 </code></pre>
 
             <h4 id="assertingnumbers">Asserting numbers</h4>
@@ -395,15 +398,16 @@ export default function WritingTests() {
             {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"IntColumn"</span>, <span className="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares int/Int32 values</span>
                 {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"SmallIntColumn"</span>, (<span className="hljs-keyword">short</span>)<span className="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares smallint/short/Int16 values</span>
                 {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"BigIntColumn"</span>, <span className="hljs-number">10L</span>)<span className="hljs-comment"> {'//'} Compares bigint/long/Int64 values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"DecimalColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares decimal values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"MoneyColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares money values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"SmallMoneyColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares smallmoney values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"NumericColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares numeric values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"FloatColumn"</span>, <span className="hljs-number">10d</span>)<span className="hljs-comment"> {'//'} Compares float/double values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"RealColumn"</span>, <span className="hljs-number">10f</span>)<span className="hljs-comment"> {'//'} Compares real/single values</span>
+                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"DecimalColumn"</span>, <span className="hljs-number">10M</span>)<span className="hljs-comment"> {'//'} Compares decimal values</span>
+                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"MoneyColumn"</span>, <span className="hljs-number">10M</span>)<span className="hljs-comment"> {'//'} Compares money values</span>
+                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"SmallMoneyColumn"</span>, <span className="hljs-number">10M</span>)<span className="hljs-comment"> {'//'} Compares smallmoney values</span>
+                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"NumericColumn"</span>, <span className="hljs-number">10M</span>)<span className="hljs-comment"> {'//'} Compares numeric values</span>
+                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"FloatColumn"</span>, <span className="hljs-number">10D</span>)<span className="hljs-comment"> {'//'} Compares float/double values</span>
+                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"RealColumn"</span>, <span className="hljs-number">10F</span>)<span className="hljs-comment"> {'//'} Compares real/single values</span>
                 {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"TinyIntColumn"</span>, (<span className="hljs-keyword">byte</span>)<span className="hljs-number">10</span>);<span className="hljs-comment"> {'//'} Compares tinyint/byte values</span>
             </code></pre>
 
+            <p>Alternatively, you can use the <code>Comparisons.MatchesNumber</code> comparison object (see above) to assert on the numeric value, regardless of type.</p>
         </>
     );
 }
