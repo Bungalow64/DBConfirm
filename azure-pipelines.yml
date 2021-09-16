@@ -9,16 +9,11 @@ pool:
 
 steps:
 - task: DockerCompose@0
-  displayName: Set up docker
+  displayName: Instantiate test databases
   inputs:
     containerregistrytype: Container Registry
     dockerComposeFile: docker-compose.yml
     dockerComposeCommand: 'up -d'
-- script: |
-    docker container logs bungalow64dbconfirm_sqlserver2017_1
-- script: |
-    docker container logs bungalow64dbconfirm_sqlserver2019_1
-
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
@@ -34,10 +29,6 @@ steps:
       **/*[Tt]ests/*.csproj
       !**/Sample*/**/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
-- script: |
-    docker container logs bungalow64dbconfirm_sqlserver2017_1
-- script: |
-    docker container logs bungalow64dbconfirm_sqlserver2019_1
 - task: DotNetCoreCLI@2
   displayName: Test (database)
   inputs:
@@ -45,7 +36,3 @@ steps:
     projects: |
       **/Sample*[Tt]ests/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
-- script: |
-    docker container logs bungalow64dbconfirm_sqlserver2017_1
-- script: |
-    docker container logs bungalow64dbconfirm_sqlserver2019_1
