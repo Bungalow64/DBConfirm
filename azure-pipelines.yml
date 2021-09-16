@@ -9,9 +9,7 @@ pool:
 
 steps:
 - script: |
-    docker compose build
-- script: |
-    docker compose up
+    docker run dockerfile2019
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
