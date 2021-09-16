@@ -14,25 +14,27 @@ steps:
     containerregistrytype: Container Registry
     dockerComposeFile: docker-compose.yml
     dockerComposeCommand: 'up -d'
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    projects: |
-      **/*.csproj
-      !templates/**/templates/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
-- task: DotNetCoreCLI@2
-  displayName: Test (code)
-  inputs:
-    command: test
-    projects: |
-      **/*[Tt]ests/*.csproj
-      !**/Sample*/**/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
-- task: DotNetCoreCLI@2
-  displayName: Test (database)
-  inputs:
-    command: test
-    projects: |
-      **/Sample*[Tt]ests/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
+- script: |
+    docker inspect --format='{{.LogPath}}'
+#- task: DotNetCoreCLI@2
+#  displayName: Build
+#  inputs:
+#    projects: |
+#      **/*.csproj
+#      !templates/**/templates/*.csproj
+#    arguments: '--configuration $(BuildConfiguration)'
+#- task: DotNetCoreCLI@2
+#  displayName: Test (code)
+#  inputs:
+#    command: test
+#    projects: |
+#      **/*[Tt]ests/*.csproj
+#      !**/Sample*/**/*.csproj
+#    arguments: '--configuration $(BuildConfiguration)'
+#- task: DotNetCoreCLI@2
+#  displayName: Test (database)
+#  inputs:
+#    command: test
+#    projects: |
+#      **/Sample*[Tt]ests/*.csproj
+#    arguments: '--configuration $(BuildConfiguration)'
