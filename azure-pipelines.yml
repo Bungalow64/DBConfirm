@@ -15,7 +15,7 @@ steps:
     dockerComposeFile: docker-compose.yml
     dockerComposeCommand: 'up -d'
 - script: |
-    docker inspect --format='{{.LogPath}}'
+    docker inspect --format='{{.LogPath}}' bungalow64dbconfirm_sqlserver2019_1
 #- task: DotNetCoreCLI@2
 #  displayName: Build
 #  inputs:
