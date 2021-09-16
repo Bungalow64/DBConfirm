@@ -8,6 +8,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- script: |
+    docker compose build
+- script: |
+    docker compose up
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
