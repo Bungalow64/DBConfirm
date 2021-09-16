@@ -22,10 +22,17 @@ steps:
       !templates/**/templates/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
 - task: DotNetCoreCLI@2
-  displayName: Test
+  displayName: Test (code)
   inputs:
     command: test
     projects: |
       **/*[Tt]ests/*.csproj
       !**/Sample*/**/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Test (database)
+  inputs:
+    command: test
+    projects: |
+      **/Sample*[Tt]ests/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
