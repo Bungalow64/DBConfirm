@@ -15,9 +15,9 @@ steps:
     dockerComposeFile: docker-compose.yml
     dockerComposeCommand: 'up -d'
 - script: |
-    docker container logs dbconfirm_sqlserver2017_1
+    docker container logs bungalow64dbconfirm_sqlserver2017_1
 - script: |
-    docker container logs dbconfirm_sqlserver2019_1
+    docker container logs bungalow64dbconfirm_sqlserver2019_1
 
 - task: DotNetCoreCLI@2
   displayName: Build
@@ -35,9 +35,9 @@ steps:
       !**/Sample*/**/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
 - script: |
-    docker container logs dbconfirm_sqlserver2017_1
+    docker container logs bungalow64dbconfirm_sqlserver2017_1
 - script: |
-    docker container logs dbconfirm_sqlserver2019_1
+    docker container logs bungalow64dbconfirm_sqlserver2019_1
 - task: DotNetCoreCLI@2
   displayName: Test (database)
   inputs:
@@ -46,6 +46,6 @@ steps:
       **/Sample*[Tt]ests/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
 - script: |
-    docker container logs dbconfirm_sqlserver2017_1
+    docker container logs bungalow64dbconfirm_sqlserver2017_1
 - script: |
-    docker container logs dbconfirm_sqlserver2019_1
+    docker container logs bungalow64dbconfirm_sqlserver2019_1
