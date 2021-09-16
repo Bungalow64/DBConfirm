@@ -8,8 +8,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: |
-    docker run dockerfile2019
+- task: DockerCompose@0
+  displayName: Set up docker
+  inputs:
+    containerregistrytype: Container Registry
+    dockerComposeFile: docker-compose.yml
+    dockerComposeCommand: 'up -d'
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
