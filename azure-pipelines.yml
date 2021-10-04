@@ -9,10 +9,10 @@ pool:
 
 steps:
 - bash: |
-    echo "##vso[task.setvariable variable=sauce]crushed tomatoes" # remember to use double quotes
+    echo "##vso[task.setvariable variable=defaultconnectionstring]SERVER=localhost,1403;DATABASE=SampleDB;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;" # remember to use double quotes
 
 # Use the variable
 # "$(sauce)" is replaced by the contents of the `sauce` variable by Azure Pipelines
 # before handing the body of the script to the shell.
 - bash: |
-    echo my pipeline variable is $(sauce)
+    echo my pipeline variable is $(defaultconnectionstring)
