@@ -30,27 +30,7 @@ steps:
       !**/Sample*/**/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
 - task: DotNetCoreCLI@2
-  displayName: Test (database - 2017)
-  inputs:
-    command: test
-    projects: |
-      **/Sample*[Tt]ests/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
-- script: "##vso[task.setvariable variable=defaultconnectionstring]SERVER=localhost,1402;DATABASE=SampleDB;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;"
-- script: "##vso[task.setvariable variable=sampledbconnection]SERVER=localhost,1402;DATABASE=SampleDB;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;"
-- script: "##vso[task.setvariable variable=northwindconnection]SERVER=localhost,1402;DATABASE=Northwind;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;"
-- task: DotNetCoreCLI@2
-  displayName: Test (database - 2019)
-  inputs:
-    command: test
-    projects: |
-      **/Sample*[Tt]ests/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
-- script: "##vso[task.setvariable variable=defaultconnectionstring]SERVER=localhost,1403;DATABASE=SampleDB;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;"
-- script: "##vso[task.setvariable variable=sampledbconnection]SERVER=localhost,1403;DATABASE=SampleDB;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;"
-- script: "##vso[task.setvariable variable=northwindconnection]SERVER=localhost,1403;DATABASE=Northwind;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;"
-- task: DotNetCoreCLI@2
-  displayName: Test (database - X)
+  displayName: Test (database)
   inputs:
     command: test
     projects: |
