@@ -8,6 +8,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo "$(DefaultConnectionString)"
-- script: "##vso[task.setvariable variable=DefaultConnectionString]ABCD"
-- script: echo "$(DefaultConnectionString)"
+- bash: |
+    echo "##vso[task.setvariable variable=sauce]crushed tomatoes" # remember to use double quotes
+
+# Use the variable
+# "$(sauce)" is replaced by the contents of the `sauce` variable by Azure Pipelines
+# before handing the body of the script to the shell.
+- bash: |
+    echo my pipeline variable is $(sauce)
