@@ -30,9 +30,16 @@ steps:
       !**/Sample*/**/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
 - task: DotNetCoreCLI@2
-  displayName: Test (database)
+  displayName: Test (database - SQL 2017)
   inputs:
     command: test
     projects: |
       **/Sample*[Tt]ests/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--configuration $(BuildConfiguration) -s tests/settings/SQL2017.runsettings'
+- task: DotNetCoreCLI@2
+  displayName: Test (database - SQL 2019)
+  inputs:
+    command: test
+    projects: |
+      **/Sample*[Tt]ests/*.csproj
+    arguments: '--configuration $(BuildConfiguration) -s tests/settings/SQL2019.runsettings'
