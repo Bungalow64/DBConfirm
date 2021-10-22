@@ -87,6 +87,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2019", "2019", "{E33A57C4-F
 		tests\SampleDatabases\2019\sampledb_schema_2019_setup.sql = tests\SampleDatabases\2019\sampledb_schema_2019_setup.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Settings", "0.Settings", "{3F5817BB-0FEC-4D18-8FB9-8270215DCD47}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Settings\local.runsettings = tests\Settings\local.runsettings
+		tests\Settings\SQL2017.runsettings = tests\Settings\SQL2017.runsettings
+		tests\Settings\SQL2019.runsettings = tests\Settings\SQL2019.runsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -200,6 +207,7 @@ Global
 		{F64F6C1B-0FDA-4644-A890-FA98617499F7} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
 		{C5FCFCFC-B805-46A7-8A9D-7EB20F397C86} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
 		{E33A57C4-F877-43A3-BB3C-7B31EBC49417} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
+		{3F5817BB-0FEC-4D18-8FB9-8270215DCD47} = {FC314E9D-E36F-460C-949E-9556D2D3451E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED27D3CD-4261-418B-BC4D-1F33D285E5C2}
