@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Packages.MySQL.NUnit</name>
+    </assembly>
+    <members>
+        <member name="T:DBConfirm.Packages.SQLServer.NUnit.NUnitBase">
+            <summary>
+            The abstract base class for test classes using NUnit and SQL Server
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Packages.SQLServer.NUnit.NUnitBase.TestRunnerFactory">
+            <summary>
+            Uses <see cref="T:DBConfirm.Databases.MySQL.Factories.MySQLTestRunnerFactory"/> to generate <see cref="T:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner"/> as the test runner
+            </summary>
+        </member>
+    </members>
+</doc>

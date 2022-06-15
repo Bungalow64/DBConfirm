@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DBConfirm.Databases.MySQL</name>
+    </assembly>
+    <members>
+        <member name="T:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException">
+            <summary>
+            The exception that is thrown when a table cannot be found
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException.TableName">
+            <summary>
+            The name of the missing table
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException"/> class
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException"/> class with the name of the missing table
+            </summary>
+            <param name="tableName">The name of the table missing a value</param>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException"/> class with a specified error message and the exception that is the cause of this exception
+            </summary>
+            <param name="message">The error message that explains the reason for this exception</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified</param>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException"/> class with serialized data
+            </summary>
+            <param name="info">The object that holds the serialized object data</param>
+            <param name="context">An object that describes the source or destination of the serialized data</param>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Exceptions.TableNotFoundException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DBConfirm.Databases.MySQL.Extensions.IDictionaryExtensions">
+            <summary>
+            Defines extensions to <see cref="T:System.Collections.Generic.IDictionary`2"/>
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Extensions.IDictionaryExtensions.ToSqlParameters(System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Converts an <see cref="T:System.Collections.Generic.IDictionary`2"/> to an IList of <see cref="T:MySql.Data.MySqlClient.MySqlParameter"/> objects.  The Key is used as the column name, and the Value the parameter value
+            </summary>
+            <param name="dictionary">The dictionary to convert.  A null or empty dictionary results in an empty array</param>
+            <param name="tableName">The name of the table being inserted into, for more specific error messages</param>
+            <returns>Returns an IList of <see cref="T:MySql.Data.MySqlClient.MySqlParameter"/> objects</returns>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Extensions.IDictionaryExtensions.ToSqlParameters(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Converts an <see cref="T:System.Collections.Generic.IDictionary`2"/> to an IList of <see cref="T:MySql.Data.MySqlClient.MySqlParameter"/> objects.  The Key is used as the column name, and the Value the parameter value
+            </summary>
+            <param name="dictionary">The dictionary to convert.  A null or empty dictionary results in an empty array</param>
+            <returns>Returns an IList of <see cref="T:MySql.Data.MySqlClient.MySqlParameter"/> objects</returns>
+        </member>
+        <member name="T:DBConfirm.Databases.MySQL.Extensions.SqlQueryParameterExtensions">
+            <summary>
+            Defines extensions to <see cref="T:DBConfirm.Core.Parameters.SqlQueryParameter"/>
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Extensions.SqlQueryParameterExtensions.ToSqlParameters(DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <summary>
+            Converts an array of <see cref="T:DBConfirm.Core.Parameters.SqlQueryParameter"/> to an array of <see cref="T:MySql.Data.MySqlClient.MySqlParameter"/> objects
+            </summary>
+            <param name="parameters">The array to convert.  A null or empty array results in an empty array</param>
+            <returns>Returns an array of <see cref="T:MySql.Data.MySqlClient.MySqlParameter"/> objects</returns>
+        </member>
+        <member name="T:DBConfirm.Databases.MySQL.Factories.MySQLTestRunnerFactory">
+            <summary>
+            The default <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> factory, using <see cref="T:DBConfirm.Databases.MySQL.Factories.MySQLTestRunnerFactory"/>
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Factories.MySQLTestRunnerFactory.BuildTestRunner(System.String)">
+            <summary>
+            Gets an instantiation of <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/>, using <see cref="T:DBConfirm.Databases.MySQL.Factories.MySQLTestRunnerFactory"/>
+            </summary>
+            <param name="connectionString">The connection string to use for SQL connections</param>
+            <returns>Returns the generated <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/></returns>
+        </member>
+        <member name="T:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner">
+            <summary>
+            The MySQL test runner, handling all SQL connections for a single database.  When communicating with a database multiple times within a single test, the same test runner instance must be used.
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.#ctor(System.String)">
+            <summary>
+            Constructor, setting the connection string of the target database
+            </summary>
+            <param name="connectionString">The connection string to use</param>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.InitialiseAsync(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureNonQueryAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureNonQueryAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureQueryAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureQueryAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteViewAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.CountRowsInViewAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureMultipleDataSetAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureMultipleDataSetAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureScalarAsync``1(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteStoredProcedureScalarAsync``1(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandNoResultsAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandNoResultsAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandScalarAsync``1(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandScalarAsync``1(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandMultipleDataSetAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteCommandMultipleDataSetAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.ExecuteTableAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.CountRowsInTableAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.InsertTemplateAsync``1">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.InsertTemplateAsync``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.InsertTemplateAsync(DBConfirm.Core.Templates.Abstract.ITemplate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.InsertDefaultAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.InsertDataAsync(System.String,DBConfirm.Core.Data.DataSetRow)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.InsertDataAsync(System.String,DBConfirm.Core.Data.DataSetRow,DBConfirm.Core.Data.DataSetRow)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.GenerateNextIdentity">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.Dispose(System.Boolean)">
+            <summary>
+            Rolls back the active transaction, and closes the connection to the target database
+            </summary>
+            <param name="disposing">Indicates whether the object is being disposed from the <see cref="M:System.IDisposable.Dispose"/> method</param>
+        </member>
+        <member name="M:DBConfirm.Databases.MySQL.Runners.MySQLTestRunner.Dispose">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

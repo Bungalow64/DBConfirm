@@ -1,12 +1,12 @@
 using DBConfirm.Core.Data;
 using DBConfirm.Core.Templates;
 
-namespace Sample.Core.MSTest.Tests.Templates.Complex
+namespace Sample.Core.MySQL.MSTest.Tests.Templates
 {
-    public class CountriesTemplate: BaseSimpleTemplate<CountriesTemplate>
+    public class CountriesTemplate : BaseSimpleTemplate<CountriesTemplate>
     {
-        public override string TableName => "[dbo].[Countries]";
-        
+        public override string TableName => "`Countries`";
+
         public override DataSetRow DefaultData => new DataSetRow
         {
             ["CountryCode"] = "SampleCountryCode",

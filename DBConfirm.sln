@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30523.141
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Logic", "1.Logic", "{0613F625-9DBA-4F24-8869-5A41F4B57973}"
 EndProject
@@ -63,36 +63,61 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.SQLServer.NUnit",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Databases", "1.Databases", "{4BD42497-978E-48C1-8664-75A7F30C91BE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2014", "2014", "{7EC69DD4-A5C5-4AEA-A0F7-799205004AE8}"
-	ProjectSection(SolutionItems) = preProject
-		tests\SampleDatabases\2014\northwind_schema_2014_setup.sql = tests\SampleDatabases\2014\northwind_schema_2014_setup.sql
-		tests\SampleDatabases\2014\sampledb_schema_2014_setup.sql = tests\SampleDatabases\2014\sampledb_schema_2014_setup.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2016", "2016", "{F64F6C1B-0FDA-4644-A890-FA98617499F7}"
-	ProjectSection(SolutionItems) = preProject
-		tests\SampleDatabases\2016\northwind_schema_2016_setup.sql = tests\SampleDatabases\2016\northwind_schema_2016_setup.sql
-		tests\SampleDatabases\2016\sampledb_schema_2016_setup.sql = tests\SampleDatabases\2016\sampledb_schema_2016_setup.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2017", "2017", "{C5FCFCFC-B805-46A7-8A9D-7EB20F397C86}"
-	ProjectSection(SolutionItems) = preProject
-		tests\SampleDatabases\2017\northwind_schema_2017_setup.sql = tests\SampleDatabases\2017\northwind_schema_2017_setup.sql
-		tests\SampleDatabases\2017\sampledb_schema_2017_setup.sql = tests\SampleDatabases\2017\sampledb_schema_2017_setup.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2019", "2019", "{E33A57C4-F877-43A3-BB3C-7B31EBC49417}"
-	ProjectSection(SolutionItems) = preProject
-		tests\SampleDatabases\2019\northwind_schema_2019_setup.sql = tests\SampleDatabases\2019\northwind_schema_2019_setup.sql
-		tests\SampleDatabases\2019\sampledb_schema_2019_setup.sql = tests\SampleDatabases\2019\sampledb_schema_2019_setup.sql
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Settings", "0.Settings", "{3F5817BB-0FEC-4D18-8FB9-8270215DCD47}"
 	ProjectSection(SolutionItems) = preProject
 		tests\Settings\local.runsettings = tests\Settings\local.runsettings
+		tests\Settings\MySQL8.0.0.runsettings = tests\Settings\MySQL8.0.0.runsettings
 		tests\Settings\SQL2017.runsettings = tests\Settings\SQL2017.runsettings
 		tests\Settings\SQL2019.runsettings = tests\Settings\SQL2019.runsettings
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Databases.MySQL", "src\Databases.MySQL\Databases.MySQL.csproj", "{F518EA6B-0F13-4AD0-A4AE-0865DD58128C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{A2E279D3-B196-4D4F-8EBD-1A3F0FD9DB24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2014", "2014", "{8C22A3E5-9CA7-45F3-99F8-80E3A0F0D0B5}"
+	ProjectSection(SolutionItems) = preProject
+		tests\SampleDatabases\SQLServer\2014\northwind_schema_2014_setup.sql = tests\SampleDatabases\SQLServer\2014\northwind_schema_2014_setup.sql
+		tests\SampleDatabases\SQLServer\2014\sampledb_schema_2014_setup.sql = tests\SampleDatabases\SQLServer\2014\sampledb_schema_2014_setup.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2016", "2016", "{86218D80-4A39-47E7-8E3E-7B31B7D8F67E}"
+	ProjectSection(SolutionItems) = preProject
+		tests\SampleDatabases\SQLServer\2016\northwind_schema_2016_setup.sql = tests\SampleDatabases\SQLServer\2016\northwind_schema_2016_setup.sql
+		tests\SampleDatabases\SQLServer\2016\sampledb_schema_2016_setup.sql = tests\SampleDatabases\SQLServer\2016\sampledb_schema_2016_setup.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2017", "2017", "{4FA38614-73F8-4FB7-A08F-4291991CE522}"
+	ProjectSection(SolutionItems) = preProject
+		tests\SampleDatabases\SQLServer\2017\northwind_schema_2017_setup.sql = tests\SampleDatabases\SQLServer\2017\northwind_schema_2017_setup.sql
+		tests\SampleDatabases\SQLServer\2017\sampledb_schema_2017_setup.sql = tests\SampleDatabases\SQLServer\2017\sampledb_schema_2017_setup.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2019", "2019", "{F58E78AF-DC4F-4F8E-9CC4-60FE156FE0B4}"
+	ProjectSection(SolutionItems) = preProject
+		tests\SampleDatabases\SQLServer\2019\northwind_schema_2019_setup.sql = tests\SampleDatabases\SQLServer\2019\northwind_schema_2019_setup.sql
+		tests\SampleDatabases\SQLServer\2019\sampledb_schema_2019_setup.sql = tests\SampleDatabases\SQLServer\2019\sampledb_schema_2019_setup.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{BE8BE4C3-766B-48C5-AE78-444F32FE8885}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.0.0", "8.0.0", "{A0598135-C6A8-4F4B-B698-C806A995CE06}"
+	ProjectSection(SolutionItems) = preProject
+		tests\SampleDatabases\MySQL\8.0.0\sakila-schema.sql = tests\SampleDatabases\MySQL\8.0.0\sakila-schema.sql
+		tests\SampleDatabases\MySQL\8.0.0\sample_schema.sql = tests\SampleDatabases\MySQL\8.0.0\sample_schema.sql
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Databases.MySQL.Tests", "tests\Databases.MySQL.Tests\Databases.MySQL.Tests.csproj", "{A6E21A6D-5BEE-429B-8FB6-70291683A97D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.MySQL.MSTest", "src\Packages.MySQL.MSTest\Packages.MySQL.MSTest.csproj", "{AEAF2803-6259-4471-84D1-5DD0778E836C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.MySQL.NUnit", "src\Packages.MySQL.NUnit\Packages.MySQL.NUnit.csproj", "{285865F2-C6B9-414F-B24A-A257AF4D18F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templates.MySQL.MSTest", "src\Templates.MySQL.MSTest\Templates.MySQL.MSTest.csproj", "{1FF266A3-3EC4-4D6E-8229-E153D17BB797}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templates.MySQL.NUnit", "src\Templates.MySQL.NUnit\Templates.MySQL.NUnit.csproj", "{BF0472BE-C296-4475-BFAF-772167E0A04B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Core.MySQL.MSTest.Tests", "tests\Sample.Core.MySQL.MSTest.Tests\Sample.Core.MySQL.MSTest.Tests.csproj", "{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -176,6 +201,34 @@ Global
 		{46E6E065-8BAC-4598-9932-1B5D9573B31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46E6E065-8BAC-4598-9932-1B5D9573B31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46E6E065-8BAC-4598-9932-1B5D9573B31A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F518EA6B-0F13-4AD0-A4AE-0865DD58128C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F518EA6B-0F13-4AD0-A4AE-0865DD58128C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F518EA6B-0F13-4AD0-A4AE-0865DD58128C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F518EA6B-0F13-4AD0-A4AE-0865DD58128C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E21A6D-5BEE-429B-8FB6-70291683A97D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E21A6D-5BEE-429B-8FB6-70291683A97D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E21A6D-5BEE-429B-8FB6-70291683A97D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E21A6D-5BEE-429B-8FB6-70291683A97D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEAF2803-6259-4471-84D1-5DD0778E836C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEAF2803-6259-4471-84D1-5DD0778E836C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEAF2803-6259-4471-84D1-5DD0778E836C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEAF2803-6259-4471-84D1-5DD0778E836C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{285865F2-C6B9-414F-B24A-A257AF4D18F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{285865F2-C6B9-414F-B24A-A257AF4D18F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{285865F2-C6B9-414F-B24A-A257AF4D18F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{285865F2-C6B9-414F-B24A-A257AF4D18F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FF266A3-3EC4-4D6E-8229-E153D17BB797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF266A3-3EC4-4D6E-8229-E153D17BB797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF266A3-3EC4-4D6E-8229-E153D17BB797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FF266A3-3EC4-4D6E-8229-E153D17BB797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF0472BE-C296-4475-BFAF-772167E0A04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF0472BE-C296-4475-BFAF-772167E0A04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF0472BE-C296-4475-BFAF-772167E0A04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF0472BE-C296-4475-BFAF-772167E0A04B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -203,11 +256,21 @@ Global
 		{BD1843C0-D230-4A84-AA7C-7C4B71D2BEB6} = {3992A9CE-DE7E-4F8D-9B9C-2A078095C722}
 		{46E6E065-8BAC-4598-9932-1B5D9573B31A} = {3992A9CE-DE7E-4F8D-9B9C-2A078095C722}
 		{4BD42497-978E-48C1-8664-75A7F30C91BE} = {FC314E9D-E36F-460C-949E-9556D2D3451E}
-		{7EC69DD4-A5C5-4AEA-A0F7-799205004AE8} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
-		{F64F6C1B-0FDA-4644-A890-FA98617499F7} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
-		{C5FCFCFC-B805-46A7-8A9D-7EB20F397C86} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
-		{E33A57C4-F877-43A3-BB3C-7B31EBC49417} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
 		{3F5817BB-0FEC-4D18-8FB9-8270215DCD47} = {FC314E9D-E36F-460C-949E-9556D2D3451E}
+		{F518EA6B-0F13-4AD0-A4AE-0865DD58128C} = {414B269E-6A51-4800-B92B-0271C8139441}
+		{A2E279D3-B196-4D4F-8EBD-1A3F0FD9DB24} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
+		{8C22A3E5-9CA7-45F3-99F8-80E3A0F0D0B5} = {A2E279D3-B196-4D4F-8EBD-1A3F0FD9DB24}
+		{86218D80-4A39-47E7-8E3E-7B31B7D8F67E} = {A2E279D3-B196-4D4F-8EBD-1A3F0FD9DB24}
+		{4FA38614-73F8-4FB7-A08F-4291991CE522} = {A2E279D3-B196-4D4F-8EBD-1A3F0FD9DB24}
+		{F58E78AF-DC4F-4F8E-9CC4-60FE156FE0B4} = {A2E279D3-B196-4D4F-8EBD-1A3F0FD9DB24}
+		{BE8BE4C3-766B-48C5-AE78-444F32FE8885} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
+		{A0598135-C6A8-4F4B-B698-C806A995CE06} = {BE8BE4C3-766B-48C5-AE78-444F32FE8885}
+		{A6E21A6D-5BEE-429B-8FB6-70291683A97D} = {2C61BE28-D178-4B16-AEC4-E144803A871E}
+		{AEAF2803-6259-4471-84D1-5DD0778E836C} = {2638F6A0-CC65-46E8-8FD6-0E50ECF6242C}
+		{285865F2-C6B9-414F-B24A-A257AF4D18F4} = {2638F6A0-CC65-46E8-8FD6-0E50ECF6242C}
+		{1FF266A3-3EC4-4D6E-8229-E153D17BB797} = {3992A9CE-DE7E-4F8D-9B9C-2A078095C722}
+		{BF0472BE-C296-4475-BFAF-772167E0A04B} = {3992A9CE-DE7E-4F8D-9B9C-2A078095C722}
+		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED27D3CD-4261-418B-BC4D-1F33D285E5C2}
