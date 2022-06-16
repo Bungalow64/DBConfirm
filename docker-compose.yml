@@ -1,21 +1,21 @@
 version: '3.7'
 services:
-    sqlserver2017:
-        build: 
-          context: .
-          dockerfile: dockerfile2017
-        ports:  
-          - "1401:1433"
-        env_file:
-          - docker/sqlserver/sqlserver.env
-    sqlserver2019:
-        build: 
-          context: .
-          dockerfile: dockerfile2019
-        ports:  
-          - "1402:1433"
-        env_file:
-          - docker/sqlserver/sqlserver.env
+#    sqlserver2017:
+#        build: 
+#          context: .
+#          dockerfile: dockerfile2017
+#        ports:  
+#          - "1401:1433"
+#        env_file:
+#          - docker/sqlserver/sqlserver.env
+#    sqlserver2019:
+#        build: 
+#          context: .
+#          dockerfile: dockerfile2019
+#        ports:  
+#          - "1402:1433"
+#        env_file:
+#          - docker/sqlserver/sqlserver.env
     mysql8:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
@@ -27,10 +27,10 @@ services:
           - "./tests/SampleDatabases/MySQL/8.0.0/sakila_schema.sql:/docker-entrypoint-initdb.d/1.sql"
           - "./tests/SampleDatabases/MySQL/8.0.0/sample_schema.sql:/docker-entrypoint-initdb.d/2.sql"
         restart: always
-    admin:
-        image: phpmyadmin
-        ports:
-          - "8080:80"
-        links:
-          - mysql8:db
-        restart: always
+#    admin:
+#        image: phpmyadmin
+#        ports:
+#          - "8080:80"
+#        links:
+#          - mysql8:db
+#        restart: always
