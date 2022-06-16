@@ -132,6 +132,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A059A0C2
 		azure-pipelines.yml = azure-pipelines.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{C0FF2CC0-90F8-49E6-9333-6B8BD8462838}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		dockerfile2017 = dockerfile2017
+		dockerfile2019 = dockerfile2019
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mysql", "mysql", "{7BE99159-5B93-422D-9ADB-D2AB9F71C630}"
+	ProjectSection(SolutionItems) = preProject
+		docker\mysql\mysql.env = docker\mysql\mysql.env
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sqlserver", "sqlserver", "{ECF7D2A8-1516-4124-9315-91A2321D3DDC}"
+	ProjectSection(SolutionItems) = preProject
+		docker\sqlserver\entrypoint.sh = docker\sqlserver\entrypoint.sh
+		docker\sqlserver\import-data.sh = docker\sqlserver\import-data.sh
+		docker\sqlserver\sqlserver.env = docker\sqlserver\sqlserver.env
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -292,6 +311,9 @@ Global
 		{9BD8001E-F011-43E3-A00C-63510812D035} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
 		{69F3979A-516B-40B5-9C5D-8474464402BE} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
 		{A059A0C2-EB7C-4449-B7BC-FBB059355DF4} = {576B78E0-DF0A-414E-9810-E058DC9B2F85}
+		{C0FF2CC0-90F8-49E6-9333-6B8BD8462838} = {A059A0C2-EB7C-4449-B7BC-FBB059355DF4}
+		{7BE99159-5B93-422D-9ADB-D2AB9F71C630} = {C0FF2CC0-90F8-49E6-9333-6B8BD8462838}
+		{ECF7D2A8-1516-4124-9315-91A2321D3DDC} = {C0FF2CC0-90F8-49E6-9333-6B8BD8462838}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED27D3CD-4261-418B-BC4D-1F33D285E5C2}
