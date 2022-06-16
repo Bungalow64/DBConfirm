@@ -43,10 +43,10 @@ steps:
     projects: |
       **/tests/Sample*SQLServer*/*.csproj
     arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2019.runsettings'
-#- task: DotNetCoreCLI@2
-#  displayName: Test (database - MySQL 8.0.0)
-#  inputs:
-#    command: test
-#    projects: |
-#      **/tests/Sample*MySQL*/*.csproj
-#    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/MySQL8.0.0.runsettings'
+- task: DotNetCoreCLI@2
+  displayName: Test (database - MySQL 8.0.0)
+  inputs:
+    command: test
+    projects: |
+      **/tests/Sample*MySQL*/*.csproj
+    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/MySQL8.0.0.runsettings'
