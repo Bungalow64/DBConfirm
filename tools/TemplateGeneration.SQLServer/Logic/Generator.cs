@@ -4,11 +4,11 @@ using System.Data;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
-using DBConfirm.TemplateGeneration.Models;
-using DBConfirm.TemplateGeneration.Logic.Abstract;
+using DBConfirm.TemplateGeneration.SQLServer.Models;
+using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
 using System.IO;
 
-namespace DBConfirm.TemplateGeneration.Logic
+namespace DBConfirm.TemplateGeneration.SQLServer.Logic
 {
     public class Generator
     {
@@ -16,7 +16,7 @@ namespace DBConfirm.TemplateGeneration.Logic
         private readonly IFileHelper _fileHelper;
         private readonly IDatabaseHelper _databaseHelper;
         private readonly IConsoleLog _consoleLog;
-        private const string _getColumnsScript = "DBConfirm.TemplateGeneration.Scripts.GetColumns.sql";
+        private const string _getColumnsScript = "DBConfirm.TemplateGeneration.SQLServer.Scripts.GetColumns.sql";
 
         public Generator(
             Options options,

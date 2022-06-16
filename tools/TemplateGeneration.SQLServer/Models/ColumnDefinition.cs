@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace DBConfirm.TemplateGeneration.Models
+namespace DBConfirm.TemplateGeneration.SQLServer.Models
 {
     public class ColumnDefinition
     {

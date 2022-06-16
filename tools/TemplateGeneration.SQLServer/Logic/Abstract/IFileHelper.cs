@@ -1,4 +1,4 @@
-﻿namespace DBConfirm.TemplateGeneration.Logic.Abstract
+﻿namespace DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract
 {
     public interface IFileHelper
     {

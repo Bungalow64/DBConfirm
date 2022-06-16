@@ -1,6 +1,6 @@
-﻿using DBConfirm.TemplateGeneration.Logic.Abstract;
+﻿using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
 
-namespace DBConfirm.TemplateGeneration.Logic
+namespace DBConfirm.TemplateGeneration.SQLServer.Logic
 {
     public class ConsoleLog : IConsoleLog
     {

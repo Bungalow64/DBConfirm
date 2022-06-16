@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
 
-namespace DBConfirm.TemplateGeneration.Logic.Abstract
+namespace DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract
 {
     public interface IDatabaseHelper
     {

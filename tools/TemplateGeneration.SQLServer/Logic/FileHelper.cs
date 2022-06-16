@@ -1,7 +1,7 @@
-﻿using DBConfirm.TemplateGeneration.Logic.Abstract;
+﻿using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
 using System.IO;
 
-namespace DBConfirm.TemplateGeneration.Logic
+namespace DBConfirm.TemplateGeneration.SQLServer.Logic
 {
     public class FileHelper : IFileHelper
     {

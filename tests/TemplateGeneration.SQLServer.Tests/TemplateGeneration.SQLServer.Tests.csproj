@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\tools\TemplateGeneration.SQLServer\TemplateGeneration.csproj" />
+    <ProjectReference Include="..\..\tools\TemplateGeneration.SQLServer\TemplateGeneration.SQLServer.csproj" />
   </ItemGroup>
 
 </Project>

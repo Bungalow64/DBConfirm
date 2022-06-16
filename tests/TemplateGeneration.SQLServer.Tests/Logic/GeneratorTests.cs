@@ -1,6 +1,6 @@
-using DBConfirm.TemplateGeneration;
-using DBConfirm.TemplateGeneration.Logic;
-using DBConfirm.TemplateGeneration.Logic.Abstract;
+using DBConfirm.TemplateGeneration.SQLServer;
+using DBConfirm.TemplateGeneration.SQLServer.Logic;
+using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
 using Moq;
 using NUnit.Framework;
 using System.Data;
@@ -367,7 +367,7 @@ namespace TemplateGeneration.Tests.Logic
 
         private async Task<string> ReadResource(string filename)
         {
-            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TemplateGeneration.Tests.Logic.ExpectedClasses.{filename}.txt");
+            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TemplateGeneration.SQLServer.Tests.Logic.ExpectedClasses.{filename}.txt");
             using StreamReader reader = new StreamReader(stream);
 
             return await reader.ReadToEndAsync();

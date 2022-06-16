@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace DBConfirm.TemplateGeneration
+namespace DBConfirm.TemplateGeneration.SQLServer
 {
     public class Options
     {

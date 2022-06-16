@@ -41,13 +41,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Packages.SQLServer.NUnit", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Tools", "0.Tools", "{068FCD6B-9DA6-4AEB-93E8-B019867278EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration", "tools\TemplateGeneration.SQLServer\TemplateGeneration.csproj", "{5FC9A8DE-85E4-455F-9DB3-97BC00937A2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration.SQLServer", "tools\TemplateGeneration.SQLServer\TemplateGeneration.SQLServer.csproj", "{5FC9A8DE-85E4-455F-9DB3-97BC00937A2E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Nuget.Northwind.SQLServer.MSTest.Tests", "tests\Sample.Nuget.Northwind.SQLServer.MSTest.Tests\Sample.Nuget.Northwind.SQLServer.MSTest.Tests.csproj", "{C0982F5D-57A2-49DD-B19D-0BE690BF80B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Nuget.Northwind.SQLServer.NUnit.Tests", "tests\Sample.Nuget.Northwind.SQLServer.NUnit.Tests\Sample.Nuget.Northwind.SQLServer.NUnit.Tests.csproj", "{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration.Tests", "tests\TemplateGeneration.Tests\TemplateGeneration.Tests.csproj", "{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration.SQLServer.Tests", "tests\TemplateGeneration.SQLServer.Tests\TemplateGeneration.SQLServer.Tests.csproj", "{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Northwind.SQLServer.MSTest.Tests", "tests\Sample.Northwind.SQLServer.MSTest.Tests\Sample.Northwind.SQLServer.MSTest.Tests.csproj", "{941521B6-2EC9-4BFE-9A17-3323DC42CA02}"
 EndProject
@@ -113,9 +113,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Packages.MySQL.MSTest", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Packages.MySQL.NUnit", "src\Packages.MySQL.NUnit\Packages.MySQL.NUnit.csproj", "{285865F2-C6B9-414F-B24A-A257AF4D18F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.MySQL.MSTest", "src\Templates.MySQL.MSTest\Templates.MySQL.MSTest.csproj", "{1FF266A3-3EC4-4D6E-8229-E153D17BB797}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.MySQL.MSTest", "templates\Templates.MySQL.MSTest\Templates.MySQL.MSTest.csproj", "{1FF266A3-3EC4-4D6E-8229-E153D17BB797}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.MySQL.NUnit", "src\Templates.MySQL.NUnit\Templates.MySQL.NUnit.csproj", "{BF0472BE-C296-4475-BFAF-772167E0A04B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.MySQL.NUnit", "templates\Templates.MySQL.NUnit\Templates.MySQL.NUnit.csproj", "{BF0472BE-C296-4475-BFAF-772167E0A04B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MySQL.MSTest.Tests", "tests\Sample.Core.MySQL.MSTest.Tests\Sample.Core.MySQL.MSTest.Tests.csproj", "{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}"
 EndProject
