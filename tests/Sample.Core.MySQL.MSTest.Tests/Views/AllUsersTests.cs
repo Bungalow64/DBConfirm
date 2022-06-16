@@ -128,6 +128,31 @@ namespace Sample.Core.MySQL.MSTest.Tests.Views
         }
 
         [TestMethod]
+        public async Task AllUsers_UseFluentReversed()
+        {
+            UserTemplate user = new UserTemplate()
+                .WithId(1002)
+                .WithFirstName("Jamie");
+
+            UserWithAddressTemplate userWithAddress = new UserWithAddressTemplate
+            {
+                User = user
+            };
+            await TestRunner.InsertTemplateAsync(user);
+            await TestRunner.InsertTemplateAsync(userWithAddress);
+
+            QueryResult results = await TestRunner.ExecuteViewAsync("AllUsers");
+
+            results
+                .AssertRowCount(1)
+                .AssertRowValues(0, new DataSetRow
+                {
+                    { "Id", 1002 },
+                    { "FirstName", "Jamie" }
+                });
+        }
+
+        [TestMethod]
         public async Task AllUsers_DefaultComplex()
         {
             UserWithAddressTemplate template = await TestRunner.InsertTemplateAsync<UserWithAddressTemplate>();

@@ -407,7 +407,7 @@ namespace DBConfirm.Databases.MySQL.Runners
 
             bool hasIdentity = !string.IsNullOrWhiteSpace(identityColumn);
 
-            bool isInsertingIdentity = hasIdentity && data.Any(p => DelimitName(p.Key).Equals(identityColumn, StringComparison.OrdinalIgnoreCase));
+            bool isInsertingIdentity = hasIdentity && data.Any(p => DelimitName(p.Key).Trim('`').Equals(identityColumn, StringComparison.OrdinalIgnoreCase));
 
             string command = $@"
                 INSERT INTO
@@ -428,7 +428,7 @@ namespace DBConfirm.Databases.MySQL.Runners
 
                 ulong newId = (await ExecuteCommandScalarAsync<ulong>(command, parameters)).RawData;
 
-                if (!hasIdentity || newId == 0)
+                if (!hasIdentity || isInsertingIdentity || newId == 0)
                 {
                     return data;
                 }

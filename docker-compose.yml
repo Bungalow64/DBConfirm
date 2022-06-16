@@ -7,7 +7,7 @@ services:
         ports:  
           - "1401:1433"
         env_file:
-          - docker/sqlserver.env
+          - docker/sqlserver/sqlserver.env
     sqlserver2019:
         build: 
           context: .
@@ -15,4 +15,22 @@ services:
         ports:  
           - "1402:1433"
         env_file:
-          - docker/sqlserver.env
+          - docker/sqlserver/sqlserver.env
+    mysql8:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        env_file:
+          - docker/mysql/mysql.env
+        ports:
+          - 127.0.0.1:1507:3306
+        volumes:
+          - "./tests/SampleDatabases/MySQL/8.0.0/sakila_schema.sql:/docker-entrypoint-initdb.d/1.sql"
+          - "./tests/SampleDatabases/MySQL/8.0.0/sample_schema.sql:/docker-entrypoint-initdb.d/2.sql"
+        restart: always
+    admin:
+        image: phpmyadmin
+        ports:
+          - "8080:80"
+        links:
+          - mysql8:db
+        restart: always

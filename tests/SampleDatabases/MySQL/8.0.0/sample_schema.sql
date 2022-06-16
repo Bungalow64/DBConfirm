@@ -14,7 +14,7 @@ CREATE TABLE Users(
 	`EmailAddress` varchar(50) NOT NULL,
 	`CreatedDate` datetime(3) NOT NULL,
 	`StartDate` datetime(3) NOT NULL,
-	`IsActive` Tinyint NOT NULL DEFAULT 1,
+	`IsActive` tinyint(1) NOT NULL DEFAULT 1,
 	`NumberOfHats` bigint NOT NULL,
 	`HatType` varchar(50) NULL,
 	`Cost` decimal(18, 2) NOT NULL,
@@ -105,7 +105,9 @@ BEGIN
 	LEFT JOIN
 		UserAddresses ON Users.Id = UserAddresses.UserId
 	WHERE
-		EmailAddress = p_EmailAddress;
+		EmailAddress = p_EmailAddress
+	ORDER BY
+		Users.Id ASC;
 
 	SELECT
 		COUNT(*) AS TotalUsers

@@ -242,6 +242,8 @@ BEGIN
 		dbo.UserAddresses ON Users.Id = UserAddresses.UserId
 	WHERE
 		EmailAddress = @EmailAddress
+	ORDER BY
+		Users.Id ASC
 
 	SELECT
 		COUNT(*) AS TotalUsers

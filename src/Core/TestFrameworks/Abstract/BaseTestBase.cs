@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DBConfirm.Core.Attributes;
+using DBConfirm.Core.Comparisons;
 using DBConfirm.Core.Factories.Abstract;
 using DBConfirm.Core.Runners.Abstract;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Threading.Tasks;
-using DBConfirm.Core.Comparisons;
-using DBConfirm.Core.Attributes;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace DBConfirm.Core.TestFrameworks.Abstract
 {

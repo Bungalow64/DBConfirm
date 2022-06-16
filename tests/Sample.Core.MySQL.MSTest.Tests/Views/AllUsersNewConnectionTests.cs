@@ -12,7 +12,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.Views
         [TestMethod]
         public async Task AllUsersNewConnection_NoData_NothingReturned()
         {
-            using (ITestRunner testRunner = await NewConnectionByConnectionStringAsync("SERVER=localhost;DATABASE=SampleDB;User Id=root;Password=123qwe;Connection Timeout=30;"))
+            using (ITestRunner testRunner = await NewConnectionByConnectionStringAsync("SERVER=localhost;PORT=1507;DATABASE=SampleDB;User Id=root;Password=123qwe123qwe!;Connection Timeout=30;"))
             {
                 QueryResult results = await testRunner.ExecuteViewAsync("AllUsers");
 

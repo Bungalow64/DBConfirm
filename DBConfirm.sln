@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Tests", "5.Tests", "{2C61
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.SampleSolutions", "6.SampleSolutions", "{FC314E9D-E36F-460C-949E-9556D2D3451E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Tests", "tests\Sample.Core.MSTest.Tests\Sample.Core.MSTest.Tests.csproj", "{219A1871-A079-4AE9-BE52-00088B9C5D7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.SQLServer.MSTest.Tests", "tests\Sample.Core.SQLServer.MSTest.Tests\Sample.Core.SQLServer.MSTest.Tests.csproj", "{219A1871-A079-4AE9-BE52-00088B9C5D7A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.MSTest", "src\Frameworks.MSTest\Frameworks.MSTest.csproj", "{FB4326A8-C542-416B-9CCF-72026E00868A}"
 EndProject
@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.MSTest.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks.NUnit", "src\Frameworks.NUnit\Frameworks.NUnit.csproj", "{B7B91F0A-B06A-48B5-96BF-8E55312B9CCE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.NUnit.Tests", "tests\Sample.Core.NUnit.Tests\Sample.Core.NUnit.Tests.csproj", "{720FB59B-288C-4809-BAC7-E839D87190FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.SQLServer.NUnit.Tests", "tests\Sample.Core.SQLServer.NUnit.Tests\Sample.Core.SQLServer.NUnit.Tests.csproj", "{720FB59B-288C-4809-BAC7-E839D87190FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Frameworks", "2.Frameworks", "{CDC9E680-83AA-4670-AF5D-FD3504EEADB0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Nuget.Tests", "tests\Sample.Core.MSTest.Nuget.Tests\Sample.Core.MSTest.Nuget.Tests.csproj", "{F21804F3-CC3A-4F18-9EBE-D947D40193D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Nuget.Core.SQLServer.MSTest.Tests", "tests\Sample.Nuget.Core.SQLServer.MSTest.Tests\Sample.Nuget.Core.SQLServer.MSTest.Tests.csproj", "{F21804F3-CC3A-4F18-9EBE-D947D40193D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Databases", "2.Databases", "{414B269E-6A51-4800-B92B-0271C8139441}"
 EndProject
@@ -43,13 +43,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Tools", "0.Tools", "{068F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration", "tools\TemplateGeneration.SQLServer\TemplateGeneration.csproj", "{5FC9A8DE-85E4-455F-9DB3-97BC00937A2E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.MSTest.Northwind.Tests", "tests\Sample.MSTest.Northwind.Tests\Sample.MSTest.Northwind.Tests.csproj", "{C0982F5D-57A2-49DD-B19D-0BE690BF80B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Nuget.Northwind.SQLServer.MSTest.Tests", "tests\Sample.Nuget.Northwind.SQLServer.MSTest.Tests\Sample.Nuget.Northwind.SQLServer.MSTest.Tests.csproj", "{C0982F5D-57A2-49DD-B19D-0BE690BF80B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.NUnit.Northwind.Tests", "tests\Sample.NUnit.Northwind.Tests\Sample.NUnit.Northwind.Tests.csproj", "{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Nuget.Northwind.SQLServer.NUnit.Tests", "tests\Sample.Nuget.Northwind.SQLServer.NUnit.Tests\Sample.Nuget.Northwind.SQLServer.NUnit.Tests.csproj", "{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration.Tests", "tests\TemplateGeneration.Tests\TemplateGeneration.Tests.csproj", "{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Northwind.MSTest.Tests", "tests\Sample.Northwind.MSTest.Tests\Sample.Northwind.MSTest.Tests.csproj", "{941521B6-2EC9-4BFE-9A17-3323DC42CA02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Northwind.SQLServer.MSTest.Tests", "tests\Sample.Northwind.SQLServer.MSTest.Tests\Sample.Northwind.SQLServer.MSTest.Tests.csproj", "{941521B6-2EC9-4BFE-9A17-3323DC42CA02}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.ProjectTests", "2.ProjectTests", "{6E32C571-92E7-46D1-B37B-88D1DC8362A3}"
 EndProject
@@ -103,21 +103,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{BE8BE4C3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.0.0", "8.0.0", "{A0598135-C6A8-4F4B-B698-C806A995CE06}"
 	ProjectSection(SolutionItems) = preProject
-		tests\SampleDatabases\MySQL\8.0.0\sakila-schema.sql = tests\SampleDatabases\MySQL\8.0.0\sakila-schema.sql
+		tests\SampleDatabases\MySQL\8.0.0\sakila_schema.sql = tests\SampleDatabases\MySQL\8.0.0\sakila_schema.sql
 		tests\SampleDatabases\MySQL\8.0.0\sample_schema.sql = tests\SampleDatabases\MySQL\8.0.0\sample_schema.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Databases.MySQL.Tests", "tests\Databases.MySQL.Tests\Databases.MySQL.Tests.csproj", "{A6E21A6D-5BEE-429B-8FB6-70291683A97D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Databases.MySQL.Tests", "tests\Databases.MySQL.Tests\Databases.MySQL.Tests.csproj", "{A6E21A6D-5BEE-429B-8FB6-70291683A97D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.MySQL.MSTest", "src\Packages.MySQL.MSTest\Packages.MySQL.MSTest.csproj", "{AEAF2803-6259-4471-84D1-5DD0778E836C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Packages.MySQL.MSTest", "src\Packages.MySQL.MSTest\Packages.MySQL.MSTest.csproj", "{AEAF2803-6259-4471-84D1-5DD0778E836C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages.MySQL.NUnit", "src\Packages.MySQL.NUnit\Packages.MySQL.NUnit.csproj", "{285865F2-C6B9-414F-B24A-A257AF4D18F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Packages.MySQL.NUnit", "src\Packages.MySQL.NUnit\Packages.MySQL.NUnit.csproj", "{285865F2-C6B9-414F-B24A-A257AF4D18F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templates.MySQL.MSTest", "src\Templates.MySQL.MSTest\Templates.MySQL.MSTest.csproj", "{1FF266A3-3EC4-4D6E-8229-E153D17BB797}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.MySQL.MSTest", "src\Templates.MySQL.MSTest\Templates.MySQL.MSTest.csproj", "{1FF266A3-3EC4-4D6E-8229-E153D17BB797}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templates.MySQL.NUnit", "src\Templates.MySQL.NUnit\Templates.MySQL.NUnit.csproj", "{BF0472BE-C296-4475-BFAF-772167E0A04B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates.MySQL.NUnit", "src\Templates.MySQL.NUnit\Templates.MySQL.NUnit.csproj", "{BF0472BE-C296-4475-BFAF-772167E0A04B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Core.MySQL.MSTest.Tests", "tests\Sample.Core.MySQL.MSTest.Tests\Sample.Core.MySQL.MSTest.Tests.csproj", "{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MySQL.MSTest.Tests", "tests\Sample.Core.MySQL.MSTest.Tests\Sample.Core.MySQL.MSTest.Tests.csproj", "{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MySQL.NUnit.Tests", "tests\Sample.Core.MySQL.NUnit.Tests\Sample.Core.MySQL.NUnit.Tests.csproj", "{3FD4E695-1721-48F2-8F73-2D7052040455}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{9BD8001E-F011-43E3-A00C-63510812D035}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{69F3979A-516B-40B5-9C5D-8474464402BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Solution", "7.Solution", "{576B78E0-DF0A-414E-9810-E058DC9B2F85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A059A0C2-EB7C-4449-B7BC-FBB059355DF4}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,16 +242,20 @@ Global
 		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD4E695-1721-48F2-8F73-2D7052040455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD4E695-1721-48F2-8F73-2D7052040455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD4E695-1721-48F2-8F73-2D7052040455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD4E695-1721-48F2-8F73-2D7052040455}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{219A1871-A079-4AE9-BE52-00088B9C5D7A} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
+		{219A1871-A079-4AE9-BE52-00088B9C5D7A} = {9BD8001E-F011-43E3-A00C-63510812D035}
 		{FB4326A8-C542-416B-9CCF-72026E00868A} = {CDC9E680-83AA-4670-AF5D-FD3504EEADB0}
 		{7FFB0F7D-5408-4990-9100-E0DFE4835F01} = {2C61BE28-D178-4B16-AEC4-E144803A871E}
 		{B7B91F0A-B06A-48B5-96BF-8E55312B9CCE} = {CDC9E680-83AA-4670-AF5D-FD3504EEADB0}
-		{720FB59B-288C-4809-BAC7-E839D87190FA} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
+		{720FB59B-288C-4809-BAC7-E839D87190FA} = {9BD8001E-F011-43E3-A00C-63510812D035}
 		{F21804F3-CC3A-4F18-9EBE-D947D40193D0} = {0C38EDBB-D1F5-4266-A8BE-BC9378E216E8}
 		{0252E888-A388-4BFC-895C-34A0F614E0ED} = {414B269E-6A51-4800-B92B-0271C8139441}
 		{954838CF-436B-4BD9-906B-8B93772ACBA6} = {0613F625-9DBA-4F24-8869-5A41F4B57973}
@@ -250,7 +267,7 @@ Global
 		{C0982F5D-57A2-49DD-B19D-0BE690BF80B3} = {0C38EDBB-D1F5-4266-A8BE-BC9378E216E8}
 		{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE} = {0C38EDBB-D1F5-4266-A8BE-BC9378E216E8}
 		{D3118EF1-A158-40B2-9D55-80A68BE7C8EA} = {2C61BE28-D178-4B16-AEC4-E144803A871E}
-		{941521B6-2EC9-4BFE-9A17-3323DC42CA02} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
+		{941521B6-2EC9-4BFE-9A17-3323DC42CA02} = {9BD8001E-F011-43E3-A00C-63510812D035}
 		{6E32C571-92E7-46D1-B37B-88D1DC8362A3} = {FC314E9D-E36F-460C-949E-9556D2D3451E}
 		{0C38EDBB-D1F5-4266-A8BE-BC9378E216E8} = {FC314E9D-E36F-460C-949E-9556D2D3451E}
 		{BD1843C0-D230-4A84-AA7C-7C4B71D2BEB6} = {3992A9CE-DE7E-4F8D-9B9C-2A078095C722}
@@ -270,7 +287,11 @@ Global
 		{285865F2-C6B9-414F-B24A-A257AF4D18F4} = {2638F6A0-CC65-46E8-8FD6-0E50ECF6242C}
 		{1FF266A3-3EC4-4D6E-8229-E153D17BB797} = {3992A9CE-DE7E-4F8D-9B9C-2A078095C722}
 		{BF0472BE-C296-4475-BFAF-772167E0A04B} = {3992A9CE-DE7E-4F8D-9B9C-2A078095C722}
-		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
+		{ACE2FBAD-0C91-4772-9262-D6E8B5ADD07C} = {69F3979A-516B-40B5-9C5D-8474464402BE}
+		{3FD4E695-1721-48F2-8F73-2D7052040455} = {69F3979A-516B-40B5-9C5D-8474464402BE}
+		{9BD8001E-F011-43E3-A00C-63510812D035} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
+		{69F3979A-516B-40B5-9C5D-8474464402BE} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
+		{A059A0C2-EB7C-4449-B7BC-FBB059355DF4} = {576B78E0-DF0A-414E-9810-E058DC9B2F85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED27D3CD-4261-418B-BC4D-1F33D285E5C2}
