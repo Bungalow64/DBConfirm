@@ -22,7 +22,7 @@ services:
         env_file:
           - docker/mysql/mysql.env
         ports:
-          - 127.0.0.1:1507:3306
+          - 3306:3306
         volumes:
           - "./tests/SampleDatabases/MySQL/8.0.0/sakila_schema.sql:/docker-entrypoint-initdb.d/1.sql"
           - "./tests/SampleDatabases/MySQL/8.0.0/sample_schema.sql:/docker-entrypoint-initdb.d/2.sql"
