@@ -21,28 +21,28 @@ steps:
       **/*.csproj
       !templates/**/templates/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
-#- task: DotNetCoreCLI@2
-#  displayName: Test (code)
-#  inputs:
-#    command: test
-#    projects: |
-#      **/*[Tt]ests/*.csproj
-#      !**/Sample*/**/*.csproj
-#    arguments: '--configuration $(BuildConfiguration)'
-#- task: DotNetCoreCLI@2
-#  displayName: Test (database - SQL 2017)
-#  inputs:
-#    command: test
-#    projects: |
-#      **/tests/Sample*SQLServer*/*.csproj
-#    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2017.runsettings'
-#- task: DotNetCoreCLI@2
-#  displayName: Test (database - SQL 2019)
-#  inputs:
-#    command: test
-#    projects: |
-#      **/tests/Sample*SQLServer*/*.csproj
-#    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2019.runsettings'
+- task: DotNetCoreCLI@2
+  displayName: Test (code)
+  inputs:
+    command: test
+    projects: |
+      **/*[Tt]ests/*.csproj
+      !**/Sample*/**/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Test (database - SQL 2017)
+  inputs:
+    command: test
+    projects: |
+      **/tests/Sample*SQLServer*/*.csproj
+    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2017.runsettings'
+- task: DotNetCoreCLI@2
+  displayName: Test (database - SQL 2019)
+  inputs:
+    command: test
+    projects: |
+      **/tests/Sample*SQLServer*/*.csproj
+    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2019.runsettings'
 - task: DotNetCoreCLI@2
   displayName: Test (database - MySQL 8.0.0)
   inputs:

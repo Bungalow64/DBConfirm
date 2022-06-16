@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<TestRunParameters>
-		<Parameter name="SakilaConnection" value="SERVER=localhost,1402;DATABASE=Sakila;User Id=root;Password=123qwe123qwe!;Connection Timeout=30;" />
-		<Parameter name="SampleDBConnection" value="SERVER=localhost,1402;DATABASE=SampleDB;User Id=root;Password=123qwe123qwe!;Connection Timeout=30;" />
-		<Parameter name="DefaultConnectionString" value="SERVER=localhost,1402;DATABASE=SampleDB;User Id=root;Password=123qwe123qwe!;Connection Timeout=30;" />
+		<Parameter name="SakilaConnection" value="SERVER=localhost;PORT=1507;DATABASE=Sakila;User Id=root;Password=123qwe123qwe!;Connection Timeout=30;" />
+		<Parameter name="SampleDBConnection" value="SERVER=localhost;PORT=1507;DATABASE=SampleDB;User Id=root;Password=123qwe123qwe!;Connection Timeout=30;" />
+		<Parameter name="DefaultConnectionString" value="SERVER=localhost;PORT=1507;DATABASE=SampleDB;User Id=root;Password=123qwe123qwe!;Connection Timeout=30;" />
 	</TestRunParameters>
 </RunSettings>
