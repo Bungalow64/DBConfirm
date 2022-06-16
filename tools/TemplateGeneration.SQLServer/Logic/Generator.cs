@@ -1,35 +1,19 @@
-﻿using System.Threading.Tasks;
-using System;
-using System.Data;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
 using DBConfirm.TemplateGeneration.SQLServer.Models;
-using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace DBConfirm.TemplateGeneration.SQLServer.Logic
 {
-    public class Generator
+    [SlowFox.InjectDependencies(typeof(Options), typeof(IFileHelper), typeof(IDatabaseHelper), typeof(IConsoleLog))]
+    public partial class Generator
     {
-        private readonly Options _options;
-        private readonly IFileHelper _fileHelper;
-        private readonly IDatabaseHelper _databaseHelper;
-        private readonly IConsoleLog _consoleLog;
         private const string _getColumnsScript = "DBConfirm.TemplateGeneration.SQLServer.Scripts.GetColumns.sql";
-
-        public Generator(
-            Options options,
-            IFileHelper fileHelper,
-            IDatabaseHelper databaseHelper,
-            IConsoleLog consoleLog
-            )
-        {
-            _options = options;
-            _fileHelper = fileHelper;
-            _databaseHelper = databaseHelper;
-            _consoleLog = consoleLog;
-        }
 
         public async Task GenerateFileAsync()
         {
