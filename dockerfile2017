@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/mssql/server:2017-latest
 COPY ./tests/SampleDatabases/2017/northwind_schema_2017_setup.sql ./northwind_setup.sql
 COPY ./tests/SampleDatabases/2017/sampledb_schema_2017_setup.sql ./sampledb_setup.sql
-COPY ./docker/sqlserver/entrypoint.sh .
-COPY ./docker/sqlserver/import-data.sh .
+COPY ./docker/entrypoint.sh .
+COPY ./docker/import-data.sh .
 
 USER root
 
