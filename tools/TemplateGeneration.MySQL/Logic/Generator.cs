@@ -130,7 +130,7 @@ namespace DBConfirm.TemplateGeneration.MySQL.Logic
         {
             ColumnDefinition identityColumn = processedColumns.FirstOrDefault(p => p.IsIdentity);
 
-            string className = $"{tableName.Replace(' ', '_')}Template";
+            string className = $"{tableName.Replace(' ', '_').Replace("'", "_")}Template";
 
             List<string> usings = new List<string>
             {

@@ -108,7 +108,8 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         public async Task GetUser_MatchEmailAddress_ReturnPostcode()
         {
             UsersTemplate user = new UsersTemplate();
-            UserAddressesTemplate userA = new UserAddressesTemplate(user);
+            UserAddressesTemplate userA = new UserAddressesTemplate()
+                .WithUserId(user.IdentityResolver);
             await TestRunner.InsertTemplateAsync(user);
             await TestRunner.InsertTemplateAsync(userA);
 
