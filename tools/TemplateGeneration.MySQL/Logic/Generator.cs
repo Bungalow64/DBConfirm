@@ -1,4 +1,5 @@
-﻿using DBConfirm.TemplateGeneration.MySQL.Logic.Abstract;
+﻿using DBConfirm.TemplateGeneration.MySQL.Extensions;
+using DBConfirm.TemplateGeneration.MySQL.Logic.Abstract;
 using DBConfirm.TemplateGeneration.MySQL.Models;
 using System;
 using System.Collections.Generic;
@@ -132,6 +133,8 @@ namespace DBConfirm.TemplateGeneration.MySQL.Logic
 
             string className = $"{tableName.Replace(' ', '_').Replace("'", "_")}Template";
 
+            className = className.UppercaseFirstCharacter();
+
             List<string> usings = new List<string>
             {
                 "using DBConfirm.Core.Data;",
@@ -141,6 +144,11 @@ namespace DBConfirm.TemplateGeneration.MySQL.Logic
             if (processedColumns.Any(p => p.TypeRequiresSystem))
             {
                 usings.Insert(0, "using System;");
+            }
+
+            if (processedColumns.Any(p => p.TypeRequiresMySqlType))
+            {
+                usings.Insert(0, "using MySql.Data.Types;");
             }
 
             if (processedColumns.Any(p => p.ReferencesIdentity))

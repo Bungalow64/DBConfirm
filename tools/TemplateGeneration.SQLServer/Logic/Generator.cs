@@ -1,4 +1,5 @@
-﻿using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
+﻿using DBConfirm.TemplateGeneration.SQLServer.Extensions;
+using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
 using DBConfirm.TemplateGeneration.SQLServer.Models;
 using System;
 using System.Collections.Generic;
@@ -143,6 +144,8 @@ namespace DBConfirm.TemplateGeneration.SQLServer.Logic
             ColumnDefinition identityColumn = processedColumns.FirstOrDefault(p => p.IsIdentity);
 
             string className = $"{tableName.Replace(' ', '_')}Template";
+
+            className = className.UppercaseFirstCharacter();
 
             List<string> usings = new List<string>
             {

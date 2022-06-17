@@ -5,7 +5,7 @@ namespace DBConfirm.Templates
 {
     public class UsersTemplate : BaseIdentityTemplate<UsersTemplate>
     {
-        public override string TableName => "[dbo].[Users]";
+        public override string TableName => "[dbo].[users]";
         
         public override string IdentityColumnName => "userId";
 

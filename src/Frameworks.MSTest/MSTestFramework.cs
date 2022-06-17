@@ -14,7 +14,14 @@ namespace DBConfirm.Frameworks.MSTest
         /// <inheritdoc/>
         public void AreEqual(object expected, object actual, string message, params string[] parameters)
         {
-            Assert.AreEqual(expected, actual, message, parameters);
+            if (expected is byte[] expectedBytes && actual is byte[] actualBytes)
+            {
+                CollectionAssert.AreEqual(expectedBytes, actualBytes, message, parameters);
+            }
+            else
+            {
+                Assert.AreEqual(expected, actual, message, parameters);
+            }
         }
 
         /// <inheritdoc/>

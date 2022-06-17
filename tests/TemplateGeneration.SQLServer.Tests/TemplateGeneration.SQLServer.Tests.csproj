@@ -13,6 +13,7 @@
     <None Remove="Logic\ExpectedClasses\Generator_IncludeRequiredForeignKeyAsIdentity_FileGenerated_WithPlaceholder.txt" />
     <None Remove="Logic\ExpectedClasses\Generator_IncludeRequiredForeignKey_FileGenerated_WithPlaceholder.txt" />
     <None Remove="Logic\ExpectedClasses\Generator_SingleIdentityTableWithColumns_LowercaseNames_FileGeneratedWithPascalCaseColumns.txt" />
+    <None Remove="Logic\ExpectedClasses\Generator_SingleLowercaseTableWithColumns_FileGenerated.txt" />
     <None Remove="Logic\ExpectedClasses\Generator_SingleNonIdentityTableWithColumns_FileGenerated.txt" />
     <None Remove="Logic\ExpectedClasses\Generator_SingleTableWithColumns_FileGenerated.txt" />
   </ItemGroup>
@@ -23,6 +24,7 @@
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleNonIdentityTableWithColumns_FileGenerated.txt" />
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_IncludeDateTimeColumn_FileGenerated_WithSystem.txt" />
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleIdentityTableWithColumns_LowercaseNames_FileGeneratedWithPascalCaseColumns.txt" />
+    <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleLowercaseTableWithColumns_FileGenerated.txt" />
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleTableWithColumns_FileGenerated.txt" />
     <EmbeddedResource Include="Logic\ExpectedClasses\Generator_SingleIdentityTableWithRequiredMaxNvarcharColumn_FileGenerated.txt" />
   </ItemGroup>

@@ -1,0 +1,22 @@
+﻿using System;
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
+
+namespace DBConfirm.Templates
+{
+    public class UsersTemplate : BaseIdentityTemplate<UsersTemplate>
+    {
+        public override string TableName => "`Users`";
+        
+        public override string IdentityColumnName => "UserId";
+
+        public override DataSetRow DefaultData => new DataSetRow
+        {
+            ["FirstName"] = "SampleFirstName"
+        };
+
+        public UsersTemplate WithUserId(int value) => SetValue("UserId", value);
+        public UsersTemplate WithFirstName(string value) => SetValue("FirstName", value);
+        public UsersTemplate WithStartDate(DateTime value) => SetValue("StartDate", value);
+    }
+}

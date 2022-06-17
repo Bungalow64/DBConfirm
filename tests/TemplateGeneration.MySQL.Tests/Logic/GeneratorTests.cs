@@ -1,6 +1,6 @@
-using DBConfirm.TemplateGeneration.SQLServer;
-using DBConfirm.TemplateGeneration.SQLServer.Logic;
-using DBConfirm.TemplateGeneration.SQLServer.Logic.Abstract;
+using DBConfirm.TemplateGeneration.MySQL;
+using DBConfirm.TemplateGeneration.MySQL.Logic;
+using DBConfirm.TemplateGeneration.MySQL.Logic.Abstract;
 using Moq;
 using NUnit.Framework;
 using System.Data;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace TemplateGeneration.SQLServer.Tests.Logic
+namespace TemplateGeneration.MySQL.Tests.Logic
 {
     public class GeneratorTests
     {
@@ -32,16 +32,15 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
         {
             DataTable table = new DataTable();
             table.Columns.Add("TableName");
-            table.Columns.Add("SchemaName");
             table.Columns.Add("ColumnName");
-            table.Columns.Add("IsNullable", typeof(bool));
+            table.Columns.Add("IsNullable", typeof(int));
             table.Columns.Add("DefaultValue");
             table.Columns.Add("DataType");
             table.Columns.Add("MaxCharacterLength", typeof(int));
-            table.Columns.Add("IsIdentity", typeof(bool));
-            table.Columns.Add("IsForeignKey", typeof(bool));
+            table.Columns.Add("IsIdentity", typeof(int));
+            table.Columns.Add("IsForeignKey", typeof(int));
             table.Columns.Add("ReferencedTableName");
-            table.Columns.Add("ReferencesIdentity", typeof(bool));
+            table.Columns.Add("ReferencesIdentity", typeof(int));
             return table;
         }
 
@@ -66,7 +65,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
 
             _fileHelperMock
                 .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
@@ -74,7 +73,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
@@ -90,7 +89,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
 
             _fileHelperMock
                 .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
@@ -98,7 +97,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
@@ -118,7 +117,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(CreateTable());
 
             _fileHelperMock
@@ -127,7 +126,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
@@ -147,11 +146,10 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string, string, string, string>((connectionString, schemaName, tableName, script) =>
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string, string>((connectionString, tableName, script) =>
                 {
                     Assert.AreEqual("SERVER=(local);DATABASE=TestDatabase1;Integrated Security=true;Connection Timeout=30;", connectionString);
-                    Assert.AreEqual("dbo", schemaName);
                     Assert.AreEqual("Users", tableName);
                 })
                 .ReturnsAsync(CreateTable());
@@ -159,7 +157,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         [Test]
@@ -172,11 +170,10 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string, string, string, string>((connectionString, schemaName, tableName, script) =>
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string, string>((connectionString, tableName, script) =>
                 {
                     Assert.AreEqual("SERVER=(local);DATABASE=TestDatabase1;Integrated Security=true;Connection Timeout=30;", connectionString);
-                    Assert.AreEqual("dbo", schemaName);
                     Assert.AreEqual("%", tableName);
                 })
                 .ReturnsAsync(CreateTable());
@@ -184,7 +181,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         [Test]
@@ -197,11 +194,10 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string, string, string, string>((connectionString, schemaName, tableName, script) =>
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string, string>((connectionString, tableName, script) =>
                 {
                     Assert.AreEqual("SERVER=(local);DATABASE=TestDatabase1;Integrated Security=true;Connection Timeout=30;", connectionString);
-                    Assert.AreEqual("dbo", schemaName);
                     Assert.AreEqual("User%", tableName);
                 })
                 .ReturnsAsync(CreateTable());
@@ -209,25 +205,23 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         [Test]
-        public async Task Generator_WithTableAndSchema_UseProvidedDetails()
+        public async Task Generator_WithTableInBrackets_UseProvidedDetailsStripBrackets()
         {
             Options options = new Options
             {
                 DatabaseName = "TestDatabase1",
-                SchemaName = "Fact",
-                TableName = "Users"
+                TableName = "`Users`"
             };
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string, string, string, string>((connectionString, schemaName, tableName, script) =>
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string, string>((connectionString, tableName, script) =>
                 {
                     Assert.AreEqual("SERVER=(local);DATABASE=TestDatabase1;Integrated Security=true;Connection Timeout=30;", connectionString);
-                    Assert.AreEqual("Fact", schemaName);
                     Assert.AreEqual("Users", tableName);
                 })
                 .ReturnsAsync(CreateTable());
@@ -235,139 +229,83 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-        }
-
-        [Test]
-        public async Task Generator_WithTableAndSchemaInBrackets_UseProvidedDetailsStripBrackets()
-        {
-            Options options = new Options
-            {
-                DatabaseName = "TestDatabase1",
-                SchemaName = "[Fact]",
-                TableName = "[Users]"
-            };
-
-            _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string, string, string, string>((connectionString, schemaName, tableName, script) =>
-                {
-                    Assert.AreEqual("SERVER=(local);DATABASE=TestDatabase1;Integrated Security=true;Connection Timeout=30;", connectionString);
-                    Assert.AreEqual("Fact", schemaName);
-                    Assert.AreEqual("Users", tableName);
-                })
-                .ReturnsAsync(CreateTable());
-
-            await Create(options).GenerateFileAsync();
-
-            _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-        }
-
-        [Test]
-        public async Task Generator_WithTableNameIncludingSchema_SchemaSplitOut()
-        {
-            Options options = new Options
-            {
-                DatabaseName = "TestDatabase1",
-                TableName = "[Fact].[Users]"
-            };
-
-            _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string, string, string, string>((connectionString, schemaName, tableName, script) =>
-                {
-                    Assert.AreEqual("SERVER=(local);DATABASE=TestDatabase1;Integrated Security=true;Connection Timeout=30;", connectionString);
-                    Assert.AreEqual("Fact", schemaName);
-                    Assert.AreEqual("Users", tableName);
-                })
-                .ReturnsAsync(CreateTable());
-
-            await Create(options).GenerateFileAsync();
-
-            _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         #endregion
 
         #region File Generation
 
-        private void AddPrimaryKeyRow(DataTable columns, string schemaName, string tableName, string columnName, bool isIdentity = true)
+        private void AddPrimaryKeyRow(DataTable columns, string tableName, string columnName, bool isIdentity = true)
         {
             DataRow row = columns.NewRow();
             row["TableName"] = tableName;
-            row["SchemaName"] = schemaName;
             row["ColumnName"] = columnName;
-            row["IsNullable"] = false;
+            row["IsNullable"] = 0;
             row["DataType"] = "int";
-            row["IsIdentity"] = isIdentity;
-            row["IsForeignKey"] = false;
-            row["ReferencesIdentity"] = false;
+            row["IsIdentity"] = isIdentity ? 1 : 0;
+            row["IsForeignKey"] = 0;
+            row["ReferencesIdentity"] = 0;
             columns.Rows.Add(row);
         }
 
-        private void AddRequiredNVarcharRow(DataTable columns, string schemaName, string tableName, string columnName)
+        private void AddRequiredNVarcharRow(DataTable columns, string tableName, string columnName)
         {
             DataRow row = columns.NewRow();
             row["TableName"] = tableName;
-            row["SchemaName"] = schemaName;
             row["ColumnName"] = columnName;
-            row["IsNullable"] = false;
+            row["IsNullable"] = 0;
             row["DataType"] = "nvarchar";
             row["MaxCharacterLength"] = 50;
-            row["IsIdentity"] = false;
-            row["IsForeignKey"] = false;
-            row["ReferencesIdentity"] = false;
+            row["IsIdentity"] = 0;
+            row["IsForeignKey"] = 0;
+            row["ReferencesIdentity"] = 0;
             columns.Rows.Add(row);
         }
         
-        private void AddRequiredNvarcharMaxRow(DataTable columns, string schemaName, string tableName, string columnName)
+        private void AddRequiredNvarcharMaxRow(DataTable columns, string tableName, string columnName)
         {
             DataRow row = columns.NewRow();
             row["TableName"] = tableName;
-            row["SchemaName"] = schemaName;
             row["ColumnName"] = columnName;
-            row["IsNullable"] = false;
+            row["IsNullable"] = 0;
             row["DataType"] = "nvarchar";
             row["MaxCharacterLength"] = -1;
-            row["IsIdentity"] = false;
-            row["IsForeignKey"] = false;
-            row["ReferencesIdentity"] = false;
+            row["IsIdentity"] = 0;
+            row["IsForeignKey"] = 0;
+            row["ReferencesIdentity"] = 0;
             columns.Rows.Add(row);
         }
 
-        private void AddNullableRow(DataTable columns, string schemaName, string tableName, string columnName, string dataType)
+        private void AddNullableRow(DataTable columns, string tableName, string columnName, string dataType)
         {
             DataRow row = columns.NewRow();
             row["TableName"] = tableName;
-            row["SchemaName"] = schemaName;
             row["ColumnName"] = columnName;
-            row["IsNullable"] = true;
+            row["IsNullable"] = 1;
             row["DataType"] = dataType;
-            row["IsIdentity"] = false;
-            row["IsForeignKey"] = false;
-            row["ReferencesIdentity"] = false;
+            row["IsIdentity"] = 0;
+            row["IsForeignKey"] = 0;
+            row["ReferencesIdentity"] = 0;
             columns.Rows.Add(row);
         }
 
-        private void AddRequiredForeignKey(DataTable columns, string schemaName, string tableName, string columnName, bool isIdentity = true, bool isNullable = false)
+        private void AddRequiredForeignKey(DataTable columns, string tableName, string columnName, bool isIdentity = true, bool isNullable = false)
         {
             DataRow row = columns.NewRow();
             row["TableName"] = tableName;
-            row["SchemaName"] = schemaName;
             row["ColumnName"] = columnName;
-            row["IsNullable"] = isNullable;
+            row["IsNullable"] = isNullable ? 1 : 0;
             row["DataType"] = "int";
-            row["IsIdentity"] = false;
-            row["IsForeignKey"] = true;
-            row["ReferencesIdentity"] = isIdentity;
+            row["IsIdentity"] = 0;
+            row["IsForeignKey"] = 1;
+            row["ReferencesIdentity"] = isIdentity ? 1 : 0;
             columns.Rows.Add(row);
         }
 
         private async Task<string> ReadResource(string filename)
         {
-            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TemplateGeneration.SQLServer.Tests.Logic.ExpectedClasses.{filename}.txt");
+            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TemplateGeneration.MySQL.Tests.Logic.ExpectedClasses.{filename}.txt");
             using StreamReader reader = new StreamReader(stream);
 
             return await reader.ReadToEndAsync();
@@ -384,11 +322,11 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId");
-            AddRequiredNVarcharRow(columns, "dbo", "Users", "UserId");
+            AddPrimaryKeyRow(columns, "Users", "UserId");
+            AddRequiredNVarcharRow(columns, "Users", "UserId");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             _fileHelperMock
@@ -397,7 +335,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
@@ -413,11 +351,11 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "users", "userId");
-            AddRequiredNVarcharRow(columns, "dbo", "users", "firstName");
+            AddPrimaryKeyRow(columns, "users", "userId");
+            AddRequiredNVarcharRow(columns, "users", "firstName");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -440,7 +378,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -458,11 +396,11 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId");
-            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+            AddPrimaryKeyRow(columns, "Users", "UserId");
+            AddRequiredNVarcharRow(columns, "Users", "FirstName");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -485,7 +423,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -503,11 +441,11 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId");
-            AddRequiredNvarcharMaxRow(columns, "dbo", "Users", "Notes");
+            AddPrimaryKeyRow(columns, "Users", "UserId");
+            AddRequiredNvarcharMaxRow(columns, "Users", "Notes");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -530,7 +468,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -548,11 +486,11 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId", isIdentity: false);
-            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+            AddPrimaryKeyRow(columns, "Users", "UserId", isIdentity: false);
+            AddRequiredNVarcharRow(columns, "Users", "FirstName");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -575,7 +513,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -593,12 +531,12 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId");
-            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
-            AddNullableRow(columns, "dbo", "Users", "StartDate", "datetime2");
+            AddPrimaryKeyRow(columns, "Users", "UserId");
+            AddRequiredNVarcharRow(columns, "Users", "FirstName");
+            AddNullableRow(columns, "Users", "StartDate", "datetime2");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -621,7 +559,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -639,12 +577,12 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId");
-            AddRequiredForeignKey(columns, "dbo", "Users", "CountryId", isIdentity: false, isNullable: false);
-            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+            AddPrimaryKeyRow(columns, "Users", "UserId");
+            AddRequiredForeignKey(columns, "Users", "CountryId", isIdentity: false, isNullable: false);
+            AddRequiredNVarcharRow(columns, "Users", "FirstName");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -667,7 +605,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -685,12 +623,12 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "UserId");
-            AddRequiredForeignKey(columns, "dbo", "Users", "CountryId", isIdentity: true, isNullable: false);
-            AddRequiredNVarcharRow(columns, "dbo", "Users", "FirstName");
+            AddPrimaryKeyRow(columns, "Users", "UserId");
+            AddRequiredForeignKey(columns, "Users", "CountryId", isIdentity: true, isNullable: false);
+            AddRequiredNVarcharRow(columns, "Users", "FirstName");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -713,7 +651,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -731,11 +669,11 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             };
 
             DataTable columns = CreateTable();
-            AddPrimaryKeyRow(columns, "dbo", "Users", "userId");
-            AddRequiredNVarcharRow(columns, "dbo", "Users", "firstName");
+            AddPrimaryKeyRow(columns, "Users", "userId");
+            AddRequiredNVarcharRow(columns, "Users", "firstName");
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             string generatedFileText = null;
@@ -758,7 +696,7 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             await Create(options).GenerateFileAsync();
 
             _databaseHelperMock
-                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+                .Verify(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
             _fileHelperMock
                 .Verify(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -772,19 +710,18 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             Options options = new Options
             {
                 DatabaseName = "TestDatabase1",
-                TableName = "*",
-                SchemaName = "dbo2"
+                TableName = "*"
             };
 
             DataTable columns = CreateTable();
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             _consoleLogMock
                 .Setup(p => p.WriteError(It.IsAny<string>()))
-                .Callback<string>(p => Assert.AreEqual("Cannot find any tables in schema: dbo2", p));
+                .Callback<string>(p => Assert.AreEqual("Cannot find any tables", p));
 
             await Create(options).GenerateFileAsync();
 
@@ -798,19 +735,18 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             Options options = new Options
             {
                 DatabaseName = "TestDatabase1",
-                TableName = "Table1",
-                SchemaName = "dbo2"
+                TableName = "Table1"
             };
 
             DataTable columns = CreateTable();
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             _consoleLogMock
                 .Setup(p => p.WriteError(It.IsAny<string>()))
-                .Callback<string>(p => Assert.AreEqual("Cannot find table: dbo2.Table1", p));
+                .Callback<string>(p => Assert.AreEqual("Cannot find table: Table1", p));
 
             await Create(options).GenerateFileAsync();
 
@@ -824,19 +760,18 @@ namespace TemplateGeneration.SQLServer.Tests.Logic
             Options options = new Options
             {
                 DatabaseName = "TestDatabase1",
-                TableName = "T*",
-                SchemaName = "dbo2"
+                TableName = "T*"
             };
 
             DataTable columns = CreateTable();
 
             _databaseHelperMock
-                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(columns);
 
             _consoleLogMock
                 .Setup(p => p.WriteError(It.IsAny<string>()))
-                .Callback<string>(p => Assert.AreEqual("Cannot find any tables that match: dbo2.T*", p));
+                .Callback<string>(p => Assert.AreEqual("Cannot find any tables that match: T*", p));
 
             await Create(options).GenerateFileAsync();
 

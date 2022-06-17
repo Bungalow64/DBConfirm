@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBConfirm.TemplateGeneration.MySQL.Extensions;
+using System;
 using System.Data;
 
 namespace DBConfirm.TemplateGeneration.MySQL.Models
@@ -35,13 +36,13 @@ namespace DBConfirm.TemplateGeneration.MySQL.Models
                         return "string";
                     case "int":
                     case "smallint":
+                    case "tinyint":
                         return "int";
                     case "bigint":
                         return "long";
                     case "binary":
                     case "image":
                     case "rowversion":
-                    case "timestamp":
                     case "varbinary":
                         return "byte[]";
                     case "bit":
@@ -59,17 +60,18 @@ namespace DBConfirm.TemplateGeneration.MySQL.Models
                     case "datetime":
                     case "datetime2":
                     case "smalldatetime":
+                    case "timestamp":
                         return "DateTime";
                     case "time":
                         return "TimeSpan";
                     case "real":
                         return "float";
-                    case "tinyint":
-                        return "byte";
                     case "uniqueidentifier":
                         return "Guid";
                     case "datetimeoffset":
                     case "xml":
+                    case "geometry":
+                        return "MySqlGeometry";
                     default:
                         return "object";
                 }
@@ -85,6 +87,20 @@ namespace DBConfirm.TemplateGeneration.MySQL.Models
                     case "DateTime":
                     case "TimeSpan":
                     case "Guid":
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        }
+
+        public bool TypeRequiresMySqlType
+        {
+            get
+            {
+                switch (ActualType)
+                {
+                    case "MySqlGeometry":
                         return true;
                     default:
                         return false;
@@ -116,7 +132,7 @@ namespace DBConfirm.TemplateGeneration.MySQL.Models
             }
             return ActualType switch
             {
-                "string" => $"\"{TruncateLongString($"Sample{ColumnName}")}\"",
+                "string" => $"\"{TruncateLongString($"Sample{ColumnName.UppercaseFirstCharacter()}")}\"",
                 "int" => "50",
                 "long" => "50",
                 "byte[]" => "new byte[] { 0x68, 0x65, 0x6c, 0x6c, 0x29 }",
@@ -129,6 +145,7 @@ namespace DBConfirm.TemplateGeneration.MySQL.Models
                 "byte" => "0x65",
                 "Guid" => "Guid.Parse(\"729e8f2e-5101-4ab7-a7ed-52e58c8cf9b1\")",
                 "object" => "\"<object>\"",
+                "MySqlGeometry" => "new MySqlGeometry(1, 1)",
                 _ => string.Empty,
             };
         }

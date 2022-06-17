@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBConfirm.TemplateGeneration.SQLServer.Extensions;
+using System;
 using System.Data;
 
 namespace DBConfirm.TemplateGeneration.SQLServer.Models
@@ -116,7 +117,7 @@ namespace DBConfirm.TemplateGeneration.SQLServer.Models
             }
             return ActualType switch
             {
-                "string" => $"\"{TruncateLongString($"Sample{ColumnName}")}\"",
+                "string" => $"\"{TruncateLongString($"Sample{ColumnName.UppercaseFirstCharacter()}")}\"",
                 "int" => "50",
                 "long" => "50",
                 "byte[]" => "new byte[] { 0x68, 0x65, 0x6c, 0x6c, 0x29 }",
