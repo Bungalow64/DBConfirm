@@ -6,17 +6,17 @@ namespace Sample.Core.MySQL.MSTest.Tests.Templates.Complex
 {
     public class UserWithTwoAddressesTemplate : BaseComplexTemplate
     {
-        public UserTemplate User { get; set; }
+        public UsersTemplate User { get; set; }
 
-        public UserAddressTemplate UserAddress1 { get; set; }
+        public UserAddressesTemplate UserAddress1 { get; set; }
 
-        public UserAddressTemplate UserAddress2 { get; set; }
+        public UserAddressesTemplate UserAddress2 { get; set; }
 
         public UserWithTwoAddressesTemplate()
         {
-            User = new UserTemplate();
-            UserAddress1 = new UserAddressTemplate();
-            UserAddress2 = new UserAddressTemplate();
+            User = new UsersTemplate();
+            UserAddress1 = new UserAddressesTemplate();
+            UserAddress2 = new UserAddressesTemplate();
         }
 
         public override async Task InsertAsync(ITestRunner testRunner)

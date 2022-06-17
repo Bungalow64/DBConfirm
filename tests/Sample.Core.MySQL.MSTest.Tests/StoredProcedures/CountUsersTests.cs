@@ -98,7 +98,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task CountUsers_MatchEmailAddress_Return1_UseDefaultDataTemplateSetupIdentity()
         {
-            await TestRunner.InsertTemplateAsync<UserTemplate>();
+            await TestRunner.InsertTemplateAsync<UsersTemplate>();
 
             ScalarResult<long> result = await TestRunner.ExecuteStoredProcedureScalarAsync<long>("CountUsers", new DataSetRow
             {
@@ -112,7 +112,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task CountUsers_MatchEmailAddress_Return1_UseDataTemplateSetupIdentity()
         {
-            await TestRunner.InsertTemplateAsync(new UserTemplate
+            await TestRunner.InsertTemplateAsync(new UsersTemplate
             {
                 { "EmailAddress", "jimmy@bungalow64.co.uk" }
             });

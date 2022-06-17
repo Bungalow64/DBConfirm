@@ -6,9 +6,9 @@ namespace Sample.Core.MySQL.MSTest.Tests.Templates.Complex
 {
     public class UserWithAddressAndCountryTemplate : BaseComplexTemplate
     {
-        public UserTemplate User { get; set; } = new UserTemplate();
+        public UsersTemplate User { get; set; } = new UsersTemplate();
 
-        public UserAddressTemplate UserAddress { get; set; } = new UserAddressTemplate();
+        public UserAddressesTemplate UserAddress { get; set; } = new UserAddressesTemplate();
 
         public CountriesTemplate Country { get; set; } = new CountriesTemplate();
 

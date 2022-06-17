@@ -6,14 +6,14 @@ namespace Sample.Core.MySQL.MSTest.Tests.Templates.Complex
 {
     public class UserWithAddressTemplate : BaseComplexTemplate
     {
-        public UserTemplate User { get; set; }
+        public UsersTemplate User { get; set; }
 
-        public UserAddressTemplate UserAddress { get; set; }
+        public UserAddressesTemplate UserAddress { get; set; }
 
         public UserWithAddressTemplate()
         {
-            User = new UserTemplate();
-            UserAddress = new UserAddressTemplate();
+            User = new UsersTemplate();
+            UserAddress = new UserAddressesTemplate();
         }
 
         public override async Task InsertAsync(ITestRunner testRunner)

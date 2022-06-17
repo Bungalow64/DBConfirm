@@ -107,8 +107,8 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ReturnPostcode()
         {
-            UserTemplate user = new UserTemplate();
-            UserAddressTemplate userA = new UserAddressTemplate(user);
+            UsersTemplate user = new UsersTemplate();
+            UserAddressesTemplate userA = new UserAddressesTemplate(user);
             await TestRunner.InsertTemplateAsync(user);
             await TestRunner.InsertTemplateAsync(userA);
 
@@ -133,13 +133,13 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ReturnMultiplePostcodes()
         {
-            UserTemplate user = await TestRunner.InsertTemplateAsync<UserTemplate>();
-            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
+            UsersTemplate user = await TestRunner.InsertTemplateAsync<UsersTemplate>();
+            await TestRunner.InsertTemplateAsync(new UserAddressesTemplate
             {
                 { "UserId", user.Identity },
                 { "Postcode", "HD6 3UB" }
             });
-            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserAddressesTemplate
             {
                 { "UserId", user.Identity },
                 { "Postcode", "HD6 4UB" }
@@ -172,22 +172,22 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         [TestMethod]
         public async Task GetUser_MatchEmailAddress_ReturnUsers()
         {
-            UserTemplate user1 = await TestRunner.InsertTemplateAsync(new UserTemplate
+            UsersTemplate user1 = await TestRunner.InsertTemplateAsync(new UsersTemplate
             {
                 { "FirstName", "user1" },
                 { "EmailAddress", "user1@b64.co.uk" }
             });
-            UserTemplate user2 = await TestRunner.InsertTemplateAsync(new UserTemplate
+            UsersTemplate user2 = await TestRunner.InsertTemplateAsync(new UsersTemplate
             {
                 { "FirstName", "user2" },
                 { "EmailAddress", "user1@b64.co.uk" }
             });
-            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserAddressesTemplate
             {
                 { "UserId", user1.Identity },
                 { "Postcode", "HD6 3UB" }
             });
-            await TestRunner.InsertTemplateAsync(new UserAddressTemplate
+            await TestRunner.InsertTemplateAsync(new UserAddressesTemplate
             {
                 { "UserId", user2.Identity },
                 { "Postcode", "HD6 4UB" }
@@ -222,12 +222,12 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         {
             await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
-                User = new UserTemplate
+                User = new UsersTemplate
                 {
                     { "FirstName", "user1" },
                     { "EmailAddress", "user1@b64.co.uk" }
                 },
-                UserAddress = new UserAddressTemplate
+                UserAddress = new UserAddressesTemplate
                 {
                     { "Postcode", "HD6 3UB" }
                 }
@@ -235,12 +235,12 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
 
             await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
-                User = new UserTemplate
+                User = new UsersTemplate
                 {
                     { "FirstName", "user2" },
                     { "EmailAddress", "user1@b64.co.uk" }
                 },
-                UserAddress = new UserAddressTemplate
+                UserAddress = new UserAddressesTemplate
                 {
                     { "Postcode", "HD6 4UB" }
                 }
@@ -275,7 +275,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
         {
             await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
-                User = new UserTemplate
+                User = new UsersTemplate
                 {
                     { "FirstName", "user1" },
                     { "EmailAddress", "user1@b64.co.uk" }
@@ -284,7 +284,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
 
             await TestRunner.InsertTemplateAsync(new UserWithAddressTemplate
             {
-                User = new UserTemplate
+                User = new UsersTemplate
                 {
                     { "FirstName", "user2" },
                     { "EmailAddress", "user1@b64.co.uk" }
@@ -382,13 +382,13 @@ namespace Sample.Core.MySQL.MSTest.Tests.StoredProcedures
 
             UserWithAddressAndCountryTemplate template1 = await TestRunner.InsertTemplateAsync(new UserWithAddressAndCountryTemplate
             {
-                User = new UserTemplate().WithId(1001).WithEmailAddress("jamie@bungalow64.co.uk"),
+                User = new UsersTemplate().WithId(1001).WithEmailAddress("jamie@bungalow64.co.uk"),
                 Country = country
             });
 
             await TestRunner.InsertTemplateAsync(new UserWithAddressAndCountryTemplate
             {
-                User = new UserTemplate().WithId(1002).WithEmailAddress("jimmy@bungalow64.co.uk"),
+                User = new UsersTemplate().WithId(1002).WithEmailAddress("jimmy@bungalow64.co.uk"),
                 Country = country
             });
 

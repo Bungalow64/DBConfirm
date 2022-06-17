@@ -151,6 +151,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sqlserver", "sqlserver", "{
 		docker\sqlserver\sqlserver.env = docker\sqlserver\sqlserver.env
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration.MySQL", "tools\TemplateGeneration.MySQL\TemplateGeneration.MySQL.csproj", "{61A0FD9C-14C7-4E1A-8C53-4EFE6F0D6E0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -265,6 +267,10 @@ Global
 		{3FD4E695-1721-48F2-8F73-2D7052040455}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FD4E695-1721-48F2-8F73-2D7052040455}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FD4E695-1721-48F2-8F73-2D7052040455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A0FD9C-14C7-4E1A-8C53-4EFE6F0D6E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A0FD9C-14C7-4E1A-8C53-4EFE6F0D6E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A0FD9C-14C7-4E1A-8C53-4EFE6F0D6E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A0FD9C-14C7-4E1A-8C53-4EFE6F0D6E0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -314,6 +320,7 @@ Global
 		{C0FF2CC0-90F8-49E6-9333-6B8BD8462838} = {A059A0C2-EB7C-4449-B7BC-FBB059355DF4}
 		{7BE99159-5B93-422D-9ADB-D2AB9F71C630} = {C0FF2CC0-90F8-49E6-9333-6B8BD8462838}
 		{ECF7D2A8-1516-4124-9315-91A2321D3DDC} = {C0FF2CC0-90F8-49E6-9333-6B8BD8462838}
+		{61A0FD9C-14C7-4E1A-8C53-4EFE6F0D6E0D} = {068FCD6B-9DA6-4AEB-93E8-B019867278EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED27D3CD-4261-418B-BC4D-1F33D285E5C2}

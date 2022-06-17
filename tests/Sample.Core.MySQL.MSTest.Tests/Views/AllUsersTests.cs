@@ -83,7 +83,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.Views
         [TestMethod]
         public async Task AllUsers_UseComplexData_ReuseTemplate()
         {
-            UserTemplate user = new UserTemplate
+            UsersTemplate user = new UsersTemplate
             {
                 { "FirstName", "Jamie" }
             };
@@ -105,7 +105,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.Views
         [TestMethod]
         public async Task AllUsers_UseFluent()
         {
-            UserTemplate user = new UserTemplate()
+            UsersTemplate user = new UsersTemplate()
                 .WithId(1001)
                 .WithFirstName("Jamie");
 
@@ -130,7 +130,7 @@ namespace Sample.Core.MySQL.MSTest.Tests.Views
         [TestMethod]
         public async Task AllUsers_UseFluentReversed()
         {
-            UserTemplate user = new UserTemplate()
+            UsersTemplate user = new UsersTemplate()
                 .WithId(1002)
                 .WithFirstName("Jamie");
 
