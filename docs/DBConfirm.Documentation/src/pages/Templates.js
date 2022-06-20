@@ -27,7 +27,7 @@ export default function Templates() {
                 to be inserted across many tables at the same time.</li>
             </ul>
 
-            <p>Simple templates can also be automatically generated based on an existing database by using <a href="#templategeneration">DBConfirm.TemplateGeneration</a>.</p>
+            <p>Simple templates can also be automatically generated based on an existing database by using <a href="#templategeneration">DBConfirm.TemplateGeneration.SQLServer</a> or <a href="#templategeneration">DBConfirm.TemplateGeneration.MySQL</a>.</p>
 
             <h3 id="simpletemplates">Simple Templates</h3>
 
@@ -458,13 +458,27 @@ overridden, then the latest value will be returned, not the original default.</p
             <h3 id="templategeneration">Template Generation</h3>
 
             <p>Simple templates are designed to exactly match their corresponding tables in the database,
-                so the dotnet tool <a href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration/" target="_black">DBConfirm.TemplateGeneration</a> can
+                so the dotnet tools <a href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration.SQLServer/" target="_black" rel="noreferrer">DBConfirm.TemplateGeneration.SQLServer</a> and 
+                <a href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration.MySQL/" target="_black" rel="noreferrer">DBConfirm.TemplateGeneration.MySQL</a> can
                 be used to generate the C# classes for you.  These classes include all required properties for the table, and add a fluent method for each column found.</p>
 
-            <p>To get started, you need to have created your test project, and added the relevant DBConfirm.Packages.* NuGet package.</p>
-            <p>Next, using the Package Manager Console (or command line) install the tool by executing the following:</p>
-            <pre><code>dotnet tool install --global DBConfirm.TemplateGeneration</code></pre>
-            <p>Once installed, you can run the tool by executing <strong>GenerateTemplatesSQLServer</strong>.  There are a number of parameters you can set:</p>
+                <p>To get started, you need to have created your test project, and added the relevant DBConfirm.Packages.* NuGet package.</p>
+
+            <div className="content-split">
+                <div className="content-split-primary">
+                    <p>Next, using the Package Manager Console (or command line) install the tool by executing the following:</p>
+
+                    <pre><code>dotnet tool install --global DBConfirm.TemplateGeneration.SQLServer</code></pre>
+                </div>
+                <aside>
+                    <header>For MySQL</header>
+                    <div className="aside-body">
+                        <p>For MySQL the tool is <a href="https://www.nuget.org/packages/DBConfirm.TemplateGeneration.MySQL/" target="_black" rel="noreferrer">DBConfirm.TemplateGeneration.MySQL</a> and the command is <strong>GenerateTemplatesMySQL</strong>.</p>
+                    </div>
+                </aside>
+            </div>
+
+            <p>Once installed, you can run the tool by executing <strong>GenerateTemplatesSQLServer</strong>/<strong>GenerateTemplatesMySQL</strong>.  There are a number of parameters you can set:</p>
             <table>
                 <thead>
                     <tr>
@@ -497,7 +511,7 @@ overridden, then the latest value will be returned, not the original default.</p
                         <td>--schemaName (or -s)</td>
                         <td>String</td>
                         <td>The schema of the table to process</td>
-                        <td>Optional, defaults to <strong>dbo</strong></td>
+                        <td>Optional, defaults to <strong>dbo</strong>.  This option is not applicable for MySQL databases using <strong>GenerateTemplatesMySQL</strong></td>
                     </tr>
                     <tr>
                         <td>--namespace (or -n)</td>
@@ -527,7 +541,7 @@ overridden, then the latest value will be returned, not the original default.</p
             </table>
 
             <h4>Example commands</h4>
-            <p>To generate all tables for the local database called <strong>Northwind</strong>, outputting all files in the same location, execute:</p>
+            <p>To generate all tables for the local SQL Server database called <strong>Northwind</strong>, outputting all files in the same location, execute:</p>
             <pre><code>GenerateTemplatesSQLServer --databaseName "Northwind" --tableName "*"</code></pre>
 
             <p>To generate the file for the <strong>dbo.Users</strong> table, using a custom connection string, execute:</p>
@@ -538,11 +552,11 @@ overridden, then the latest value will be returned, not the original default.</p
 
             <h4>Updating the tool</h4>
             <p>To update the tool to the latest version, execute:</p>
-            <pre><code>dotnet tool update --global DBConfirm.TemplateGeneration</code></pre>
+            <pre><code>dotnet tool update --global DBConfirm.TemplateGeneration.SQLServer</code></pre>
 
             <h4>Uninstalling the tool</h4>
             <p>To uninstall the tool, execute:</p>
-            <pre><code>dotnet tool uninstall --global DBConfirm.TemplateGeneration</code></pre>
+            <pre><code>dotnet tool uninstall --global DBConfirm.TemplateGeneration.SQLServer</code></pre>
         </>
     );
 }

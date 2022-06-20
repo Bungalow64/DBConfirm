@@ -4,7 +4,7 @@ export default function Overview() {
     return (
         <>
             <h2 id="introduction">Introduction</h2>
-            <p>A C#-based testing framework to write and run tests for logic within SQL Server</p>
+            <p>A C#-based testing framework to write and run tests for logic within SQL Server and MySQL</p>
             <p><a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Core/"><img
                 src="https://img.shields.io/nuget/v/DBConfirm.Core" alt="" /></a>
                 <a target="_blank" rel="noreferrer" href="https://www.nuget.org/packages/DBConfirm.Core/"><img
@@ -21,7 +21,7 @@ export default function Overview() {
 
             </p>
             <h2 id="what-is-DBConfirm-">What is DBConfirm?</h2>
-            <p>DBConfirm is a unit testing framework for SQL Server databases from within .Net projects.  Tests can be written to check that stored procedures and views behave
+            <p>DBConfirm is a unit testing framework for SQL databases from within .Net projects.  Tests can be written to check that stored procedures and views behave
 			as you'd expect, and can be used to help reduce the number of bugs introduced.  DBConfirm also provides patterns and tools to easily set up prerequisite data needed for your tests.</p>
             <h2 id="why-">Why?</h2>
             <p>Developers are pretty good at writing unit tests for their application logic already, but sometimes database
@@ -91,8 +91,8 @@ export default function Overview() {
                 </aside>
             </div>
 
-            <h2>What versions of SQL Server does DBConfirm work with?</h2>
-            <p>DBConfirm is compatible with SQL Server 2014, 2016, 2017, 2019 and with Azure SQL Database.</p>
+            <h2>What versions of SQL does DBConfirm work with?</h2>
+            <p>DBConfirm is compatible with SQL Server 2014, 2016, 2017, 2019 and with Azure SQL Database.  There are also packages to work with MySQL 8.</p>
 
             <h2 id="getting-started">Getting started</h2>
             <p>See the <a href="/quickstart">Quick Start</a> guide for getting started.</p>

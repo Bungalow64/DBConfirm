@@ -390,20 +390,29 @@ export default function WritingTests() {
             </p>
             <p>Therefore, always make sure you cast your expected values to the correct type.</p>
 
-            <pre><code className="lang-csharp">results
-            {"\n"}<span className="hljs-meta">    .<span className="hljs-title">ValidateRow</span></span>(<span className="hljs-number">0</span>)
-            {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"IntColumn"</span>, <span className="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares int/Int32 values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"SmallIntColumn"</span>, (<span className="hljs-keyword">short</span>)<span className="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares smallint/short/Int16 values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"BigIntColumn"</span>, <span className="hljs-number">10L</span>)<span className="hljs-comment"> {'//'} Compares bigint/long/Int64 values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"DecimalColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares decimal values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"MoneyColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares money values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"SmallMoneyColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares smallmoney values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"NumericColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares numeric values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"FloatColumn"</span>, <span className="hljs-number">10d</span>)<span className="hljs-comment"> {'//'} Compares float/double values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"RealColumn"</span>, <span className="hljs-number">10f</span>)<span className="hljs-comment"> {'//'} Compares real/single values</span>
-                {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"TinyIntColumn"</span>, (<span className="hljs-keyword">byte</span>)<span className="hljs-number">10</span>);<span className="hljs-comment"> {'//'} Compares tinyint/byte values</span>
-            </code></pre>
-
+            <div className="content-split">
+                <div className="content-split-primary">
+                    <pre><code className="lang-csharp">results
+                    {"\n"}<span className="hljs-meta">    .<span className="hljs-title">ValidateRow</span></span>(<span className="hljs-number">0</span>)
+                    {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"IntColumn"</span>, <span className="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares int/Int32 values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"SmallIntColumn"</span>, (<span className="hljs-keyword">short</span>)<span className="hljs-number">10</span>)<span className="hljs-comment"> {'//'} Compares smallint/short/Int16 values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"BigIntColumn"</span>, <span className="hljs-number">10L</span>)<span className="hljs-comment"> {'//'} Compares bigint/long/Int64 values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"DecimalColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares decimal values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"MoneyColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares money values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"SmallMoneyColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares smallmoney values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"NumericColumn"</span>, <span className="hljs-number">10m</span>)<span className="hljs-comment"> {'//'} Compares numeric values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"FloatColumn"</span>, <span className="hljs-number">10d</span>)<span className="hljs-comment"> {'//'} Compares float/double values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"RealColumn"</span>, <span className="hljs-number">10f</span>)<span className="hljs-comment"> {'//'} Compares real/single values</span>
+                        {"\n"}<span className="hljs-meta">        .<span className="hljs-title">AssertValue</span></span>(<span className="hljs-string">"TinyIntColumn"</span>, (<span className="hljs-keyword">byte</span>)<span className="hljs-number">10</span>);<span className="hljs-comment"> {'//'} Compares tinyint/byte values</span>
+                    </code></pre>
+                </div>
+                <aside>
+                    <header>For MySQL</header>
+                    <div className="aside-body">
+                        <p>Due to MySQL's handling of <code>real</code> objects (see <a href="//dev.mysql.com/doc/refman/8.0/en/numeric-types.html" target="_blank" rel="noreferrer">MySQL's data types</a>), data that is returned as <code>real</code> may need to be compared against <code>double</code> numbers.</p>
+                    </div>
+                </aside>
+            </div>
         </>
     );
 }

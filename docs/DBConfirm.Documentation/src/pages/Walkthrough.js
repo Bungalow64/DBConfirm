@@ -49,7 +49,7 @@ export default function Walkthrough() {
             </ul>
             <h3 id="the-database-to-test">The database to test</h3>
 
-            <p>We're going to be testing the sample Northwind database.  If you want to code along with this walkthrough, you can install the
+            <p>We're going to be testing the sample Northwind database on SQL Server.  If you want to code along with this walkthrough, you can install the
                 database using the <a href="https://github.com/Bungalow64/DBConfirm/blob/master/tests/SampleDatabases/SQLServer/2019/northwind_schema_2019_setup">Northwind set up script</a>.  This
                 script has no dependencies, you just need to open a new query window, copy that script in, and execute it.
             </p>

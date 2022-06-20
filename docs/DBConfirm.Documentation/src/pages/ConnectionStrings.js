@@ -67,6 +67,7 @@ export default function ConnectionStrings() {
                     </header>
                     <div className="aside-body">
                         <p>For NUnit, use <code>[TestFixture]</code> instead of <code>[TestClass]</code>, and inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
+                        <p>When using MySQL, this base class is <code>DBConfirm.Packages.MySQL.NUnit.NUnitBase</code>.</p>
                     </div>
                 </aside>
             </div>
@@ -94,6 +95,7 @@ export default function ConnectionStrings() {
                     </header>
                     <div className="aside-body">
                         <p>For NUnit, use <code>[TestFixture]</code> instead of <code>[TestClass]</code>, and inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
+                        <p>When using MySQL, this base class is <code>DBConfirm.Packages.MySQL.NUnit.NUnitBase</code>.</p>
                     </div>
                 </aside>
             </div>

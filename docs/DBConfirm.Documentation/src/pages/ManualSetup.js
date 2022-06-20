@@ -9,13 +9,19 @@ export default function ManualSetup() {
             <p>Here are the steps you need to take to manually add DBConfirm to a unit test project.  To use a dotnet template, see the <a href="/quickstart">Quick Start</a> guide.</p>
 
             <h3>Install packages</h3>
-            <p>Install the NuGet package for the test framework you&apos;re using, either MSTest or NUnit:</p>
+            <p>Install the NuGet package for the test framework you&apos;re using, either MSTest or NUnit and SQL Server or MySQL:</p>
             <ul>
                 <li>Install-Package <a target="_blank" rel="noreferrer"
                     href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.MSTest/">DBConfirm.Packages.SQLServer.MSTest</a>
                 </li>
                 <li>Install-Package <a target="_blank" rel="noreferrer"
                     href="https://www.nuget.org/packages/DBConfirm.Packages.SQLServer.NUnit/">DBConfirm.Packages.SQLServer.NUnit</a>
+                </li>
+                <li>Install-Package <a target="_blank" rel="noreferrer"
+                    href="https://www.nuget.org/packages/DBConfirm.Packages.MySQL.MSTest/">DBConfirm.Packages.MySQL.MSTest</a>
+                </li>
+                <li>Install-Package <a target="_blank" rel="noreferrer"
+                    href="https://www.nuget.org/packages/DBConfirm.Packages.MySQL.NUnit/">DBConfirm.Packages.MySQL.NUnit</a>
                 </li>
             </ul>
             <h3>Set test database configuration</h3>
@@ -67,6 +73,7 @@ export default function ManualSetup() {
                     <header>For NUnit</header>
                     <div className="aside-body">
                         <p>For NUnit, use <code>[TestFixture]</code> instead of <code>[TestClass]</code>, and inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
+                        <p>When using MySQL, this base class is <code>DBConfirm.Packages.MySQL.NUnit.NUnitBase</code>.</p>
                     </div>
                 </aside>
             </div>

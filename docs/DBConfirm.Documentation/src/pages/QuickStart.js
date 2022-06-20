@@ -13,7 +13,7 @@ export default function QuickStart() {
 
             <div className="content-split">
                 <div className="content-split-primary">
-                    <p>To install the package (using MSTest as the test framework), execute this command from a command prompt:</p>
+                    <p>To install the package (for SQL Server and using MSTest as the test framework), execute this command from a command prompt:</p>
                     <pre>
                         <code>
                             dotnet new -i DBConfirm.Templates.SQLServer.MSTest
@@ -21,9 +21,10 @@ export default function QuickStart() {
                     </pre>
                 </div>
                 <aside>
-                    <header>Package for NUnit</header>
+                    <header>Alternate packages</header>
                     <div className="aside-body">
-                        <p>To use NUnit as the test framework, use <code>DBConfirm.Templates.SQLServer.NUnit</code> instead.</p>
+                        <p>To use NUnit as the test framework, use <code><a href="//www.nuget.org/packages/DBConfirm.Templates.SQLServer.NUnit" target="_blank" rel="noreferrer">DBConfirm.Templates.SQLServer.NUnit</a></code> instead.</p>
+                        <p>For MySQL databases, use <code><a href="//www.nuget.org/packages/DBConfirm.Templates.MySQL.MSTest" target="_blank" rel="noreferrer">DBConfirm.Templates.MySQL.MSTest</a></code> or <code><a href="//www.nuget.org/packages/DBConfirm.Templates.MySQL.NUnit" target="_blank" rel="noreferrer">DBConfirm.Templates.MySQL.NUnit</a></code>.</p>
                     </div>
                 </aside>
             </div>
@@ -41,9 +42,10 @@ export default function QuickStart() {
                     <p>If you want to use a custom name for the new project, supply the <code>-n NewProjectName</code> argument, to set the name.</p>
                 </div>
                 <aside>
-                    <header>Command for NUnit</header>
+                    <header>Alternate commands</header>
                     <div className="aside-body">
                         <p>To add an NUnit test project, use <code>dbconfirm-sqlserver-nunit</code> instead.</p>
+                        <p>For MySQL databases, use <code>dbconfirm-mysql-mstest</code> or <code>dbconfirm-mysql-nunit</code>.</p>
                     </div>
                 </aside>
             </div>
@@ -78,6 +80,7 @@ export default function QuickStart() {
                     <header>For NUnit</header>
                     <div className="aside-body">
                         <p>For NUnit, <code>[TestFixture]</code> is used instead of <code>[TestClass]</code>, and the class will inherit from <code>DBConfirm.Packages.SQLServer.NUnit.NUnitBase</code> instead of <code>MSTestBase</code>.</p>
+                        <p>When using MySQL, this base class is <code>DBConfirm.Packages.MySQL.NUnit.NUnitBase</code>.</p>
                     </div>
                 </aside>
             </div>
