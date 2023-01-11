@@ -44,7 +44,7 @@ steps:
     projects: '**/NuGet/*.csproj'
     feedsToUse: 'select'
     vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
- - task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2
   displayName: Build (External)
   continueOnError: true
   inputs:
