@@ -72,9 +72,8 @@ steps:
   inputs:
     command: test
     projects: |
-      **/NuGet/**/*.csproj
-      !**/Sample*[Tt]ests/*.csproj
-    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2017.runsettings'
+      **/NuGet/Sample*[Tt]ests/*.csproj
+    arguments: '--configuration $(BuildConfiguration) --no-restore -s tests/Settings/SQL2017.runsettings'
 - task: DotNetCoreCLI@2
   displayName: Test Projects (database - SQL 2019)
   inputs:
@@ -88,6 +87,5 @@ steps:
   inputs:
     command: test
     projects: |
-      **/NuGet/**/*.csproj
-      !**/Sample*[Tt]ests/*.csproj
-    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2019.runsettings'
+      **/NuGet/Sample*[Tt]ests/*.csproj
+    arguments: '--configuration $(BuildConfiguration) --no-restore -s tests/Settings/SQL2019.runsettings'
