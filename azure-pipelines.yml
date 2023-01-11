@@ -14,13 +14,48 @@ steps:
     containerregistrytype: Container Registry
     dockerComposeFile: docker-compose.yml
     dockerComposeCommand: 'up -d'
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     projects: |
-      **/*.csproj
+      src/**/*.csproj
       !templates/**/templates/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: Pack
+  inputs:
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    requestedMajorVersion: 1
+    requestedMinorVersion: 0
+    requestedPatchVersion: 1
+    packagesToPack: 'src/**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: Push
+  inputs:
+    command: push
+    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
+    feedPublish: 'bungalow64'
+
+- task: DotNetCoreCLI@2
+  displayName: Restore (External)
+  inputs:
+    command: 'restore'
+    projects: '**/NuGet/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
+
+ task: DotNetCoreCLI@2
+  displayName: Build (External)
+  continueOnError: true
+  inputs:
+    projects: |
+      **/NuGet/*.csproj
+    arguments: '--configuration $(BuildConfiguration) --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(Build.BinariesDirectory)/GeneratedFiles'
+
 - task: DotNetCoreCLI@2
   displayName: Test (code)
   inputs:
@@ -29,17 +64,39 @@ steps:
       **/*[Tt]ests/*.csproj
       !**/Sample*/**/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
+
 - task: DotNetCoreCLI@2
-  displayName: Test (database - SQL 2017)
+  displayName: Test Projects (database - SQL 2017)
   inputs:
     command: test
     projects: |
       **/Sample*[Tt]ests/*.csproj
+      !**/NuGet/**/*.csproj
     arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2017.runsettings'
+
 - task: DotNetCoreCLI@2
-  displayName: Test (database - SQL 2019)
+  displayName: Test NuGet (database - SQL 2017)
+  inputs:
+    command: test
+    projects: |
+      **/NuGet/**/*.csproj
+      !**/Sample*[Tt]ests/*.csproj
+    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2017.runsettings'
+
+- task: DotNetCoreCLI@2
+  displayName: Test Projects (database - SQL 2019)
   inputs:
     command: test
     projects: |
       **/Sample*[Tt]ests/*.csproj
+      !**/NuGet/**/*.csproj
+    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2019.runsettings'
+
+- task: DotNetCoreCLI@2
+  displayName: Test NuGet (database - SQL 2019)
+  inputs:
+    command: test
+    projects: |
+      **/NuGet/**/*.csproj
+      !**/Sample*[Tt]ests/*.csproj
     arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2019.runsettings'

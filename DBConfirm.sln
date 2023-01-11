@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.NUnit.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Frameworks", "2.Frameworks", "{CDC9E680-83AA-4670-AF5D-FD3504EEADB0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Nuget.Tests", "tests\Sample.Core.MSTest.Nuget.Tests\Sample.Core.MSTest.Nuget.Tests.csproj", "{F21804F3-CC3A-4F18-9EBE-D947D40193D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.MSTest.Nuget.Tests", "tests\NuGet\Sample.Core.MSTest.Nuget.Tests\Sample.Core.MSTest.Nuget.Tests.csproj", "{F21804F3-CC3A-4F18-9EBE-D947D40193D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Databases", "2.Databases", "{414B269E-6A51-4800-B92B-0271C8139441}"
 EndProject
@@ -43,9 +43,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Tools", "0.Tools", "{068F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration", "tools\TemplateGeneration.SQLServer\TemplateGeneration.csproj", "{5FC9A8DE-85E4-455F-9DB3-97BC00937A2E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.MSTest.Northwind.Tests", "tests\Sample.MSTest.Northwind.Tests\Sample.MSTest.Northwind.Tests.csproj", "{C0982F5D-57A2-49DD-B19D-0BE690BF80B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.MSTest.Northwind.Tests", "tests\NuGet\Sample.MSTest.Northwind.Tests\Sample.MSTest.Northwind.Tests.csproj", "{C0982F5D-57A2-49DD-B19D-0BE690BF80B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.NUnit.Northwind.Tests", "tests\Sample.NUnit.Northwind.Tests\Sample.NUnit.Northwind.Tests.csproj", "{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.NUnit.Northwind.Tests", "tests\NuGet\Sample.NUnit.Northwind.Tests\Sample.NUnit.Northwind.Tests.csproj", "{E2C004ED-60B9-4C3A-BCD5-2ACD19FEB0BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGeneration.Tests", "tests\TemplateGeneration.Tests\TemplateGeneration.Tests.csproj", "{D3118EF1-A158-40B2-9D55-80A68BE7C8EA}"
 EndProject
