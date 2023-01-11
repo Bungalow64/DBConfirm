@@ -38,18 +38,18 @@ steps:
     searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
     feedPublish: 'bungalow64'
 - task: DotNetCoreCLI@2
-  displayName: Restore (External)
+  displayName: Restore (NuGet)
   inputs:
     command: 'restore'
-    projects: '**/NuGet/*.csproj'
+    projects: '**/NuGet/**/*.csproj'
     feedsToUse: 'select'
     vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
 - task: DotNetCoreCLI@2
-  displayName: Build (External)
+  displayName: Build (NuGet)
   continueOnError: true
   inputs:
     projects: |
-      **/NuGet/*.csproj
+      **/NuGet/**/*.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(Build.BinariesDirectory)/GeneratedFiles'
 - task: DotNetCoreCLI@2
   displayName: Test (code)
