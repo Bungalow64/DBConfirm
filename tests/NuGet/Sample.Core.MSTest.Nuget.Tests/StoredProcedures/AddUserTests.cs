@@ -6,7 +6,7 @@ using DBConfirm.Core.Data;
 using DBConfirm.Core.Parameters;
 using DBConfirm.Packages.SQLServer.MSTest;
 
-namespace Sample.Core.MSTest.Tests.StoredProcedures
+namespace Sample.Core.MSTest.Nuget.Tests.StoredProcedures
 {
     [TestClass]
     public class AddUserTests : MSTestBase

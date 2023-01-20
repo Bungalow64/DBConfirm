@@ -1,17 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using DBConfirm.Core.DataResults;
 using DBConfirm.Core.Data;
 using DBConfirm.Core.Parameters;
-using DBConfirm.Packages.SQLServer.MSTest;
+using DBConfirm.Packages.SQLServer.NUnit;
+using NUnit.Framework;
 
-namespace Sample.Core.MSTest.Tests.StoredProcedures
+namespace Sample.Core.NUnit.Nuget.Tests.StoredProcedures
 {
-    [TestClass]
-    public class AddUserTests : MSTestBase
+    public class AddUserTests : NUnitBase
     {
-        [TestMethod]
+        [Test]
         public async Task AddUser_ValidData_UserAdded()
         {
             var expectedData = new DataSetRow
@@ -92,7 +91,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                 });
         }
 
-        [TestMethod]
+        [Test]
         public async Task AddUser_Incorrect_AssertRowCount_TestFailure()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
@@ -113,12 +112,12 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
 
             QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-            var exception = Assert.ThrowsException<AssertFailedException>(() => data.AssertRowCount(3));
+            var exception = Assert.Throws<AssertionException>(() => data.AssertRowCount(3));
 
-            Assert.AreEqual("Assert.AreEqual failed. Expected:<3>. Actual:<2>. The total row count is unexpected", exception.Message);
+            Assert.AreEqual("  The total row count is unexpected\r\n  Expected: 3\r\n  But was:  2\r\n", exception.Message);
         }
 
-        [TestMethod]
+        [Test]
         public async Task AddUser_Incorrect_AssertRowDoesNotExist_TestFailure()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
@@ -139,16 +138,16 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
 
             QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-            var exception = Assert.ThrowsException<AssertFailedException>(() => data.AssertRowDoesNotExist(new DataSetRow
+            var exception = Assert.Throws<AssertionException>(() => data.AssertRowDoesNotExist(new DataSetRow
                 {
                     { "FirstName", "Jamie" },
                     { "LastName", "Burns" }
                 }));
 
-            Assert.AreEqual("Assert.Fail failed. Row 0 matches the expected data that should not match anything: \r\n[FirstName, Jamie]\r\n[LastName, Burns]", exception.Message);
+            Assert.AreEqual("Row 0 matches the expected data that should not match anything: \r\n[FirstName, Jamie]\r\n[LastName, Burns]", exception.Message);
         }
 
-        [TestMethod]
+        [Test]
         public async Task AddUser_Incorrect_AssertRowDoesNotExist_SecondRow_TestFailure()
         {
             await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
@@ -169,13 +168,13 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
 
             QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-            var exception = Assert.ThrowsException<AssertFailedException>(() => data.AssertRowDoesNotExist(new DataSetRow
+            var exception = Assert.Throws<AssertionException>(() => data.AssertRowDoesNotExist(new DataSetRow
                 {
                     { "FirstName", "AAA" },
                     { "LastName", "FFF" }
                 }));
 
-            Assert.AreEqual("Assert.Fail failed. Row 1 matches the expected data that should not match anything: \r\n[FirstName, AAA]\r\n[LastName, FFF]", exception.Message);
+            Assert.AreEqual("Row 1 matches the expected data that should not match anything: \r\n[FirstName, AAA]\r\n[LastName, FFF]", exception.Message);
         }
     }
 }
