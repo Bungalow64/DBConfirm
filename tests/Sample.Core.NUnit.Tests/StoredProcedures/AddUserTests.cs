@@ -114,7 +114,7 @@ namespace Sample.Core.NUnit.Tests.StoredProcedures
 
             var exception = Assert.Throws<AssertionException>(() => data.AssertRowCount(3));
 
-            Assert.AreEqual("  The total row count is unexpected\r\n  Expected: 3\r\n  But was:  2\r\n", exception.Message);
+            Assert.AreEqual($"  The total row count is unexpected{Environment.NewLine}  Expected: 3{Environment.NewLine}  But was:  2{Environment.NewLine}", exception.Message);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace Sample.Core.NUnit.Tests.StoredProcedures
                     { "LastName", "Burns" }
                 }));
 
-            Assert.AreEqual("Row 0 matches the expected data that should not match anything: \r\n[FirstName, Jamie]\r\n[LastName, Burns]", exception.Message);
+            Assert.AreEqual($"Row 0 matches the expected data that should not match anything: {Environment.NewLine}[FirstName, Jamie]{Environment.NewLine}[LastName, Burns]", exception.Message);
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace Sample.Core.NUnit.Tests.StoredProcedures
                     { "LastName", "FFF" }
                 }));
 
-            Assert.AreEqual("Row 1 matches the expected data that should not match anything: \r\n[FirstName, AAA]\r\n[LastName, FFF]", exception.Message);
+            Assert.AreEqual($"Row 1 matches the expected data that should not match anything: {Environment.NewLine}[FirstName, AAA]{Environment.NewLine}[LastName, FFF]", exception.Message);
         }
     }
 }

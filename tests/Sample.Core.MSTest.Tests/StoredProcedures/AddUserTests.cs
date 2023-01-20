@@ -145,7 +145,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                     { "LastName", "Burns" }
                 }));
 
-            Assert.AreEqual("Assert.Fail failed. Row 0 matches the expected data that should not match anything: \r\n[FirstName, Jamie]\r\n[LastName, Burns]", exception.Message);
+            Assert.AreEqual($"Assert.Fail failed. Row 0 matches the expected data that should not match anything: {Environment.NewLine}[FirstName, Jamie]{Environment.NewLine}[LastName, Burns]", exception.Message);
         }
 
         [TestMethod]
@@ -175,7 +175,7 @@ namespace Sample.Core.MSTest.Tests.StoredProcedures
                     { "LastName", "FFF" }
                 }));
 
-            Assert.AreEqual("Assert.Fail failed. Row 1 matches the expected data that should not match anything: \r\n[FirstName, AAA]\r\n[LastName, FFF]", exception.Message);
+            Assert.AreEqual($"Assert.Fail failed. Row 1 matches the expected data that should not match anything: {Environment.NewLine}[FirstName, AAA]{Environment.NewLine}[LastName, FFF]", exception.Message);
         }
     }
 }
