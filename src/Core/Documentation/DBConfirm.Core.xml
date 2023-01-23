@@ -567,6 +567,20 @@
             <param name="rowNumber">The row number (zero-based)</param>
             <returns>Returns the data row</returns>
         </member>
+        <member name="M:DBConfirm.Core.DataResults.QueryResult.GetRowIfPossible(System.Int32)">
+            <summary>
+            Gets the data row for the specific position, if the row exists.  If it doesn't exist, null is returned
+            </summary>
+            <param name="rowNumber">The row number (zero-based)</param>
+            <returns>Returns the data row, or null if the row isn't found</returns>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.QueryResult.CheckColumnExists(System.String)">
+            <summary>
+            Checks that a specific column exists in the data set, returning a boolean as the result
+            </summary>
+            <param name="expectedColumnName">The column name (case-sensitive)</param>
+            <returns>Returns a boolean indicating whether the column exists</returns>
+        </member>
         <member name="T:DBConfirm.Core.DataResults.RowResult">
             <summary>
             The data for a specific row
@@ -578,6 +592,15 @@
             </summary>
             <param name="queryResult">The parent <see cref="T:DBConfirm.Core.DataResults.QueryResult"/> object.  Must not be null</param>
             <param name="rowNumber">The row number (zero-based)</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.RowResult.#ctor(DBConfirm.Core.DataResults.QueryResult,System.Int32,System.Boolean)">
+            <summary>
+            Constructor, setting the parent <see cref="T:DBConfirm.Core.DataResults.QueryResult"/> and row number (zero-based).  Validates that the row number exists in the parent data set
+            </summary>
+            <param name="queryResult">The parent <see cref="T:DBConfirm.Core.DataResults.QueryResult"/> object.  Must not be null</param>
+            <param name="rowNumber">The row number (zero-based)</param>
+            <param name="skipValidation">Whether the validation should be skipped</param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:DBConfirm.Core.DataResults.RowResult.AssertValue(System.String,System.Object)">
@@ -608,6 +631,13 @@
             </summary>
             <param name="expectedData">The expected data to match.  Respects <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> objects</param>
             <returns>Returns whether the values match the current row</returns>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.RowResult.DoValuesMatch(DBConfirm.Core.Data.DataSetRow)">
+            <summary>
+            Checks that the row matches the expected data, returning a boolean as the result instead of failing the test
+            </summary>
+            <param name="expectedData">The expected data to match.  Respects <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> objects</param>
+            <returns>Returns a boolean indicating if the values match</returns>
         </member>
         <member name="T:DBConfirm.Core.DataResults.ScalarResult`1">
             <summary>
