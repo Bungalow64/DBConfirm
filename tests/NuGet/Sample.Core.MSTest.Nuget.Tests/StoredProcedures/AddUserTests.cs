@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Threading.Tasks;
+﻿using DBConfirm.Core.Data;
 using DBConfirm.Core.DataResults;
-using DBConfirm.Core.Data;
 using DBConfirm.Core.Parameters;
 using DBConfirm.Packages.SQLServer.MSTest;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Threading.Tasks;
 
-namespace Sample.Core.MSTest.Tests.StoredProcedures
+namespace Sample.Core.MSTest.Nuget.Tests.StoredProcedures
 {
     [TestClass]
     public class AddUserTests : MSTestBase

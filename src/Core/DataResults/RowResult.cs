@@ -35,6 +35,25 @@ namespace DBConfirm.Core.DataResults
         }
 
         /// <summary>
+        /// Constructor, setting the parent <see cref="QueryResult"/> and row number (zero-based).  Validates that the row number exists in the parent data set
+        /// </summary>
+        /// <param name="queryResult">The parent <see cref="QueryResult"/> object.  Must not be null</param>
+        /// <param name="rowNumber">The row number (zero-based)</param>
+        /// <param name="skipValidation">Whether the validation should be skipped</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        internal RowResult(QueryResult queryResult, int rowNumber, bool skipValidation)
+        {
+            if (queryResult == null)
+            {
+                throw new ArgumentNullException(nameof(queryResult));
+            }
+
+            _row = queryResult.GetRowIfPossible(rowNumber);
+            _queryResult = queryResult;
+            _rowNumber = rowNumber;
+        }
+
+        /// <summary>
         /// Asserts that a specific value exists for the given column.  Also asserts that the column exists
         /// </summary>
         /// <param name="columnName">The column name (case-sensitive)</param>
@@ -87,9 +106,38 @@ namespace DBConfirm.Core.DataResults
             return expectedData.All(p => ValidateValue(p.Key, p.Value));
         }
 
+        /// <summary>
+        /// Checks that the row matches the expected data, returning a boolean as the result instead of failing the test
+        /// </summary>
+        /// <param name="expectedData">The expected data to match.  Respects <see cref="Comparisons.Abstract.IComparison"/> objects</param>
+        /// <returns>Returns a boolean indicating if the values match</returns>
+        internal bool DoValuesMatch(DataSetRow expectedData)
+        {
+            expectedData = expectedData ?? new DataSetRow();
+
+            return expectedData.All(p => ValidateValueNoAssertions(p.Key, p.Value));
+        }
+
         private bool ValidateValue(string columnName, object expectedValue)
         {
             _queryResult.AssertColumnExists(columnName);
+
+            object value = _row[columnName];
+
+            return ValueValidation.Validate(expectedValue, value);
+        }
+
+        private bool ValidateValueNoAssertions(string columnName, object expectedValue)
+        {
+            if (!_queryResult.CheckColumnExists(columnName))
+            {
+                return false;
+            }
+
+            if (_row is null)
+            {
+                return false;
+            }
 
             object value = _row[columnName];
 
