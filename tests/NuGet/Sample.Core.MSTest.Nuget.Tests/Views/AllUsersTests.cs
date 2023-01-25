@@ -5,6 +5,8 @@ using DBConfirm.Packages.SQLServer.MSTest;
 using DBConfirm.Core.Parameters;
 using DBConfirm.Core.DataResults;
 using DBConfirm.Core.Data;
+using Sample.Core.MSTest.Nuget.Tests.Templates;
+using Sample.Core.MSTest.Nuget.Tests.Templates.Complex;
 
 namespace Sample.Core.MSTest.Nuget.Tests.Views
 {
@@ -75,6 +77,68 @@ namespace Sample.Core.MSTest.Nuget.Tests.Views
                 .AssertRowExists(new DataSetRow
                 {
                     { "FirstName", "Stuart" }
+                });
+        }
+
+        [TestMethod]
+        public async Task AllUsers_UseComplexData_ReuseTemplate()
+        {
+            UserTemplate user = new UserTemplate
+            {
+                { "FirstName", "Jamie" }
+            };
+
+            UserWithAddressTemplate userWithAddress = new UserWithAddressTemplate
+            {
+                User = user
+            };
+            await TestRunner.InsertTemplateAsync(userWithAddress);
+
+            await TestRunner.InsertTemplateAsync(user);
+
+            QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
+
+            results
+                .AssertRowCount(1);
+        }
+
+        [TestMethod]
+        public async Task AllUsers_UseFluent()
+        {
+            UserTemplate user = new UserTemplate()
+                .WithId(1001)
+                .WithFirstName("Jamie");
+
+            UserWithAddressTemplate userWithAddress = new UserWithAddressTemplate
+            {
+                User = user
+            };
+            await TestRunner.InsertTemplateAsync(userWithAddress);
+            await TestRunner.InsertTemplateAsync(user);
+
+            QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
+
+            results
+                .AssertRowCount(1)
+                .AssertRowValues(0, new DataSetRow
+                {
+                    { "Id", 1001 },
+                    { "FirstName", "Jamie" }
+                });
+        }
+
+        [TestMethod]
+        public async Task AllUsers_DefaultComplex()
+        {
+            UserWithAddressTemplate template = await TestRunner.InsertTemplateAsync<UserWithAddressTemplate>();
+
+            QueryResult results = await TestRunner.ExecuteViewAsync("dbo.AllUsers");
+
+            results
+                .AssertRowCount(1)
+                .AssertRowValues(0, new DataSetRow
+                {
+                    { "FirstName", template.User.DefaultData["FirstName"] }
                 });
         }
     }
