@@ -42,8 +42,8 @@ function App() {
           <Route path="/walkthrough"><Walkthrough /></Route>
           <Route path="/"><Overview /></Route>
         </Switch>
-        <Footer />
         <Analytics />
+        <Footer />
       </div>
     </Router>
   );
