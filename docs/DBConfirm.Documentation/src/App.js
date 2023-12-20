@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Sidebar from './components/Sidebar';
 import Overview from './pages/Overview';
 import WritingTests from './pages/WritingTests';
@@ -42,6 +43,7 @@ function App() {
           <Route path="/"><Overview /></Route>
         </Switch>
         <Footer />
+        <Analytics />
       </div>
     </Router>
   );
