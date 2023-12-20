@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
+    <TargetFramework>net6</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,10 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DBConfirm.Packages.SQLServer.MSTest" Version="0.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="coverlet.collector" Version="1.2.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Packages.SQLServer.NUnit\Packages.SQLServer.NUnit.csproj" />
   </ItemGroup>
 
 </Project>

@@ -147,7 +147,7 @@ namespace DBConfirm.Core.DataResults
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertRowPositionExists(int expectedRowPosition)
         {
-            TestFramework.IsTrue(TotalRows > expectedRowPosition && expectedRowPosition >= 0, $"There is no row at position {expectedRowPosition} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
+            TestFramework.IsTrue(IsRowFound(expectedRowPosition), $"There is no row at position {expectedRowPosition} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
             return this;
         }
 
@@ -219,15 +219,7 @@ namespace DBConfirm.Core.DataResults
 
             for (int x = 0; x < TotalRows; x++)
             {
-                bool isMatch = false;
-                try
-                {
-                    AssertRowValues(x, unexpectedData);
-                    isMatch = true;
-                }
-                catch (Exception) { }
-
-                if (isMatch)
+                if (CheckRowValues(x, unexpectedData))
                 {
                     TestFramework.Fail($"Row {x} matches the expected data that should not match anything: {unexpectedData}");
                 }
@@ -247,12 +239,48 @@ namespace DBConfirm.Core.DataResults
             return RawData.Rows[rowNumber];
         }
 
+        /// <summary>
+        /// Gets the data row for the specific position, if the row exists.  If it doesn't exist, null is returned
+        /// </summary>
+        /// <param name="rowNumber">The row number (zero-based)</param>
+        /// <returns>Returns the data row, or null if the row isn't found</returns>
+        internal DataRow GetRowIfPossible(int rowNumber)
+        {
+            if (IsRowFound(rowNumber))
+            {
+                return RawData.Rows[rowNumber];
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks that a specific column exists in the data set, returning a boolean as the result
+        /// </summary>
+        /// <param name="expectedColumnName">The column name (case-sensitive)</param>
+        /// <returns>Returns a boolean indicating whether the column exists</returns>
+        internal bool CheckColumnExists(string expectedColumnName)
+        {
+            return ColumnNames.Any(p => p.Equals(expectedColumnName));
+        }
+
         private void AssertColumnNames(DataSetRow expectedData)
         {
             foreach (KeyValuePair<string, object> row in expectedData)
             {
                 AssertColumnExists(row.Key);
             }
+        }
+
+        private bool CheckRowValues(int rowNumber, DataSetRow expectedData)
+        {
+            var row = new RowResult(this, rowNumber);
+            return row.DoValuesMatch(expectedData);
+        }
+
+        private bool IsRowFound(int expectedRowPosition)
+        {
+            return TotalRows > expectedRowPosition && expectedRowPosition >= 0;
         }
     }
 }
