@@ -1,8 +1,9 @@
 ﻿using DBConfirm.Core.Data;
 using DBConfirm.Core.DataResults;
 using DBConfirm.Core.TestFrameworks.Abstract;
-using NUnit.Framework;
 using DBConfirm.Frameworks.MSTest;
+using NUnit.Framework;
+using System;
 using System.Data;
 using System.Linq;
 
@@ -749,6 +750,423 @@ namespace Core.Tests.DataResults
 
         #endregion
 
+        #region AssertColumnValuesUnique
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_EmptyColumnNames_NoFailure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("UserId", typeof(int));
+            table.Columns.Add("DomainId", typeof(int));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique());
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_NullColumnNames_NoFailure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("UserId", typeof(int));
+            table.Columns.Add("DomainId", typeof(int));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique(null));
+        }
+
+        [TestCase("OtherId")]
+        [TestCase("DomainId2")]
+        [TestCase("domainId")]
+        public void QueryResult_AssertColumnValuesUnique_SpecifyColumnNotAvailable_Failure(string columnName)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("UserId", typeof(int));
+            table.Columns.Add("DomainId", typeof(int));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique(columnName));
+
+            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName} to be found but the only columns found are UserId, DomainId", exception.Message);
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_SpecifyColumnsNotAvailable_Failure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("UserId", typeof(int));
+            table.Columns.Add("DomainId", typeof(int));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("Other1", "Other2"));
+
+            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column Other1 to be found but the only columns found are UserId, DomainId", exception.Message);
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_SpecifySomeColumnsNotAvailable_Failure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("UserId", typeof(int));
+            table.Columns.Add("DomainId", typeof(int));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("DomainId", "Other1", "Other2"));
+
+            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column Other1 to be found but the only columns found are UserId, DomainId", exception.Message);
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_SpecifyDuplicateColumnsNotAvailable_Failure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("UserId", typeof(int));
+            table.Columns.Add("DomainId", typeof(int));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("Other1", "Other1"));
+
+            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column Other1 to be found but the only columns found are UserId, DomainId", exception.Message);
+        }
+
+        [TestCase("UserId")]
+        [TestCase("DomainId")]
+        public void QueryResult_AssertColumnValuesUnique_SingleColumn_DataUnique_NoFailure(string columnName)
+        {
+            DataTable table = CreateDefaultTable();
+
+            AddRow(table, 1, 2);
+            AddRow(table, 3, 4);
+            AddRow(table, 5, 6);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique(columnName));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_MultipleColumns_DataUnique_NoFailure()
+        {
+            DataTable table = CreateDefaultTable();
+
+            AddRow(table, 1, 2);
+            AddRow(table, 3, 4);
+            AddRow(table, 5, 6);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_MultipleColumns_DataUniqueInOneColumnOnly_NoFailure()
+        {
+            DataTable table = CreateDefaultTable();
+
+            AddRow(table, 1, 2);
+            AddRow(table, 3, 2);
+            AddRow(table, 5, 2);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_SingleColumn_DataUniqueInColumnOnly_NoFailure()
+        {
+            DataTable table = CreateDefaultTable();
+
+            AddRow(table, 1, 2);
+            AddRow(table, 3, 2);
+            AddRow(table, 5, 2);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique("UserId"));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_SingleColumn_DataUniqueInOtherColumnOnly_Failure()
+        {
+            DataTable table = CreateDefaultTable();
+
+            AddRow(table, 1, 2);
+            AddRow(table, 3, 7);
+            AddRow(table, 5, 7);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("DomainId"));
+
+            Assert.AreEqual($"Assert.Fail failed. Duplicate data found for column DomainId in rows 1, 2", exception.Message);
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_MultipleColumns_SomeDataNotUnique_Failure()
+        {
+            DataTable table = CreateDefaultTable();
+
+            AddRow(table, 1, 2);
+            AddRow(table, 3, 2);
+            AddRow(table, 3, 2);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
+
+            Assert.AreEqual($"Assert.Fail failed. Duplicate data found for columns UserId, DomainId in rows 1, 2", exception.Message);
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_MultipleColumns_AllDataNotUnique_Failure()
+        {
+            DataTable table = CreateDefaultTable();
+
+            AddRow(table, 3, 2);
+            AddRow(table, 3, 2);
+            AddRow(table, 3, 2);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
+
+            Assert.AreEqual($"Assert.Fail failed. Duplicate data found for columns UserId, DomainId in rows 0, 1, 2", exception.Message);
+        }
+
+        [TestCase("Col1")]
+        [TestCase("Col2")]
+        public void QueryResult_AssertColumnValuesUnique_Dates_SingleColumn_Unique_NoFailure(string columnName)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(DateTime));
+            table.Columns.Add("Col2", typeof(DateTime));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow(DateTime.Parse("01-Mar-2023 09:23:32"), DateTime.Parse("02-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("03-Mar-2023 09:23:32"), DateTime.Parse("04-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("05-Mar-2023 09:23:32"), DateTime.Parse("06-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("06-Mar-2023 09:23:32"), DateTime.Parse("07-Mar-2023 09:23:32"));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique(columnName));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_Dates_MultipleColumns_Unique_NoFailure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(DateTime));
+            table.Columns.Add("Col2", typeof(DateTime));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow(DateTime.Parse("01-Mar-2023 09:23:32"), DateTime.Parse("02-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("03-Mar-2023 09:23:32"), DateTime.Parse("04-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("03-Mar-2023 09:23:32"), DateTime.Parse("06-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("06-Mar-2023 09:23:32"), DateTime.Parse("02-Mar-2023 09:23:32"));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique("Col1", "Col2"));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_Dates_NotUnique_Failure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(DateTime));
+            table.Columns.Add("Col2", typeof(DateTime));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow(DateTime.Parse("01-Mar-2023 09:23:32"), DateTime.Parse("02-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("03-Mar-2023 09:23:32"), DateTime.Parse("04-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("06-Mar-2023 09:23:32"), DateTime.Parse("07-Mar-2023 09:23:32"));
+            AddRow(DateTime.Parse("03-Mar-2023 09:23:32"), DateTime.Parse("04-Mar-2023 09:23:32"));
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("Col1", "Col2"));
+
+            Assert.AreEqual($"Assert.Fail failed. Duplicate data found for columns Col1, Col2 in rows 1, 3", exception.Message);
+        }
+
+        [TestCase("Col1")]
+        [TestCase("Col2")]
+        public void QueryResult_AssertColumnValuesUnique_Strings_SingleColumn_Unique_NoFailure(string columnName)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(string));
+            table.Columns.Add("Col2", typeof(string));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow("a", "b");
+            AddRow("b", "c");
+            AddRow("c", "d");
+            AddRow("d", "e");
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique(columnName));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_Strings_NotUnique_Failure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(string));
+            table.Columns.Add("Col2", typeof(string));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow("a", "b");
+            AddRow("b", "c");
+            AddRow("c", "d");
+            AddRow("d", "b");
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("Col2"));
+
+            Assert.AreEqual($"Assert.Fail failed. Duplicate data found for column Col2 in rows 0, 3", exception.Message);
+        }
+
+        [TestCase("Col1")]
+        [TestCase("Col2")]
+        public void QueryResult_AssertColumnValuesUnique_Bools_SingleColumn_Unique_NoFailure(string columnName)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(bool));
+            table.Columns.Add("Col2", typeof(bool));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow(false, false);
+            AddRow(true, true);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique(columnName));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_Bools_MultipleColumns_Unique_NoFailure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(bool));
+            table.Columns.Add("Col2", typeof(bool));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow(false, false);
+            AddRow(true, true);
+            AddRow(false, true);
+            AddRow(true, false);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            Assert.DoesNotThrow(() =>
+                queryResult.AssertColumnValuesUnique("Col1", "Col2"));
+        }
+
+        [Test]
+        public void QueryResult_AssertColumnValuesUnique_Bools_NotUnique_Failure()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Col1", typeof(bool));
+            table.Columns.Add("Col2", typeof(bool));
+
+            void AddRow(object o1, object o2)
+            {
+                DataRow row = table.NewRow();
+                row["Col1"] = o1;
+                row["Col2"] = o2;
+                table.Rows.Add(row);
+            }
+
+            AddRow(false, false);
+            AddRow(true, false);
+
+            QueryResult queryResult = new QueryResult(_testFramework, table);
+
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+                queryResult.AssertColumnValuesUnique("Col2"));
+
+            Assert.AreEqual($"Assert.Fail failed. Duplicate data found for column Col2 in rows 0, 1", exception.Message);
+        }
+
+        #endregion
+
         #region AssertRowPositionExists
 
         [TestCase(1, 0)]
@@ -907,7 +1325,7 @@ namespace Core.Tests.DataResults
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertValue(rowNumber, columnName, expectedUserId));
 
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{ expectedUserId }>. Actual:<{ table.Rows[rowNumber][columnName] }>. Column { columnName } in row { rowNumber } has an unexpected value", exception.Message);
+            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedUserId}>. Actual:<{table.Rows[rowNumber][columnName]}>. Column {columnName} in row {rowNumber} has an unexpected value", exception.Message);
         }
 
         #endregion
@@ -1012,7 +1430,7 @@ namespace Core.Tests.DataResults
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { queryResult.AssertRowValues(rowNumber, expectedData); });
 
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedUserId}>. Actual:<{ table.Rows[rowNumber]["UserId"] }>. Column UserId in row { rowNumber } has an unexpected value", exception.Message);
+            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedUserId}>. Actual:<{table.Rows[rowNumber]["UserId"]}>. Column UserId in row {rowNumber} has an unexpected value", exception.Message);
         }
 
         [TestCase(0, 1001, 1502)]
@@ -1036,7 +1454,7 @@ namespace Core.Tests.DataResults
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { queryResult.AssertRowValues(rowNumber, expectedData); });
 
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedDomainId}>. Actual:<{ table.Rows[rowNumber]["DomainId"] }>. Column DomainId in row { rowNumber } has an unexpected value", exception.Message);
+            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedDomainId}>. Actual:<{table.Rows[rowNumber]["DomainId"]}>. Column DomainId in row {rowNumber} has an unexpected value", exception.Message);
         }
 
         #endregion
@@ -1142,7 +1560,7 @@ namespace Core.Tests.DataResults
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { queryResult.AssertRowExists(expectedData); });
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column { columnname } to be found but the only columns found are UserId, DomainId", exception.Message);
+            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnname} to be found but the only columns found are UserId, DomainId", exception.Message);
         }
 
         #endregion
@@ -1198,7 +1616,7 @@ namespace Core.Tests.DataResults
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { queryResult.AssertRowDoesNotExist(expectedData); });
 
-            Assert.AreEqual(@$"Assert.Fail failed. Row { matchingRowNumber } matches the expected data that should not match anything: 
+            Assert.AreEqual(@$"Assert.Fail failed. Row {matchingRowNumber} matches the expected data that should not match anything: 
 [UserId, {expectedData["UserId"]}]
 [DomainId, {expectedData["DomainId"]}]", exception.Message);
         }
@@ -1223,7 +1641,7 @@ namespace Core.Tests.DataResults
             var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             { queryResult.AssertRowDoesNotExist(expectedData); });
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column { columnname } to be found but the only columns found are UserId, DomainId", exception.Message);
+            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnname} to be found but the only columns found are UserId, DomainId", exception.Message);
         }
 
         #endregion

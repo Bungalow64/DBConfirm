@@ -515,6 +515,14 @@
             <param name="notExpectedColumnNames">The column names (case-sensitive)</param>
             <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.QueryResult"/> object</returns>
         </member>
+        <member name="M:DBConfirm.Core.DataResults.QueryResult.AssertColumnValuesUnique(System.String[])">
+            <summary>
+            Asserts that the data across the selected columns is unique
+            </summary>
+            <param name="uniqueColumnNames">The column names (case-sensitive).  Duplicates are ignored</param>
+            <remarks>If multiple columns are selected, then uniqueness is determined by checking the data in all columns, not each column individually</remarks>
+            <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.QueryResult"/> object</returns>
+        </member>
         <member name="M:DBConfirm.Core.DataResults.QueryResult.AssertRowPositionExists(System.Int32)">
             <summary>
             Asserts that a row exists at a specific position (zero-based)
