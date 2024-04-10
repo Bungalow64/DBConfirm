@@ -2,19 +2,18 @@ using DBConfirm.Core.Data;
 using DBConfirm.Core.Templates;
 using DBConfirm.Core.Templates.Placeholders;
 
-namespace Sample.Northwind.NUnit.Tests.Templates
+namespace Sample.Northwind.NUnit.Tests.Templates;
+
+public class CustomerCustomerDemoTemplate : BaseSimpleTemplate<CustomerCustomerDemoTemplate>
 {
-    public class CustomerCustomerDemoTemplate : BaseSimpleTemplate<CustomerCustomerDemoTemplate>
+    public override string TableName => "[dbo].[CustomerCustomerDemo]";
+
+    public override DataSetRow DefaultData => new()
     {
-        public override string TableName => "[dbo].[CustomerCustomerDemo]";
+        ["CustomerID"] = Placeholders.IsRequired(),
+        ["CustomerTypeID"] = Placeholders.IsRequired()
+    };
 
-        public override DataSetRow DefaultData => new DataSetRow
-        {
-            ["CustomerID"] = Placeholders.IsRequired(),
-            ["CustomerTypeID"] = Placeholders.IsRequired()
-        };
-
-        public CustomerCustomerDemoTemplate WithCustomerID(string value) => SetValue("CustomerID", value);
-        public CustomerCustomerDemoTemplate WithCustomerTypeID(string value) => SetValue("CustomerTypeID", value);
-    }
+    public CustomerCustomerDemoTemplate WithCustomerID(string value) => SetValue("CustomerID", value);
+    public CustomerCustomerDemoTemplate WithCustomerTypeID(string value) => SetValue("CustomerTypeID", value);
 }

@@ -3,74 +3,73 @@ using DBConfirm.Core.Templates;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Core.Tests.Templates
+namespace Core.Tests.Templates;
+
+[TestFixture]
+public class BaseIdentityTemplateTests
 {
-    [TestFixture]
-    public class BaseIdentityTemplateTests
+    public class TestIdentityTemplate : BaseIdentityTemplate<TestIdentityTemplate>
     {
-        public class TestIdentityTemplate : BaseIdentityTemplate<TestIdentityTemplate>
+        public override string IdentityColumnName => "UserId";
+
+        public override string TableName => "dbo.Users";
+
+        public override DataSetRow DefaultData => new();
+    }
+
+    [Test]
+    public void BaseIdentityTemplate_Identity_RetrieveCorrectValue()
+    {
+        TestIdentityTemplate template = new()
         {
-            public override string IdentityColumnName => "UserId";
+            { "DomainId", 1001 },
+            { "UserId", 2001 }
+        };
 
-            public override string TableName => "dbo.Users";
+        Assert.AreEqual(2001, template.Identity);
+    }
 
-            public override DataSetRow DefaultData => new DataSetRow();
-        }
-
-        [Test]
-        public void BaseIdentityTemplate_Identity_RetrieveCorrectValue()
+    [Test]
+    public void BaseIdentityTemplate_IdentityColumnNotSet_Error()
+    {
+        TestIdentityTemplate template = new()
         {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DomainId", 1001 },
-                { "UserId", 2001 }
-            };
+            { "DomainId", 1001 }
+        };
 
-            Assert.AreEqual(2001, template.Identity);
-        }
+        var exception = Assert.Throws<KeyNotFoundException>(() => { int value = template.Identity; });
 
-        [Test]
-        public void BaseIdentityTemplate_IdentityColumnNotSet_Error()
+        Assert.AreEqual("UserId was not found in the data set", exception.Message);
+    }
+
+    [Test]
+    public void BaseIdentityTemplate_IdentityResolver_RetrieveCorrectValue()
+    {
+        TestIdentityTemplate template = new()
         {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DomainId", 1001 }
-            };
+            { "DomainId", 1001 },
+            { "UserId", 2001 }
+        };
 
-            var exception = Assert.Throws<KeyNotFoundException>(() => { int value = template.Identity; });
+        Resolver<int> resolver = template.IdentityResolver;
+        Assert.IsNotNull(resolver);
 
-            Assert.AreEqual("UserId was not found in the data set", exception.Message);
-        }
+        Assert.AreEqual(2001, resolver.Resolve());
+    }
 
-        [Test]
-        public void BaseIdentityTemplate_IdentityResolver_RetrieveCorrectValue()
+    [Test]
+    public void BaseIdentityTemplate_IdentityColumnNotSet_IdentityResolver_ErrorDuringResolveOnly()
+    {
+        TestIdentityTemplate template = new()
         {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DomainId", 1001 },
-                { "UserId", 2001 }
-            };
+            { "DomainId", 1001 }
+        };
 
-            Resolver<int> resolver = template.IdentityResolver;
-            Assert.IsNotNull(resolver);
+        Resolver<int> resolver = template.IdentityResolver;
+        Assert.IsNotNull(resolver);
 
-            Assert.AreEqual(2001, resolver.Resolve());
-        }
+        var exception = Assert.Throws<KeyNotFoundException>(() => { object value = resolver.Resolve(); });
 
-        [Test]
-        public void BaseIdentityTemplate_IdentityColumnNotSet_IdentityResolver_ErrorDuringResolveOnly()
-        {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DomainId", 1001 }
-            };
-
-            Resolver<int> resolver = template.IdentityResolver;
-            Assert.IsNotNull(resolver);
-
-            var exception = Assert.Throws<KeyNotFoundException>(() => { object value = resolver.Resolve(); });
-
-            Assert.AreEqual("UserId was not found in the data set", exception.Message);
-        }
+        Assert.AreEqual("UserId was not found in the data set", exception.Message);
     }
 }

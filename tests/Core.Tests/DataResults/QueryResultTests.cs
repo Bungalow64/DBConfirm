@@ -6,1226 +6,1225 @@ using DBConfirm.Frameworks.MSTest;
 using System.Data;
 using System.Linq;
 
-namespace Core.Tests.DataResults
+namespace Core.Tests.DataResults;
+
+[TestFixture]
+public class QueryResultTests
 {
-    [TestFixture]
-    public class QueryResultTests
+    #region Setup
+
+    private readonly ITestFramework _testFramework = new MSTestFramework();
+
+    private static DataTable CreateDefaultTable()
     {
-        #region Setup
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
+        return table;
+    }
+    private static void AddRow(DataTable table, int userId, int domainId)
+    {
+        DataRow row = table.NewRow();
+        row["UserId"] = userId;
+        row["DomainId"] = domainId;
+        table.Rows.Add(row);
+    }
 
-        private readonly ITestFramework _testFramework = new MSTestFramework();
+    #endregion
 
-        private DataTable CreateDefaultTable()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
-            return table;
-        }
-        private void AddRow(DataTable table, int userId, int domainId)
+    #region Ctor
+
+    [Test]
+    public void QueryResult_Ctor_Default_EmptyTableSet()
+    {
+        QueryResult queryResult = new(_testFramework);
+
+        Assert.AreEqual(0, queryResult.RawData.Rows.Count);
+    }
+
+    [Test]
+    public void QueryResult_Ctor_Default_NullTableSet()
+    {
+        QueryResult queryResult = new(null);
+
+        Assert.AreEqual(0, queryResult.RawData.Rows.Count);
+    }
+
+    [Test]
+    public void QueryResult_Ctor_SetData()
+    {
+        DataTable table = CreateDefaultTable();
+
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
+
+        QueryResult queryResult = new(_testFramework, table);
+
+        Assert.AreEqual(3, queryResult.RawData.Rows.Count);
+    }
+
+    #endregion
+
+    #region TotalRows
+
+    [Test]
+    public void QueryResult_TotalRows_DefaultConstructor_0()
+    {
+        QueryResult queryResult = new(_testFramework);
+
+        Assert.AreEqual(0, queryResult.TotalRows);
+    }
+
+    [Test]
+    public void QueryResult_TotalRows_NullConstructor_0()
+    {
+        QueryResult queryResult = new(null);
+
+        Assert.AreEqual(0, queryResult.TotalRows);
+    }
+
+    [TestCase(0, 0)]
+    [TestCase(1, 1)]
+    [TestCase(2, 2)]
+    public void QueryResult_TotalRows_CorrectValues(int actualRows, int expectedRows)
+    {
+        DataTable table = CreateDefaultTable();
+
+        for (int x = 0; x < actualRows; x++)
         {
-            DataRow row = table.NewRow();
-            row["UserId"] = userId;
-            row["DomainId"] = domainId;
-            table.Rows.Add(row);
+            AddRow(table, x, x);
         }
 
-        #endregion
+        QueryResult queryResult = new(_testFramework, table);
 
-        #region Ctor
+        Assert.AreEqual(expectedRows, queryResult.TotalRows);
+    }
 
-        [Test]
-        public void QueryResult_Ctor_Default_EmptyTableSet()
-        {
-            QueryResult queryResult = new QueryResult(_testFramework);
+    #endregion
 
-            Assert.AreEqual(0, queryResult.RawData.Rows.Count);
-        }
+    #region TotalColumns
 
-        [Test]
-        public void QueryResult_Ctor_Default_NullTableSet()
-        {
-            QueryResult queryResult = new QueryResult(null);
+    [Test]
+    public void QueryResult_TotalColumns_DefaultConstructor_0()
+    {
+        QueryResult queryResult = new(_testFramework);
 
-            Assert.AreEqual(0, queryResult.RawData.Rows.Count);
-        }
+        Assert.AreEqual(0, queryResult.TotalColumns);
+    }
 
-        [Test]
-        public void QueryResult_Ctor_SetData()
-        {
-            DataTable table = CreateDefaultTable();
+    [Test]
+    public void QueryResult_TotalColumns_NullConstructor_0()
+    {
+        QueryResult queryResult = new(null);
 
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+        Assert.AreEqual(0, queryResult.TotalColumns);
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [Test]
+    public void QueryResult_TotalColumns_TableWithNoColumns_0()
+    {
+        DataTable table = new();
 
-            Assert.AreEqual(3, queryResult.RawData.Rows.Count);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        #endregion
+        Assert.AreEqual(0, queryResult.TotalColumns);
+    }
 
-        #region TotalRows
+    [Test]
+    public void QueryResult_TotalColumns_TableWith2Columns_2()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        [Test]
-        public void QueryResult_TotalRows_DefaultConstructor_0()
-        {
-            QueryResult queryResult = new QueryResult(_testFramework);
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual(0, queryResult.TotalRows);
-        }
+        Assert.AreEqual(2, queryResult.TotalColumns);
+    }
 
-        [Test]
-        public void QueryResult_TotalRows_NullConstructor_0()
-        {
-            QueryResult queryResult = new QueryResult(null);
+    #endregion
 
-            Assert.AreEqual(0, queryResult.TotalRows);
-        }
+    #region ColumnNames
 
-        [TestCase(0, 0)]
-        [TestCase(1, 1)]
-        [TestCase(2, 2)]
-        public void QueryResult_TotalRows_CorrectValues(int actualRows, int expectedRows)
-        {
-            DataTable table = CreateDefaultTable();
+    [Test]
+    public void QueryResult_ColumnNames_DefaultConstructor_0Items()
+    {
+        QueryResult queryResult = new(_testFramework);
 
-            for (int x = 0; x < actualRows; x++)
-            {
-                AddRow(table, x, x);
-            }
+        Assert.IsNotNull(queryResult.ColumnNames);
+        Assert.AreEqual(0, queryResult.ColumnNames.Count);
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [Test]
+    public void QueryResult_ColumnNames_NullConstructor_0Items()
+    {
+        QueryResult queryResult = new(null);
 
-            Assert.AreEqual(expectedRows, queryResult.TotalRows);
-        }
+        Assert.IsNotNull(queryResult.ColumnNames);
+        Assert.AreEqual(0, queryResult.ColumnNames.Count);
+    }
 
-        #endregion
+    [Test]
+    public void QueryResult_ColumnNames_TableWithNoColumns_0Items()
+    {
+        DataTable table = new();
 
-        #region TotalColumns
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_TotalColumns_DefaultConstructor_0()
-        {
-            QueryResult queryResult = new QueryResult(_testFramework);
+        Assert.IsNotNull(queryResult.ColumnNames);
+        Assert.AreEqual(0, queryResult.ColumnNames.Count);
+    }
 
-            Assert.AreEqual(0, queryResult.TotalColumns);
-        }
+    [Test]
+    public void QueryResult_ColumnNames_TableWith2Columns_2Items()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        [Test]
-        public void QueryResult_TotalColumns_NullConstructor_0()
-        {
-            QueryResult queryResult = new QueryResult(null);
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual(0, queryResult.TotalColumns);
-        }
+        Assert.IsNotNull(queryResult.ColumnNames);
+        Assert.AreEqual(2, queryResult.ColumnNames.Count);
+        Assert.AreEqual("UserId", queryResult.ColumnNames.ElementAt(0));
+        Assert.AreEqual("DomainId", queryResult.ColumnNames.ElementAt(1));
+    }
 
-        [Test]
-        public void QueryResult_TotalColumns_TableWithNoColumns_0()
-        {
-            DataTable table = new DataTable();
+    #endregion
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    #region AssertRowCount
 
-            Assert.AreEqual(0, queryResult.TotalColumns);
-        }
+    [TestCase(0, 0)]
+    [TestCase(1, 1)]
+    [TestCase(2, 2)]
+    public void QueryResult_AssertRowCount_ExpectCorrect(int actualRows, int expectedRows)
+    {
+        DataTable table = CreateDefaultTable();
 
-        [Test]
-        public void QueryResult_TotalColumns_TableWith2Columns_2()
+        for (int x = 0; x < actualRows; x++)
         {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+            AddRow(table, x, x);
+        }
+
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertRowCount(expectedRows));
+    }
 
-            Assert.AreEqual(2, queryResult.TotalColumns);
+    [TestCase(0, 1)]
+    [TestCase(1, 0)]
+    [TestCase(2, 3)]
+    public void QueryResult_AssertRowCount_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
+    {
+        DataTable table = CreateDefaultTable();
+
+        for (int x = 0; x < actualRows; x++)
+        {
+            AddRow(table, x, x);
         }
 
-        #endregion
+        QueryResult queryResult = new(_testFramework, table);
 
-        #region ColumnNames
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertRowCount(expectedRows));
 
-        [Test]
-        public void QueryResult_ColumnNames_DefaultConstructor_0Items()
-        {
-            QueryResult queryResult = new QueryResult(_testFramework);
+        Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedRows}>. Actual:<{actualRows}>. The total row count is unexpected", exception.Message);
+    }
 
-            Assert.IsNotNull(queryResult.ColumnNames);
-            Assert.AreEqual(0, queryResult.ColumnNames.Count);
-        }
+    #endregion
 
-        [Test]
-        public void QueryResult_ColumnNames_NullConstructor_0Items()
-        {
-            QueryResult queryResult = new QueryResult(null);
+    #region AssertColumnCount
 
-            Assert.IsNotNull(queryResult.ColumnNames);
-            Assert.AreEqual(0, queryResult.ColumnNames.Count);
+    [TestCase(0, 0)]
+    [TestCase(1, 1)]
+    [TestCase(2, 2)]
+    public void QueryResult_AssertColumnCount_ExpectCorrect(int actualColumns, int expectedColumns)
+    {
+        DataTable table = new();
+        for (int x = 0; x < actualColumns; x++)
+        {
+            table.Columns.Add($"Column{x}", typeof(int));
         }
 
-        [Test]
-        public void QueryResult_ColumnNames_TableWithNoColumns_0Items()
-        {
-            DataTable table = new DataTable();
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnCount(expectedColumns));
+    }
 
-            Assert.IsNotNull(queryResult.ColumnNames);
-            Assert.AreEqual(0, queryResult.ColumnNames.Count);
-        }
+    [TestCase(0, 1)]
+    [TestCase(1, 0)]
+    [TestCase(2, 3)]
+    public void QueryResult_AssertColumnCount_ExpectIncorrect_ThrowError(int actualColumns, int expectedColumns)
+    {
+        DataTable table = new();
 
-        [Test]
-        public void QueryResult_ColumnNames_TableWith2Columns_2Items()
+        for (int x = 0; x < actualColumns; x++)
         {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            Assert.IsNotNull(queryResult.ColumnNames);
-            Assert.AreEqual(2, queryResult.ColumnNames.Count);
-            Assert.AreEqual("UserId", queryResult.ColumnNames.ElementAt(0));
-            Assert.AreEqual("DomainId", queryResult.ColumnNames.ElementAt(1));
+            table.Columns.Add($"Column{x}", typeof(int));
         }
 
-        #endregion
+        QueryResult queryResult = new(_testFramework, table);
 
-        #region AssertRowCount
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnCount(expectedColumns));
 
-        [TestCase(0, 0)]
-        [TestCase(1, 1)]
-        [TestCase(2, 2)]
-        public void QueryResult_AssertRowCount_ExpectCorrect(int actualRows, int expectedRows)
-        {
-            DataTable table = CreateDefaultTable();
+        Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedColumns}>. Actual:<{actualColumns}>. The total column count is unexpected", exception.Message);
+    }
 
-            for (int x = 0; x < actualRows; x++)
-            {
-                AddRow(table, x, x);
-            }
+    #endregion
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    #region AssertColumnExists
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertRowCount(expectedRows));
-        }
+    [TestCase("UserId")]
+    [TestCase("DomainId")]
+    public void QueryResult_AssertColumnExists_ExpectCorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        [TestCase(0, 1)]
-        [TestCase(1, 0)]
-        [TestCase(2, 3)]
-        public void QueryResult_AssertRowCount_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
-        {
-            DataTable table = CreateDefaultTable();
+        QueryResult queryResult = new(_testFramework, table);
 
-            for (int x = 0; x < actualRows; x++)
-            {
-                AddRow(table, x, x);
-            }
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnExists(columnName));
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [TestCase("otherColumn")]
+    [TestCase("userid")]
+    [TestCase("USERID")]
+    public void QueryResult_AssertColumnExists_ExpectIncorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertRowCount(expectedRows));
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedRows}>. Actual:<{actualRows}>. The total row count is unexpected", exception.Message);
-        }
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnExists(columnName));
 
-        #endregion
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName} to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-        #region AssertColumnCount
+    [Test]
+    public void QueryResult_AssertColumnExists_OnlyOneColumnFound_ErrorMessageCorrect()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
 
-        [TestCase(0, 0)]
-        [TestCase(1, 1)]
-        [TestCase(2, 2)]
-        public void QueryResult_AssertColumnCount_ExpectCorrect(int actualColumns, int expectedColumns)
-        {
-            DataTable table = new DataTable();
-            for (int x = 0; x < actualColumns; x++)
-            {
-                table.Columns.Add($"Column{x}", typeof(int));
-            }
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnCount(expectedColumns));
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase(0, 1)]
-        [TestCase(1, 0)]
-        [TestCase(2, 3)]
-        public void QueryResult_AssertColumnCount_ExpectIncorrect_ThrowError(int actualColumns, int expectedColumns)
-        {
-            DataTable table = new DataTable();
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnExists("DomainId"));
 
-            for (int x = 0; x < actualColumns; x++)
-            {
-                table.Columns.Add($"Column{x}", typeof(int));
-            }
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column DomainId to be found but the only column found is UserId", exception.Message);
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [Test]
+    public void QueryResult_AssertColumnExists_NullColumn_ExistingColumns_Error()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnCount(expectedColumns));
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedColumns}>. Actual:<{actualColumns}>. The total column count is unexpected", exception.Message);
-        }
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnExists(null));
 
-        #endregion
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-        #region AssertColumnExists
+    [Test]
+    public void QueryResult_AssertColumnExists_NullColumn_NoColumns_Error()
+    {
+        DataTable table = new();
 
-        [TestCase("UserId")]
-        [TestCase("DomainId")]
-        public void QueryResult_AssertColumnExists_ExpectCorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnExists(null));
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnExists(columnName));
-        }
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but no columns were found", exception.Message);
+    }
 
-        [TestCase("otherColumn")]
-        [TestCase("userid")]
-        [TestCase("USERID")]
-        public void QueryResult_AssertColumnExists_ExpectIncorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+    [Test]
+    public void QueryResult_AssertColumnExists_ExpectedColumn_NoColumns_Error()
+    {
+        DataTable table = new();
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnExists(columnName));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnExists("UserId"));
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName} to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column UserId to be found but no columns were found", exception.Message);
+    }
 
-        [Test]
-        public void QueryResult_AssertColumnExists_OnlyOneColumnFound_ErrorMessageCorrect()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
+    #endregion
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    #region AssertColumnNotExists
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnExists("DomainId"));
+    [TestCase("otherColumn")]
+    [TestCase("userid")]
+    [TestCase("USERID")]
+    public void QueryResult_AssertColumnNotExists_ExpectCorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column DomainId to be found but the only column found is UserId", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_AssertColumnExists_NullColumn_ExistingColumns_Error()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnNotExists(columnName));
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [TestCase("UserId")]
+    [TestCase("DomainId")]
+    public void QueryResult_AssertColumnNotExist_ExpectIncorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnExists(null));
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnNotExists(columnName));
 
-        [Test]
-        public void QueryResult_AssertColumnExists_NullColumn_NoColumns_Error()
-        {
-            DataTable table = new DataTable();
+        Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName} to not be found but it was found", exception.Message);
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [Test]
+    public void QueryResult_AssertColumnNotExists_NullColumn_ExistingColumns_NoError()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnExists(null));
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but no columns were found", exception.Message);
-        }
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnNotExists(null));
+    }
 
-        [Test]
-        public void QueryResult_AssertColumnExists_ExpectedColumn_NoColumns_Error()
-        {
-            DataTable table = new DataTable();
+    [Test]
+    public void QueryResult_AssertColumnNotExists_NullColumn_NoColumns_NoError()
+    {
+        DataTable table = new();
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnExists("UserId"));
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnNotExists(null));
+    }
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column UserId to be found but no columns were found", exception.Message);
-        }
+    [Test]
+    public void QueryResult_AssertColumnNotExists_ExpectedColumn_NoColumns_NoError()
+    {
+        DataTable table = new();
 
-        #endregion
+        QueryResult queryResult = new(_testFramework, table);
 
-        #region AssertColumnNotExists
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnNotExists("UserId"));
+    }
 
-        [TestCase("otherColumn")]
-        [TestCase("userid")]
-        [TestCase("USERID")]
-        public void QueryResult_AssertColumnNotExists_ExpectCorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+    #endregion
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    #region AssertColumnsExist
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnNotExists(columnName));
-        }
+    [TestCase("UserId")]
+    [TestCase("DomainId")]
+    public void QueryResult_AssertColumnsExist_SingleColumn_ExpectCorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        [TestCase("UserId")]
-        [TestCase("DomainId")]
-        public void QueryResult_AssertColumnNotExist_ExpectIncorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsExist(columnName));
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnNotExists(columnName));
+    [TestCase("UserId", "DomainId")]
+    [TestCase("DomainId", "UserId")]
+    [TestCase("AddressId1", "UserId")]
+    public void QueryResult_AssertColumnsExist_TwoColumns_ExpectCorrect(string columnName1, string columnName2)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
+        table.Columns.Add("AddressId1", typeof(int));
 
-            Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName} to not be found but it was found", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_AssertColumnNotExists_NullColumn_ExistingColumns_NoError()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsExist(columnName1, columnName2));
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [TestCase("otherColumn")]
+    [TestCase("userid")]
+    [TestCase("USERID")]
+    public void QueryResult_AssertColumnsExist_ExpectIncorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnNotExists(null));
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_AssertColumnNotExists_NullColumn_NoColumns_NoError()
-        {
-            DataTable table = new DataTable();
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(columnName));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName} to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnNotExists(null));
-        }
+    [TestCase("otherColumn", "UserId")]
+    [TestCase("userid", "UserId")]
+    [TestCase("USERID", "UserId")]
+    [TestCase("otherColumn", "DomainId")]
+    public void QueryResult_AssertColumnsExist_FirstColumnMissing_ExpectIncorrect(string columnName1, string columnName2)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        [Test]
-        public void QueryResult_AssertColumnNotExists_ExpectedColumn_NoColumns_NoError()
-        {
-            DataTable table = new DataTable();
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(columnName1, columnName2));
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnNotExists("UserId"));
-        }
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName1} to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-        #endregion
+    [TestCase("UserId", "otherColumn")]
+    [TestCase("DomainId", "userid")]
+    public void QueryResult_AssertColumnsExist_SecondColumnMissing_ExpectIncorrect(string columnName1, string columnName2)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        #region AssertColumnsExist
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase("UserId")]
-        [TestCase("DomainId")]
-        public void QueryResult_AssertColumnsExist_SingleColumn_ExpectCorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(columnName1, columnName2));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName2} to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsExist(columnName));
-        }
+    [TestCase("otherColumn", "userid")]
+    [TestCase("userid", "otherColumn")]
+    public void QueryResult_AssertColumnsExist_BothColumnsMissing_ExpectIncorrect_ShowFirst(string columnName1, string columnName2)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        [TestCase("UserId", "DomainId")]
-        [TestCase("DomainId", "UserId")]
-        [TestCase("AddressId1", "UserId")]
-        public void QueryResult_AssertColumnsExist_TwoColumns_ExpectCorrect(string columnName1, string columnName2)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
-            table.Columns.Add("AddressId1", typeof(int));
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsExist(columnName1, columnName2));
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase("otherColumn")]
-        [TestCase("userid")]
-        [TestCase("USERID")]
-        public void QueryResult_AssertColumnsExist_ExpectIncorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(columnName1, columnName2));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName1} to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(columnName));
+    [Test]
+    public void QueryResult_AssertColumnsExist_NullColumn_ExistingColumns_Error()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName} to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase("otherColumn", "UserId")]
-        [TestCase("userid", "UserId")]
-        [TestCase("USERID", "UserId")]
-        [TestCase("otherColumn", "DomainId")]
-        public void QueryResult_AssertColumnsExist_FirstColumnMissing_ExpectIncorrect(string columnName1, string columnName2)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(null));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(columnName1, columnName2));
+    [Test]
+    public void QueryResult_AssertColumnsExist_TwoNullColumns_ExistingColumns_Error()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName1} to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase("UserId", "otherColumn")]
-        [TestCase("DomainId", "userid")]
-        public void QueryResult_AssertColumnsExist_SecondColumnMissing_ExpectIncorrect(string columnName1, string columnName2)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(null, null));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(columnName1, columnName2));
+    [Test]
+    public void QueryResult_AssertColumnsExist_NullColumn_NoColumns_Error()
+    {
+        DataTable table = new();
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName2} to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase("otherColumn", "userid")]
-        [TestCase("userid", "otherColumn")]
-        public void QueryResult_AssertColumnsExist_BothColumnsMissing_ExpectIncorrect_ShowFirst(string columnName1, string columnName2)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(null));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but no columns were found", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(columnName1, columnName2));
+    [Test]
+    public void QueryResult_AssertColumnsExist_TwoNullColumns_NoColumns_Error()
+    {
+        DataTable table = new();
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName1} to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_AssertColumnsExist_NullColumn_ExistingColumns_Error()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist(null, null));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but no columns were found", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(null));
+    [Test]
+    public void QueryResult_AssertColumnsExist_ExpectedColumn_NoColumns_Error()
+    {
+        DataTable table = new();
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_AssertColumnsExist_TwoNullColumns_ExistingColumns_Error()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist("UserId"));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column UserId to be found but no columns were found", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(null, null));
+    [Test]
+    public void QueryResult_AssertColumnsExist_TwoExpectedColumns_NoColumns_Error()
+    {
+        DataTable table = new();
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_AssertColumnsExist_NullColumn_NoColumns_Error()
-        {
-            DataTable table = new DataTable();
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsExist("UserId", "DomainId"));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column UserId to be found but no columns were found", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(null));
+    #endregion
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but no columns were found", exception.Message);
-        }
+    #region AssertColumnsNotExist
 
-        [Test]
-        public void QueryResult_AssertColumnsExist_TwoNullColumns_NoColumns_Error()
-        {
-            DataTable table = new DataTable();
+    [TestCase("otherColumn")]
+    [TestCase("userid")]
+    [TestCase("USERID")]
+    public void QueryResult_AssertColumnsNotExist_ExpectCorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist(null, null));
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsNotExist(columnName));
+    }
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column <null> to be found but no columns were found", exception.Message);
-        }
+    [TestCase("otherColumn", "otherColumn2")]
+    [TestCase("userid", "otherColumn2")]
+    [TestCase("USERID", "otherColumn2")]
+    public void QueryResult_AssertColumnsNotExist_MultipleColumns_ExpectCorrect(string columnName1, string columnName2)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-        [Test]
-        public void QueryResult_AssertColumnsExist_ExpectedColumn_NoColumns_Error()
-        {
-            DataTable table = new DataTable();
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsNotExist(columnName1, columnName2));
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist("UserId"));
+    [TestCase("UserId")]
+    [TestCase("DomainId")]
+    public void QueryResult_AssertColumnsNotExist_ExpectIncorrect(string columnName)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column UserId to be found but no columns were found", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [Test]
-        public void QueryResult_AssertColumnsExist_TwoExpectedColumns_NoColumns_Error()
-        {
-            DataTable table = new DataTable();
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsNotExist(columnName));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName} to not be found but it was found", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsExist("UserId", "DomainId"));
+    [TestCase("UserId", "otherColumn")]
+    [TestCase("DomainId", "otherColumn")]
+    public void QueryResult_AssertColumnsNotExist_MultipleColumnsFirstFound_ExpectIncorrect(string columnName1, string columnName2)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column UserId to be found but no columns were found", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        #endregion
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsNotExist(columnName1, columnName2));
 
-        #region AssertColumnsNotExist
+        Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName1} to not be found but it was found", exception.Message);
+    }
 
-        [TestCase("otherColumn")]
-        [TestCase("userid")]
-        [TestCase("USERID")]
-        public void QueryResult_AssertColumnsNotExist_ExpectCorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+    [TestCase("otherColumn", "UserId")]
+    [TestCase("otherColumn", "DomainId")]
+    public void QueryResult_AssertColumnsNotExist_MultipleColumnsSecondFound_ExpectIncorrect(string columnName1, string columnName2)
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsNotExist(columnName));
-        }
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertColumnsNotExist(columnName1, columnName2));
 
-        [TestCase("otherColumn", "otherColumn2")]
-        [TestCase("userid", "otherColumn2")]
-        [TestCase("USERID", "otherColumn2")]
-        public void QueryResult_AssertColumnsNotExist_MultipleColumns_ExpectCorrect(string columnName1, string columnName2)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName2} to not be found but it was found", exception.Message);
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [Test]
+    public void QueryResult_AssertColumnsNotExist_NullColumn_ExistingColumns_NoError()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsNotExist(columnName1, columnName2));
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase("UserId")]
-        [TestCase("DomainId")]
-        public void QueryResult_AssertColumnsNotExist_ExpectIncorrect(string columnName)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsNotExist(null));
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [Test]
+    public void QueryResult_AssertColumnsNotExist_NullColumns_ExistingColumns_NoError()
+    {
+        DataTable table = new();
+        table.Columns.Add("UserId", typeof(int));
+        table.Columns.Add("DomainId", typeof(int));
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsNotExist(columnName));
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName} to not be found but it was found", exception.Message);
-        }
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsNotExist(null, null));
+    }
 
-        [TestCase("UserId", "otherColumn")]
-        [TestCase("DomainId", "otherColumn")]
-        public void QueryResult_AssertColumnsNotExist_MultipleColumnsFirstFound_ExpectIncorrect(string columnName1, string columnName2)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+    [Test]
+    public void QueryResult_AssertColumnsNotExist_NullColumn_NoColumns_NoError()
+    {
+        DataTable table = new();
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsNotExist(columnName1, columnName2));
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsNotExist(null));
+    }
 
-            Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName1} to not be found but it was found", exception.Message);
-        }
+    [Test]
+    public void QueryResult_AssertColumnsNotExist_ExpectedColumn_NoColumns_NoError()
+    {
+        DataTable table = new();
 
-        [TestCase("otherColumn", "UserId")]
-        [TestCase("otherColumn", "DomainId")]
-        public void QueryResult_AssertColumnsNotExist_MultipleColumnsSecondFound_ExpectIncorrect(string columnName1, string columnName2)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertColumnsNotExist("UserId"));
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertColumnsNotExist(columnName1, columnName2));
+    #endregion
 
-            Assert.AreEqual($"CollectionAssert.DoesNotContain failed. Expected column {columnName2} to not be found but it was found", exception.Message);
-        }
+    #region AssertRowPositionExists
 
-        [Test]
-        public void QueryResult_AssertColumnsNotExist_NullColumn_ExistingColumns_NoError()
+    [TestCase(1, 0)]
+    [TestCase(2, 0)]
+    [TestCase(2, 1)]
+    [TestCase(3, 0)]
+    [TestCase(3, 1)]
+    [TestCase(3, 2)]
+    public void QueryResult_AssertRowPositionExists_ExpectCorrect(int totalRows, int expectedPosition)
+    {
+        DataTable table = CreateDefaultTable();
+
+        for (int x = 0; x < totalRows; x++)
         {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+            AddRow(table, x, x);
+        }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsNotExist(null));
-        }
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertRowPositionExists(expectedPosition));
+    }
 
-        [Test]
-        public void QueryResult_AssertColumnsNotExist_NullColumns_ExistingColumns_NoError()
+    [TestCase(1, 1)]
+    [TestCase(1, 2)]
+    [TestCase(1, 3)]
+    [TestCase(1, -1)]
+    public void QueryResult_AssertRowPositionExists_1Row_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
+    {
+        DataTable table = CreateDefaultTable();
+
+        for (int x = 0; x < actualRows; x++)
         {
-            DataTable table = new DataTable();
-            table.Columns.Add("UserId", typeof(int));
-            table.Columns.Add("DomainId", typeof(int));
+            AddRow(table, x, x);
+        }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsNotExist(null, null));
-        }
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertRowPositionExists(expectedRows));
 
-        [Test]
-        public void QueryResult_AssertColumnsNotExist_NullColumn_NoColumns_NoError()
-        {
-            DataTable table = new DataTable();
+        Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {expectedRows} (zero-based).  There is 1 row", exception.Message);
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [TestCase(2, 2)]
+    [TestCase(2, 3)]
+    public void QueryResult_AssertRowPositionExists_2Rows_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
+    {
+        DataTable table = CreateDefaultTable();
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsNotExist(null));
+        for (int x = 0; x < actualRows; x++)
+        {
+            AddRow(table, x, x);
         }
 
-        [Test]
-        public void QueryResult_AssertColumnsNotExist_ExpectedColumn_NoColumns_NoError()
-        {
-            DataTable table = new DataTable();
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertRowPositionExists(expectedRows));
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertColumnsNotExist("UserId"));
+        Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {expectedRows} (zero-based).  There are 2 rows", exception.Message);
+    }
+
+    [TestCase(0, 0)]
+    [TestCase(0, 1)]
+    [TestCase(0, 2)]
+    [TestCase(0, -1)]
+    public void QueryResult_AssertRowPositionExists_0Rows_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
+    {
+        DataTable table = CreateDefaultTable();
+
+        for (int x = 0; x < actualRows; x++)
+        {
+            AddRow(table, x, x);
         }
 
-        #endregion
+        QueryResult queryResult = new(_testFramework, table);
 
-        #region AssertRowPositionExists
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertRowPositionExists(expectedRows));
 
-        [TestCase(1, 0)]
-        [TestCase(2, 0)]
-        [TestCase(2, 1)]
-        [TestCase(3, 0)]
-        [TestCase(3, 1)]
-        [TestCase(3, 2)]
-        public void QueryResult_AssertRowPositionExists_ExpectCorrect(int totalRows, int expectedPosition)
-        {
-            DataTable table = CreateDefaultTable();
+        Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {expectedRows} (zero-based).  There are 0 rows", exception.Message);
+    }
 
-            for (int x = 0; x < totalRows; x++)
-            {
-                AddRow(table, x, x);
-            }
+    #endregion
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    #region AssertValue
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertRowPositionExists(expectedPosition));
-        }
+    [TestCase(0, "UserId", 1001)]
+    [TestCase(0, "DomainId", 1002)]
+    [TestCase(1, "UserId", 2001)]
+    [TestCase(1, "DomainId", 2002)]
+    [TestCase(2, "UserId", 3001)]
+    [TestCase(2, "DomainId", 3002)]
+    public void QueryResult_AssertValue_ValueIsCorrect_NoError(int rowNumber, string columnName, int expectedValue)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-        [TestCase(1, 1)]
-        [TestCase(1, 2)]
-        [TestCase(1, 3)]
-        [TestCase(1, -1)]
-        public void QueryResult_AssertRowPositionExists_1Row_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
-        {
-            DataTable table = CreateDefaultTable();
+        QueryResult queryResult = new(_testFramework, table);
 
-            for (int x = 0; x < actualRows; x++)
-            {
-                AddRow(table, x, x);
-            }
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertValue(rowNumber, columnName, expectedValue));
+    }
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+    [TestCase(-1, 1001)]
+    [TestCase(3, 1001)]
+    public void QueryResult_AssertValue_RowDoesNotExist_Error(int rowNumber, int expectedUserId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertRowPositionExists(expectedRows));
+        QueryResult queryResult = new(_testFramework, table);
 
-            Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {expectedRows} (zero-based).  There is 1 row", exception.Message);
-        }
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertValue(rowNumber, "UserId", expectedUserId));
 
-        [TestCase(2, 2)]
-        [TestCase(2, 3)]
-        public void QueryResult_AssertRowPositionExists_2Rows_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
-        {
-            DataTable table = CreateDefaultTable();
+        Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {rowNumber} (zero-based).  There are 3 rows", exception.Message);
+    }
 
-            for (int x = 0; x < actualRows; x++)
-            {
-                AddRow(table, x, x);
-            }
+    [TestCase("OtherColumn", 1001)]
+    [TestCase("userid", 1001)]
+    [TestCase("USERID", 1001)]
+    public void QueryResult_AssertValue_ColumnDoesNotExist_Error(string columnName, int expectedValue)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertRowPositionExists(expectedRows));
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertValue(0, columnName, expectedValue));
 
-            Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {expectedRows} (zero-based).  There are 2 rows", exception.Message);
-        }
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName} to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-        [TestCase(0, 0)]
-        [TestCase(0, 1)]
-        [TestCase(0, 2)]
-        [TestCase(0, -1)]
-        public void QueryResult_AssertRowPositionExists_0Rows_ExpectIncorrect_ThrowError(int actualRows, int expectedRows)
-        {
-            DataTable table = CreateDefaultTable();
+    [TestCase(0, "UserId", 1502)]
+    [TestCase(0, "DomainId", 1502)]
+    [TestCase(1, "UserId", 2502)]
+    [TestCase(1, "DomainId", 2502)]
+    [TestCase(2, "UserId", 3502)]
+    [TestCase(2, "DomainId", 3502)]
+    public void QueryResult_AssertValue_ValueDoesNotMatch_Error(int rowNumber, string columnName, int expectedUserId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-            for (int x = 0; x < actualRows; x++)
-            {
-                AddRow(table, x, x);
-            }
+        QueryResult queryResult = new(_testFramework, table);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            queryResult.AssertValue(rowNumber, columnName, expectedUserId));
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertRowPositionExists(expectedRows));
+        Assert.AreEqual($"Assert.AreEqual failed. Expected:<{ expectedUserId }>. Actual:<{ table.Rows[rowNumber][columnName] }>. Column { columnName } in row { rowNumber } has an unexpected value", exception.Message);
+    }
 
-            Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {expectedRows} (zero-based).  There are 0 rows", exception.Message);
-        }
+    #endregion
 
-        #endregion
+    #region ValidateRow
 
-        #region AssertValue
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(2)]
+    public void QueryResult_ValidateRow_ValidRow(int rowNumber)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-        [TestCase(0, "UserId", 1001)]
-        [TestCase(0, "DomainId", 1002)]
-        [TestCase(1, "UserId", 2001)]
-        [TestCase(1, "DomainId", 2002)]
-        [TestCase(2, "UserId", 3001)]
-        [TestCase(2, "DomainId", 3002)]
-        public void QueryResult_AssertValue_ValueIsCorrect_NoError(int rowNumber, string columnName, int expectedValue)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertValue(rowNumber, columnName, expectedValue));
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase(-1, 1001)]
-        [TestCase(3, 1001)]
-        public void QueryResult_AssertValue_RowDoesNotExist_Error(int rowNumber, int expectedUserId)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+        RowResult rowResult = queryResult.ValidateRow(rowNumber);
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        rowResult.AssertValue("UserId", table.Rows[rowNumber]["UserId"]);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertValue(rowNumber, "UserId", expectedUserId));
+    [TestCase(-1)]
+    [TestCase(3)]
+    public void QueryResult_ValidateRow_RowDoesNotExist_Error(int rowNumber)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-            Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {rowNumber} (zero-based).  There are 3 rows", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase("OtherColumn", 1001)]
-        [TestCase("userid", 1001)]
-        [TestCase("USERID", 1001)]
-        public void QueryResult_AssertValue_ColumnDoesNotExist_Error(string columnName, int expectedValue)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+            { RowResult result = queryResult.ValidateRow(rowNumber); });
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {rowNumber} (zero-based).  There are 3 rows", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertValue(0, columnName, expectedValue));
+    #endregion
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column {columnName} to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+    #region AssertRowValues
 
-        [TestCase(0, "UserId", 1502)]
-        [TestCase(0, "DomainId", 1502)]
-        [TestCase(1, "UserId", 2502)]
-        [TestCase(1, "DomainId", 2502)]
-        [TestCase(2, "UserId", 3502)]
-        [TestCase(2, "DomainId", 3502)]
-        public void QueryResult_AssertValue_ValueDoesNotMatch_Error(int rowNumber, string columnName, int expectedUserId)
+    [TestCase(0, 1001, 1002)]
+    [TestCase(1, 2001, 2002)]
+    [TestCase(2, 3001, 3002)]
+    public void QueryResult_AssertRowValues_ValidRow(int rowNumber, int expectedUserId, int expectedDomainId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
+
+        QueryResult queryResult = new(_testFramework, table);
+
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+            { "UserId", expectedUserId },
+            { "DomainId", expectedDomainId }
+        };
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertRowValues(rowNumber, expectedData));
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                queryResult.AssertValue(rowNumber, columnName, expectedUserId));
+    [TestCase(-1)]
+    [TestCase(3)]
+    public void QueryResult_AssertRowValues_RowDoesNotExist_Error(int rowNumber)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{ expectedUserId }>. Actual:<{ table.Rows[rowNumber][columnName] }>. Column { columnName } in row { rowNumber } has an unexpected value", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        #endregion
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+        { queryResult.AssertRowValues(rowNumber, []); });
 
-        #region ValidateRow
+        Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {rowNumber} (zero-based).  There are 3 rows", exception.Message);
+    }
 
-        [TestCase(0)]
-        [TestCase(1)]
-        [TestCase(2)]
-        public void QueryResult_ValidateRow_ValidRow(int rowNumber)
+    [TestCase(0, 1501, 1002)]
+    [TestCase(1, 2501, 2002)]
+    [TestCase(2, 3501, 3002)]
+    public void QueryResult_AssertRowValues_UserIdValuesDoNotMatch_Error(int rowNumber, int expectedUserId, int expectedDomainId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
+
+        QueryResult queryResult = new(_testFramework, table);
+
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+            { "UserId", expectedUserId },
+            { "DomainId", expectedDomainId }
+        };
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+        { queryResult.AssertRowValues(rowNumber, expectedData); });
 
-            RowResult rowResult = queryResult.ValidateRow(rowNumber);
+        Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedUserId}>. Actual:<{ table.Rows[rowNumber]["UserId"] }>. Column UserId in row { rowNumber } has an unexpected value", exception.Message);
+    }
 
-            rowResult.AssertValue("UserId", table.Rows[rowNumber]["UserId"]);
-        }
+    [TestCase(0, 1001, 1502)]
+    [TestCase(1, 2001, 2502)]
+    [TestCase(2, 3001, 3502)]
+    public void QueryResult_AssertRowValues_DomainIdValuesDoNotMatch_Error(int rowNumber, int expectedUserId, int expectedDomainId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-        [TestCase(-1)]
-        [TestCase(3)]
-        public void QueryResult_ValidateRow_RowDoesNotExist_Error(int rowNumber)
+        QueryResult queryResult = new(_testFramework, table);
+
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+            { "UserId", expectedUserId },
+            { "DomainId", expectedDomainId }
+        };
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+        { queryResult.AssertRowValues(rowNumber, expectedData); });
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-                { RowResult result = queryResult.ValidateRow(rowNumber); });
+        Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedDomainId}>. Actual:<{ table.Rows[rowNumber]["DomainId"] }>. Column DomainId in row { rowNumber } has an unexpected value", exception.Message);
+    }
 
-            Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {rowNumber} (zero-based).  There are 3 rows", exception.Message);
-        }
+    #endregion
 
-        #endregion
+    #region AssertRowExists
 
-        #region AssertRowValues
+    [TestCase(1001, 1002)]
+    [TestCase(2001, 2002)]
+    [TestCase(3001, 3002)]
+    public void QueryResult_AssertRowExists_ValidRow(int expectedUserId, int expectedDomainId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-        [TestCase(0, 1001, 1002)]
-        [TestCase(1, 2001, 2002)]
-        [TestCase(2, 3001, 3002)]
-        public void QueryResult_AssertRowValues_ValidRow(int rowNumber, int expectedUserId, int expectedDomainId)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", expectedUserId },
-                { "DomainId", expectedDomainId }
-            };
-
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertRowValues(rowNumber, expectedData));
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase(-1)]
-        [TestCase(3)]
-        public void QueryResult_AssertRowValues_RowDoesNotExist_Error(int rowNumber)
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+            { "UserId", expectedUserId },
+            { "DomainId", expectedDomainId }
+        };
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertRowExists(expectedData));
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-            { queryResult.AssertRowValues(rowNumber, new DataSetRow()); });
+    [TestCase(1001, 1002)]
+    [TestCase(2001, 2002)]
+    [TestCase(3001, 3002)]
+    public void QueryResult_AssertRowExists_DuplicateRows_ValidRow(int expectedUserId, int expectedDomainId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
+        AddRow(table, 3001, 3002);
 
-            Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {rowNumber} (zero-based).  There are 3 rows", exception.Message);
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase(0, 1501, 1002)]
-        [TestCase(1, 2501, 2002)]
-        [TestCase(2, 3501, 3002)]
-        public void QueryResult_AssertRowValues_UserIdValuesDoNotMatch_Error(int rowNumber, int expectedUserId, int expectedDomainId)
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", expectedUserId },
-                { "DomainId", expectedDomainId }
-            };
-
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-            { queryResult.AssertRowValues(rowNumber, expectedData); });
-
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedUserId}>. Actual:<{ table.Rows[rowNumber]["UserId"] }>. Column UserId in row { rowNumber } has an unexpected value", exception.Message);
-        }
+            { "UserId", expectedUserId },
+            { "DomainId", expectedDomainId }
+        };
 
-        [TestCase(0, 1001, 1502)]
-        [TestCase(1, 2001, 2502)]
-        [TestCase(2, 3001, 3502)]
-        public void QueryResult_AssertRowValues_DomainIdValuesDoNotMatch_Error(int rowNumber, int expectedUserId, int expectedDomainId)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", expectedUserId },
-                { "DomainId", expectedDomainId }
-            };
-
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-            { queryResult.AssertRowValues(rowNumber, expectedData); });
-
-            Assert.AreEqual($"Assert.AreEqual failed. Expected:<{expectedDomainId}>. Actual:<{ table.Rows[rowNumber]["DomainId"] }>. Column DomainId in row { rowNumber } has an unexpected value", exception.Message);
-        }
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertRowExists(expectedData));
+    }
 
-        #endregion
+    [TestCase(1501, 1002)]
+    [TestCase(2501, 2002)]
+    [TestCase(3501, 3002)]
+    [TestCase(1001, 1502)]
+    [TestCase(2001, 2502)]
+    [TestCase(3001, 3502)]
+    [TestCase(1501, 1502)]
+    [TestCase(2501, 2502)]
+    [TestCase(3501, 3502)]
+    public void QueryResult_AssertRowExists_ValuesDoNotMatch_Error(int expectedUserId, int expectedDomainId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-        #region AssertRowExists
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase(1001, 1002)]
-        [TestCase(2001, 2002)]
-        [TestCase(3001, 3002)]
-        public void QueryResult_AssertRowExists_ValidRow(int expectedUserId, int expectedDomainId)
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", expectedUserId },
-                { "DomainId", expectedDomainId }
-            };
-
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertRowExists(expectedData));
-        }
+            { "UserId", expectedUserId },
+            { "DomainId", expectedDomainId }
+        };
 
-        [TestCase(1001, 1002)]
-        [TestCase(2001, 2002)]
-        [TestCase(3001, 3002)]
-        public void QueryResult_AssertRowExists_DuplicateRows_ValidRow(int expectedUserId, int expectedDomainId)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", expectedUserId },
-                { "DomainId", expectedDomainId }
-            };
-
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertRowExists(expectedData));
-        }
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+        { queryResult.AssertRowExists(expectedData); });
 
-        [TestCase(1501, 1002)]
-        [TestCase(2501, 2002)]
-        [TestCase(3501, 3002)]
-        [TestCase(1001, 1502)]
-        [TestCase(2001, 2502)]
-        [TestCase(3001, 3502)]
-        [TestCase(1501, 1502)]
-        [TestCase(2501, 2502)]
-        [TestCase(3501, 3502)]
-        public void QueryResult_AssertRowExists_ValuesDoNotMatch_Error(int expectedUserId, int expectedDomainId)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", expectedUserId },
-                { "DomainId", expectedDomainId }
-            };
-
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-            { queryResult.AssertRowExists(expectedData); });
-
-            Assert.AreEqual(@$"Assert.Fail failed. No rows found matching the expected data: 
+        Assert.AreEqual(@$"Assert.Fail failed. No rows found matching the expected data: 
 [UserId, {expectedUserId}]
 [DomainId, {expectedDomainId}]", exception.Message);
-        }
+    }
 
-        [TestCase("otherDomainId")]
-        [TestCase("userid")]
-        [TestCase("USERID")]
-        public void QueryResult_AssertRowExists_ColumnNameDoesNotExist_Error(string columnname)
+    [TestCase("otherDomainId")]
+    [TestCase("userid")]
+    [TestCase("USERID")]
+    public void QueryResult_AssertRowExists_ColumnNameDoesNotExist_Error(string columnname)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
+
+        QueryResult queryResult = new(_testFramework, table);
+
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+            { columnname, 1000 }
+        };
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+        { queryResult.AssertRowExists(expectedData); });
 
-            DataSetRow expectedData = new DataSetRow
-            {
-                { columnname, 1000 }
-            };
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column { columnname } to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
 
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-            { queryResult.AssertRowExists(expectedData); });
+    #endregion
 
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column { columnname } to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
+    #region AssertRowDoesNotExist
 
-        #endregion
+    [TestCase(1501, 1002)]
+    [TestCase(2501, 2002)]
+    [TestCase(3501, 3002)]
+    [TestCase(1001, 1502)]
+    [TestCase(2001, 2502)]
+    [TestCase(3001, 3502)]
+    [TestCase(1501, 1502)]
+    [TestCase(2501, 2502)]
+    [TestCase(3501, 3502)]
+    public void QueryResult_AssertRowDoesNotExist_ValidRow(int expectedUserId, int expectedDomainId)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-        #region AssertRowDoesNotExist
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase(1501, 1002)]
-        [TestCase(2501, 2002)]
-        [TestCase(3501, 3002)]
-        [TestCase(1001, 1502)]
-        [TestCase(2001, 2502)]
-        [TestCase(3001, 3502)]
-        [TestCase(1501, 1502)]
-        [TestCase(2501, 2502)]
-        [TestCase(3501, 3502)]
-        public void QueryResult_AssertRowDoesNotExist_ValidRow(int expectedUserId, int expectedDomainId)
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+            { "UserId", expectedUserId },
+            { "DomainId", expectedDomainId }
+        };
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        Assert.DoesNotThrow(() =>
+            queryResult.AssertRowDoesNotExist(expectedData));
+    }
 
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", expectedUserId },
-                { "DomainId", expectedDomainId }
-            };
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(2)]
+    public void QueryResult_AssertRowDoesNotExist_ValuesDoNotMatch_Error(int matchingRowNumber)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
 
-            Assert.DoesNotThrow(() =>
-                queryResult.AssertRowDoesNotExist(expectedData));
-        }
+        QueryResult queryResult = new(_testFramework, table);
 
-        [TestCase(0)]
-        [TestCase(1)]
-        [TestCase(2)]
-        public void QueryResult_AssertRowDoesNotExist_ValuesDoNotMatch_Error(int matchingRowNumber)
+        DataSetRow expectedData = new()
         {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
+            { "UserId", table.Rows[matchingRowNumber]["UserId"] },
+            { "DomainId", table.Rows[matchingRowNumber]["DomainId"] }
+        };
 
-            QueryResult queryResult = new QueryResult(_testFramework, table);
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+        { queryResult.AssertRowDoesNotExist(expectedData); });
 
-            DataSetRow expectedData = new DataSetRow
-            {
-                { "UserId", table.Rows[matchingRowNumber]["UserId"] },
-                { "DomainId", table.Rows[matchingRowNumber]["DomainId"] }
-            };
-
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-            { queryResult.AssertRowDoesNotExist(expectedData); });
-
-            Assert.AreEqual(@$"Assert.Fail failed. Row { matchingRowNumber } matches the expected data that should not match anything: 
+        Assert.AreEqual(@$"Assert.Fail failed. Row { matchingRowNumber } matches the expected data that should not match anything: 
 [UserId, {expectedData["UserId"]}]
 [DomainId, {expectedData["DomainId"]}]", exception.Message);
-        }
-
-        [TestCase("otherDomainId")]
-        [TestCase("userid")]
-        [TestCase("USERID")]
-        public void QueryResult_AssertRowDoesNotExist_ColumnNameDoesNotExist_Error(string columnname)
-        {
-            DataTable table = CreateDefaultTable();
-            AddRow(table, 1001, 1002);
-            AddRow(table, 2001, 2002);
-            AddRow(table, 3001, 3002);
-
-            QueryResult queryResult = new QueryResult(_testFramework, table);
-
-            DataSetRow expectedData = new DataSetRow
-            {
-                { columnname, 1000 }
-            };
-
-            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-            { queryResult.AssertRowDoesNotExist(expectedData); });
-
-            Assert.AreEqual($"CollectionAssert.Contains failed. Expected column { columnname } to be found but the only columns found are UserId, DomainId", exception.Message);
-        }
-
-        #endregion
     }
+
+    [TestCase("otherDomainId")]
+    [TestCase("userid")]
+    [TestCase("USERID")]
+    public void QueryResult_AssertRowDoesNotExist_ColumnNameDoesNotExist_Error(string columnname)
+    {
+        DataTable table = CreateDefaultTable();
+        AddRow(table, 1001, 1002);
+        AddRow(table, 2001, 2002);
+        AddRow(table, 3001, 3002);
+
+        QueryResult queryResult = new(_testFramework, table);
+
+        DataSetRow expectedData = new()
+        {
+            { columnname, 1000 }
+        };
+
+        var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
+        { queryResult.AssertRowDoesNotExist(expectedData); });
+
+        Assert.AreEqual($"CollectionAssert.Contains failed. Expected column { columnname } to be found but the only columns found are UserId, DomainId", exception.Message);
+    }
+
+    #endregion
 }

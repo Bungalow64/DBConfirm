@@ -2,26 +2,25 @@
 using DBConfirm.Core.Templates;
 using System.Threading.Tasks;
 
-namespace Sample.Core.MSTest.Tests.Templates.Complex
+namespace Sample.Core.MSTest.Tests.Templates.Complex;
+
+public class UserWithAddressTemplate : BaseComplexTemplate
 {
-    public class UserWithAddressTemplate : BaseComplexTemplate
+    public UserTemplate User { get; set; }
+
+    public UserAddressTemplate UserAddress { get; set; }
+
+    public UserWithAddressTemplate()
     {
-        public UserTemplate User { get; set; }
+        User = [];
+        UserAddress = [];
+    }
 
-        public UserAddressTemplate UserAddress { get; set; }
+    public override async Task InsertAsync(ITestRunner testRunner)
+    {
+        await testRunner.InsertTemplateAsync(User);
 
-        public UserWithAddressTemplate()
-        {
-            User = new UserTemplate();
-            UserAddress = new UserAddressTemplate();
-        }
-
-        public override async Task InsertAsync(ITestRunner testRunner)
-        {
-            await testRunner.InsertTemplateAsync(User);
-
-            UserAddress["UserId"] = User.Identity;
-            await testRunner.InsertTemplateAsync(UserAddress);
-        }
+        UserAddress["UserId"] = User.Identity;
+        await testRunner.InsertTemplateAsync(UserAddress);
     }
 }
