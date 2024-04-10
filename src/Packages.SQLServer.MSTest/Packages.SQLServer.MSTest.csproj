@@ -5,7 +5,7 @@
 		<AssemblyName>DBConfirm.Packages.SQLServer.MSTest</AssemblyName>
 		<RootNamespace>DBConfirm.Packages.SQLServer.MSTest</RootNamespace>
 		<PackageId>DBConfirm.Packages.SQLServer.MSTest</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
 		<Product>DBConfirm (SQLServer/MSTest package)</Product>

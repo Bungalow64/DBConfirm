@@ -118,6 +118,25 @@ namespace DBConfirm.Core.DataResults
             return expectedData.All(p => ValidateValueNoAssertions(p.Key, p.Value));
         }
 
+        /// <summary>
+        /// Gets the value in a specific column
+        /// </summary>
+        /// <param name="columnName">The column name (case-sensitive)</param>
+        /// <returns>The object in the column</returns>
+        internal object Get(string columnName)
+        {
+            return _row[columnName];
+        }
+
+        /// <summary>
+        /// Gets the current row number (0-based)
+        /// </summary>
+        /// <returns>Returns the row number (0-based)</returns>
+        internal int GetRowNumber()
+        {
+            return _rowNumber;
+        }
+
         private bool ValidateValue(string columnName, object expectedValue)
         {
             _queryResult.AssertColumnExists(columnName);

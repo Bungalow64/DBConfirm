@@ -515,6 +515,14 @@
             <param name="notExpectedColumnNames">The column names (case-sensitive)</param>
             <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.QueryResult"/> object</returns>
         </member>
+        <member name="M:DBConfirm.Core.DataResults.QueryResult.AssertColumnValuesUnique(System.String[])">
+            <summary>
+            Asserts that the data across the selected columns is unique
+            </summary>
+            <param name="uniqueColumnNames">The column names (case-sensitive).  Duplicates are ignored</param>
+            <remarks>If multiple columns are selected, then uniqueness is determined by checking the data in all columns, not each column individually</remarks>
+            <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.QueryResult"/> object</returns>
+        </member>
         <member name="M:DBConfirm.Core.DataResults.QueryResult.AssertRowPositionExists(System.Int32)">
             <summary>
             Asserts that a row exists at a specific position (zero-based)
@@ -638,6 +646,19 @@
             </summary>
             <param name="expectedData">The expected data to match.  Respects <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> objects</param>
             <returns>Returns a boolean indicating if the values match</returns>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.RowResult.Get(System.String)">
+            <summary>
+            Gets the value in a specific column
+            </summary>
+            <param name="columnName">The column name (case-sensitive)</param>
+            <returns>The object in the column</returns>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.RowResult.GetRowNumber">
+            <summary>
+            Gets the current row number (0-based)
+            </summary>
+            <returns>Returns the row number (0-based)</returns>
         </member>
         <member name="T:DBConfirm.Core.DataResults.ScalarResult`1">
             <summary>
