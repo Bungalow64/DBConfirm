@@ -755,11 +755,11 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_EmptyColumnNames_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("DomainId", typeof(int));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique());
@@ -770,11 +770,11 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_NullColumnNames_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("DomainId", typeof(int));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique(null));
@@ -787,11 +787,11 @@ public class QueryResultTests
     [TestCase("domainId")]
     public void QueryResult_AssertColumnValuesUnique_SpecifyColumnNotAvailable_Failure(string columnName)
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("DomainId", typeof(int));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique(columnName));
@@ -802,11 +802,11 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_SpecifyColumnsNotAvailable_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("DomainId", typeof(int));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("Other1", "Other2"));
@@ -817,11 +817,11 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_SpecifySomeColumnsNotAvailable_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("DomainId", typeof(int));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("DomainId", "Other1", "Other2"));
@@ -832,11 +832,11 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_SpecifyDuplicateColumnsNotAvailable_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("DomainId", typeof(int));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("Other1", "Other1"));
@@ -854,7 +854,7 @@ public class QueryResultTests
         AddRow(table, 3, 4);
         AddRow(table, 5, 6);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique(columnName));
@@ -869,7 +869,7 @@ public class QueryResultTests
         AddRow(table, 3, 4);
         AddRow(table, 5, 6);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
@@ -884,7 +884,7 @@ public class QueryResultTests
         AddRow(table, 3, 2);
         AddRow(table, 5, 2);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
@@ -899,7 +899,7 @@ public class QueryResultTests
         AddRow(table, 3, 2);
         AddRow(table, 5, 2);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique("UserId"));
@@ -914,7 +914,7 @@ public class QueryResultTests
         AddRow(table, 3, 7);
         AddRow(table, 5, 7);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("DomainId"));
@@ -931,7 +931,7 @@ public class QueryResultTests
         AddRow(table, 3, 2);
         AddRow(table, 3, 2);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
@@ -948,7 +948,7 @@ public class QueryResultTests
         AddRow(table, 3, 2);
         AddRow(table, 3, 2);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("UserId", "DomainId"));
@@ -960,7 +960,7 @@ public class QueryResultTests
     [TestCase("Col2")]
     public void QueryResult_AssertColumnValuesUnique_Dates_SingleColumn_Unique_NoFailure(string columnName)
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(DateTime));
         table.Columns.Add("Col2", typeof(DateTime));
 
@@ -977,7 +977,7 @@ public class QueryResultTests
         AddRow(DateTime.Parse("05-Mar-2023 09:23:32"), DateTime.Parse("06-Mar-2023 09:23:32"));
         AddRow(DateTime.Parse("06-Mar-2023 09:23:32"), DateTime.Parse("07-Mar-2023 09:23:32"));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique(columnName));
@@ -986,7 +986,7 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_Dates_MultipleColumns_Unique_NoFailure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(DateTime));
         table.Columns.Add("Col2", typeof(DateTime));
 
@@ -1003,7 +1003,7 @@ public class QueryResultTests
         AddRow(DateTime.Parse("03-Mar-2023 09:23:32"), DateTime.Parse("06-Mar-2023 09:23:32"));
         AddRow(DateTime.Parse("06-Mar-2023 09:23:32"), DateTime.Parse("02-Mar-2023 09:23:32"));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique("Col1", "Col2"));
@@ -1012,7 +1012,7 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_Dates_NotUnique_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(DateTime));
         table.Columns.Add("Col2", typeof(DateTime));
 
@@ -1029,7 +1029,7 @@ public class QueryResultTests
         AddRow(DateTime.Parse("06-Mar-2023 09:23:32"), DateTime.Parse("07-Mar-2023 09:23:32"));
         AddRow(DateTime.Parse("03-Mar-2023 09:23:32"), DateTime.Parse("04-Mar-2023 09:23:32"));
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("Col1", "Col2"));
@@ -1041,7 +1041,7 @@ public class QueryResultTests
     [TestCase("Col2")]
     public void QueryResult_AssertColumnValuesUnique_Strings_SingleColumn_Unique_NoFailure(string columnName)
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(string));
         table.Columns.Add("Col2", typeof(string));
 
@@ -1058,7 +1058,7 @@ public class QueryResultTests
         AddRow("c", "d");
         AddRow("d", "e");
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique(columnName));
@@ -1067,7 +1067,7 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_Strings_NotUnique_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(string));
         table.Columns.Add("Col2", typeof(string));
 
@@ -1084,7 +1084,7 @@ public class QueryResultTests
         AddRow("c", "d");
         AddRow("d", "b");
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("Col2"));
@@ -1096,7 +1096,7 @@ public class QueryResultTests
     [TestCase("Col2")]
     public void QueryResult_AssertColumnValuesUnique_Bools_SingleColumn_Unique_NoFailure(string columnName)
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(bool));
         table.Columns.Add("Col2", typeof(bool));
 
@@ -1111,7 +1111,7 @@ public class QueryResultTests
         AddRow(false, false);
         AddRow(true, true);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique(columnName));
@@ -1120,7 +1120,7 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_Bools_MultipleColumns_Unique_NoFailure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(bool));
         table.Columns.Add("Col2", typeof(bool));
 
@@ -1137,7 +1137,7 @@ public class QueryResultTests
         AddRow(false, true);
         AddRow(true, false);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         Assert.DoesNotThrow(() =>
             queryResult.AssertColumnValuesUnique("Col1", "Col2"));
@@ -1146,7 +1146,7 @@ public class QueryResultTests
     [Test]
     public void QueryResult_AssertColumnValuesUnique_Bools_NotUnique_Failure()
     {
-        DataTable table = new DataTable();
+        DataTable table = new();
         table.Columns.Add("Col1", typeof(bool));
         table.Columns.Add("Col2", typeof(bool));
 
@@ -1161,7 +1161,7 @@ public class QueryResultTests
         AddRow(false, false);
         AddRow(true, false);
 
-        QueryResult queryResult = new QueryResult(_testFramework, table);
+        QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
             queryResult.AssertColumnValuesUnique("Col2"));
