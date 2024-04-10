@@ -322,7 +322,7 @@ export default function Api() {
             <ul>
                 <li>Returns the same <code>QueryResult</code> object</li>
             </ul>
-            <h3 id="assertrowcount">AssertRowCount</h3>
+            <h3 id="assertcolumncount">AssertColumnCount</h3>
             <p>Asserts the number of columns</p>
             <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> AssertColumnCount(<span className="hljs-keyword">int</span> expected)
 </code></pre>
