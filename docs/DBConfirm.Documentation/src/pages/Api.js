@@ -382,6 +382,46 @@ export default function Api() {
             <ul>
                 <li>Returns the same <code>QueryResult</code> object</li>
             </ul>
+            <h3 id="assertcolumnvaluesunique">AssertColumnValuesUnique</h3>
+            <p>Asserts that the data across the selected columns is unique</p>
+            <p>If a single column is specified, then the assertion is checking that this column does not contain any duplicated values</p>
+            <p>If multiple columns are specified, then the assertion is checking that the data present in all of those columns is not duplicated across multiple rows. 
+                For example, say a result set has the following data:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style={{ width: "120px" }}>FirstName</th>
+                            <th style={{ width: "120px" }}>MiddleName</th>
+                            <th style={{ width: "120px" }}>LastName</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John</td>
+                            <td>A</td>
+                            <td>Smith</td>
+                        </tr>
+                        <tr>
+                            <td>Jane</td>
+                            <td>A</td>
+                            <td>Smith</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>When <code>AssertColumnValuesUnique("FirstName")</code> is called, the test passes because all the values in the 'FirstName' column is unique</p>
+                <p>When <code>AssertColumnValuesUnique("LastName")</code> is called, the test fails because a value in the 'LastName' column ('Smith') exists in multiple rows</p>
+                <p>When <code>AssertColumnValuesUnique("FirstName", "LastName")</code> is called, the test passes because there are no multiple rows with the same 'FirstName' and 'LastName' values</p>
+                <p>When <code>AssertColumnValuesUnique("MiddleName", "LastName")</code> is called, the test fails because there are multiple rows with the same 'MiddleName' and 'LastName' values ('A' and 'Smith')</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> AssertColumnValuesUnique(<span className="hljs-keyword">params</span> <span className="hljs-keyword">string</span>[] uniqueColumnNames)
+</code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>uniqueColumnNames</strong> - The column names (case-sensitive).  Duplicates are ignored</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>QueryResult</code> object</li>
+            </ul>
             <h3 id="assertrowpositionexists">AssertRowPositionExists</h3>
             <p>Asserts that a row exists at a specific position (zero-based)</p>
             <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> AssertRowPositionExists(<span className="hljs-keyword">int</span> expectedRowPosition)
