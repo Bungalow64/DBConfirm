@@ -2,92 +2,91 @@
 using DBConfirm.Core.Templates;
 using NUnit.Framework;
 
-namespace Core.Tests.Templates
+namespace Core.Tests.Templates;
+
+[TestFixture]
+public class BaseTemplateTests
 {
-    [TestFixture]
-    public class BaseTemplateTests
+    public class TestIdentityTemplate : BaseSimpleTemplate<TestIdentityTemplate>
     {
-        public class TestIdentityTemplate : BaseSimpleTemplate<TestIdentityTemplate>
+        public override string TableName => "dbo.Users";
+
+        public override DataSetRow DefaultData => new()
         {
-            public override string TableName => "dbo.Users";
+            { "DefaultColumnA", 9001 }
+        };
 
-            public override DataSetRow DefaultData => new DataSetRow
-            {
-                { "DefaultColumnA", 9001 }
-            };
+        public TestIdentityTemplate() : base() { }
 
-            public TestIdentityTemplate() : base() { }
+        public TestIdentityTemplate(DataSetRow data) : base(data) { }
+    }
 
-            public TestIdentityTemplate(DataSetRow data) : base(data) { }
-        }
-
-        [Test]
-        public void BaseTemplate_CustomData_RetrieveDataSetDuringSetup()
+    [Test]
+    public void BaseTemplate_CustomData_RetrieveDataSetDuringSetup()
+    {
+        TestIdentityTemplate template = new()
         {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DomainId", 1001 },
-                { "UserId", 2001 }
-            };
+            { "DomainId", 1001 },
+            { "UserId", 2001 }
+        };
 
-            Assert.AreEqual(2001, template.CustomData["UserId"]);
-        }
+        Assert.AreEqual(2001, template.CustomData["UserId"]);
+    }
 
-        [Test]
-        public void BaseTemplate_DefaultCtor()
+    [Test]
+    public void BaseTemplate_DefaultCtor()
+    {
+        TestIdentityTemplate template = new();
+
+        Assert.AreEqual(0, template.CustomData.Count);
+    }
+
+    [Test]
+    public void BaseTemplate_Ctor_CanInstantiateFromExistingTemplate()
+    {
+        TestIdentityTemplate template = new()
         {
-            TestIdentityTemplate template = new TestIdentityTemplate();
+            { "DomainId", 1001 },
+            { "UserId", 2001 }
+        };
 
-            Assert.AreEqual(0, template.CustomData.Count);
-        }
+        TestIdentityTemplate newTemplate = new(template);
 
-        [Test]
-        public void BaseTemplate_Ctor_CanInstantiateFromExistingTemplate()
+        Assert.AreEqual(1001, newTemplate.CustomData["DomainId"]);
+        Assert.AreEqual(2001, newTemplate.CustomData["UserId"]);
+        Assert.AreEqual(9001, newTemplate.DefaultData["DefaultColumnA"]);
+    }
+
+    [Test]
+    public void BaseTemplate_MergedDate_NoCustomData_ReturnDefaultOnly()
+    {
+        TestIdentityTemplate template = new();
+
+        Assert.AreEqual(9001, template.MergedData["DefaultColumnA"]);
+    }
+
+    [Test]
+    public void BaseTemplate_MergedDate_HasCustomData_ReturnDefaultAndCustom()
+    {
+        TestIdentityTemplate template = new()
         {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DomainId", 1001 },
-                { "UserId", 2001 }
-            };
+            { "DomainId", 1001 },
+            { "UserId", 2001 }
+        };
 
-            TestIdentityTemplate newTemplate = new TestIdentityTemplate(template);
+        Assert.AreEqual(1001, template.MergedData["DomainId"]);
+        Assert.AreEqual(2001, template.MergedData["UserId"]);
+        Assert.AreEqual(9001, template.MergedData["DefaultColumnA"]);
+    }
 
-            Assert.AreEqual(1001, newTemplate.CustomData["DomainId"]);
-            Assert.AreEqual(2001, newTemplate.CustomData["UserId"]);
-            Assert.AreEqual(9001, newTemplate.DefaultData["DefaultColumnA"]);
-        }
-
-        [Test]
-        public void BaseTemplate_MergedDate_NoCustomData_ReturnDefaultOnly()
+    [Test]
+    public void BaseTemplate_MergedDate_HasCustomDataOverwritingDefaultData_ReturnCustom()
+    {
+        TestIdentityTemplate template = new()
         {
-            TestIdentityTemplate template = new TestIdentityTemplate();
+            { "DefaultColumnA", 3001 }
+        };
 
-            Assert.AreEqual(9001, template.MergedData["DefaultColumnA"]);
-        }
-
-        [Test]
-        public void BaseTemplate_MergedDate_HasCustomData_ReturnDefaultAndCustom()
-        {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DomainId", 1001 },
-                { "UserId", 2001 }
-            };
-
-            Assert.AreEqual(1001, template.MergedData["DomainId"]);
-            Assert.AreEqual(2001, template.MergedData["UserId"]);
-            Assert.AreEqual(9001, template.MergedData["DefaultColumnA"]);
-        }
-
-        [Test]
-        public void BaseTemplate_MergedDate_HasCustomDataOverwritingDefaultData_ReturnCustom()
-        {
-            TestIdentityTemplate template = new TestIdentityTemplate
-            {
-                { "DefaultColumnA", 3001 }
-            };
-
-            Assert.AreEqual(3001, template.MergedData["DefaultColumnA"]);
-        }
+        Assert.AreEqual(3001, template.MergedData["DefaultColumnA"]);
     }
 }
