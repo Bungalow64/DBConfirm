@@ -28,7 +28,7 @@ This package contains the data access to Microsoft SQL Server.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.2" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.7" />
 	</ItemGroup>
 
 	<ItemGroup>
