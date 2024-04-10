@@ -11,7 +11,7 @@ namespace Sample.Northwind.MSTest.Tests.Data
     public class UniquenessTests : MSTestBase
     {
         [TestMethod]
-        public async Task ProvideNoColumns_AssumePass()
+        public async Task ProvideNoColumns_Failure()
         {
             await TestRunner.InsertTemplateAsync(new CategoriesTemplate()
                 .WithCategoryName("Cat1")
@@ -23,9 +23,19 @@ namespace Sample.Northwind.MSTest.Tests.Data
 
             QueryResult data = await TestRunner.ExecuteCommandAsync("SELECT Categories.CategoryName, Categories.Description FROM Categories ORDER BY Categories.CategoryID");
 
-            data
-                .AssertColumnCount(2)
-                .AssertColumnValuesUnique();
+            try
+            {
+                data
+                    .AssertColumnCount(2)
+                    .AssertColumnValuesUnique();
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual("Assert.Fail failed. No column names provided.  Specify columns to check for uniqueness", ex.Message);
+                return;
+            }
+
+            Assert.Fail("Expected test to fail, but it passed");
         }
 
         [TestMethod]

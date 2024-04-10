@@ -11,21 +11,34 @@ namespace Sample.Northwind.NUnit.Tests.Data
     public class UniquenessTests : NUnitBase
     {
         [Test]
-        public async Task ProvideNoColumns_AssumePass()
+        public async Task ProvideNoColumns_Failure()
         {
-            await TestRunner.InsertTemplateAsync(new CategoriesTemplate()
+            using (new TestExecutionContext.IsolatedContext())
+            {
+                await TestRunner.InsertTemplateAsync(new CategoriesTemplate()
                 .WithCategoryName("Cat1")
                 .WithDescription("Description1"));
 
-            await TestRunner.InsertTemplateAsync(new CategoriesTemplate()
-                .WithCategoryName("Cat1")
-                .WithDescription("Description1"));
+                await TestRunner.InsertTemplateAsync(new CategoriesTemplate()
+                    .WithCategoryName("Cat1")
+                    .WithDescription("Description1"));
 
-            QueryResult data = await TestRunner.ExecuteCommandAsync("SELECT Categories.CategoryName, Categories.Description FROM Categories ORDER BY Categories.CategoryID");
+                QueryResult data = await TestRunner.ExecuteCommandAsync("SELECT Categories.CategoryName, Categories.Description FROM Categories ORDER BY Categories.CategoryID");
 
-            data
-                .AssertColumnCount(2)
-                .AssertColumnValuesUnique();
+                try
+                {
+                    data
+                        .AssertColumnCount(2)
+                        .AssertColumnValuesUnique();
+                }
+                catch (Exception ex)
+                {
+                    Assert.AreEqual("No column names provided.  Specify columns to check for uniqueness", ex.Message);
+                    return;
+                }
+
+                Assert.Fail("Expected test to fail, but it passed");
+            }
         }
 
         [Test]

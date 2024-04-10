@@ -149,7 +149,7 @@ namespace DBConfirm.Core.DataResults
         {
             if ((uniqueColumnNames ?? new string[0]).Length == 0)
             {
-                return this;
+                TestFramework.Fail($"No column names provided.  Specify columns to check for uniqueness");
             }
 
             var columnNames = uniqueColumnNames.Distinct().ToList();

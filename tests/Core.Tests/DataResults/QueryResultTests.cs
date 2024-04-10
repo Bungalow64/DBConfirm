@@ -753,7 +753,7 @@ namespace Core.Tests.DataResults
         #region AssertColumnValuesUnique
 
         [Test]
-        public void QueryResult_AssertColumnValuesUnique_EmptyColumnNames_NoFailure()
+        public void QueryResult_AssertColumnValuesUnique_EmptyColumnNames_Failure()
         {
             DataTable table = new DataTable();
             table.Columns.Add("UserId", typeof(int));
@@ -761,12 +761,14 @@ namespace Core.Tests.DataResults
 
             QueryResult queryResult = new QueryResult(_testFramework, table);
 
-            Assert.DoesNotThrow(() =>
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnValuesUnique());
+
+            Assert.AreEqual($"Assert.Fail failed. No column names provided.  Specify columns to check for uniqueness", exception.Message);
         }
 
         [Test]
-        public void QueryResult_AssertColumnValuesUnique_NullColumnNames_NoFailure()
+        public void QueryResult_AssertColumnValuesUnique_NullColumnNames_Failure()
         {
             DataTable table = new DataTable();
             table.Columns.Add("UserId", typeof(int));
@@ -774,8 +776,10 @@ namespace Core.Tests.DataResults
 
             QueryResult queryResult = new QueryResult(_testFramework, table);
 
-            Assert.DoesNotThrow(() =>
+            var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
                 queryResult.AssertColumnValuesUnique(null));
+
+            Assert.AreEqual($"Assert.Fail failed. No column names provided.  Specify columns to check for uniqueness", exception.Message);
         }
 
         [TestCase("OtherId")]
