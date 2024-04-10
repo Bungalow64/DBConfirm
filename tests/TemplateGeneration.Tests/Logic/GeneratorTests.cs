@@ -799,5 +799,44 @@ public class GeneratorTests
             .Verify(p => p.WriteError(It.IsAny<string>()), Times.Once);
     }
 
+    [Test]
+    public async Task Generator_TableContainingApostrophe_GenerateValidClass()
+    {
+        Options options = new()
+        {
+            DatabaseName = "TestDatabase1",
+            TableName = "User's"
+        };
+
+        DataTable columns = CreateTable();
+        AddPrimaryKeyRow(columns, "dbo", "User's", "UserId");
+        AddRequiredNVarcharRow(columns, "dbo", "User's", "FirstName");
+
+        _databaseHelperMock
+            .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(columns);
+
+        string generatedFileText = null;
+        _fileHelperMock
+            .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+            .Callback<string, string>((path, contents) =>
+            {
+                Assert.AreEqual(@"C:\Temp\User_sTemplate.cs", path);
+                generatedFileText = contents;
+            });
+
+        _fileHelperMock
+            .Setup(p => p.GetCurrentDirectory())
+            .Returns(@"C:\Temp");
+
+        _fileHelperMock
+            .Setup(p => p.Exists(It.IsAny<string>()))
+            .Returns(false);
+
+        await Create(options).GenerateFileAsync();
+
+        Assert.AreEqual(await ReadResource("Generator_SingleTableWithColumns_SpecialCharacterTable_FileGenerated"), generatedFileText);
+    }
+
     #endregion
 }
