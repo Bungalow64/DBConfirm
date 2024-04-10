@@ -29,7 +29,7 @@ public class ResolverTests
     [Test]
     public void Resolver_Resolve_ReturnValue()
     {
-        Func<int> function = () => 123;
+        static int function() => 123;
 
         Resolver<int> resolver = new(function);
 

@@ -76,7 +76,7 @@ public class SqlQueryParameterExtensionsTests
     [Test]
     public void SqlQueryParameterExtensions_ArrayWithResolver_CallResolverAndReturnResult()
     {
-        Func<int> resolveAction = () => 123;
+        static int resolveAction() => 123;
 
         SqlQueryParameter[] array = new SqlQueryParameter[]
         {
