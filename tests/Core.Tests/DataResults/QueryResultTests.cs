@@ -15,14 +15,14 @@ public class QueryResultTests
 
     private readonly ITestFramework _testFramework = new MSTestFramework();
 
-    private DataTable CreateDefaultTable()
+    private static DataTable CreateDefaultTable()
     {
         DataTable table = new();
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("DomainId", typeof(int));
         return table;
     }
-    private void AddRow(DataTable table, int userId, int domainId)
+    private static void AddRow(DataTable table, int userId, int domainId)
     {
         DataRow row = table.NewRow();
         row["UserId"] = userId;
@@ -986,7 +986,7 @@ public class QueryResultTests
         QueryResult queryResult = new(_testFramework, table);
 
         var exception = Assert.Throws<Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException>(() =>
-        { queryResult.AssertRowValues(rowNumber, new DataSetRow()); });
+        { queryResult.AssertRowValues(rowNumber, []); });
 
         Assert.AreEqual($"Assert.IsTrue failed. There is no row at position {rowNumber} (zero-based).  There are 3 rows", exception.Message);
     }

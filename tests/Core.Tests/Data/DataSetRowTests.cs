@@ -22,7 +22,7 @@ public class DataSetRowTests
     [Test]
     public void DataSetRow_Count_NoItems_0()
     {
-        DataSetRow row = new();
+        DataSetRow row = [];
 
         Assert.AreEqual(0, row.Count);
     }
@@ -96,7 +96,7 @@ public class DataSetRowTests
     [Test]
     public void DataSetRow_Values_RetrieveUnsetValue_ThrowException()
     {
-        DataSetRow row = new();
+        DataSetRow row = [];
 
         var exception = Assert.Throws<KeyNotFoundException>(() => { object result = row["UserId"]; });
         Assert.IsNotNull(exception);
@@ -106,7 +106,7 @@ public class DataSetRowTests
     [Test]
     public void DataSetRow_ToString_NoValues_ReturnEmptyString()
     {
-        DataSetRow row = new();
+        DataSetRow row = [];
 
         Assert.AreEqual("", row.ToString());
     }
@@ -163,7 +163,7 @@ public class DataSetRowTests
             ["DomainId"] = 1001
         };
 
-        DataSetRow result = row.Merge(new DataSetRow());
+        DataSetRow result = row.Merge([]);
 
         Assert.AreEqual(2, result.Count);
         Assert.AreEqual(123, result["UserId"]);
@@ -193,7 +193,7 @@ public class DataSetRowTests
     [Test]
     public void DataSetRow_Merge_WithNoOriginalWithNewKey_ReturnOriginalAndNew()
     {
-        DataSetRow row = new();
+        DataSetRow row = [];
 
         DataSetRow result = row.Merge(new DataSetRow
         {

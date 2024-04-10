@@ -106,7 +106,7 @@ public class GetUserTests : NUnitBase
     [Test]
     public async Task GetUser_MatchEmailAddress_ReturnPostcode()
     {
-        UserTemplate user = new();
+        UserTemplate user = [];
         UserAddressTemplate userA = new(user);
         await TestRunner.InsertTemplateAsync(user);
         await TestRunner.InsertTemplateAsync(userA);

@@ -13,8 +13,8 @@ public class UserWithAddressTemplate : BaseComplexTemplate
 
     public UserWithAddressTemplate()
     {
-        User = new UserTemplate();
-        UserAddress = new UserAddressTemplate();
+        User = [];
+        UserAddress = [];
     }
 
     public override async Task InsertAsync(ITestRunner testRunner)

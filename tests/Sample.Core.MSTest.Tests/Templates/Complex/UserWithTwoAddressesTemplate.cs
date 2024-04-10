@@ -14,9 +14,9 @@ public class UserWithTwoAddressesTemplate : BaseComplexTemplate
 
     public UserWithTwoAddressesTemplate()
     {
-        User = new UserTemplate();
-        UserAddress1 = new UserAddressTemplate();
-        UserAddress2 = new UserAddressTemplate();
+        User = [];
+        UserAddress1 = [];
+        UserAddress2 = [];
     }
 
     public override async Task InsertAsync(ITestRunner testRunner)

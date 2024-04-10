@@ -6,10 +6,10 @@ namespace Sample.NUnit.Northwind.Tests.Templates.Complex;
 
 public class CompleteOrderForCustomerTemplate : BaseComplexTemplate
 {
-    public CustomersTemplate CustomersTemplate { get; set; } = new CustomersTemplate();
-    public ProductsTemplate ProductsTemplate { get; set; } = new ProductsTemplate();
-    public OrdersTemplate OrdersTemplate { get; set; } = new OrdersTemplate();
-    public Order_DetailsTemplate Order_DetailsTemplate { get; set; } = new Order_DetailsTemplate();
+    public CustomersTemplate CustomersTemplate { get; set; } = [];
+    public ProductsTemplate ProductsTemplate { get; set; } = [];
+    public OrdersTemplate OrdersTemplate { get; set; } = [];
+    public Order_DetailsTemplate Order_DetailsTemplate { get; set; } = [];
 
     public override async Task InsertAsync(ITestRunner testRunner)
     {

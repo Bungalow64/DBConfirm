@@ -10,20 +10,20 @@ namespace DBConfirm.TemplateGeneration.Logic
     {
         public async Task<DataTable> GetColumnsAsync(string connectionString, string schemaName, string tableName, string commandText)
         {
-            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            using SqlConnection sqlConnection = new(connectionString);
             await sqlConnection.OpenAsync();
-            using DataSet ds = new DataSet
+            using DataSet ds = new()
             {
                 Locale = CultureInfo.InvariantCulture
             };
 
-            using (SqlCommand command = new SqlCommand(commandText, sqlConnection))
+            using (SqlCommand command = new(commandText, sqlConnection))
             {
                 command.CommandType = CommandType.Text;
                 command.Parameters.Add(new SqlParameter("SchemaName", schemaName));
                 command.Parameters.Add(new SqlParameter("TableName", tableName));
 
-                using SqlDataAdapter adapter = new SqlDataAdapter(command);
+                using SqlDataAdapter adapter = new(command);
                 adapter.Fill(ds);
             }
             if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)

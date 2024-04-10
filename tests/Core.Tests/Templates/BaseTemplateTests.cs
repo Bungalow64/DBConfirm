@@ -36,7 +36,7 @@ public class BaseTemplateTests
     [Test]
     public void BaseTemplate_DefaultCtor()
     {
-        TestIdentityTemplate template = new();
+        TestIdentityTemplate template = [];
 
         Assert.AreEqual(0, template.CustomData.Count);
     }
@@ -60,7 +60,7 @@ public class BaseTemplateTests
     [Test]
     public void BaseTemplate_MergedDate_NoCustomData_ReturnDefaultOnly()
     {
-        TestIdentityTemplate template = new();
+        TestIdentityTemplate template = [];
 
         Assert.AreEqual(9001, template.MergedData["DefaultColumnA"]);
     }

@@ -6,11 +6,11 @@ namespace Sample.Core.MSTest.Nuget.Tests.Templates.Complex;
 
 public class UserWithAddressAndCountryTemplate : BaseComplexTemplate
 {
-    public UserTemplate User { get; set; } = new UserTemplate();
+    public UserTemplate User { get; set; } = [];
 
-    public UserAddressTemplate UserAddress { get; set; } = new UserAddressTemplate();
+    public UserAddressTemplate UserAddress { get; set; } = [];
 
-    public CountriesTemplate Country { get; set; } = new CountriesTemplate();
+    public CountriesTemplate Country { get; set; } = [];
 
     public override async Task InsertAsync(ITestRunner testRunner)
     {

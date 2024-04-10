@@ -28,7 +28,7 @@ public class GeneratorTests
 
     private Generator Create(Options options = null) => new(options ?? new Options(), _fileHelperMock.Object, _databaseHelperMock.Object, _consoleLogMock.Object);
 
-    private DataTable CreateTable()
+    private static DataTable CreateTable()
     {
         DataTable table = new();
         table.Columns.Add("TableName");
@@ -293,7 +293,7 @@ public class GeneratorTests
 
     #region File Generation
 
-    private void AddPrimaryKeyRow(DataTable columns, string schemaName, string tableName, string columnName, bool isIdentity = true)
+    private static void AddPrimaryKeyRow(DataTable columns, string schemaName, string tableName, string columnName, bool isIdentity = true)
     {
         DataRow row = columns.NewRow();
         row["TableName"] = tableName;
@@ -307,7 +307,7 @@ public class GeneratorTests
         columns.Rows.Add(row);
     }
 
-    private void AddRequiredNVarcharRow(DataTable columns, string schemaName, string tableName, string columnName)
+    private static void AddRequiredNVarcharRow(DataTable columns, string schemaName, string tableName, string columnName)
     {
         DataRow row = columns.NewRow();
         row["TableName"] = tableName;
@@ -322,7 +322,7 @@ public class GeneratorTests
         columns.Rows.Add(row);
     }
     
-    private void AddRequiredNvarcharMaxRow(DataTable columns, string schemaName, string tableName, string columnName)
+    private static void AddRequiredNvarcharMaxRow(DataTable columns, string schemaName, string tableName, string columnName)
     {
         DataRow row = columns.NewRow();
         row["TableName"] = tableName;
@@ -337,7 +337,7 @@ public class GeneratorTests
         columns.Rows.Add(row);
     }
 
-    private void AddNullableRow(DataTable columns, string schemaName, string tableName, string columnName, string dataType)
+    private static void AddNullableRow(DataTable columns, string schemaName, string tableName, string columnName, string dataType)
     {
         DataRow row = columns.NewRow();
         row["TableName"] = tableName;
@@ -351,7 +351,7 @@ public class GeneratorTests
         columns.Rows.Add(row);
     }
 
-    private void AddRequiredForeignKey(DataTable columns, string schemaName, string tableName, string columnName, bool isIdentity = true, bool isNullable = false)
+    private static void AddRequiredForeignKey(DataTable columns, string schemaName, string tableName, string columnName, bool isIdentity = true, bool isNullable = false)
     {
         DataRow row = columns.NewRow();
         row["TableName"] = tableName;
@@ -365,7 +365,7 @@ public class GeneratorTests
         columns.Rows.Add(row);
     }
 
-    private async Task<string> ReadResource(string filename)
+    private static async Task<string> ReadResource(string filename)
     {
         using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TemplateGeneration.Tests.Logic.ExpectedClasses.{filename}.txt");
         using StreamReader reader = new(stream);

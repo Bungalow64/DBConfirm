@@ -40,7 +40,7 @@ public class IdentityOnlyTableTests : MSTestBase
     [TestMethod]
     public async Task IdentityOnlyTable_CanInsertDefaultDataWithEmptyDataSetRow()
     {
-        await TestRunner.InsertDataAsync(_tableName, new DataSetRow());
+        await TestRunner.InsertDataAsync(_tableName, []);
 
         QueryResult results = await TestRunner.ExecuteTableAsync(_tableName);
 

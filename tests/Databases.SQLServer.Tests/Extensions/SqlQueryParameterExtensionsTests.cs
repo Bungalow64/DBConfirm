@@ -25,7 +25,7 @@ public class SqlQueryParameterExtensionsTests
     [Test]
     public void SqlQueryParameterExtensions_EmptyArray_ReturnEmptyArray()
     {
-        SqlQueryParameter[] array = new SqlQueryParameter[0];
+        SqlQueryParameter[] array = [];
         SqlParameter[] result = array.ToSqlParameters();
 
         Assert.IsNotNull(result);
@@ -35,10 +35,10 @@ public class SqlQueryParameterExtensionsTests
     [Test]
     public void SqlQueryParameterExtensions_ArrayWithItems_ReturnArrayWithItems()
     {
-        SqlQueryParameter[] array = new SqlQueryParameter[]
-        {
+        SqlQueryParameter[] array =
+        [
             new("ColumnA", 123)
-        };
+        ];
         SqlParameter[] result = array.ToSqlParameters();
 
         Assert.IsNotNull(result);
@@ -50,11 +50,11 @@ public class SqlQueryParameterExtensionsTests
     [Test]
     public void SqlQueryParameterExtensions_ArrayWithRequiredPlaceholder_ThrowError()
     {
-        SqlQueryParameter[] array = new SqlQueryParameter[]
-        {
+        SqlQueryParameter[] array =
+        [
             new("ColumnA", 123),
             new("ColumnB", Placeholders.IsRequired())
-        };
+        ];
         RequiredPlaceholderIsNullException exception = Assert.Throws<RequiredPlaceholderIsNullException>(() => array.ToSqlParameters());
         Assert.AreEqual("ColumnB", exception.ColumnName);
         Assert.AreEqual("The value for ColumnB is required but has not been set", exception.Message);
@@ -63,11 +63,11 @@ public class SqlQueryParameterExtensionsTests
     [Test]
     public void SqlQueryParameterExtensions_ArrayWithMultipleRequiredPlaceholder_ThrowFirstError()
     {
-        SqlQueryParameter[] array = new SqlQueryParameter[]
-        {
+        SqlQueryParameter[] array =
+        [
             new("ColumnA", Placeholders.IsRequired()),
             new("ColumnB", Placeholders.IsRequired())
-        };
+        ];
         RequiredPlaceholderIsNullException exception = Assert.Throws<RequiredPlaceholderIsNullException>(() => array.ToSqlParameters());
         Assert.AreEqual("ColumnA", exception.ColumnName);
         Assert.AreEqual("The value for ColumnA is required but has not been set", exception.Message);
@@ -78,10 +78,10 @@ public class SqlQueryParameterExtensionsTests
     {
         static int resolveAction() => 123;
 
-        SqlQueryParameter[] array = new SqlQueryParameter[]
-        {
+        SqlQueryParameter[] array =
+        [
             new("ColumnA", new Resolver<int>(resolveAction))
-        };
+        ];
         SqlParameter[] result = array.ToSqlParameters();
 
         Assert.IsNotNull(result);
@@ -93,10 +93,10 @@ public class SqlQueryParameterExtensionsTests
     [Test]
     public void SqlQueryParameterExtensions_ArrayWithNull_ReturnDBNull()
     {
-        SqlQueryParameter[] array = new SqlQueryParameter[]
-        {
+        SqlQueryParameter[] array =
+        [
             new("ColumnA", null)
-        };
+        ];
         SqlParameter[] result = array.ToSqlParameters();
 
         Assert.IsNotNull(result);
