@@ -6,78 +6,77 @@ using System.Threading.Tasks;
 using DBConfirm.Core.TestFrameworks.Abstract;
 using DBConfirm.Core.Runners.Abstract;
 
-namespace Frameworks.MSTest.Tests
+namespace Frameworks.MSTest.Tests;
+
+[TestClass]
+public class TestBaseTests
 {
-    [TestClass]
-    public class TestBaseTests
+    #region Setup
+
+    private Mock<ITestRunnerFactory> _testRunnerFactoryMock;
+    private Mock<ITestRunner> _testRunnerMock;
+
+    [TestInitialize]
+    public void Init()
     {
-        #region Setup
+        _testRunnerFactoryMock = new Mock<ITestRunnerFactory>(MockBehavior.Strict);
+        _testRunnerMock = new Mock<ITestRunner>(MockBehavior.Strict);
 
-        private Mock<ITestRunnerFactory> _testRunnerFactoryMock;
-        private Mock<ITestRunner> _testRunnerMock;
+    }
 
-        [TestInitialize]
-        public void Init()
+    private MockedTestClass GetTestClass()
+    {
+        MockedTestClass testClass = new()
         {
-            _testRunnerFactoryMock = new Mock<ITestRunnerFactory>(MockBehavior.Strict);
-            _testRunnerMock = new Mock<ITestRunner>(MockBehavior.Strict);
+            ExposedTestRunnerFactory = _testRunnerFactoryMock.Object
+        };
+        return testClass;
+    }
 
-        }
+    #endregion
 
-        private MockedTestClass GetTestClass()
-        {
-            MockedTestClass testClass = new MockedTestClass
-            {
-                ExposedTestRunnerFactory = _testRunnerFactoryMock.Object
-            };
-            return testClass;
-        }
+    [TestMethod]
+    public async Task TestBase_Init_InitialiseAsyncCalledCorrectly()
+    {
+        _testRunnerFactoryMock
+            .Setup(p => p.BuildTestRunner(It.IsAny<string>()))
+            .Callback<string>(p => Assert.AreEqual("SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;", p))
+            .Returns(_testRunnerMock.Object);
 
-        #endregion
+        _testRunnerMock
+            .Setup(p => p.InitialiseAsync(It.IsAny<ITestFramework>()))
+            .Returns(Task.CompletedTask);
 
-        [TestMethod]
-        public async Task TestBase_Init_InitialiseAsyncCalledCorrectly()
-        {
-            _testRunnerFactoryMock
-                .Setup(p => p.BuildTestRunner(It.IsAny<string>()))
-                .Callback<string>(p => Assert.AreEqual("SERVER=(local);DATABASE=SampleDB;Integrated Security=true;Connection Timeout=30;", p))
-                .Returns(_testRunnerMock.Object);
+        await GetTestClass().Init();
 
-            _testRunnerMock
-                .Setup(p => p.InitialiseAsync(It.IsAny<ITestFramework>()))
-                .Returns(Task.CompletedTask);
+        _testRunnerFactoryMock
+            .Verify(p => p.BuildTestRunner(It.IsAny<string>()), Times.Once);
 
-            await GetTestClass().Init();
+        _testRunnerMock
+            .Verify(p => p.InitialiseAsync(It.IsAny<ITestFramework>()), Times.Once);
+    }
 
-            _testRunnerFactoryMock
-                .Verify(p => p.BuildTestRunner(It.IsAny<string>()), Times.Once);
+    [TestMethod]
+    public async Task TestBase_Dispose_DisposeCalledCorrectly()
+    {
+        _testRunnerFactoryMock
+            .Setup(p => p.BuildTestRunner(It.IsAny<string>()))
+            .Returns(_testRunnerMock.Object);
 
-            _testRunnerMock
-                .Verify(p => p.InitialiseAsync(It.IsAny<ITestFramework>()), Times.Once);
-        }
+        _testRunnerMock
+            .Setup(p => p.InitialiseAsync(It.IsAny<ITestFramework>()))
+            .Returns(Task.CompletedTask);
 
-        [TestMethod]
-        public async Task TestBase_Dispose_DisposeCalledCorrectly()
-        {
-            _testRunnerFactoryMock
-                .Setup(p => p.BuildTestRunner(It.IsAny<string>()))
-                .Returns(_testRunnerMock.Object);
+        _testRunnerMock
+            .Setup(p => p.Dispose());
 
-            _testRunnerMock
-                .Setup(p => p.InitialiseAsync(It.IsAny<ITestFramework>()))
-                .Returns(Task.CompletedTask);
+        var testClass = GetTestClass();
 
-            _testRunnerMock
-                .Setup(p => p.Dispose());
+        await testClass.Init();
 
-            var testClass = GetTestClass();
+        testClass.Cleanup();
 
-            await testClass.Init();
-
-            testClass.Cleanup();
-
-            _testRunnerMock
-                .Verify(p => p.Dispose(), Times.Once);
-        }
+        _testRunnerMock
+            .Verify(p => p.Dispose(), Times.Once);
     }
 }

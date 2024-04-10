@@ -5,23 +5,22 @@ using DBConfirm.Packages.SQLServer.MSTest;
 using System.Threading.Tasks;
 using DBConfirm.Core.Attributes;
 
-namespace Sample.Core.MSTest.Tests.NorthwindTests
-{
-    [ConnectionStringName("NorthwindConnection")]
-    [TestClass]
-    public class CustOrderHistTests1 : MSTestBase
-    {
-        [TestMethod]
-        public async Task NoData_ReturnNoRows()
-        {
-            QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.CustOrderHist", new DataSetRow
-            {
-                ["CustomerID"] = 123
-            });
+namespace Sample.Core.MSTest.Tests.NorthwindTests;
 
-            data
-                .AssertRowCount(0)
-                .AssertColumnsExist("ProductName", "Total");
-        }
+[ConnectionStringName("NorthwindConnection")]
+[TestClass]
+public class CustOrderHistTests1 : MSTestBase
+{
+    [TestMethod]
+    public async Task NoData_ReturnNoRows()
+    {
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.CustOrderHist", new DataSetRow
+        {
+            ["CustomerID"] = 123
+        });
+
+        data
+            .AssertRowCount(0)
+            .AssertColumnsExist("ProductName", "Total");
     }
 }

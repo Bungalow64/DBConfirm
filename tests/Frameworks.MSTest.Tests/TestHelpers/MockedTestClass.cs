@@ -2,16 +2,15 @@
 using DBConfirm.Core.Runners.Abstract;
 using DBConfirm.Packages.SQLServer.MSTest;
 
-namespace Frameworks.MSTest.Tests.TestHelpers
-{
-    public class MockedTestClass : MSTestBase
-    {
-        public ITestRunner ExposedTestRunner => TestRunner;
+namespace Frameworks.MSTest.Tests.TestHelpers;
 
-        public ITestRunnerFactory ExposedTestRunnerFactory
-        {
-            get => TestRunnerFactory;
-            set => TestRunnerFactory = value;
-        }
+public class MockedTestClass : MSTestBase
+{
+    public ITestRunner ExposedTestRunner => TestRunner;
+
+    public ITestRunnerFactory ExposedTestRunnerFactory
+    {
+        get => TestRunnerFactory;
+        set => TestRunnerFactory = value;
     }
 }

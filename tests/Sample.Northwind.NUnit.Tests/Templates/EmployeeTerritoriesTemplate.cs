@@ -3,20 +3,19 @@ using DBConfirm.Core.Templates;
 using DBConfirm.Core.Templates.Abstract;
 using DBConfirm.Core.Templates.Placeholders;
 
-namespace Sample.Northwind.NUnit.Tests.Templates
+namespace Sample.Northwind.NUnit.Tests.Templates;
+
+public class EmployeeTerritoriesTemplate : BaseSimpleTemplate<EmployeeTerritoriesTemplate>
 {
-    public class EmployeeTerritoriesTemplate : BaseSimpleTemplate<EmployeeTerritoriesTemplate>
+    public override string TableName => "[dbo].[EmployeeTerritories]";
+
+    public override DataSetRow DefaultData => new()
     {
-        public override string TableName => "[dbo].[EmployeeTerritories]";
+        ["EmployeeID"] = Placeholders.IsRequired(),
+        ["TerritoryID"] = Placeholders.IsRequired()
+    };
 
-        public override DataSetRow DefaultData => new DataSetRow
-        {
-            ["EmployeeID"] = Placeholders.IsRequired(),
-            ["TerritoryID"] = Placeholders.IsRequired()
-        };
-
-        public EmployeeTerritoriesTemplate WithEmployeeID(int value) => SetValue("EmployeeID", value);
-        public EmployeeTerritoriesTemplate WithEmployeeID(IResolver resolver) => SetValue("EmployeeID", resolver);
-        public EmployeeTerritoriesTemplate WithTerritoryID(string value) => SetValue("TerritoryID", value);
-    }
+    public EmployeeTerritoriesTemplate WithEmployeeID(int value) => SetValue("EmployeeID", value);
+    public EmployeeTerritoriesTemplate WithEmployeeID(IResolver resolver) => SetValue("EmployeeID", resolver);
+    public EmployeeTerritoriesTemplate WithTerritoryID(string value) => SetValue("TerritoryID", value);
 }
