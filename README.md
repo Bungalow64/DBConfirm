@@ -22,7 +22,7 @@ The DBConfirm framework is designed to execute tests against a physical instance
 For the full documentation, see [dbconfirm.com](https://dbconfirm.com/).
 
 # What versions of SQL Server does DBConfirm work with?
-DBConfirm is compatible with SQL Server 2014, 2016, 2017, 2019 and with Azure SQL Database.
+DBConfirm is compatible with SQL Server 2014, 2016, 2017, 2019, 2022 and with Azure SQL Database.
 
 # What does a DBConfirm test look like?
 A simple test (in MSTest) to call a stored procedure then verify that the data has been added, looks like this:
@@ -138,11 +138,11 @@ docker compose build
 docker compose up
 ```
 
-This will set up the databases for you, and host them in SQL 2017 and 2019.  The tests in the sample solutions are already set up to connect to these databases, so you should be able to just run all those tests, and they'll all (hopefully) pass.
+This will set up the databases for you, and host them in SQL 2017, 2019 and 2022.  The tests in the sample solutions are already set up to connect to these databases, so you should be able to just run all those tests, and they'll all (hopefully) pass.
 
 If you want to access these databases directly, they are located here:
 - Server: localhost
-- Port: 1401 (for SQL 2017), 1402 (for SQL 2019)
+- Port: 1401 (for SQL 2017), 1402 (for SQL 2019), 1403 (for SQL 2022)
 - Databases: SampleDB, Northwind
 - Credentials: For the 'sa' password, check the contents of the docker\sqlserver.env file.
 
