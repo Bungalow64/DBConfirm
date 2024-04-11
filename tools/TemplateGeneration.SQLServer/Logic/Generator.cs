@@ -67,9 +67,10 @@ namespace DBConfirm.TemplateGeneration.Logic
             {
                 _consoleLog.WriteSuccess($"Found table ({schemaName}.{group.Key}) and {group.Count()} column{(group.Count() == 1 ? "" : "s")}");
             }
+            List<string> processedNames = new();
             foreach (IGrouping<string, ColumnDefinition> group in grouped)
             {
-                GenerateFile(group, schemaName, group.Key);
+                GenerateFile(group, schemaName, group.Key, processedNames);
             }
         }
 
@@ -99,9 +100,9 @@ namespace DBConfirm.TemplateGeneration.Logic
             return (schemaName, tableName);
         }
 
-        private void GenerateFile(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName)
+        private void GenerateFile(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName, List<string> processedNames)
         {
-            (string classDefinition, string className) = GenerateClass(processedColumns, schemaName, tableName);
+            (string classDefinition, string className) = GenerateClass(processedColumns, schemaName, tableName, processedNames);
 
             if (_options.DryRun)
             {
@@ -154,11 +155,18 @@ namespace DBConfirm.TemplateGeneration.Logic
             return await reader.ReadToEndAsync();
         }
 
-        private (string, string) GenerateClass(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName)
+        private (string, string) GenerateClass(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName, List<string> processedNames)
         {
             ColumnDefinition identityColumn = processedColumns.FirstOrDefault(p => p.IsIdentity);
 
             string className = $"{tableName.Replace(' ', '_').Replace('\'', '_')}Template";
+            string uniqueClassName = className;
+            int iterator = 2;
+            while (processedNames.Contains(uniqueClassName))
+            {
+                uniqueClassName = className + iterator++;
+            }
+            processedNames.Add(uniqueClassName);
 
             List<string> usings = new List<string>
             {
@@ -185,7 +193,7 @@ namespace DBConfirm.TemplateGeneration.Logic
 
 namespace {_options.Namespace ?? "DBConfirm.Templates"}
 {{
-    public class {className} : Base{(identityColumn != null ? "Identity" : "Simple")}Template<{className}>
+    public class {uniqueClassName} : Base{(identityColumn != null ? "Identity" : "Simple")}Template<{uniqueClassName}>
     {{
         public override string TableName => ""[{schemaName}].[{tableName}]"";
         {(identityColumn != null ? @$"{Environment.NewLine}        public override string IdentityColumnName => ""{identityColumn.ColumnName}"";{Environment.NewLine}" : "")}
@@ -194,11 +202,11 @@ namespace {_options.Namespace ?? "DBConfirm.Templates"}
             {string.Join($",{Environment.NewLine}            ", processedColumns.Where(p => p.RequiresDefaultData).Select(p => p.ToDefaultData()))}
         }};
 
-{string.Join($"{Environment.NewLine}", processedColumns.Select(p => p.ToFluentRow("        ", $"{className}")))}
+{string.Join($"{Environment.NewLine}", processedColumns.Select(p => p.ToFluentRow("        ", $"{uniqueClassName}")))}
     }}
 }}";
 
-            return (output, className);
+            return (output, uniqueClassName);
         }
     }
 }
