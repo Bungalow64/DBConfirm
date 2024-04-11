@@ -3,6 +3,8 @@ using DBConfirm.TemplateGeneration.Logic;
 using DBConfirm.TemplateGeneration.Logic.Abstract;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
@@ -321,7 +323,7 @@ public class GeneratorTests
         row["ReferencesIdentity"] = false;
         columns.Rows.Add(row);
     }
-    
+
     private static void AddRequiredNvarcharMaxRow(DataTable columns, string schemaName, string tableName, string columnName)
     {
         DataRow row = columns.NewRow();
@@ -447,7 +449,7 @@ public class GeneratorTests
 
         Assert.AreEqual(await ReadResource("Generator_SingleTableWithColumns_FileGenerated"), generatedFileText);
     }
-    
+
     [Test]
     public async Task Generator_SingleIdentityTableWithRequiredNvarcharMaxColumn_FileGenerated()
     {
@@ -797,6 +799,163 @@ public class GeneratorTests
 
         _consoleLogMock
             .Verify(p => p.WriteError(It.IsAny<string>()), Times.Once);
+    }
+
+    [TestCase("User's")]
+    [TestCase("User s")]
+    [TestCase("User_s")]
+    public async Task Generator_TableContainingSpecialCharacter_GenerateValidClass(string tableName)
+    {
+        Options options = new()
+        {
+            DatabaseName = "TestDatabase1",
+            TableName = tableName
+        };
+
+        DataTable columns = CreateTable();
+        AddPrimaryKeyRow(columns, "dbo", tableName, "UserId");
+        AddRequiredNVarcharRow(columns, "dbo", tableName, "FirstName");
+
+        _databaseHelperMock
+            .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(columns);
+
+        string generatedFileText = null;
+        _fileHelperMock
+            .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+            .Callback<string, string>((path, contents) =>
+            {
+                Assert.AreEqual(@"C:\Temp\User_sTemplate.cs", path);
+                generatedFileText = contents;
+            });
+
+        _fileHelperMock
+            .Setup(p => p.GetCurrentDirectory())
+            .Returns(@"C:\Temp");
+
+        _fileHelperMock
+            .Setup(p => p.Exists(It.IsAny<string>()))
+            .Returns(false);
+
+        await Create(options).GenerateFileAsync();
+
+        Assert.AreEqual($$"""
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
+
+namespace DBConfirm.Templates
+{
+    public class User_sTemplate : BaseIdentityTemplate<User_sTemplate>
+    {
+        public override string TableName => "[dbo].[{{tableName}}]";
+        
+        public override string IdentityColumnName => "UserId";
+
+        public override DataSetRow DefaultData => new DataSetRow
+        {
+            ["FirstName"] = "SampleFirstName"
+        };
+
+        public User_sTemplate WithUserId(int value) => SetValue("UserId", value);
+        public User_sTemplate WithFirstName(string value) => SetValue("FirstName", value);
+    }
+}
+""", generatedFileText);
+    }
+
+    [TestCase("User's", "User_s")]
+    [TestCase("User s", "User_s")]
+    [TestCase("User's", "User s")]
+    [TestCase("User_s", "User s")]
+    [TestCase("User_s", "User's")]
+    public async Task Generator_TableContainingApostrophe_AlsoContainingUnderscore_GenerateValidClasses(string table1, string table2)
+    {
+        Options options = new()
+        {
+            DatabaseName = "TestDatabase1",
+            TableName = "User*"
+        };
+
+        DataTable columns = CreateTable();
+        AddPrimaryKeyRow(columns, "dbo", table1, "UserId");
+        AddRequiredNVarcharRow(columns, "dbo", table1, "FirstName");
+        AddPrimaryKeyRow(columns, "dbo", table2, "OtherUserId");
+        AddRequiredNVarcharRow(columns, "dbo", table2, "LastName");
+
+        _databaseHelperMock
+            .Setup(p => p.GetColumnsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(columns);
+
+        List<string> generatedFilePaths = [];
+        List<string> generatedFileTexts = [];
+
+        _fileHelperMock
+            .Setup(p => p.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+            .Callback<string, string>((path, contents) =>
+            {
+                generatedFilePaths.Add(path);
+                generatedFileTexts.Add(contents);
+            });
+
+        _fileHelperMock
+            .Setup(p => p.GetCurrentDirectory())
+            .Returns(@"C:\Temp");
+
+        _fileHelperMock
+            .Setup(p => p.Exists(It.IsAny<string>()))
+            .Returns(false);
+
+        await Create(options).GenerateFileAsync();
+
+        Assert.AreEqual(2, generatedFilePaths.Count);
+        Assert.AreEqual(@"C:\Temp\User_sTemplate.cs", generatedFilePaths[0]);
+        Assert.AreEqual(@"C:\Temp\User_sTemplate2.cs", generatedFilePaths[1]);
+
+        Assert.AreEqual(2, generatedFileTexts.Count);
+        Assert.AreEqual($$"""
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
+
+namespace DBConfirm.Templates
+{
+    public class User_sTemplate : BaseIdentityTemplate<User_sTemplate>
+    {
+        public override string TableName => "[dbo].[{{table1}}]";
+        
+        public override string IdentityColumnName => "UserId";
+
+        public override DataSetRow DefaultData => new DataSetRow
+        {
+            ["FirstName"] = "SampleFirstName"
+        };
+
+        public User_sTemplate WithUserId(int value) => SetValue("UserId", value);
+        public User_sTemplate WithFirstName(string value) => SetValue("FirstName", value);
+    }
+}
+""", generatedFileTexts[0]);
+        Assert.AreEqual($$"""
+using DBConfirm.Core.Data;
+using DBConfirm.Core.Templates;
+
+namespace DBConfirm.Templates
+{
+    public class User_sTemplate2 : BaseIdentityTemplate<User_sTemplate2>
+    {
+        public override string TableName => "[dbo].[{{table2}}]";
+        
+        public override string IdentityColumnName => "OtherUserId";
+
+        public override DataSetRow DefaultData => new DataSetRow
+        {
+            ["LastName"] = "SampleLastName"
+        };
+
+        public User_sTemplate2 WithOtherUserId(int value) => SetValue("OtherUserId", value);
+        public User_sTemplate2 WithLastName(string value) => SetValue("LastName", value);
+    }
+}
+""", generatedFileTexts[1]);
     }
 
     #endregion
