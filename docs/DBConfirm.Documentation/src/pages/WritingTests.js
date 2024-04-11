@@ -259,6 +259,7 @@ export default function WritingTests() {
                 <li><strong>AssertColumnNotExists</strong> - asserts that a specific column does not exist</li>
                 <li><strong>AssertColumnsExist</strong> - given multiple columns, asserts that all exist</li>
                 <li><strong>AssertColumnsNotExist</strong> - given multiple columns, asserts that non exist</li>
+                <li><strong>AssertColumnValuesUnique</strong> - given specific columns, asserts that the data is unique across those columns</li>
             </ul>
 
             <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureQueryAsync</span>(<span className="hljs-string">"dbo.GetCustomerData"</span>);
@@ -269,6 +270,7 @@ export default function WritingTests() {
                 {"\n"}    .<span className="hljs-title">AssertColumnNotExists</span>(<span className="hljs-string">"OrderID"</span>) <span className="hljs-comment">{'//'} Asserts that there is no column called 'OrderID'</span>
                 {"\n"}    .<span className="hljs-title">AssertColumnsExist</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"LastName"</span>) <span className="hljs-comment">{'//'} Asserts that there are columns called 'FirstName' and 'LastName'</span>
                 {"\n"}    .<span className="hljs-title">AssertColumnsNotExist</span>(<span className="hljs-string">"TotalValue"</span>, <span className="hljs-string">"Quantity"</span>); <span className="hljs-comment">{'//'} Asserts that there are no columns called 'TotalValue' and 'Quantity'</span>
+                {"\n"}    .<span className="hljs-title">AssertColumnValuesUnique</span>(<span className="hljs-string">"FirstName"</span>, <span className="hljs-string">"LastName"</span>); <span className="hljs-comment">{'//'} Asserts that the data in the 'FirstName' and 'LastName' columns does not exist in multiple rows</span>
             </code></pre>
 
             <p>The rows within a <code>QueryResult</code> can be verified, to check that the correct data is present.</p>

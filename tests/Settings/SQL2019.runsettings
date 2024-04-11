@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<TestRunParameters>
+		<Parameter name="NorthwindConnection" value="SERVER=localhost,1402;DATABASE=Northwind;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;" />
+		<Parameter name="SampleDBConnection" value="SERVER=localhost,1402;DATABASE=SampleDB;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;" />
+		<Parameter name="DefaultConnectionString" value="SERVER=localhost,1402;DATABASE=SampleDB;User Id=sa;Password=123qwe123qwe!;Connection Timeout=30;" />
+	</TestRunParameters>
+</RunSettings>

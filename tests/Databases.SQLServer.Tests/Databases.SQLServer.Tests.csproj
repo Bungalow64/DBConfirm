@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+	<PropertyGroup>
+		<TargetFramework>net8</TargetFramework>
 
-    <IsPackable>false</IsPackable>
-	  <SignAssembly>true</SignAssembly>
-	  <AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+		<IsPackable>false</IsPackable>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>../../DBConfirm.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+		<PackageReference Include="NUnit" Version="3.12.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Databases.SQLServer\Databases.SQLServer.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Databases.SQLServer\Databases.SQLServer.csproj" />
+	</ItemGroup>
 
 </Project>

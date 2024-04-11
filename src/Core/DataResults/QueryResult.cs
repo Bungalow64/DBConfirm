@@ -1,6 +1,5 @@
 ﻿using DBConfirm.Core.Data;
 using DBConfirm.Core.TestFrameworks.Abstract;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -141,13 +140,71 @@ namespace DBConfirm.Core.DataResults
         }
 
         /// <summary>
+        /// Asserts that the data across the selected columns is unique
+        /// </summary>
+        /// <param name="uniqueColumnNames">The column names (case-sensitive).  Duplicates are ignored</param>
+        /// <remarks>If multiple columns are selected, then uniqueness is determined by checking the data in all columns, not each column individually</remarks>
+        /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
+        public QueryResult AssertColumnValuesUnique(params string[] uniqueColumnNames)
+        {
+            if ((uniqueColumnNames ?? new string[0]).Length == 0)
+            {
+                TestFramework.Fail($"No column names provided.  Specify columns to check for uniqueness");
+            }
+
+            var columnNames = uniqueColumnNames.Distinct().ToList();
+
+            AssertColumnsExist(columnNames.ToArray());
+
+            var duplicates = new HashSet<RowResult>();
+
+            List<(RowResult Row, List<object> Columns)> focusData = RawData
+                .Rows.Cast<DataRow>()
+                .Select((p, i) => new RowResult(this, i))
+                .Select(p => (p, columnNames.Select(q => p.Get(q)).ToList()))
+                .ToList();
+
+            foreach (var (Row, Columns) in focusData)
+            {
+                if (duplicates.Contains(Row))
+                {
+                    continue;
+                }
+
+                var otherMatches = focusData
+                    .Where(p => p.Row != Row)
+                    .Where(p => !duplicates.Contains(p.Row))
+                    .Where(p => p.Columns.Select((q, i) => new { Value = q, Index = i }).All(q => Columns[q.Index].Equals(q.Value)))
+                    .ToList();
+
+                if (otherMatches.Any())
+                {
+                    duplicates.Add(Row);
+
+                    foreach (var item in otherMatches.Select(p => p.Row))
+                    {
+                        duplicates.Add(item);
+                    }
+                }
+            }
+
+            if (duplicates.Any())
+            {
+                TestFramework.Fail($"Duplicate data found for column{(columnNames.Count > 1 ? "s" : "")} {string.Join(", ", columnNames)} in rows {string.Join(", ", duplicates.Select(p => p.GetRowNumber()))}");
+            }
+
+            return this;
+        }
+
+
+        /// <summary>
         /// Asserts that a row exists at a specific position (zero-based)
         /// </summary>
         /// <param name="expectedRowPosition">The row position (zero-based)</param>
         /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
         public QueryResult AssertRowPositionExists(int expectedRowPosition)
         {
-            TestFramework.IsTrue(TotalRows > expectedRowPosition && expectedRowPosition >= 0, $"There is no row at position {expectedRowPosition} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
+            TestFramework.IsTrue(IsRowFound(expectedRowPosition), $"There is no row at position {expectedRowPosition} (zero-based).  There {(TotalRows == 1 ? "is 1 row" : $"are {TotalRows} rows")}");
             return this;
         }
 
@@ -219,15 +276,7 @@ namespace DBConfirm.Core.DataResults
 
             for (int x = 0; x < TotalRows; x++)
             {
-                bool isMatch = false;
-                try
-                {
-                    AssertRowValues(x, unexpectedData);
-                    isMatch = true;
-                }
-                catch (Exception) { }
-
-                if (isMatch)
+                if (CheckRowValues(x, unexpectedData))
                 {
                     TestFramework.Fail($"Row {x} matches the expected data that should not match anything: {unexpectedData}");
                 }
@@ -247,12 +296,48 @@ namespace DBConfirm.Core.DataResults
             return RawData.Rows[rowNumber];
         }
 
+        /// <summary>
+        /// Gets the data row for the specific position, if the row exists.  If it doesn't exist, null is returned
+        /// </summary>
+        /// <param name="rowNumber">The row number (zero-based)</param>
+        /// <returns>Returns the data row, or null if the row isn't found</returns>
+        internal DataRow GetRowIfPossible(int rowNumber)
+        {
+            if (IsRowFound(rowNumber))
+            {
+                return RawData.Rows[rowNumber];
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks that a specific column exists in the data set, returning a boolean as the result
+        /// </summary>
+        /// <param name="expectedColumnName">The column name (case-sensitive)</param>
+        /// <returns>Returns a boolean indicating whether the column exists</returns>
+        internal bool CheckColumnExists(string expectedColumnName)
+        {
+            return ColumnNames.Any(p => p.Equals(expectedColumnName));
+        }
+
         private void AssertColumnNames(DataSetRow expectedData)
         {
             foreach (KeyValuePair<string, object> row in expectedData)
             {
                 AssertColumnExists(row.Key);
             }
+        }
+
+        private bool CheckRowValues(int rowNumber, DataSetRow expectedData)
+        {
+            var row = new RowResult(this, rowNumber);
+            return row.DoValuesMatch(expectedData);
+        }
+
+        private bool IsRowFound(int expectedRowPosition)
+        {
+            return TotalRows > expectedRowPosition && expectedRowPosition >= 0;
         }
     }
 }

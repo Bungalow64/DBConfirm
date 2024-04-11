@@ -114,3 +114,40 @@ The DBConfirm API provides a whole bunch of assertion methods that you can run o
 You can also use the DBConfirm API to query the data in tables, and run the same assertions, to make sure the data is in the exact state that you expect.
 
 For the full documentation, see [DBConfirm.com](https://dbconfirm.com/).
+
+# Buliding and running the source of DBConfirm
+
+Feel free to fork/clone this repository.  Once you have the source files locally, open DBConfirm.sln, and the solution will load.  Each NuGet package is its own project; hopefully you will be able to find your way around.
+
+There are a number of test projects, and these fall under 2 categories:
+- unit tests
+- sample project tests
+
+The unit test projects are all within the 5.Tests solution folder.  These are just standard unit tests, nothing special there.
+
+The sample project tests, within the 6.SampleSolutions solution foder, are more like integration tests, that carry out DBConfirm tests against an actual database.
+
+## Running sample project tests
+
+These tests require an actual database to test against, so for these tests to run, you'll need to set these databases up.
+
+The easiest/quickest way is to use [Docker](https://www.docker.com/).  Once you have Docker installed and running locally, open up your command prompt, go to the root of the DBConfirm solution, and run these commands:
+
+```powershell
+docker compose build
+docker compose up
+```
+
+This will set up the databases for you, and host them in SQL 2017 and 2019.  The tests in the sample solutions are already set up to connect to these databases, so you should be able to just run all those tests, and they'll all (hopefully) pass.
+
+If you want to access these databases directly, they are located here:
+- Server: localhost
+- Port: 1401 (for SQL 2017), 1402 (for SQL 2019)
+- Databases: SampleDB, Northwind
+- Credentials: For the 'sa' password, check the contents of the docker\sqlserver.env file.
+
+
+The continuous integration builds we have set up also use Docker to set up the test environment, so we can be assured that everything is working as expected.
+
+Alternatively, if you don't want to use Docker, you can host the databases directly.  The setup scripts for the databases are within 6.SampleSolutions\1.Databases.  Run these on an instance of SQL somewhere, and update the connection strings in the test projects (such as 6.SampleSolutions\2.ProjectTests\Sample.Core.MSTest.Tests\appsettings.json) to get them up and running.
+
