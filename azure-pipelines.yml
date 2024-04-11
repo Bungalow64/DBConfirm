@@ -89,3 +89,18 @@ steps:
     projects: |
       **/NuGet/Sample*[Tt]ests/*.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore -s tests/Settings/SQL2019.runsettings'
+- task: DotNetCoreCLI@2
+  displayName: Test Projects (database - SQL 2022)
+  inputs:
+    command: test
+    projects: |
+      **/Sample*[Tt]ests/*.csproj
+      !**/NuGet/**/*.csproj
+    arguments: '--configuration $(BuildConfiguration) -s tests/Settings/SQL2022.runsettings'
+- task: DotNetCoreCLI@2
+  displayName: Test NuGet (database - SQL 2022)
+  inputs:
+    command: test
+    projects: |
+      **/NuGet/Sample*[Tt]ests/*.csproj
+    arguments: '--configuration $(BuildConfiguration) --no-restore -s tests/Settings/SQL2022.runsettings'

@@ -16,3 +16,11 @@ services:
           - "1402:1433"
         env_file:
           - docker/sqlserver.env
+    sqlserver2022:
+        build: 
+          context: .
+          dockerfile: dockerfile2022
+        ports:  
+          - "1403:1433"
+        env_file:
+          - docker/sqlserver.env
