@@ -43,6 +43,24 @@ namespace DBConfirm.Frameworks.NUnit
         }
 
         /// <inheritdoc/>
+        public void StartsWith(string actual, string expected, string message, params string[] parameters)
+        {
+            StringAssert.StartsWith(expected, actual, message, parameters);
+        }
+
+        /// <inheritdoc/>
+        public void EndsWith(string actual, string expected, string message, params string[] parameters)
+        {
+            StringAssert.EndsWith(expected, actual, message, parameters);
+        }
+
+        /// <inheritdoc/>
+        public void Contains(string actual, string expected, string message, params string[] parameters)
+        {
+            StringAssert.Contains(expected, actual, message, parameters);
+        }
+
+        /// <inheritdoc/>
         public void DoesNotMatch(string value, Regex pattern, string message, params string[] parameters)
         {
             StringAssert.DoesNotMatch(pattern.ToString(), value, message, parameters);

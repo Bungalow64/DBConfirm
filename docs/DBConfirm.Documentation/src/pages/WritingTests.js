@@ -142,6 +142,7 @@ export default function WritingTests() {
                 <li><strong>ExecuteStoredProcedureMultipleDataSetAsync</strong> - returns a list of tables, each wrapped in a <code>QueryResult</code> object</li>
                 <li><strong>ExecuteStoredProcedureScalarAsync&lt;T&gt;</strong> - returns a single object, where <code>T</code> is the type of object</li>
                 <li><strong>ExecuteStoredProcedureNonQueryAsync</strong> - returns nothing</li>
+                <li><strong>ExecuteStoredProcedureErrorAsync</strong> - returns a single error, wrapped in an <code>ErrorResult</code> object</li>
             </ul>
 
             <p>Each method above takes the name of the stored procedure to execute (as a <code>string</code>), and an optional list of parameters.  The
@@ -170,6 +171,11 @@ export default function WritingTests() {
             {"\n"}
                 {"\n"}<span className="hljs-comment">{'//'} A stored procedure executed with no parameters, returning nothing</span>
                 {"\n"}<span className="hljs-function"><span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureNonQueryAsync</span><span className="hljs-params">(<span className="hljs-string">"dbo.ProcessPendingCustomerOrders"</span>)</span></span>;
+                {"\n"}
+                {"\n"}<span className="hljs-comment">{'//'} A stored procedure executed, throwing an error</span>
+                {"\n"}<span className="hljs-type">ErrorResult</span> error1 = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureErrorAsync</span>(<span className="hljs-string">"dbo.GetCustomerCount"</span>,
+            {"\n"}    <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"MaxOrders"</span>, <span className="hljs-number">-1</span>),
+            {"\n"}    <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"MaxValue"</span>, <span className="hljs-number">30</span>));
 </code></pre>
 
             <h4>Executing a view</h4>
@@ -191,6 +197,7 @@ export default function WritingTests() {
                 <li><strong>ExecuteCommandMultipleDataSetAsync</strong> - returns a list of tables, each wrapped in a <code>QueryResult</code> object</li>
                 <li><strong>ExecuteCommandScalarAsync&lt;T&gt;</strong> - returns a single object, where <code>T</code> is the type of object</li>
                 <li><strong>ExecuteCommandNonQueryAsync</strong> - returns nothing</li>
+                <li><strong>ExecuteCommandErrorAsync</strong> - returns a single error, wrapped in an <code>ErrorResult</code> object</li>
             </ul>
 
             <pre><code className="lang-csharp"><span className="hljs-comment">{'//'} A command executed with a single parameter, returning a data table</span>
@@ -214,6 +221,11 @@ export default function WritingTests() {
             {"\n"}
                 {"\n"}<span className="hljs-comment">{'//'} A command executed with no parameters, returning nothing</span>
                 {"\n"}<span className="hljs-function"><span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteCommandNoResultsAsync</span><span className="hljs-params">(<span className="hljs-string">"UPDATE dbo.Orders SET StatusID = 3"</span>)</span></span>;
+{"\n"}
+                {"\n"}<span className="hljs-comment">{'//'} A command executed, throwing an error</span>
+                {"\n"}<span className="hljs-type">ErrorResult</span> error1 = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteCommandErrorAsync</span>(<span className="hljs-string">"EXEC dbo.GetCustomerCount @MaxOrders, @MaxValue"</span>,
+            {"\n"}    <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"MaxOrders"</span>, <span className="hljs-number">-1</span>),
+            {"\n"}    <span className="hljs-keyword">new</span> <span className="hljs-type">SqlQueryParameter</span>(<span className="hljs-string">"MaxValue"</span>, <span className="hljs-number">30</span>));
 </code></pre>
 
             <h3 id="assert">Assert - check the returned data, and check the state of data in the database</h3>
@@ -410,6 +422,34 @@ export default function WritingTests() {
             </code></pre>
 
             <p>Alternatively, you can use the <code>Comparisons.MatchesNumber</code> comparison object (see above) to assert on the numeric value, regardless of type.</p>
+
+            
+            <h4>ErrorResult assertions</h4>
+
+            <p><code>ErrorResult</code> represents a single error, and there are a few methods that can be used to make assertions on this error.  This is used to test whether the error you've experienced is what you're expecting.</p>
+
+<pre><code className="lang-csharp"><span className="hljs-type">ErrorResult</span> data = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureErrorAsync</span>(<span className="hljs-string">"dbo.GetCount"</span>);
+        {"\n"}
+                {"\n"}data
+                {"\n"}    <span className="hljs-comment">{'//'} Asserts that the error was found</span>
+                {"\n"}    .<span className="hljs-title">AssertError</span>()
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the message is 'Cannot insert the value NULL into column 'FirstName''</span>
+                {"\n"}    .<span className="hljs-title">AssertMessage</span>(<span className="hljs-string">"Cannot insert the value NULL into column 'FirstName'"</span>)
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the message starts with 'Cannot insert the value NULL'</span>
+                {"\n"}    .<span className="hljs-title">AssertMessage</span>(Comparisons.<span className="hljs-title">StartsWith</span>(<span className="hljs-string">"Cannot insert the value NULL"</span>))
+        {"\n"}    <span className="hljs-comment">{'//'} Asserts that the exception type is 'SqlException'</span>
+                {"\n"}    .<span className="hljs-title">AssertType</span>(<span className="hljs-keyword">typeof</span>(<span className="hljs-type">SqlException</span>));
+</code></pre>
+
+
+
+
+            <p>To access the exception itself, you can call <code>ErrorResult.RawData</code>, which returns the value itself in case you need to do further assertions on it.</p>
+
+            <pre><code className="lang-csharp"><span className="hljs-type">ErrorResult</span> result = <span className="hljs-keyword">await</span> TestRunner.<span className="hljs-title">ExecuteStoredProcedureErrorAsync</span>(<span className="hljs-string">"dbo.GetCount"</span>);
+            {"\n"}<span className="hljs-comment">{'//'} Gets the exception</span>
+                {"\n"}<span className="hljs-type">Exception</span> resultValue = result.RawData;
+</code></pre>
         </>
     );
 }

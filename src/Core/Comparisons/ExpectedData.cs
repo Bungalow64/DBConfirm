@@ -107,6 +107,24 @@ namespace DBConfirm.Core.Comparisons
         /// <returns>Returns the comparison object</returns>
         public IComparison NotMatchesRegex(string unexpectedRegex) => new NoMatchRegex(unexpectedRegex);
         /// <summary>
+        /// Gets the <see cref="IComparison"/> object to test for the data to start with a specific string  (case-sensitive)
+        /// </summary>
+        /// <param name="expected">The expected start string</param>
+        /// <returns>Returns the comparison object</returns>
+        public IComparison StartsWith(string expected) => new StartsWith(expected);
+        /// <summary>
+        /// Gets the <see cref="IComparison"/> object to test for the data to sendtart with a specific string  (case-sensitive)
+        /// </summary>
+        /// <param name="expected">The expected end string</param>
+        /// <returns>Returns the comparison object</returns>
+        public IComparison EndsWith(string expected) => new EndsWith(expected);
+        /// <summary>
+        /// Gets the <see cref="IComparison"/> object to test for the data to contain a specific string  (case-sensitive)
+        /// </summary>
+        /// <param name="expected">The expected contents</param>
+        /// <returns>Returns the comparison object</returns>
+        public IComparison Contains(string expected) => new Contains(expected);
+        /// <summary>
         /// Gets the <see cref="IComparison"/> object to test for the data to match a specific type
         /// </summary>
         /// <param name="expectedType">The expected type</param>

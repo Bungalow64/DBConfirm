@@ -24,6 +24,15 @@
         <member name="M:DBConfirm.Frameworks.NUnit.NUnitFramework.Matches(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
             <inheritdoc/>
         </member>
+        <member name="M:DBConfirm.Frameworks.NUnit.NUnitFramework.StartsWith(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.NUnit.NUnitFramework.EndsWith(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.NUnit.NUnitFramework.Contains(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
         <member name="M:DBConfirm.Frameworks.NUnit.NUnitFramework.DoesNotMatch(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
             <inheritdoc/>
         </member>
