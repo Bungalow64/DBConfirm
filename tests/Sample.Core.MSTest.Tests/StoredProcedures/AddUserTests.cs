@@ -446,7 +446,10 @@ public class AddUserTests : MSTestBase
         }
         catch (Exception ex)
         {
-            Assert.AreEqual($"StringAssert.StartsWith failed. String 'Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.{Environment.NewLine}The statement has been terminated.' does not start with string 'Cannot insert the value NULL into column 'LastName', table 'SampleDB.dbo.Users'; column does not allow nulls.'. Error result does not start with the expected string.", ex.Message);
+            Assert.AreEqual($$"""
+StringAssert.StartsWith failed. String 'Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.
+The statement has been terminated.' does not start with string 'Cannot insert the value NULL into column 'LastName', table 'SampleDB.dbo.Users'; column does not allow nulls.'. Error result does not start with the expected string.
+""", ex.Message);
             return;
         }
 
@@ -503,6 +506,154 @@ public class AddUserTests : MSTestBase
         catch (Exception ex)
         {
             Assert.AreEqual("Assert.AreEqual failed. Expected:<System.NullReferenceException>. Actual:<Microsoft.Data.SqlClient.SqlException>. Error result has an unexpected value", ex.Message);
+            return;
+        }
+
+        Assert.Fail("Expected test to fail, but it passed");
+    }
+
+    [TestMethod]
+    public async Task AddUser_ValidData_AssertDifferentColumn_ShouldError()
+    {
+        try
+        {
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
+
+            QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
+
+            data.AssertColumnsExist("HatSize");
+        }
+        catch (Exception ex)
+        {
+            Assert.AreEqual("CollectionAssert.Contains failed. Expected column HatSize to be found but the only columns found are Id, FirstName, LastName, EmailAddress, CreatedDate, StartDate, IsActive, NumberOfHats, HatType, Cost", ex.Message);
+            return;
+        }
+
+        Assert.Fail("Expected test to fail, but it passed");
+    }
+
+    [TestMethod]
+    public async Task AddUser_ValidData_AssertDifferentData_ShouldError()
+    {
+        try
+        {
+            var expectedData = new DataSetRow
+            {
+                ["FirstName"] = "Ian",
+                ["LastName"] = Comparisons.NotMatchesRegex(".*@.*"),
+                ["EmailAddress"] = Comparisons.MatchesRegex(".*@.*"),
+                ["CreatedDate"] = Comparisons.IsUtcNow(),
+                ["StartDate"] = Comparisons.IsDay("01-Mar-2020 00:10:00"),
+                ["IsActive"] = true,
+                ["NumberOfHats"] = 14L,
+                ["HatType"] = null,
+                ["Cost"] = 15.87m
+            };
+
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
+
+            QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
+
+            data.AssertRowCount(1);
+
+            data
+                .ValidateRow(0)
+                .AssertValues(expectedData);
+        }
+        catch (Exception ex)
+        {
+            Assert.AreEqual("Assert.AreEqual failed. Expected:<Ian>. Actual:<Jamie>. Column FirstName in row 0 has an unexpected value", ex.Message);
+            return;
+        }
+
+        Assert.Fail("Expected test to fail, but it passed");
+    }
+
+    [TestMethod]
+    public async Task AddUser_ValidData_AssertWrongColumnNotExists_ShouldError()
+    {
+        try
+        {
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
+
+            QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
+
+            data.AssertColumnsNotExist("FirstName");
+        }
+        catch (Exception ex)
+        {
+            Assert.AreEqual("CollectionAssert.DoesNotContain failed. Expected column FirstName to not be found but it was found", ex.Message);
+            return;
+        }
+
+        Assert.Fail("Expected test to fail, but it passed");
+    }
+
+    [TestMethod]
+    public async Task AddUser_ValidData_AssertDifferentRowCount_ShouldError()
+    {
+        try
+        {
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
+
+            QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
+
+            data.AssertRowCount(2);
+        }
+        catch (Exception ex)
+        {
+            Assert.AreEqual("Assert.AreEqual failed. Expected:<2>. Actual:<1>. The total row count is unexpected", ex.Message);
+            return;
+        }
+
+        Assert.Fail("Expected test to fail, but it passed");
+    }
+
+    [TestMethod]
+    public async Task AddUser_ValidData_AssertDifferentValue_ShouldError()
+    {
+        try
+        {
+            await TestRunner.ExecuteStoredProcedureNonQueryAsync("dbo.AddUser",
+                new SqlQueryParameter("FirstName", "Jamie"),
+                new SqlQueryParameter("LastName", "Burns"),
+                new SqlQueryParameter("EmailAddress", "jamie@bungalow64.co.uk"),
+                new SqlQueryParameter("StartDate", DateTime.Parse("01-Mar-2020")),
+                new SqlQueryParameter("NumberOfHats", 14),
+                new SqlQueryParameter("Cost", 15.87));
+
+            QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
+
+            data.AssertRowCount(1);
+            data.AssertValue(0, "FirstName", "Jamie2");
+        }
+        catch (Exception ex)
+        {
+            Assert.AreEqual("Assert.AreEqual failed. Expected:<Jamie2>. Actual:<Jamie>. Column FirstName in row 0 has an unexpected value", ex.Message);
             return;
         }
 
