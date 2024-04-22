@@ -165,7 +165,7 @@ public class UniquenessTests : MSTestBase
         Assert.Fail("Expected test to fail, but it passed");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow("03-Mar-2023", "04-Mar-2023")]
     [DataRow("03-Mar-2023 09:23:23", "03-Mar-2023 09:23:24")]
     [DataRow("03-Mar-2023 09:23:23.001", "03-Mar-2023 09:23:23.002")]
@@ -266,7 +266,7 @@ public class UniquenessTests : MSTestBase
         Assert.Fail("Expected test to fail, but it passed");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(1, 2)]
     [DataRow(10000, 10001)]
     public async Task IntType_AllUnique_AssertColumnValuesUniqueTrue(int value1, int value2)
@@ -292,7 +292,7 @@ public class UniquenessTests : MSTestBase
             .AssertColumnValuesUnique("Quantity");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(1)]
     [DataRow(1001)]
     public async Task IntType_SingleColumnNotUnique_AssertColumnValuesUniqueTrue(int value)
@@ -334,7 +334,7 @@ public class UniquenessTests : MSTestBase
         Assert.Fail("Expected test to fail, but it passed");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(1.0, 2.0)]
     [DataRow(10000, 10001)]
     [DataRow(1.01, 1.02)]
@@ -361,7 +361,7 @@ public class UniquenessTests : MSTestBase
             .AssertColumnValuesUnique("UnitPrice");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(1)]
     [DataRow(1001)]
     [DataRow(100.01)]
@@ -404,7 +404,7 @@ public class UniquenessTests : MSTestBase
         Assert.Fail("Expected test to fail, but it passed");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(0f, 0.1f)]
     [DataRow(0.001f, 0.002f)]
     [DataRow(0.999f, 0.998f)]
@@ -431,7 +431,7 @@ public class UniquenessTests : MSTestBase
             .AssertColumnValuesUnique("Discount");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(0f)]
     [DataRow(0.1f)]
     [DataRow(0.001f)]
@@ -476,7 +476,7 @@ public class UniquenessTests : MSTestBase
         Assert.Fail("Expected test to fail, but it passed");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(true, false)]
     [DataRow(false, true)]
     public async Task BoolType_AllUnique_AssertColumnValuesUniqueTrue(bool value1, bool value2)
@@ -494,7 +494,7 @@ public class UniquenessTests : MSTestBase
             .AssertColumnValuesUnique("Discontinued");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(true)]
     [DataRow(false)]
     public async Task BoolType_SingleColumnNotUnique_AssertColumnValuesUniqueTrue(bool value)
@@ -525,7 +525,7 @@ public class UniquenessTests : MSTestBase
         Assert.Fail("Expected test to fail, but it passed");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow("A", "B")]
     [DataRow("A", "")]
     [DataRow("", "A")]
@@ -548,7 +548,7 @@ public class UniquenessTests : MSTestBase
             .AssertColumnValuesUnique("CategoryName");
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow("A")]
     [DataRow("")]
     [DataRow(" ")]

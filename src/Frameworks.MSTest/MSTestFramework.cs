@@ -42,6 +42,24 @@ namespace DBConfirm.Frameworks.MSTest
         }
 
         /// <inheritdoc/>
+        public void StartsWith(string actual, string expected, string message, params string[] parameters)
+        {
+            StringAssert.StartsWith(actual, expected, message, parameters);
+        }
+
+        /// <inheritdoc/>
+        public void EndsWith(string actual, string expected, string message, params string[] parameters)
+        {
+            StringAssert.EndsWith(actual, expected, message, parameters);
+        }
+
+        /// <inheritdoc/>
+        public void Contains(string actual, string expected, string message, params string[] parameters)
+        {
+            StringAssert.Contains(actual, expected, message, parameters);
+        }
+
+        /// <inheritdoc/>
         public void DoesNotMatch(string value, Regex pattern, string message, params string[] parameters)
         {
             StringAssert.DoesNotMatch(value, pattern, message, parameters);

@@ -74,6 +74,33 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         void Matches(string value, Regex pattern, string message, params string[] parameters);
 
         /// <summary>
+        /// Asserts that the value starts with the expected string
+        /// </summary>
+        /// <param name="actual">The actual value to test</param>
+        /// <param name="expected">The string with which the value is expected to start</param>
+        /// <param name="message">The message to include in the exception when the assertion fails. The message is shown in test results</param>
+        /// <param name="parameters">An array of parameters to use when formatting message</param>
+        void StartsWith(string actual, string expected, string message, params string[] parameters);
+
+        /// <summary>
+        /// Asserts that the value ends with the expected string
+        /// </summary>
+        /// <param name="actual">The actual value to test</param>
+        /// <param name="expected">The string with which the value is expected to end</param>
+        /// <param name="message">The message to include in the exception when the assertion fails. The message is shown in test results</param>
+        /// <param name="parameters">An array of parameters to use when formatting message</param>
+        void EndsWith(string actual, string expected, string message, params string[] parameters);
+
+        /// <summary>
+        /// Asserts that the value contains with the expected string
+        /// </summary>
+        /// <param name="actual">The actual value to test</param>
+        /// <param name="expected">The string with which the value is expected to contain</param>
+        /// <param name="message">The message to include in the exception when the assertion fails. The message is shown in test results</param>
+        /// <param name="parameters">An array of parameters to use when formatting message</param>
+        void Contains(string actual, string expected, string message, params string[] parameters);
+
+        /// <summary>
         /// Asserts that the value does not match the Regex pattern
         /// </summary>
         /// <param name="value">The actual value to test</param>

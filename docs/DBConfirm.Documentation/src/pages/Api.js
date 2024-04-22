@@ -8,6 +8,7 @@ export default function Api() {
                 <li><a href="#queryresult">QueryResult object</a></li>
                 <li><a href="#rowresult">RowResult object</a></li>
                 <li><a href="#scalarresult">ScalarResult object</a></li>
+                <li><a href="#errorresult">ErrorResult object</a></li>
             </ul>
 
             <h2 id="testrunner">TestRunner API</h2>
@@ -185,6 +186,23 @@ export default function Api() {
             <p>Returns:</p>
             <ul>
                 <li>Returns the object returned from the stored procedure</li>
+            </ul>
+            <h3 id="executestoredprocedureerrorasync">ExecuteStoredProcedureErrorAsync</h3>
+            <p>Executes a stored procedure, returning the found error</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">Task</span>&lt;<span className="hljs-type">ErrorResult</span>&gt; ExecuteStoredProcedureErrorAsync(<span className="hljs-keyword">string</span> procedureName, <span className="hljs-interface">IDictionary</span>&lt;<span className="hljs-keyword">string</span>, <span className="hljs-keyword">object</span>&gt; parameters)
+        {"\n"}
+                {"\n"}<span className="hljs-type">Task</span>&lt;<span className="hljs-type">ErrorResult</span>&gt; ExecuteStoredProcedureErrorAsync(<span className="hljs-keyword">string</span> procedureName, <span className="hljs-keyword">params</span> <span className="hljs-type">SqlQueryParameter</span>[] parameters)
+</code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>procedureName</strong> - The name of the stored procedure, including schema</li>
+                <li><strong>parameters</strong> - The parameters to be used (when an IDictionary is used, the Key is used as
+                the
+                parameter name, and the Value used as the parameter value)</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the error returned from the stored procedure.  If no error is found, then the RawData within the ErrorResult object will be null</li>
             </ul>
             <h3 id="executetableasync">ExecuteTableAsync</h3>
             <p>Returns all data for a specific table</p>
@@ -563,6 +581,43 @@ export default function Api() {
             <p>Returns:</p>
             <ul>
                 <li>Returns the same <code>ScalarResult&lt;T&gt;</code> object</li>
+            </ul>
+            
+            <h2 id="errorresult">ErrorResult</h2>
+            <p>A single error is returned in an <code>ErrorResult</code> object, accessed via an error method in <code>TestRunner</code>. This object has assertion methods which can be used to test the error found.</p>
+            <h3 id="asserterror">AssertError</h3>
+            <p>Asserts that an error was found</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">ErrorResult</span> AssertError()
+</code></pre>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>ErrorResult</code> object</li>
+            </ul>
+
+            <h3 id="assertmessage">AssertMessage</h3>
+            <p>Asserts that the error message matches the expected value.  If no error has been found, this assertion will fail</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">ScalarResult</span> AssertMessage(<span className="hljs-keyword">object</span> expectedValue)
+            </code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>expectedValue</strong> - The expected value. Respects <code>IComparison</code> objects</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>ErrorResult</code> object</li>
+            </ul>
+
+            <h3 id="asserttype">AssertType</h3>
+            <p>Asserts that the error type matches the expected type.  If no error has been found, this assertion will fail</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">ScalarResult</span> AssertType(<span className="hljs-keyword">Type</span> expectedType)
+            </code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>expectedType</strong> - The expected type</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>ErrorResult</code> object</li>
             </ul>
         </>
     );

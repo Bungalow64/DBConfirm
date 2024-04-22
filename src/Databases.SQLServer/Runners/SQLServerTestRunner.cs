@@ -187,6 +187,19 @@ namespace DBConfirm.Databases.SQLServer.Runners
             }
         }
 
+        private async Task<ErrorResult> ExecuteStoredProcedureErrorAsync(string procedureName, IList<SqlParameter> parameters)
+        {
+            try
+            {
+                await ExecuteStoredProcedureNonQueryAsync(procedureName, parameters);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(_testFramework, ex);
+            }
+            return new ErrorResult(_testFramework, null);
+        }
+
         /// <inheritdoc/>
         public Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, IDictionary<string, object> parameters)
         {
@@ -197,6 +210,18 @@ namespace DBConfirm.Databases.SQLServer.Runners
         public Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, params SqlQueryParameter[] parameters)
         {
             return ExecuteStoredProcedureScalarAsync<T>(procedureName, parameters.ToSqlParameters());
+        }
+
+        /// <inheritdoc/>
+        public Task<ErrorResult> ExecuteStoredProcedureErrorAsync(string procedureName, params SqlQueryParameter[] parameters)
+        {
+            return ExecuteStoredProcedureErrorAsync(procedureName, parameters.ToSqlParameters());
+        }
+
+        /// <inheritdoc/>
+        public Task<ErrorResult> ExecuteStoredProcedureErrorAsync(string procedureName, IDictionary<string, object> parameters)
+        {
+            return ExecuteStoredProcedureErrorAsync(procedureName, parameters.ToSqlParameters());
         }
 
         private async Task ExecuteCommandNoResultsAsync(string commandText, IList<SqlParameter> parameters)
@@ -266,6 +291,31 @@ namespace DBConfirm.Databases.SQLServer.Runners
 
                 return new ScalarResult<T>(_testFramework, (T)await command.ExecuteScalarAsync());
             }
+        }
+
+        /// <inheritdoc/>
+        public Task<ErrorResult> ExecuteCommandErrorAsync(string commandText, params SqlQueryParameter[] parameters)
+        {
+            return ExecuteCommandErrorAsync(commandText, parameters.ToSqlParameters());
+        }
+
+        /// <inheritdoc/>
+        public Task<ErrorResult> ExecuteCommandErrorAsync(string commandText, IDictionary<string, object> parameters)
+        {
+            return ExecuteCommandErrorAsync(commandText, parameters.ToSqlParameters());
+        }
+
+        private async Task<ErrorResult> ExecuteCommandErrorAsync(string commandText, IList<SqlParameter> parameters)
+        {
+            try
+            {
+                await ExecuteCommandNoResultsAsync(commandText, parameters);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(_testFramework, ex);
+            }
+            return new ErrorResult(_testFramework, null);
         }
 
         /// <inheritdoc/>
@@ -424,7 +474,7 @@ namespace DBConfirm.Databases.SQLServer.Runners
                     INSERT INTO
 	                    @Columns
                     VALUES
-	                    ({ string.Join("),(", data.Select(p => $"'{DelimitName(p.Key)}'")) })
+	                    ({string.Join("),(", data.Select(p => $"'{DelimitName(p.Key)}'"))})
 
                     IF (EXISTS(SELECT * FROM @Columns WHERE ColumnName = '[' + @IdentityColumnNameDBConfirmProperty + ']'))
                     BEGIN
@@ -440,11 +490,11 @@ namespace DBConfirm.Databases.SQLServer.Runners
                 INSERT INTO
                     {tableName}
                 (
-                    { string.Join(",", data.Select(p => DelimitName(p.Key))) }
+                    {string.Join(",", data.Select(p => DelimitName(p.Key)))}
                 )
                 VALUES
                 (
-                    { string.Join(",", data.Select(p => $"@{p.Key}")) }
+                    {string.Join(",", data.Select(p => $"@{p.Key}"))}
                 );
 
                 IF (@HasIdentityDBConfirmProperty = 1)

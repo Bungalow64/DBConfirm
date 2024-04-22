@@ -17,10 +17,14 @@ namespace DBConfirm.Core.Validation
         /// <param name="expectedValue">The expected value.  This can be either a native type or an <see cref="IComparison"/> object</param>
         /// <param name="value">The value to test</param>
         /// <param name="messagePrefix">The prefix of the message to use during assertion failure</param>
-        public static void Assert(ITestFramework testFramework, object expectedValue, object value, string messagePrefix)
+        /// <param name="useDBNull">Whether null values should be converted to DBNull</param>
+        public static void Assert(ITestFramework testFramework, object expectedValue, object value, string messagePrefix, bool useDBNull = true)
         {
-            expectedValue = expectedValue ?? DBNull.Value;
-            value = value ?? DBNull.Value;
+            if (useDBNull)
+            {
+                expectedValue = expectedValue ?? DBNull.Value;
+                value = value ?? DBNull.Value;
+            }
 
             if (expectedValue is IComparison comparisonValue)
             {

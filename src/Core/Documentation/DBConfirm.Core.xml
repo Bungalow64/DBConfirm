@@ -301,6 +301,27 @@
             <param name="unexpectedRegex">The regex to not match</param>
             <returns>Returns the comparison object</returns>
         </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.StartsWith(System.String)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to start with a specific string  (case-sensitive)
+            </summary>
+            <param name="expected">The expected start string</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.EndsWith(System.String)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to sendtart with a specific string  (case-sensitive)
+            </summary>
+            <param name="expected">The expected end string</param>
+            <returns>Returns the comparison object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.ExpectedData.Contains(System.String)">
+            <summary>
+            Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to contain a specific string  (case-sensitive)
+            </summary>
+            <param name="expected">The expected contents</param>
+            <returns>Returns the comparison object</returns>
+        </member>
         <member name="M:DBConfirm.Core.Comparisons.ExpectedData.IsType(System.Type)">
             <summary>
             Gets the <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object to test for the data to match a specific type
@@ -437,6 +458,50 @@
         <member name="M:DBConfirm.Core.Comparisons.States.NullState.Validate(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="T:DBConfirm.Core.Comparisons.Strings.Contains">
+            <summary>
+            Asserts that a value contains a specific string (case-sensitive)
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Core.Comparisons.Strings.Contains.Expected">
+            <summary>
+            The expected string
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.Contains.#ctor(System.String)">
+            <summary>
+            Constructor, setting the expected string
+            </summary>
+            <param name="expected">The expected contents</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.Contains.Assert(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Object,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.Contains.Validate(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DBConfirm.Core.Comparisons.Strings.EndsWith">
+            <summary>
+            Asserts that a value ends with a specific string (case-sensitive)
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Core.Comparisons.Strings.EndsWith.Expected">
+            <summary>
+            The expected end string
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.EndsWith.#ctor(System.String)">
+            <summary>
+            Constructor, setting the expected end string
+            </summary>
+            <param name="expected">The expected end string</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.EndsWith.Assert(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Object,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.EndsWith.Validate(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="T:DBConfirm.Core.Comparisons.Strings.MatchRegex">
             <summary>
             Asserts that a value matches a regex pattern
@@ -515,6 +580,28 @@
         <member name="M:DBConfirm.Core.Comparisons.Strings.SpecificLength.Validate(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="T:DBConfirm.Core.Comparisons.Strings.StartsWith">
+            <summary>
+            Asserts that a value starts with a specific string (case-sensitive)
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Core.Comparisons.Strings.StartsWith.Expected">
+            <summary>
+            The expected start string
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.StartsWith.#ctor(System.String)">
+            <summary>
+            Constructor, setting the expected start string
+            </summary>
+            <param name="expected">The expected start string</param>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.StartsWith.Assert(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Object,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Core.Comparisons.Strings.StartsWith.Validate(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="T:DBConfirm.Core.Comparisons.Types.MatchType">
             <summary>
             Asserts that a value is of a specific type
@@ -536,6 +623,48 @@
         </member>
         <member name="M:DBConfirm.Core.Comparisons.Types.MatchType.Validate(System.Object)">
             <inheritdoc/>
+        </member>
+        <member name="T:DBConfirm.Core.DataResults.ErrorResult">
+            <summary>
+            The data for a specific error
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Core.DataResults.ErrorResult.RawData">
+            <summary>
+            The details of the thrown error
+            </summary>
+        </member>
+        <member name="F:DBConfirm.Core.DataResults.ErrorResult.TestFramework">
+            <summary>
+            The test framework to use for assertions
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.ErrorResult.#ctor(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Exception)">
+            <summary>
+            Constructor, including the test framework and the error data
+            </summary>
+            <param name="testFramework">The test framework to use for assertions</param>
+            <param name="rawData">The error returned from the query execution</param>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.ErrorResult.AssertError">
+            <summary>
+            Asserts that an error was found
+            </summary>
+            <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.ErrorResult"/> object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.ErrorResult.AssertMessage(System.Object)">
+            <summary>
+            Asserts that the error message matches the expected value.  If no error has been found, this assertion will fail
+            </summary>
+            <param name="expectedValue">The expected message.  Respects <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> objects</param>
+            <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.ErrorResult"/> object</returns>
+        </member>
+        <member name="M:DBConfirm.Core.DataResults.ErrorResult.AssertType(System.Type)">
+            <summary>
+            Asserts that the error type matches the expected type.  If no error has been found, this assertion will fail
+            </summary>
+            <param name="expectedType">The expected type</param>
+            <returns>Returns the same <see cref="T:DBConfirm.Core.DataResults.ErrorResult"/> object</returns>
         </member>
         <member name="T:DBConfirm.Core.DataResults.QueryResult">
             <summary>
@@ -1068,6 +1197,22 @@
             <exception cref="T:System.Data.Common.DbException"></exception>
             <exception cref="T:System.InvalidCastException"></exception>
         </member>
+        <member name="M:DBConfirm.Core.Runners.Abstract.ITestRunner.ExecuteCommandErrorAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Executes a command, returning the found error
+            </summary>
+            <param name="commandText">The command to execute</param>
+            <param name="parameters">The parameters to be used.  The Key is used as the parameter name, and the Value used as the parameter value</param>
+            <returns>Returns the error returned from the command. If no error is found, then the RawData within the ErrorResult object will be null</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Runners.Abstract.ITestRunner.ExecuteCommandErrorAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <summary>
+            Executes a command, returning the found error
+            </summary>
+            <param name="commandText">The command to execute</param>
+            <param name="parameters">The parameters to be used</param>
+            <returns>Returns the error returned from the command. If no error is found, then the RawData within the ErrorResult object will be null</returns>
+        </member>
         <member name="M:DBConfirm.Core.Runners.Abstract.ITestRunner.ExecuteStoredProcedureMultipleDataSetAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Executes a stored procedure, returning all data tables
@@ -1143,6 +1288,22 @@
             <returns>Returns the object returned from the stored procedure</returns>
             <exception cref="T:System.Data.Common.DbException"></exception>
             <exception cref="T:System.InvalidCastException"></exception>
+        </member>
+        <member name="M:DBConfirm.Core.Runners.Abstract.ITestRunner.ExecuteStoredProcedureErrorAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Executes a stored procedure, returning the found error
+            </summary>
+            <param name="procedureName">The name of the stored procedure, including schema</param>
+            <param name="parameters">The parameters to be used.  The Key is used as the parameter name, and the Value used as the parameter value</param>
+            <returns>Returns the error returned from the stored procedure. If no error is found, then the RawData within the ErrorResult object will be null</returns>
+        </member>
+        <member name="M:DBConfirm.Core.Runners.Abstract.ITestRunner.ExecuteStoredProcedureErrorAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <summary>
+            Executes a stored procedure, returning the found error
+            </summary>
+            <param name="procedureName">The name of the stored procedure, including schema</param>
+            <param name="parameters">The parameters to be used</param>
+            <returns>Returns the error returned from the stored procedure. If no error is found, then the RawData within the ErrorResult object will be null</returns>
         </member>
         <member name="M:DBConfirm.Core.Runners.Abstract.ITestRunner.ExecuteTableAsync(System.String)">
             <summary>
@@ -1549,6 +1710,33 @@
             <param name="message">The message to include in the exception when the assertion fails. The message is shown in test results</param>
             <param name="parameters">An array of parameters to use when formatting message</param>
         </member>
+        <member name="M:DBConfirm.Core.TestFrameworks.Abstract.ITestFramework.StartsWith(System.String,System.String,System.String,System.String[])">
+            <summary>
+            Asserts that the value starts with the expected string
+            </summary>
+            <param name="actual">The actual value to test</param>
+            <param name="expected">The string with which the value is expected to start</param>
+            <param name="message">The message to include in the exception when the assertion fails. The message is shown in test results</param>
+            <param name="parameters">An array of parameters to use when formatting message</param>
+        </member>
+        <member name="M:DBConfirm.Core.TestFrameworks.Abstract.ITestFramework.EndsWith(System.String,System.String,System.String,System.String[])">
+            <summary>
+            Asserts that the value ends with the expected string
+            </summary>
+            <param name="actual">The actual value to test</param>
+            <param name="expected">The string with which the value is expected to end</param>
+            <param name="message">The message to include in the exception when the assertion fails. The message is shown in test results</param>
+            <param name="parameters">An array of parameters to use when formatting message</param>
+        </member>
+        <member name="M:DBConfirm.Core.TestFrameworks.Abstract.ITestFramework.Contains(System.String,System.String,System.String,System.String[])">
+            <summary>
+            Asserts that the value contains with the expected string
+            </summary>
+            <param name="actual">The actual value to test</param>
+            <param name="expected">The string with which the value is expected to contain</param>
+            <param name="message">The message to include in the exception when the assertion fails. The message is shown in test results</param>
+            <param name="parameters">An array of parameters to use when formatting message</param>
+        </member>
         <member name="M:DBConfirm.Core.TestFrameworks.Abstract.ITestFramework.DoesNotMatch(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
             <summary>
             Asserts that the value does not match the Regex pattern
@@ -1570,7 +1758,7 @@
             Static class to handle all assertions and validations
             </summary>
         </member>
-        <member name="M:DBConfirm.Core.Validation.ValueValidation.Assert(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Object,System.Object,System.String)">
+        <member name="M:DBConfirm.Core.Validation.ValueValidation.Assert(DBConfirm.Core.TestFrameworks.Abstract.ITestFramework,System.Object,System.Object,System.String,System.Boolean)">
             <summary>
             <para>Asserts that the value is correct, according to the expected value.</para>
             <para>Where the expected value is a native type, object equality is used as the test.  Where the expected value is an <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object, the specific <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> assertion logic is used</para>
@@ -1579,6 +1767,7 @@
             <param name="expectedValue">The expected value.  This can be either a native type or an <see cref="T:DBConfirm.Core.Comparisons.Abstract.IComparison"/> object</param>
             <param name="value">The value to test</param>
             <param name="messagePrefix">The prefix of the message to use during assertion failure</param>
+            <param name="useDBNull">Whether null values should be converted to DBNull</param>
         </member>
         <member name="M:DBConfirm.Core.Validation.ValueValidation.Validate(System.Object,System.Object)">
             <summary>
