@@ -452,7 +452,7 @@ public class AddUserTests : NUnitBase
             }
             catch (Exception ex)
             {
-                Assert.AreEqual("  Error result does not start with the expected string\r\n  Expected: String starting with \"Cannot insert the value NULL into column 'LastName', table 'SampleDB.dbo.Users'; column does not allow nulls.\"\r\n  But was:  \"Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.\r\nThe statement has been terminated.\"\r\n", ex.Message);
+                Assert.AreEqual($"  Error result does not start with the expected string{Environment.NewLine}  Expected: String starting with \"Cannot insert the value NULL into column 'LastName', table 'SampleDB.dbo.Users'; column does not allow nulls.\"{Environment.NewLine}  But was:  \"Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.{Environment.NewLine}The statement has been terminated.\"{Environment.NewLine}", ex.Message);
                 return;
             }
 
@@ -510,7 +510,7 @@ public class AddUserTests : NUnitBase
             }
             catch (Exception ex)
             {
-                Assert.AreEqual("  Error result has an unexpected value\r\n  Expected: <System.NullReferenceException>\r\n  But was:  <Microsoft.Data.SqlClient.SqlException>\r\n", ex.Message);
+                Assert.AreEqual($"  Error result has an unexpected value{Environment.NewLine}  Expected: <System.NullReferenceException>{Environment.NewLine}  But was:  <Microsoft.Data.SqlClient.SqlException>{Environment.NewLine}", ex.Message);
                 return;
             }
 

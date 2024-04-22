@@ -446,7 +446,7 @@ public class AddUserTests : MSTestBase
         }
         catch (Exception ex)
         {
-            Assert.AreEqual("StringAssert.StartsWith failed. String 'Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.\r\nThe statement has been terminated.' does not start with string 'Cannot insert the value NULL into column 'LastName', table 'SampleDB.dbo.Users'; column does not allow nulls.'. Error result does not start with the expected string.", ex.Message);
+            Assert.AreEqual($"StringAssert.StartsWith failed. String 'Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.{Environment.NewLine}The statement has been terminated.' does not start with string 'Cannot insert the value NULL into column 'LastName', table 'SampleDB.dbo.Users'; column does not allow nulls.'. Error result does not start with the expected string.", ex.Message);
             return;
         }
 
