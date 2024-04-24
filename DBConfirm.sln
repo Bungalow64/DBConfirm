@@ -97,6 +97,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Settings", "0.Settings", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.SolutionFiles", "7.SolutionFiles", "{58625D46-BC80-45C7-AF4E-FB6DF67A6D1F}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGES.md = CHANGES.md
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
 		README.md = README.md
