@@ -12,6 +12,7 @@ import ContinuousIntegration from './pages/ContinuousIntegration';
 import ManualSetup from './pages/ManualSetup';
 import Debugging from './pages/Debugging'
 import Walkthrough from './pages/Walkthrough';
+import Releases from './pages/Releases';
 import Api from './pages/Api'
 import FAQ from './pages/FAQ';
 import ScrollToTop from './components/ScrollToTop';
@@ -40,6 +41,7 @@ function App() {
           <Route path="/api"><Api /></Route>
           <Route path="/faq"><FAQ /></Route>
           <Route path="/walkthrough"><Walkthrough /></Route>
+          <Route path="/releases"><Releases /></Route>
           <Route path="/"><Overview /></Route>
         </Switch>
         <Analytics />

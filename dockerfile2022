@@ -1,0 +1,11 @@
+FROM mcr.microsoft.com/mssql/server:2022-latest
+COPY ./tests/SampleDatabases/2022/northwind_schema_2022_setup.sql ./northwind_setup.sql
+COPY ./tests/SampleDatabases/2022/sampledb_schema_2022_setup.sql ./sampledb_setup.sql
+COPY ./docker/entrypoint.sh .
+COPY ./docker/import-data.sh .
+
+USER root
+
+RUN chmod +x entrypoint.sh
+
+CMD /bin/bash ./entrypoint.sh

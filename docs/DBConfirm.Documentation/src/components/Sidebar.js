@@ -28,6 +28,7 @@ export default function Sidebar() {
                     <li><NavLink to="/manualsetup" activeClassName="active">Manual Setup</NavLink></li>
                     <li><NavLink to="/debugging" activeClassName="active">Debugging</NavLink></li>
                     <li><NavLink to="/walkthrough" activeClassName="active">Walkthrough</NavLink></li>
+                    <li><NavLink to="/releases" activeClassName="active">Releases</NavLink></li>
                     <li><NavLink to="/api" activeClassName="active">API Reference</NavLink></li>
                     <li><NavLink to="/faq" activeClassName="active">FAQ</NavLink></li>
                 </ul>
@@ -46,6 +47,7 @@ export default function Sidebar() {
                     <option value="/manualsetup">Manual Setup</option>
                     <option value="/debugging">Debugging</option>
                     <option value="/walkthrough">Walkthrough</option>
+                    <option value="/releases">Releases</option>
                     <option value="/api">API Reference</option>
                     <option value="/faq">FAQ</option>
                 </select>

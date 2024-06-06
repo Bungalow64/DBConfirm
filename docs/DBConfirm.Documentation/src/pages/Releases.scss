@@ -1,0 +1,36 @@
+#content {
+  h1 {
+    font-size: 1.5em;
+    color: #1f2333;
+    line-height: 40px;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    border-bottom: solid 2px #e3e8ee;
+  }
+
+  h3 {
+    font-size: 1.2em;
+    border-bottom: solid 1px #e3e8ee;
+    margin-top: 40px;
+  }
+
+  h4 {
+    font-weight: bold;
+  }
+
+  section {
+    header {
+      display: flex;
+      align-items: center;
+    }
+    span{
+      flex-grow: 1;
+    }
+    a{
+      margin-left: 10px;
+      margin-top: 5px;
+    }
+  }
+}

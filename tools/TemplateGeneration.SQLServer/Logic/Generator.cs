@@ -1,12 +1,13 @@
-﻿using System.Threading.Tasks;
-using System;
-using System.Data;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DBConfirm.TemplateGeneration.Logic.Abstract;
 using DBConfirm.TemplateGeneration.Models;
-using DBConfirm.TemplateGeneration.Logic.Abstract;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DBConfirm.TemplateGeneration.Logic
 {
@@ -67,9 +68,10 @@ namespace DBConfirm.TemplateGeneration.Logic
             {
                 _consoleLog.WriteSuccess($"Found table ({schemaName}.{group.Key}) and {group.Count()} column{(group.Count() == 1 ? "" : "s")}");
             }
+            List<string> processedNames = new();
             foreach (IGrouping<string, ColumnDefinition> group in grouped)
             {
-                GenerateFile(group, schemaName, group.Key);
+                GenerateFile(group, schemaName, group.Key, processedNames);
             }
         }
 
@@ -99,9 +101,9 @@ namespace DBConfirm.TemplateGeneration.Logic
             return (schemaName, tableName);
         }
 
-        private void GenerateFile(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName)
+        private void GenerateFile(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName, List<string> processedNames)
         {
-            (string classDefinition, string className) = GenerateClass(processedColumns, schemaName, tableName);
+            (string classDefinition, string className) = GenerateClass(processedColumns, schemaName, tableName, processedNames);
 
             if (_options.DryRun)
             {
@@ -154,11 +156,18 @@ namespace DBConfirm.TemplateGeneration.Logic
             return await reader.ReadToEndAsync();
         }
 
-        private (string, string) GenerateClass(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName)
+        private (string, string) GenerateClass(IEnumerable<ColumnDefinition> processedColumns, string schemaName, string tableName, List<string> processedNames)
         {
             ColumnDefinition identityColumn = processedColumns.FirstOrDefault(p => p.IsIdentity);
 
-            string className = $"{tableName.Replace(' ', '_')}Template";
+            string className = $"{tableName.Replace(' ', '_').Replace('\'', '_')}Template";
+            string uniqueClassName = className;
+            int iterator = 2;
+            while (processedNames.Contains(uniqueClassName))
+            {
+                uniqueClassName = className + iterator++;
+            }
+            processedNames.Add(uniqueClassName);
 
             List<string> usings = new List<string>
             {
@@ -181,24 +190,25 @@ namespace DBConfirm.TemplateGeneration.Logic
                 usings.Add("using DBConfirm.Core.Templates.Placeholders;");
             }
 
-            string output = $@"{string.Join($"{Environment.NewLine}", usings)}
+            StringBuilder output = new();
+            output.AppendLine($@"{string.Join($"{Environment.NewLine}", usings)}");
+            output.AppendLine();
+            output.AppendLine($@"namespace {_options.Namespace ?? "DBConfirm.Templates"}");
+            output.AppendLine($@"{{");
+            output.AppendLine($@"    public class {uniqueClassName} : Base{(identityColumn != null ? "Identity" : "Simple")}Template<{uniqueClassName}>");
+            output.AppendLine($@"    {{");
+            output.AppendLine($@"        public override string TableName => ""[{schemaName}].[{tableName}]"";");
+            output.AppendLine($@"        {(identityColumn != null ? @$"{Environment.NewLine}        public override string IdentityColumnName => ""{identityColumn.ColumnName}"";{Environment.NewLine}" : "")}");
+            output.AppendLine($@"        public override DataSetRow DefaultData => new DataSetRow");
+            output.AppendLine($@"        {{");
+            output.AppendLine($@"            {string.Join($",{Environment.NewLine}            ", processedColumns.Where(p => p.RequiresDefaultData).Select(p => p.ToDefaultData()))}");
+            output.AppendLine($@"        }};");
+            output.AppendLine();
+            output.AppendLine($@"{string.Join($"{Environment.NewLine}", processedColumns.Select(p => p.ToFluentRow("        ", $"{uniqueClassName}")))}");
+            output.AppendLine($@"    }}");
+            output.Append('}');
 
-namespace {_options.Namespace ?? "DBConfirm.Templates"}
-{{
-    public class {className} : Base{(identityColumn != null ? "Identity" : "Simple")}Template<{className}>
-    {{
-        public override string TableName => ""[{schemaName}].[{tableName}]"";
-        {(identityColumn != null ? @$"{Environment.NewLine}        public override string IdentityColumnName => ""{identityColumn.ColumnName}"";{Environment.NewLine}" : "")}
-        public override DataSetRow DefaultData => new DataSetRow
-        {{
-            {string.Join($",{Environment.NewLine}            ", processedColumns.Where(p => p.RequiresDefaultData).Select(p => p.ToDefaultData()))}
-        }};
-
-{string.Join($"{Environment.NewLine}", processedColumns.Select(p => p.ToFluentRow("        ", $"{className}")))}
-    }}
-}}";
-
-            return (output, className);
+            return (output.ToString(), uniqueClassName);
         }
     }
 }

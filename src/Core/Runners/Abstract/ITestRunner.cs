@@ -104,6 +104,20 @@ namespace DBConfirm.Core.Runners.Abstract
         /// <exception cref="InvalidCastException"></exception>
         Task<ScalarResult<T>> ExecuteCommandScalarAsync<T>(string commandText, params SqlQueryParameter[] parameters);
         /// <summary>
+        /// Executes a command, returning the found error
+        /// </summary>
+        /// <param name="commandText">The command to execute</param>
+        /// <param name="parameters">The parameters to be used.  The Key is used as the parameter name, and the Value used as the parameter value</param>
+        /// <returns>Returns the error returned from the command. If no error is found, then the RawData within the ErrorResult object will be null</returns>
+        Task<ErrorResult> ExecuteCommandErrorAsync(string commandText, IDictionary<string, object> parameters);
+        /// <summary>
+        /// Executes a command, returning the found error
+        /// </summary>
+        /// <param name="commandText">The command to execute</param>
+        /// <param name="parameters">The parameters to be used</param>
+        /// <returns>Returns the error returned from the command. If no error is found, then the RawData within the ErrorResult object will be null</returns>
+        Task<ErrorResult> ExecuteCommandErrorAsync(string commandText, params SqlQueryParameter[] parameters);
+        /// <summary>
         /// Executes a stored procedure, returning all data tables
         /// </summary>
         /// <param name="procedureName">The name of the stored procedure, including schema</param>
@@ -171,6 +185,20 @@ namespace DBConfirm.Core.Runners.Abstract
         /// <exception cref="System.Data.Common.DbException"></exception>
         /// <exception cref="InvalidCastException"></exception>
         Task<ScalarResult<T>> ExecuteStoredProcedureScalarAsync<T>(string procedureName, params SqlQueryParameter[] parameters);
+        /// <summary>
+        /// Executes a stored procedure, returning the found error
+        /// </summary>
+        /// <param name="procedureName">The name of the stored procedure, including schema</param>
+        /// <param name="parameters">The parameters to be used.  The Key is used as the parameter name, and the Value used as the parameter value</param>
+        /// <returns>Returns the error returned from the stored procedure. If no error is found, then the RawData within the ErrorResult object will be null</returns>
+        Task<ErrorResult> ExecuteStoredProcedureErrorAsync(string procedureName, IDictionary<string, object> parameters);
+        /// <summary>
+        /// Executes a stored procedure, returning the found error
+        /// </summary>
+        /// <param name="procedureName">The name of the stored procedure, including schema</param>
+        /// <param name="parameters">The parameters to be used</param>
+        /// <returns>Returns the error returned from the stored procedure. If no error is found, then the RawData within the ErrorResult object will be null</returns>
+        Task<ErrorResult> ExecuteStoredProcedureErrorAsync(string procedureName, params SqlQueryParameter[] parameters);
         /// <summary>
         /// Returns all data for a specific table
         /// </summary>

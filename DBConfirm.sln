@@ -92,10 +92,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Settings", "0.Settings", 
 		tests\Settings\local.runsettings = tests\Settings\local.runsettings
 		tests\Settings\SQL2017.runsettings = tests\Settings\SQL2017.runsettings
 		tests\Settings\SQL2019.runsettings = tests\Settings\SQL2019.runsettings
+		tests\Settings\SQL2022.runsettings = tests\Settings\SQL2022.runsettings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.SolutionFiles", "7.SolutionFiles", "{58625D46-BC80-45C7-AF4E-FB6DF67A6D1F}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGES.md = CHANGES.md
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
 		README.md = README.md
@@ -111,6 +113,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compose", "Compose", "{3465
 		docker-compose.yml = docker-compose.yml
 		dockerfile2017 = dockerfile2017
 		dockerfile2019 = dockerfile2019
+		dockerfile2022 = dockerfile2022
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{B215D200-7141-4FB2-9D83-496F52AF90D6}"
@@ -120,9 +123,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{B215D2
 		docker\sqlserver.env = docker\sqlserver.env
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Core.NUnit.Nuget.Tests", "tests\NuGet\Sample.Core.NUnit.Nuget.Tests\Sample.Core.NUnit.Nuget.Tests.csproj", "{0B887BB8-8916-4530-B235-9ECD60BF27B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Core.NUnit.Nuget.Tests", "tests\NuGet\Sample.Core.NUnit.Nuget.Tests\Sample.Core.NUnit.Nuget.Tests.csproj", "{0B887BB8-8916-4530-B235-9ECD60BF27B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Northwind.NUnit.Tests", "tests\Sample.Northwind.NUnit.Tests\Sample.Northwind.NUnit.Tests.csproj", "{85FCADDE-4074-4467-BEBD-D324F617EF63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Northwind.NUnit.Tests", "tests\Sample.Northwind.NUnit.Tests\Sample.Northwind.NUnit.Tests.csproj", "{85FCADDE-4074-4467-BEBD-D324F617EF63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2022", "2022", "{14E6F6E4-AC20-4DE1-B099-9846D05F596E}"
+	ProjectSection(SolutionItems) = preProject
+		tests\SampleDatabases\2022\northwind_schema_2022_setup.sql = tests\SampleDatabases\2022\northwind_schema_2022_setup.sql
+		tests\SampleDatabases\2022\sampledb_schema_2022_setup.sql = tests\SampleDatabases\2022\sampledb_schema_2022_setup.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -251,6 +260,7 @@ Global
 		{B215D200-7141-4FB2-9D83-496F52AF90D6} = {3465DBC2-E784-48FB-909D-1B91EE1360FE}
 		{0B887BB8-8916-4530-B235-9ECD60BF27B4} = {0C38EDBB-D1F5-4266-A8BE-BC9378E216E8}
 		{85FCADDE-4074-4467-BEBD-D324F617EF63} = {6E32C571-92E7-46D1-B37B-88D1DC8362A3}
+		{14E6F6E4-AC20-4DE1-B099-9846D05F596E} = {4BD42497-978E-48C1-8664-75A7F30C91BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED27D3CD-4261-418B-BC4D-1F33D285E5C2}

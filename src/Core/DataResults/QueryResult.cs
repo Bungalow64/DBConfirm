@@ -1,6 +1,5 @@
 ﻿using DBConfirm.Core.Data;
 using DBConfirm.Core.TestFrameworks.Abstract;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -139,6 +138,64 @@ namespace DBConfirm.Core.DataResults
                 .ForEach(p => AssertColumnNotExists(p));
             return this;
         }
+
+        /// <summary>
+        /// Asserts that the data across the selected columns is unique
+        /// </summary>
+        /// <param name="uniqueColumnNames">The column names (case-sensitive).  Duplicates are ignored</param>
+        /// <remarks>If multiple columns are selected, then uniqueness is determined by checking the data in all columns, not each column individually</remarks>
+        /// <returns>Returns the same <see cref="QueryResult"/> object</returns>
+        public QueryResult AssertColumnValuesUnique(params string[] uniqueColumnNames)
+        {
+            if ((uniqueColumnNames ?? new string[0]).Length == 0)
+            {
+                TestFramework.Fail($"No column names provided.  Specify columns to check for uniqueness");
+            }
+
+            var columnNames = uniqueColumnNames.Distinct().ToList();
+
+            AssertColumnsExist(columnNames.ToArray());
+
+            var duplicates = new HashSet<RowResult>();
+
+            List<(RowResult Row, List<object> Columns)> focusData = RawData
+                .Rows.Cast<DataRow>()
+                .Select((p, i) => new RowResult(this, i))
+                .Select(p => (p, columnNames.Select(q => p.Get(q)).ToList()))
+                .ToList();
+
+            foreach (var (Row, Columns) in focusData)
+            {
+                if (duplicates.Contains(Row))
+                {
+                    continue;
+                }
+
+                var otherMatches = focusData
+                    .Where(p => p.Row != Row)
+                    .Where(p => !duplicates.Contains(p.Row))
+                    .Where(p => p.Columns.Select((q, i) => new { Value = q, Index = i }).All(q => Columns[q.Index].Equals(q.Value)))
+                    .ToList();
+
+                if (otherMatches.Any())
+                {
+                    duplicates.Add(Row);
+
+                    foreach (var item in otherMatches.Select(p => p.Row))
+                    {
+                        duplicates.Add(item);
+                    }
+                }
+            }
+
+            if (duplicates.Any())
+            {
+                TestFramework.Fail($"Duplicate data found for column{(columnNames.Count > 1 ? "s" : "")} {string.Join(", ", columnNames)} in rows {string.Join(", ", duplicates.Select(p => p.GetRowNumber()))}");
+            }
+
+            return this;
+        }
+
 
         /// <summary>
         /// Asserts that a row exists at a specific position (zero-based)

@@ -2,28 +2,27 @@
 using DBConfirm.Core.Templates;
 using System.Threading.Tasks;
 
-namespace Sample.Core.MSTest.Tests.Templates.Complex
+namespace Sample.Core.MSTest.Tests.Templates.Complex;
+
+public class UserWithAddressAndCountryTemplate : BaseComplexTemplate
 {
-    public class UserWithAddressAndCountryTemplate : BaseComplexTemplate
+    public UserTemplate User { get; set; } = [];
+
+    public UserAddressTemplate UserAddress { get; set; } = [];
+
+    public CountriesTemplate Country { get; set; } = [];
+
+    public override async Task InsertAsync(ITestRunner testRunner)
     {
-        public UserTemplate User { get; set; } = new UserTemplate();
+        await testRunner.InsertTemplateAsync(User);
 
-        public UserAddressTemplate UserAddress { get; set; } = new UserAddressTemplate();
-
-        public CountriesTemplate Country { get; set; } = new CountriesTemplate();
-
-        public override async Task InsertAsync(ITestRunner testRunner)
+        if (!Country.IsInserted)
         {
-            await testRunner.InsertTemplateAsync(User);
-
-            if (!Country.IsInserted)
-            {
-                await testRunner.InsertTemplateAsync(Country);
-            }
-
-            UserAddress["UserId"] = User.Identity;
-            UserAddress["CountryCode"] = Country["CountryCode"];
-            await testRunner.InsertTemplateAsync(UserAddress);
+            await testRunner.InsertTemplateAsync(Country);
         }
+
+        UserAddress["UserId"] = User.Identity;
+        UserAddress["CountryCode"] = Country["CountryCode"];
+        await testRunner.InsertTemplateAsync(UserAddress);
     }
 }

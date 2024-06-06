@@ -8,6 +8,7 @@ export default function Api() {
                 <li><a href="#queryresult">QueryResult object</a></li>
                 <li><a href="#rowresult">RowResult object</a></li>
                 <li><a href="#scalarresult">ScalarResult object</a></li>
+                <li><a href="#errorresult">ErrorResult object</a></li>
             </ul>
 
             <h2 id="testrunner">TestRunner API</h2>
@@ -185,6 +186,23 @@ export default function Api() {
             <p>Returns:</p>
             <ul>
                 <li>Returns the object returned from the stored procedure</li>
+            </ul>
+            <h3 id="executestoredprocedureerrorasync">ExecuteStoredProcedureErrorAsync</h3>
+            <p>Executes a stored procedure, returning the found error</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">Task</span>&lt;<span className="hljs-type">ErrorResult</span>&gt; ExecuteStoredProcedureErrorAsync(<span className="hljs-keyword">string</span> procedureName, <span className="hljs-interface">IDictionary</span>&lt;<span className="hljs-keyword">string</span>, <span className="hljs-keyword">object</span>&gt; parameters)
+        {"\n"}
+                {"\n"}<span className="hljs-type">Task</span>&lt;<span className="hljs-type">ErrorResult</span>&gt; ExecuteStoredProcedureErrorAsync(<span className="hljs-keyword">string</span> procedureName, <span className="hljs-keyword">params</span> <span className="hljs-type">SqlQueryParameter</span>[] parameters)
+</code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>procedureName</strong> - The name of the stored procedure, including schema</li>
+                <li><strong>parameters</strong> - The parameters to be used (when an IDictionary is used, the Key is used as
+                the
+                parameter name, and the Value used as the parameter value)</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the error returned from the stored procedure.  If no error is found, then the RawData within the ErrorResult object will be null</li>
             </ul>
             <h3 id="executetableasync">ExecuteTableAsync</h3>
             <p>Returns all data for a specific table</p>
@@ -382,6 +400,46 @@ export default function Api() {
             <ul>
                 <li>Returns the same <code>QueryResult</code> object</li>
             </ul>
+            <h3 id="assertcolumnvaluesunique">AssertColumnValuesUnique</h3>
+            <p>Asserts that the data across the selected columns is unique</p>
+            <p>If a single column is specified, then the assertion is checking that this column does not contain any duplicated values</p>
+            <p>If multiple columns are specified, then the assertion is checking that the data present in all of those columns is not duplicated across multiple rows. 
+                For example, say a result set has the following data:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style={{ width: "120px" }}>FirstName</th>
+                            <th style={{ width: "120px" }}>MiddleName</th>
+                            <th style={{ width: "120px" }}>LastName</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John</td>
+                            <td>A</td>
+                            <td>Smith</td>
+                        </tr>
+                        <tr>
+                            <td>Jane</td>
+                            <td>A</td>
+                            <td>Smith</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>When <code>AssertColumnValuesUnique("FirstName")</code> is called, the test passes because all the values in the 'FirstName' column is unique</p>
+                <p>When <code>AssertColumnValuesUnique("LastName")</code> is called, the test fails because a value in the 'LastName' column ('Smith') exists in multiple rows</p>
+                <p>When <code>AssertColumnValuesUnique("FirstName", "LastName")</code> is called, the test passes because there are no multiple rows with the same 'FirstName' and 'LastName' values</p>
+                <p>When <code>AssertColumnValuesUnique("MiddleName", "LastName")</code> is called, the test fails because there are multiple rows with the same 'MiddleName' and 'LastName' values ('A' and 'Smith')</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> AssertColumnValuesUnique(<span className="hljs-keyword">params</span> <span className="hljs-keyword">string</span>[] uniqueColumnNames)
+</code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>uniqueColumnNames</strong> - The column names (case-sensitive).  Duplicates are ignored</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>QueryResult</code> object</li>
+            </ul>
             <h3 id="assertrowpositionexists">AssertRowPositionExists</h3>
             <p>Asserts that a row exists at a specific position (zero-based)</p>
             <pre><code className="lang-csharp"><span className="hljs-type">QueryResult</span> AssertRowPositionExists(<span className="hljs-keyword">int</span> expectedRowPosition)
@@ -523,6 +581,43 @@ export default function Api() {
             <p>Returns:</p>
             <ul>
                 <li>Returns the same <code>ScalarResult&lt;T&gt;</code> object</li>
+            </ul>
+            
+            <h2 id="errorresult">ErrorResult</h2>
+            <p>A single error is returned in an <code>ErrorResult</code> object, accessed via an error method in <code>TestRunner</code>. This object has assertion methods which can be used to test the error found.</p>
+            <h3 id="asserterror">AssertError</h3>
+            <p>Asserts that an error was found</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">ErrorResult</span> AssertError()
+</code></pre>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>ErrorResult</code> object</li>
+            </ul>
+
+            <h3 id="assertmessage">AssertMessage</h3>
+            <p>Asserts that the error message matches the expected value.  If no error has been found, this assertion will fail</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">ScalarResult</span> AssertMessage(<span className="hljs-keyword">object</span> expectedValue)
+            </code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>expectedValue</strong> - The expected value. Respects <code>IComparison</code> objects</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>ErrorResult</code> object</li>
+            </ul>
+
+            <h3 id="asserttype">AssertType</h3>
+            <p>Asserts that the error type matches the expected type.  If no error has been found, this assertion will fail</p>
+            <pre><code className="lang-csharp"><span className="hljs-type">ScalarResult</span> AssertType(<span className="hljs-keyword">Type</span> expectedType)
+            </code></pre>
+            <p>Parameters:</p>
+            <ul>
+                <li><strong>expectedType</strong> - The expected type</li>
+            </ul>
+            <p>Returns:</p>
+            <ul>
+                <li>Returns the same <code>ErrorResult</code> object</li>
             </ul>
         </>
     );

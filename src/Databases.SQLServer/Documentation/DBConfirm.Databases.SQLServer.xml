@@ -92,6 +92,12 @@
         <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteStoredProcedureScalarAsync``1(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
             <inheritdoc/>
         </member>
+        <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteStoredProcedureErrorAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteStoredProcedureErrorAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
         <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteCommandNoResultsAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <inheritdoc/>
         </member>
@@ -102,6 +108,12 @@
             <inheritdoc/>
         </member>
         <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteCommandAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteCommandErrorAsync(System.String,DBConfirm.Core.Parameters.SqlQueryParameter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteCommandErrorAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner.ExecuteCommandScalarAsync``1(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">

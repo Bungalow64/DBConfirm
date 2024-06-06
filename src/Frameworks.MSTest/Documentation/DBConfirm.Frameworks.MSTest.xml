@@ -24,6 +24,15 @@
         <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.Matches(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
             <inheritdoc/>
         </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.StartsWith(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.EndsWith(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.Contains(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
         <member name="M:DBConfirm.Frameworks.MSTest.MSTestFramework.DoesNotMatch(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
             <inheritdoc/>
         </member>
