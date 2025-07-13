@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DBConfirm.Core.Factories.Abstract;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DBConfirm.Core.TestFrameworks.Abstract;
 using DBConfirm.Core.Runners.Abstract;
@@ -43,6 +44,10 @@ namespace DBConfirm.Frameworks.MSTest
                 return Context.Properties[parameterName]?.ToString();
             }
             return null;
+        }
+
+        protected MSTestFrameworkBase(ITestRunnerFactory testRunnerFactory) : base(testRunnerFactory)
+        {
         }
 
         /// <summary>

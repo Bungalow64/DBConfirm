@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DBConfirm.Core.Factories.Abstract;
 using DBConfirm.Core.TestFrameworks.Abstract;
 using NUnit.Framework;
 using DBConfirm.Core.Runners.Abstract;
@@ -28,6 +29,10 @@ namespace DBConfirm.Frameworks.NUnit
                 return TestContext.Parameters[parameterName];
             }
             return null;
+        }
+
+        protected NUnitFrameworkBase(ITestRunnerFactory testRunnerFactory) : base(testRunnerFactory)
+        {
         }
 
         /// <summary>
