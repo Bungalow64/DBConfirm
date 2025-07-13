@@ -2,12 +2,10 @@
 using System.Threading.Tasks;
 using DBConfirm.Core.DataResults;
 using DBConfirm.Core.Data;
-using DBConfirm.Core.Factories.Abstract;
 using DBConfirm.Core.Parameters;
 using DBConfirm.Frameworks.XUnit;
 using DBConfirm.Packages.SQLServer.XUnit;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Sample.Core.XUnit.Nuget.Tests.StoredProcedures;
 

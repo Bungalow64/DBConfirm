@@ -1,5 +1,4 @@
 ﻿using DBConfirm.Core.Factories.Abstract;
-using DBConfirm.Core.Runners.Abstract;
 using DBConfirm.Packages.SQLServer.XUnit;
 
 namespace Frameworks.XUnit.Tests.TestHelpers;
