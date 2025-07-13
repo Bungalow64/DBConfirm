@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DBConfirm.Frameworks.XUnit</name>
+    </assembly>
+    <members>
+        <member name="T:DBConfirm.Frameworks.XUnit.XUnitFramework">
+            <summary>
+            The test framework using XUnit
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.AreEqual(System.Object,System.Object,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.AreNotEqual(System.Object,System.Object,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.Contains``1(System.Collections.Generic.List{``0},``0,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.DoesNotContain``1(System.Collections.Generic.List{``0},``0,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.Matches(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.StartsWith(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.EndsWith(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.Contains(System.String,System.String,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.DoesNotMatch(System.String,System.Text.RegularExpressions.Regex,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.Fail(System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.IsInstanceOfType(System.Object,System.Type,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFramework.IsTrue(System.Boolean,System.String,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase">
+            <summary>
+            The abstract base class for test classes using XUnit
+            </summary>
+        </member>
+        <member name="P:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.TestFramework">
+            <summary>
+            Gets and sets the <see cref="T:DBConfirm.Core.TestFrameworks.Abstract.ITestFramework"/> to be used for assertions, by default using <see cref="T:DBConfirm.Frameworks.XUnit.XUnitFramework"/> 
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.GetParameter(System.String)">
+            <summary>
+            Gets the value of the parameter from <see cref="!:TestContext"/>.  If the parameter does not exist, null is returned
+            </summary>
+            <param name="parameterName">The name of the parameter</param>
+            <returns>Returns the value of the parameter, or null if the parameter is not found</returns>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.#ctor(DBConfirm.Core.Factories.Abstract.ITestRunnerFactory)">
+            <summary>
+            The initialisation called before each test, to set up the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the test, and making the initial connection to the target database
+            </summary>
+            <returns>A task representing the asynchronous operation</returns>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.Finalize">
+            <summary>
+            The cleanup called after each test, to dispose the current instance of <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/>, rolling back the transaction and closing the connection
+            </summary>
+        </member>
+    </members>
+</doc>

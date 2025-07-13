@@ -1,0 +1,234 @@
+using DBConfirm.Core.Data;
+using DBConfirm.Core.DataResults;
+using DBConfirm.Core.Parameters;
+using DBConfirm.Packages.SQLServer.XUnit;
+using Sample.Northwind.XUnit.Tests.Templates;
+using System;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Sample.Northwind.XUnit.Tests.Procedures;
+
+public class SalesByYearTests : XUnitBase
+{
+    [Fact]
+    public async Task NoData_ReturnNoRows()
+    {
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.[Sales by Year]",
+            new SqlQueryParameter("Beginning_Date", DateTime.Parse("01-Mar-2020")),
+            new SqlQueryParameter("Ending_Date", DateTime.Parse("10-Mar-2020"))
+            );
+
+        data
+            .AssertRowCount(0)
+            .AssertColumnsExist("ShippedDate", "OrderID", "Subtotal", "Year");
+    }
+
+    [Fact]
+    public async Task OneOrder_ReturnOneRow()
+    {
+        await TestRunner.InsertTemplateAsync(new OrdersTemplate()
+            .WithOrderID(1001)
+            .WithShippedDate(DateTime.Parse("05-Mar-2020")));
+
+        ProductsTemplate product = await TestRunner.InsertTemplateAsync<ProductsTemplate>();
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1001)
+            .WithProductID(product.Identity)
+            .WithUnitPrice(10)
+            .WithQuantity(5)
+            .WithDiscount(0));
+
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.[Sales by Year]",
+            new SqlQueryParameter("Beginning_Date", DateTime.Parse("01-Mar-2020")),
+            new SqlQueryParameter("Ending_Date", DateTime.Parse("10-Mar-2020"))
+            );
+
+        data
+            .AssertRowCount(1)
+            .AssertRowValues(0, new DataSetRow
+            {
+                { "ShippedDate", DateTime.Parse("05-Mar-2020") },
+                { "OrderID", 1001 },
+                { "Subtotal", 50m },
+                { "Year", "2020" }
+            });
+    }
+
+    [Fact]
+    public async Task OneEmployeeAndOrder_OrderBeforeRange_ReturnNothing()
+    {
+        await TestRunner.InsertTemplateAsync(new OrdersTemplate()
+            .WithOrderID(1001)
+            .WithShippedDate(DateTime.Parse("05-Mar-2019")));
+
+        var product = await TestRunner.InsertTemplateAsync<ProductsTemplate>();
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1001)
+            .WithProductID(product.Identity)
+            .WithUnitPrice(10)
+            .WithQuantity(5)
+            .WithDiscount(0));
+
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.[Sales by Year]",
+            new SqlQueryParameter("Beginning_Date", DateTime.Parse("01-Mar-2020")),
+            new SqlQueryParameter("Ending_Date", DateTime.Parse("10-Mar-2020"))
+            );
+
+        data
+            .AssertRowCount(0);
+    }
+
+    [Fact]
+    public async Task OneEmployeeAndOrder_OrderAfterRange_ReturnNothing()
+    {
+        await TestRunner.InsertTemplateAsync(new OrdersTemplate()
+            .WithOrderID(1001)
+            .WithShippedDate(DateTime.Parse("05-Sep-2020")));
+
+        var product = await TestRunner.InsertTemplateAsync<ProductsTemplate>();
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1001)
+            .WithProductID(product.Identity)
+            .WithUnitPrice(10)
+            .WithQuantity(5)
+            .WithDiscount(0));
+
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.[Sales by Year]",
+            new SqlQueryParameter("Beginning_Date", DateTime.Parse("01-Mar-2020")),
+            new SqlQueryParameter("Ending_Date", DateTime.Parse("10-Mar-2020"))
+            );
+
+        data
+            .AssertRowCount(0);
+    }
+
+    [Fact]
+    public async Task TwoOrders_ReturnOneRowEach()
+    {
+        await TestRunner.InsertTemplateAsync(new OrdersTemplate()
+            .WithOrderID(1001)
+            .WithShippedDate(DateTime.Parse("05-Mar-2020")));
+
+        await TestRunner.InsertTemplateAsync(new OrdersTemplate()
+            .WithOrderID(1002)
+            .WithShippedDate(DateTime.Parse("06-Mar-2020")));
+
+        var product = await TestRunner.InsertTemplateAsync<ProductsTemplate>();
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1001)
+            .WithProductID(product.Identity)
+            .WithUnitPrice(10)
+            .WithQuantity(5)
+            .WithDiscount(0));
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1002)
+            .WithProductID(product.Identity)
+            .WithUnitPrice(20)
+            .WithQuantity(5)
+            .WithDiscount(0));
+
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.[Sales by Year]",
+            new SqlQueryParameter("Beginning_Date", DateTime.Parse("01-Mar-2020")),
+            new SqlQueryParameter("Ending_Date", DateTime.Parse("10-Mar-2020"))
+            );
+
+        data
+            .AssertRowCount(2)
+            .AssertRowValues(0, new DataSetRow
+            {
+                { "ShippedDate", DateTime.Parse("05-Mar-2020") },
+                { "OrderID", 1001 },
+                { "Subtotal", 50m },
+                { "Year", "2020" }
+            })
+            .AssertRowValues(1, new DataSetRow
+            {
+                { "ShippedDate", DateTime.Parse("06-Mar-2020") },
+                { "OrderID", 1002 },
+                { "Subtotal", 100m },
+                { "Year", "2020" }
+            });
+    }
+
+    [Fact]
+    public async Task OneEmployeesAndOneOrderTwoLiness_ReturnOneRow()
+    {
+        await TestRunner.InsertTemplateAsync(new OrdersTemplate()
+            .WithOrderID(1001)
+            .WithShippedDate(DateTime.Parse("05-Mar-2020")));
+
+        ProductsTemplate product1 = await TestRunner.InsertTemplateAsync<ProductsTemplate>();
+        ProductsTemplate product2 = await TestRunner.InsertTemplateAsync<ProductsTemplate>();
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1001)
+            .WithProductID(product1.Identity)
+            .WithUnitPrice(10)
+            .WithQuantity(5)
+            .WithDiscount(0));
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1001)
+            .WithProductID(product2.Identity)
+            .WithUnitPrice(20)
+            .WithQuantity(5)
+            .WithDiscount(0));
+
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.[Sales by Year]",
+            new SqlQueryParameter("Beginning_Date", DateTime.Parse("01-Mar-2020")),
+            new SqlQueryParameter("Ending_Date", DateTime.Parse("10-Mar-2020"))
+            );
+
+        data
+            .AssertRowCount(1)
+            .AssertRowValues(0, new DataSetRow
+            {
+                { "ShippedDate", DateTime.Parse("05-Mar-2020") },
+                { "OrderID", 1001 },
+                { "Subtotal", 150m },
+                { "Year", "2020" }
+            });
+    }
+
+    [InlineData("0.0", 50)]
+    [InlineData("0.1", 45)]
+    [InlineData("0.2", 40)]
+    [InlineData("0.3", 35)]
+    [InlineData("0.4", 30)]
+    [InlineData("0.5", 25)]
+    [InlineData("0.6", 20)]
+    [InlineData("0.7", 15)]
+    [InlineData("0.8", 10)]
+    [InlineData("0.9", 5)]
+    [InlineData("1.0", 0)]
+    public async Task OneOrderWithDiscount_ReturnValid(string discount, int expectedValue)
+    {
+        await TestRunner.InsertTemplateAsync(new OrdersTemplate()
+            .WithOrderID(1001)
+            .WithShippedDate(DateTime.Parse("05-Mar-2020")));
+
+        ProductsTemplate product = await TestRunner.InsertTemplateAsync<ProductsTemplate>();
+
+        await TestRunner.InsertTemplateAsync(new Order_DetailsTemplate()
+            .WithOrderID(1001)
+            .WithProductID(product.Identity)
+            .WithUnitPrice(10)
+            .WithQuantity(5)
+            .WithDiscount(Convert.ToSingle(discount)));
+
+        QueryResult data = await TestRunner.ExecuteStoredProcedureQueryAsync("dbo.[Sales by Year]",
+            new SqlQueryParameter("Beginning_Date", DateTime.Parse("01-Mar-2020")),
+            new SqlQueryParameter("Ending_Date", DateTime.Parse("10-Mar-2020"))
+            );
+
+        data
+            .AssertRowCount(1)
+            .AssertValue(0, "Subtotal", Convert.ToDecimal(expectedValue));
+    }
+}

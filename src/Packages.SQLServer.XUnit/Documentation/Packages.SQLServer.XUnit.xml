@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Packages.SQLServer.XUnit</name>
+    </assembly>
+    <members>
+        <member name="T:DBConfirm.Packages.SQLServer.XUnit.XUnitBase">
+            <summary>
+            The abstract base class for test classes using XUnit and SQL Server
+            </summary>
+        </member>
+    </members>
+</doc>
