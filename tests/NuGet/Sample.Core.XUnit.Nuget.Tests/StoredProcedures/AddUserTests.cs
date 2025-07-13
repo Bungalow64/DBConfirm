@@ -4,6 +4,7 @@ using DBConfirm.Core.DataResults;
 using DBConfirm.Core.Data;
 using DBConfirm.Core.Factories.Abstract;
 using DBConfirm.Core.Parameters;
+using DBConfirm.Frameworks.XUnit;
 using DBConfirm.Packages.SQLServer.XUnit;
 using Xunit;
 using Xunit.Sdk;
@@ -12,10 +13,6 @@ namespace Sample.Core.XUnit.Nuget.Tests.StoredProcedures;
 
 public class AddUserTests : XUnitBase
 {
-    public AddUserTests(): base(null)
-    {
-    }
-
     [Fact]
     public async Task AddUser_ValidData_UserAdded()
     {
@@ -118,9 +115,9 @@ public class AddUserTests : XUnitBase
 
         QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-        var exception = Assert.Throws<XunitException>(() => data.AssertRowCount(3));
+        var exception = Assert.Throws<XUnitException>(() => data.AssertRowCount(3));
 
-        Assert.Equal($"  The total row count is unexpected{Environment.NewLine}  Expected: 3{Environment.NewLine}  But was:  2{Environment.NewLine}", exception.Message);
+        Assert.Equal($"The total row count is unexpected{Environment.NewLine}Expected: 3{Environment.NewLine}Actual:   2", exception.Message);
     }
 
     [Fact]
@@ -144,7 +141,7 @@ public class AddUserTests : XUnitBase
 
         QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-        var exception = Assert.Throws<XunitException>(() => data.AssertRowDoesNotExist(new DataSetRow
+        var exception = Assert.Throws<XUnitException>(() => data.AssertRowDoesNotExist(new DataSetRow
             {
                 { "FirstName", "Jamie" },
                 { "LastName", "Burns" }
@@ -174,7 +171,7 @@ public class AddUserTests : XUnitBase
 
         QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-        var exception = Assert.Throws<XunitException>(() => data.AssertRowDoesNotExist(new DataSetRow
+        var exception = Assert.Throws<XUnitException>(() => data.AssertRowDoesNotExist(new DataSetRow
             {
                 { "FirstName", "AAA" },
                 { "LastName", "FFF" }
