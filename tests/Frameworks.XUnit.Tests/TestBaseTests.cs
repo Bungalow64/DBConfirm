@@ -1,10 +1,10 @@
 using System;
+using System.Threading.Tasks;
 using DBConfirm.Core.Factories.Abstract;
+using DBConfirm.Core.Runners.Abstract;
+using DBConfirm.Core.TestFrameworks.Abstract;
 using Frameworks.XUnit.Tests.TestHelpers;
 using Moq;
-using System.Threading.Tasks;
-using DBConfirm.Core.TestFrameworks.Abstract;
-using DBConfirm.Core.Runners.Abstract;
 using Xunit;
 
 namespace Frameworks.XUnit.Tests;
@@ -13,15 +13,8 @@ public class TestBaseTests
 {
     #region Setup
 
-    private readonly Mock<ITestRunnerFactory> _testRunnerFactoryMock;
-    private readonly Mock<ITestRunner> _testRunnerMock;
-
-    public TestBaseTests()
-    {
-        _testRunnerFactoryMock = new Mock<ITestRunnerFactory>(MockBehavior.Strict);
-        _testRunnerMock = new Mock<ITestRunner>(MockBehavior.Strict);
-
-    }
+    private readonly Mock<ITestRunnerFactory> _testRunnerFactoryMock = new(MockBehavior.Strict);
+    private readonly Mock<ITestRunner> _testRunnerMock = new(MockBehavior.Strict);
 
     private MockedTestClass GetTestClass()
     {

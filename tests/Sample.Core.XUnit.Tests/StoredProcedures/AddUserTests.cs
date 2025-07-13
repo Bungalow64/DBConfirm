@@ -1,6 +1,7 @@
 ﻿using DBConfirm.Core.Data;
 using DBConfirm.Core.DataResults;
 using DBConfirm.Core.Parameters;
+using DBConfirm.Frameworks.XUnit;
 using DBConfirm.Packages.SQLServer.XUnit;
 using Microsoft.Data.SqlClient;
 using System;
@@ -8,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Sample.Core.XUnit.Tests.StoredProcedures;
 
@@ -116,9 +116,9 @@ public class AddUserTests : XUnitBase
 
         QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-        var exception = Assert.Throws<XunitException>(() => data.AssertRowCount(3));
+        var exception = Assert.Throws<XUnitException>(() => data.AssertRowCount(3));
 
-        Assert.Equal($"  The total row count is unexpected{Environment.NewLine}  Expected: 3{Environment.NewLine}  But was:  2{Environment.NewLine}", exception.Message);
+        Assert.Equal($"The total row count is unexpected{Environment.NewLine}Expected: 3{Environment.NewLine}Actual:   2", exception.Message);
     }
 
     [Fact]
@@ -142,7 +142,7 @@ public class AddUserTests : XUnitBase
 
         QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-        var exception = Assert.Throws<XunitException>(() => data.AssertRowDoesNotExist(new DataSetRow
+        var exception = Assert.Throws<XUnitException>(() => data.AssertRowDoesNotExist(new DataSetRow
             {
                 { "FirstName", "Jamie" },
                 { "LastName", "Burns" }
@@ -172,7 +172,7 @@ public class AddUserTests : XUnitBase
 
         QueryResult data = await TestRunner.ExecuteTableAsync("dbo.Users");
 
-        var exception = Assert.Throws<XunitException>(() => data.AssertRowDoesNotExist(new DataSetRow
+        var exception = Assert.Throws<XUnitException>(() => data.AssertRowDoesNotExist(new DataSetRow
             {
                 { "FirstName", "AAA" },
                 { "LastName", "FFF" }
@@ -457,12 +457,11 @@ public class AddUserTests : XUnitBase
             }
             catch (Exception ex)
             {
-                Assert.Equal($$"""
-  Error result does not start with the expected string
-  Expected: String starting with "Cannot insert the value NULL into column 'LastName', table 'SampleDB.dbo.Users'; column does not allow nulls."
-  But was:  "Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.
-The statement has been terminated."
-
+                //String:         "Cannot insert the value NULL into column 'FirstName', table 'SampleDB.dbo.Users'; column does not allow nulls. INSERT fails.
+                Assert.Equal("""
+Error result does not start with the expected string
+String:         "Cannot insert the value NULL into column "···
+Expected start: "Cannot insert the value NULL into column "···
 """, ex.Message);
                 return;
             }
@@ -523,10 +522,9 @@ The statement has been terminated."
             catch (Exception ex)
             {
                 Assert.Equal($$"""
-  Error result has an unexpected value
-  Expected: <System.NullReferenceException>
-  But was:  <Microsoft.Data.SqlClient.SqlException>
-
+Error result has an unexpected value
+Expected: typeof(System.NullReferenceException)
+Actual:   typeof(Microsoft.Data.SqlClient.SqlException)
 """, ex.Message);
                 return;
             }
@@ -557,10 +555,9 @@ The statement has been terminated."
             catch (Exception ex)
             {
                 Assert.Equal($$"""
-  Expected column HatSize to be found but the only columns found are Id, FirstName, LastName, EmailAddress, CreatedDate, StartDate, IsActive, NumberOfHats, HatType, Cost
-  Expected: some item equal to "HatSize"
-  But was:  < "Id", "FirstName", "LastName", "EmailAddress", "CreatedDate", "StartDate", "IsActive", "NumberOfHats", "HatType", "Cost" >
-
+Expected column HatSize to be found but the only columns found are Id, FirstName, LastName, EmailAddress, CreatedDate, StartDate, IsActive, NumberOfHats, HatType, Cost
+Collection: ["Id", "FirstName", "LastName", "EmailAddress", "CreatedDate", ···]
+Not found:  "HatSize"
 """, ex.Message);
                 return;
             }
@@ -608,12 +605,9 @@ The statement has been terminated."
             catch (Exception ex)
             {
                 Assert.Equal($$"""
-  Column FirstName in row 0 has an unexpected value
-  Expected string length 3 but was 5. Strings differ at index 0.
-  Expected: "Ian"
-  But was:  "Jamie"
-  -----------^
-
+Column FirstName in row 0 has an unexpected value
+Expected: Ian
+Actual:   Jamie
 """, ex.Message);
                 return;
             }
@@ -644,10 +638,10 @@ The statement has been terminated."
             catch (Exception ex)
             {
                 Assert.Equal($$"""
-  Expected column FirstName to not be found but it was found
-  Expected: not some item equal to "FirstName"
-  But was:  < "Id", "FirstName", "LastName", "EmailAddress", "CreatedDate", "StartDate", "IsActive", "NumberOfHats", "HatType", "Cost" >
-
+Expected column FirstName to not be found but it was found
+                   ↓ (pos 1)
+Collection: ["Id", "FirstName", "LastName", "EmailAddress", "CreatedDate", ···]
+Found:      "FirstName"
 """, ex.Message);
                 return;
             }
@@ -678,10 +672,9 @@ The statement has been terminated."
             catch (Exception ex)
             {
                 Assert.Equal($$"""
-  The total row count is unexpected
-  Expected: 2
-  But was:  1
-
+The total row count is unexpected
+Expected: 2
+Actual:   1
 """, ex.Message);
                 return;
             }
@@ -713,12 +706,9 @@ The statement has been terminated."
             catch (Exception ex)
             {
                 Assert.Equal($$"""
-  Column FirstName in row 0 has an unexpected value
-  Expected string length 6 but was 5. Strings differ at index 5.
-  Expected: "Jamie2"
-  But was:  "Jamie"
-  ----------------^
-
+Column FirstName in row 0 has an unexpected value
+Expected: Jamie2
+Actual:   Jamie
 """, ex.Message);
                 return;
             }
