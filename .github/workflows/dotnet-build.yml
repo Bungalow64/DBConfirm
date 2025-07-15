@@ -78,8 +78,16 @@ jobs:
           find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2022.runsettings --logger "trx" || true
           find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2022.runsettings --logger "trx" || true
 
-      - name: Upload Test Results
-        uses: actions/upload-test-report@v1
+      - name: Upload Test Results Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: Test Results
+          name: test-results
           path: "**/*.trx"
+
+      - name: Publish Test Results to GitHub
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: DotNet Tests
+          path: "**/*.trx"
+          reporter: "dotnet-trx"
