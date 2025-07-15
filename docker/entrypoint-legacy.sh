@@ -1,0 +1,1 @@
+./import-data-legacy.sh & /opt/mssql/bin/sqlservr
