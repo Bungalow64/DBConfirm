@@ -11,8 +11,8 @@ export default function NuGet() {
             <h3>DBConfirm.Templates</h3>
 
             <p>DBConfirm provides template packages to quickly set up new test projects, including all the depdendencies and required configuration.</p>
-            <p>These packages need to be installed using <code>dotnet new -i [package name]</code>, and new 
-            projects created using <code>dotnet new [package command]</code>.  See the <a href="/quickstart">Quick Start</a> guide.</p>
+            <p>These packages need to be installed using <code>dotnet new install [package name]</code>, and new 
+            projects created either using <code>dotnet new [package command]</code> or from within Visual Studio.  See the <a href="/quickstart">Quick Start</a> guide.</p>
 
             <p>There is a template for MSTest and one for NUnit, both using SQL Server as the database engine.</p>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import add_new_project from './images/add_new_project.png';
 
 export default function QuickStart() {
     return (
@@ -16,7 +17,7 @@ export default function QuickStart() {
                     <p>To install the package (using MSTest as the test framework), execute this command from a command prompt:</p>
                     <pre>
                         <code>
-                            dotnet new -i DBConfirm.Templates.SQLServer.MSTest
+                            dotnet new install DBConfirm.Templates.SQLServer.MSTest
                         </code>
                     </pre>
                 </div>
@@ -29,24 +30,14 @@ export default function QuickStart() {
             </div>
 
             <h3>Creating a new project</h3>
-            <div className="content-split">
-                <div className="content-split-primary">
-                    <p>Once installed, navigate to the directory where you want to add the new project, and execute this command from a command prompt:</p>
-                    <pre>
-                        <code>
-                            dotnet new dbconfirm-sqlserver-mstest
-                </code>
-                    </pre>
 
-                    <p>If you want to use a custom name for the new project, supply the <code>-n NewProjectName</code> argument, to set the name.</p>
-                </div>
-                <aside>
-                    <header>Command for NUnit</header>
-                    <div className="aside-body">
-                        <p>To add an NUnit test project, use <code>dbconfirm-sqlserver-nunit</code> instead.</p>
-                    </div>
-                </aside>
-            </div>
+            <p>Once installed, within Visual Studio, add a new project and search for <strong>DBConfirm</strong>:</p>
+
+            <p><img src={add_new_project}
+                alt="The Add New Project window inside Visual Studio 2022, after searching for DBConfirm, showing the two available DBConfirm templates"
+                style={{ width: '100%', maxWidth: '989px' }} /></p>
+
+            <p>Select the framework you're using (either MSTest or NUnit), click Next and enter your project name.</p>
 
             <p>This will add a new project, with the required NuGet packages installed.  There will be a sample test class (inheriting from the correct base class),
             containing a single test method (already marked as async):

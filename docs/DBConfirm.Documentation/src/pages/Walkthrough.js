@@ -83,7 +83,7 @@ export default function Walkthrough() {
 
             <pre>
                 <code>
-                    dotnet new -i DBConfirm.Templates.SQLServer.MSTest
+                    dotnet new install DBConfirm.Templates.SQLServer.MSTest
                         </code>
             </pre>
 
