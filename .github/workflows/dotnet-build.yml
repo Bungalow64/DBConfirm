@@ -38,9 +38,13 @@ jobs:
         run: |
           find src -name "*.csproj" ! -path "*/templates/templates/*" -print0 | xargs -0 -n1 dotnet build --configuration $BUILD_CONFIGURATION
 
+      - name: Generate version
+        id: vars
+        run: echo "##[set-output name=version;]1.0.1-CI-$(date +'%Y%m%d-%H%M%S')"
+
       - name: Pack NuGet packages
         run: |
-          find src -name "*.csproj" ! -path "*/templates/templates/*" -print0 | xargs -0 -n1 dotnet pack --configuration $BUILD_CONFIGURATION /p:Version=1.0.1-prerelease
+          find src -name "*.csproj" ! -path "*/templates/templates/*" -print0 | xargs -0 -n1 dotnet pack --configuration $BUILD_CONFIGURATION /p:Version=${{ steps.vars.outputs.version }}
 
       - name: Push NuGet packages
         run: |
@@ -57,19 +61,25 @@ jobs:
 
       - name: Run Unit Tests (excluding Samples)
         run: |
-          find . -name "*[Tt]ests*.csproj" ! -path "*Sample*" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION || true
+          find . -name "*[Tt]ests*.csproj" ! -path "*Sample*" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --logger "trx" || true
 
       - name: Test Projects (SQL 2017)
         run: |
-          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2017.runsettings || true
-          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2017.runsettings || true
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2017.runsettings --logger "trx" || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2017.runsettings --logger "trx" || true
 
       - name: Test Projects (SQL 2019)
         run: |
-          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2019.runsettings || true
-          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2019.runsettings || true
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2019.runsettings --logger "trx" || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2019.runsettings --logger "trx" || true
 
       - name: Test Projects (SQL 2022)
         run: |
-          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2022.runsettings || true
-          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2022.runsettings || true
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2022.runsettings --logger "trx" || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2022.runsettings --logger "trx" || true
+
+      - name: Upload Test Results
+        uses: actions/upload-test-report@v1
+        with:
+          name: Test Results
+          path: "**/*.trx"
