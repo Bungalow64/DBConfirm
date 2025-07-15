@@ -8,6 +8,7 @@ on:
 
 env:
   BUILD_CONFIGURATION: Release
+  AZURE_ARTIFACTS_FEED_URL: https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json
 
 jobs:
   build:
@@ -22,81 +23,53 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Compose
+      - name: Set up Docker Compose and start services
         run: docker compose -p dbconfirm_test -f docker-compose.yml up -d
 
-      - name: Setup .NET
+      - name: Setup .NET SDK and configure Azure Artifacts feed authentication
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
+          source-url: ${{ env.AZURE_ARTIFACTS_FEED_URL }}
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_TOKEN }}
 
-      - name: Build (main)
+      - name: Build all projects except templates/templates
         run: |
-          for proj in $(find src -name "*.csproj" ! -path "*/templates/templates/*"); do
-            dotnet build "$proj" --configuration $BUILD_CONFIGURATION
-          done
+          find src -name "*.csproj" ! -path "*/templates/templates/*" -print0 | xargs -0 -n1 dotnet build --configuration $BUILD_CONFIGURATION
 
       - name: Pack NuGet packages
         run: |
-          for proj in $(find src -name "*.csproj" ! -path "*/templates/templates/*"); do
-            dotnet pack "$proj" --configuration $BUILD_CONFIGURATION /p:Version=1.0.1-prerelease
-          done
+          find src -name "*.csproj" ! -path "*/templates/templates/*" -print0 | xargs -0 -n1 dotnet pack --configuration $BUILD_CONFIGURATION /p:Version=1.0.1-prerelease
 
       - name: Push NuGet packages
         run: |
-          for file in $(find . -name '*.nupkg' ! -name '*.Tests.nupkg'); do
-            dotnet nuget push "$file" \
-              --source "https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json" \
-              --api-key ${{ secrets.AZURE_DEVOPS_TOKEN }} \
-              --skip-duplicate
-          done
+          find . -name '*.nupkg' ! -name '*.Tests.nupkg' -print0 | xargs -0 -n1 dotnet nuget push --source ${{ env.AZURE_ARTIFACTS_FEED_URL }} --api-key AzureArtifacts --skip-duplicate
 
-      - name: Restore (NuGet - after push)
+      - name: Restore NuGet projects after push
         run: |
-          for proj in $(find . -path "./NuGet" -prune -o -name "*.csproj" -path "*NuGet*" -print); do
-            dotnet restore "$proj" --source "https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json"
-          done
+          find . -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet restore --source ${{ env.AZURE_ARTIFACTS_FEED_URL }}
 
-      - name: Build (NuGet)
+      - name: Build NuGet projects (allow failures)
         continue-on-error: true
         run: |
-          for proj in $(find . -path "*NuGet*" -name "*.csproj"); do
-            dotnet build "$proj" \
-              --configuration ${{ env.BUILD_CONFIGURATION }} \
-              --no-restore \
-              /p:EmitCompilerGeneratedFiles=true \
-              /p:CompilerGeneratedFilesOutputPath=$(pwd)/GeneratedFiles
-          done
+          find . -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet build --configuration $BUILD_CONFIGURATION --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(pwd)/GeneratedFiles
 
-      - name: Run Unit Tests
+      - name: Run Unit Tests (excluding Samples)
         run: |
-          for proj in $(find . -name "*[Tt]ests*.csproj" ! -path "*Sample*"); do
-            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} || true
-          done
+          find . -name "*[Tt]ests*.csproj" ! -path "*Sample*" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION || true
 
       - name: Test Projects (SQL 2017)
         run: |
-          for proj in $(find . -path "*Sample*[Tt]ests*" -name "*.csproj" ! -path "*NuGet*"); do
-            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} -s tests/Settings/SQL2017.runsettings || true
-          done
-          for proj in $(find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj"); do
-            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore -s tests/Settings/SQL2017.runsettings || true
-          done
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2017.runsettings || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2017.runsettings || true
 
       - name: Test Projects (SQL 2019)
         run: |
-          for proj in $(find . -path "*Sample*[Tt]ests*" -name "*.csproj" ! -path "*NuGet*"); do
-            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} -s tests/Settings/SQL2019.runsettings || true
-          done
-          for proj in $(find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj"); do
-            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore -s tests/Settings/SQL2019.runsettings || true
-          done
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2019.runsettings || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2019.runsettings || true
 
       - name: Test Projects (SQL 2022)
         run: |
-          for proj in $(find . -path "*Sample*[Tt]ests*" -name "*.csproj" ! -path "*NuGet*"); do
-            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} -s tests/Settings/SQL2022.runsettings || true
-          done
-          for proj in $(find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj"); do
-            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore -s tests/Settings/SQL2022.runsettings || true
-          done
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2022.runsettings || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2022.runsettings || true
