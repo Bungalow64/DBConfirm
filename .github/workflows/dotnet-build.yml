@@ -1,0 +1,93 @@
+name: .NET CI/CD
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+env:
+  BUILD_CONFIGURATION: Release
+  AZURE_ARTIFACTS_FEED_URL: https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Compose and start services
+        run: docker compose -p dbconfirm_test -f docker-compose.yml up -d
+
+      - name: Setup .NET SDK and configure Azure Artifacts feed authentication
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+          source-url: ${{ env.AZURE_ARTIFACTS_FEED_URL }}
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+
+      - name: Build all projects except templates/templates
+        run: |
+          find src -name "*.csproj" ! -path "*/templates/templates/*" -print0 | xargs -0 -n1 dotnet build --configuration $BUILD_CONFIGURATION
+
+      - name: Generate version
+        id: vars
+        run: echo "##[set-output name=version;]1.0.1-CI-$(date +'%Y%m%d-%H%M%S')"
+
+      - name: Pack NuGet packages
+        run: |
+          find src -name "*.csproj" ! -path "*/templates/templates/*" -print0 | xargs -0 -n1 dotnet pack --configuration $BUILD_CONFIGURATION /p:Version=${{ steps.vars.outputs.version }}
+
+      - name: Push NuGet packages
+        run: |
+          find . -name '*.nupkg' ! -name '*.Tests.nupkg' -print0 | xargs -0 -n1 dotnet nuget push --source ${{ env.AZURE_ARTIFACTS_FEED_URL }} --api-key AzureArtifacts --skip-duplicate
+
+      - name: Restore NuGet projects after push
+        run: |
+          find . -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet restore --source ${{ env.AZURE_ARTIFACTS_FEED_URL }}
+
+      - name: Build NuGet projects (allow failures)
+        continue-on-error: true
+        run: |
+          find . -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet build --configuration $BUILD_CONFIGURATION --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(pwd)/GeneratedFiles
+
+      - name: Run Unit Tests (excluding Samples)
+        run: |
+          find . -name "*[Tt]ests*.csproj" ! -path "*Sample*" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --logger "trx" || true
+
+      - name: Test Projects (SQL 2017)
+        run: |
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2017.runsettings --logger "trx" || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2017.runsettings --logger "trx" || true
+
+      - name: Test Projects (SQL 2019)
+        run: |
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2019.runsettings --logger "trx" || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2019.runsettings --logger "trx" || true
+
+      - name: Test Projects (SQL 2022)
+        run: |
+          find . -path "*Sample*[Tt]ests*" ! -path "*NuGet*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION -s tests/Settings/SQL2022.runsettings --logger "trx" || true
+          find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj" -print0 | xargs -0 -n1 dotnet test --configuration $BUILD_CONFIGURATION --no-restore -s tests/Settings/SQL2022.runsettings --logger "trx" || true
+
+      - name: Upload Test Results Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: "**/*.trx"
+
+      - name: Publish Test Results to GitHub
+        uses: dorny/test-reporter@v2
+        if: always()
+        with:
+          name: DotNet Tests
+          path: "**/*.trx"
+          reporter: "dotnet-trx"
