@@ -31,7 +31,10 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Build (main)
-        run: dotnet build "src/**/*.csproj" --configuration ${{ env.BUILD_CONFIGURATION }}
+        run: |
+          for proj in $(find src -name "*.csproj" ! -path "*/templates/templates/*"); do
+            dotnet build "$proj" --configuration $BUILD_CONFIGURATION
+          done
 
       - name: Pack NuGet
         run: dotnet pack "src/**/*.csproj" --configuration ${{ env.BUILD_CONFIGURATION }} /p:Version=1.0.1-prerelease
