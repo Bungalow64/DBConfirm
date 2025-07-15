@@ -1,26 +1,26 @@
-version: '3.7'
+version: "3.7"
 services:
-    sqlserver2017:
-        build: 
-          context: .
-          dockerfile: dockerfile2017
-        ports:  
-          - "1401:1433"
-        env_file:
-          - docker/sqlserver.env
-    sqlserver2019:
-        build: 
-          context: .
-          dockerfile: dockerfile2019
-        ports:  
-          - "1402:1433"
-        env_file:
-          - docker/sqlserver.env
-    sqlserver2022:
-        build: 
-          context: .
-          dockerfile: dockerfile2022
-        ports:  
-          - "1403:1433"
-        env_file:
-          - docker/sqlserver.env
+  sqlserver2017:
+    build:
+      context: .
+      dockerfile: dockerfile2017
+    ports:
+      - "1401:1433"
+    env_file:
+      - docker/sqlserver.env
+  sqlserver2019:
+    build:
+      context: .
+      dockerfile: dockerfile2019
+    ports:
+      - "1402:1433"
+    env_file:
+      - docker/sqlserver.env
+  sqlserver2022:
+    build:
+      context: .
+      dockerfile: dockerfile2022
+    ports:
+      - "1403:1433"
+    env_file:
+      - docker/sqlserver.env
