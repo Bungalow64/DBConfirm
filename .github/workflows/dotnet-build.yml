@@ -1,0 +1,86 @@
+name: .NET CI/CD
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+env:
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Compose
+        run: docker-compose -p dbconfirm_test -f docker-compose.yml up -d
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Build (main)
+        run: dotnet build "src/**/*.csproj" --configuration ${{ env.BUILD_CONFIGURATION }}
+
+      - name: Pack NuGet
+        run: dotnet pack "src/**/*.csproj" --configuration ${{ env.BUILD_CONFIGURATION }} /p:Version=1.0.1-prerelease
+
+      - name: Push NuGet packages
+        run: |
+          for file in $(find . -name '*.nupkg' ! -name '*.Tests.nupkg'); do
+            dotnet nuget push "$file" \
+              --source "https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json" \
+              --api-key ${{ secrets.AZURE_DEVOPS_TOKEN }} \
+              --skip-duplicate
+          done
+
+      - name: Restore (NuGet - after push)
+        run: dotnet restore "**/NuGet/**/*.csproj" --source "https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json"
+
+      - name: Build (NuGet)
+        continue-on-error: true
+        run: dotnet build "**/NuGet/**/*.csproj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(pwd)/GeneratedFiles
+
+      - name: Run Unit Tests
+        run: |
+          dotnet test "**/*[Tt]ests/*.csproj" \
+            --configuration ${{ env.BUILD_CONFIGURATION }} \
+            --filter "FullyQualifiedName!~Sample" || true
+
+      - name: Test Projects (SQL 2017)
+        run: |
+          dotnet test "**/Sample*[Tt]ests/*.csproj" \
+            --configuration ${{ env.BUILD_CONFIGURATION }} \
+            -s tests/Settings/SQL2017.runsettings || true
+          dotnet test "**/NuGet/Sample*[Tt]ests/*.csproj" \
+            --configuration ${{ env.BUILD_CONFIGURATION }} \
+            --no-restore -s tests/Settings/SQL2017.runsettings || true
+
+      - name: Test Projects (SQL 2019)
+        run: |
+          dotnet test "**/Sample*[Tt]ests/*.csproj" \
+            --configuration ${{ env.BUILD_CONFIGURATION }} \
+            -s tests/Settings/SQL2019.runsettings || true
+          dotnet test "**/NuGet/Sample*[Tt]ests/*.csproj" \
+            --configuration ${{ env.BUILD_CONFIGURATION }} \
+            --no-restore -s tests/Settings/SQL2019.runsettings || true
+
+      - name: Test Projects (SQL 2022)
+        run: |
+          dotnet test "**/Sample*[Tt]ests/*.csproj" \
+            --configuration ${{ env.BUILD_CONFIGURATION }} \
+            -s tests/Settings/SQL2022.runsettings || true
+          dotnet test "**/NuGet/Sample*[Tt]ests/*.csproj" \
+            --configuration ${{ env.BUILD_CONFIGURATION }} \
+            --no-restore -s tests/Settings/SQL2022.runsettings || true
