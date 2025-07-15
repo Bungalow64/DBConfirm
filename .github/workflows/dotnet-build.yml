@@ -36,8 +36,11 @@ jobs:
             dotnet build "$proj" --configuration $BUILD_CONFIGURATION
           done
 
-      - name: Pack NuGet
-        run: dotnet pack "src/**/*.csproj" --configuration ${{ env.BUILD_CONFIGURATION }} /p:Version=1.0.1-prerelease
+      - name: Pack NuGet packages
+        run: |
+          for proj in $(find src -name "*.csproj" ! -path "*/templates/templates/*"); do
+            dotnet pack "$proj" --configuration $BUILD_CONFIGURATION /p:Version=1.0.1-prerelease
+          done
 
       - name: Push NuGet packages
         run: |
@@ -49,41 +52,51 @@ jobs:
           done
 
       - name: Restore (NuGet - after push)
-        run: dotnet restore "**/NuGet/**/*.csproj" --source "https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json"
+        run: |
+          for proj in $(find . -path "./NuGet" -prune -o -name "*.csproj" -path "*NuGet*" -print); do
+            dotnet restore "$proj" --source "https://pkgs.dev.azure.com/bungalow64/_packaging/bungalow64/nuget/v3/index.json"
+          done
 
       - name: Build (NuGet)
         continue-on-error: true
-        run: dotnet build "**/NuGet/**/*.csproj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(pwd)/GeneratedFiles
+        run: |
+          for proj in $(find . -path "*NuGet*" -name "*.csproj"); do
+            dotnet build "$proj" \
+              --configuration ${{ env.BUILD_CONFIGURATION }} \
+              --no-restore \
+              /p:EmitCompilerGeneratedFiles=true \
+              /p:CompilerGeneratedFilesOutputPath=$(pwd)/GeneratedFiles
+          done
 
       - name: Run Unit Tests
         run: |
-          dotnet test "**/*[Tt]ests/*.csproj" \
-            --configuration ${{ env.BUILD_CONFIGURATION }} \
-            --filter "FullyQualifiedName!~Sample" || true
+          for proj in $(find . -name "*[Tt]ests*.csproj" ! -path "*Sample*"); do
+            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} || true
+          done
 
       - name: Test Projects (SQL 2017)
         run: |
-          dotnet test "**/Sample*[Tt]ests/*.csproj" \
-            --configuration ${{ env.BUILD_CONFIGURATION }} \
-            -s tests/Settings/SQL2017.runsettings || true
-          dotnet test "**/NuGet/Sample*[Tt]ests/*.csproj" \
-            --configuration ${{ env.BUILD_CONFIGURATION }} \
-            --no-restore -s tests/Settings/SQL2017.runsettings || true
+          for proj in $(find . -path "*Sample*[Tt]ests*" -name "*.csproj" ! -path "*NuGet*"); do
+            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} -s tests/Settings/SQL2017.runsettings || true
+          done
+          for proj in $(find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj"); do
+            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore -s tests/Settings/SQL2017.runsettings || true
+          done
 
       - name: Test Projects (SQL 2019)
         run: |
-          dotnet test "**/Sample*[Tt]ests/*.csproj" \
-            --configuration ${{ env.BUILD_CONFIGURATION }} \
-            -s tests/Settings/SQL2019.runsettings || true
-          dotnet test "**/NuGet/Sample*[Tt]ests/*.csproj" \
-            --configuration ${{ env.BUILD_CONFIGURATION }} \
-            --no-restore -s tests/Settings/SQL2019.runsettings || true
+          for proj in $(find . -path "*Sample*[Tt]ests*" -name "*.csproj" ! -path "*NuGet*"); do
+            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} -s tests/Settings/SQL2019.runsettings || true
+          done
+          for proj in $(find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj"); do
+            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore -s tests/Settings/SQL2019.runsettings || true
+          done
 
       - name: Test Projects (SQL 2022)
         run: |
-          dotnet test "**/Sample*[Tt]ests/*.csproj" \
-            --configuration ${{ env.BUILD_CONFIGURATION }} \
-            -s tests/Settings/SQL2022.runsettings || true
-          dotnet test "**/NuGet/Sample*[Tt]ests/*.csproj" \
-            --configuration ${{ env.BUILD_CONFIGURATION }} \
-            --no-restore -s tests/Settings/SQL2022.runsettings || true
+          for proj in $(find . -path "*Sample*[Tt]ests*" -name "*.csproj" ! -path "*NuGet*"); do
+            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} -s tests/Settings/SQL2022.runsettings || true
+          done
+          for proj in $(find . -path "*NuGet/Sample*[Tt]ests*" -name "*.csproj"); do
+            dotnet test "$proj" --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore -s tests/Settings/SQL2022.runsettings || true
+          done
