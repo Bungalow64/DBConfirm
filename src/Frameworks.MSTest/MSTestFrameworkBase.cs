@@ -46,6 +46,9 @@ namespace DBConfirm.Frameworks.MSTest
             return null;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MSTestFrameworkBase"/> class.
+        /// </summary>
         protected MSTestFrameworkBase(ITestRunnerFactory testRunnerFactory) : base(testRunnerFactory)
         {
         }
@@ -58,7 +61,7 @@ namespace DBConfirm.Frameworks.MSTest
         public Task Init() => BaseInit();
 
         /// <summary>
-        /// The cleaup called after each test, to dispose the current instance of <see cref="ITestRunner"/>, rolling back the transaction and closing the connection
+        /// The cleanup called after each test, to dispose the current instance of <see cref="ITestRunner"/>, rolling back the transaction and closing the connection
         /// </summary>
         [TestCleanup]
         public void Cleanup() => BaseCleanup();

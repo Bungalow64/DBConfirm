@@ -4,6 +4,30 @@
         <name>DBConfirm.Frameworks.XUnit</name>
     </assembly>
     <members>
+        <member name="T:DBConfirm.Frameworks.XUnit.XUnitException">
+            <summary>
+            <see cref="T:Xunit.Sdk.XunitException"/> wrapper
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitException.HandleMessage(System.String,System.Exception)">
+            <summary>
+            Removes the first line of the <see cref="!:innerException"/> and appends the rest to the <see cref="!:userMessage"/>.
+            The first line of an <see cref="T:Xunit.Sdk.XunitException"/> includes the `Assert.*` that was called internally.
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Frameworks.XUnit.XUnitException"/> class.
+            </summary>
+            <param name="userMessage">The user message to be displayed</param>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Frameworks.XUnit.XUnitException"/> class.
+            </summary>
+            <param name="userMessage">The user message to be displayed</param>
+            <param name="innerException">The inner exception, the first line of the Exception will be removed</param>
+        </member>
         <member name="T:DBConfirm.Frameworks.XUnit.XUnitFramework">
             <summary>
             The test framework using XUnit
@@ -66,12 +90,14 @@
             <summary>
             The initialisation called before each test, to set up the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the test, and making the initial connection to the target database
             </summary>
-            <returns>A task representing the asynchronous operation</returns>
         </member>
         <member name="M:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.Finalize">
             <summary>
             The cleanup called after each test, to dispose the current instance of <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/>, rolling back the transaction and closing the connection
             </summary>
+        </member>
+        <member name="M:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.Dispose">
+            <inheritdoc />
         </member>
     </members>
 </doc>

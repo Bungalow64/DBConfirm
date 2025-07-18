@@ -21,7 +21,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (EqualException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -34,7 +34,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (NotEqualException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -47,7 +47,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (ContainsException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -60,7 +60,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (DoesNotContainException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -73,7 +73,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (MatchesException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -86,7 +86,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (StartsWithException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -99,7 +99,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (EndsWithException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -112,7 +112,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (ContainsException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -125,7 +125,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (DoesNotMatchException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -137,8 +137,8 @@ namespace DBConfirm.Frameworks.XUnit
                 Assert.Fail(message);
             }
             catch (FailException)
-            {
-                throw new XUnitException($"{string.Format(message, parameters)}");
+            { 
+                throw new XUnitException(string.Format(message, parameters));
             }
         }
 
@@ -151,7 +151,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (IsTypeException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
 
@@ -164,7 +164,7 @@ namespace DBConfirm.Frameworks.XUnit
             }
             catch (XunitException ex)
             {
-                throw new XUnitException($"{string.Format(message, parameters)}", ex);
+                throw new XUnitException(string.Format(message, parameters), ex);
             }
         }
     }

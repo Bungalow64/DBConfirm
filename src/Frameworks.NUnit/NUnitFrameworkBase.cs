@@ -31,6 +31,9 @@ namespace DBConfirm.Frameworks.NUnit
             return null;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NUnitFrameworkBase"/> class.
+        /// </summary>
         protected NUnitFrameworkBase(ITestRunnerFactory testRunnerFactory) : base(testRunnerFactory)
         {
         }
@@ -43,7 +46,7 @@ namespace DBConfirm.Frameworks.NUnit
         public Task Init() => BaseInit();
 
         /// <summary>
-        /// The cleaup called after each test, to dispose the current instance of <see cref="ITestRunner"/>, rolling back the transaction and closing the connection
+        /// The cleanup called after each test, to dispose the current instance of <see cref="ITestRunner"/>, rolling back the transaction and closing the connection
         /// </summary>
         [TearDown]
         public void Cleanup() => BaseCleanup();

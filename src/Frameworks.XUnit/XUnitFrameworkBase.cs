@@ -36,7 +36,6 @@ namespace DBConfirm.Frameworks.XUnit
         /// <summary>
         /// The initialisation called before each test, to set up the <see cref="ITestRunner"/> for the test, and making the initial connection to the target database
         /// </summary>
-        /// <returns>A task representing the asynchronous operation</returns>
         protected XUnitFrameworkBase(ITestRunnerFactory testRunnerFactory) : base(testRunnerFactory) => Task.Run(BaseInit).Wait();
 
         /// <summary>
@@ -44,6 +43,7 @@ namespace DBConfirm.Frameworks.XUnit
         /// </summary>
         ~XUnitFrameworkBase() => BaseCleanup();
 
+        /// <inheritdoc />
         public void Dispose()
         {
             BaseCleanup();

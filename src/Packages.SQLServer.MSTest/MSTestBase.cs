@@ -1,4 +1,5 @@
 ﻿using DBConfirm.Databases.SQLServer.Factories;
+using DBConfirm.Databases.SQLServer.Runners;
 using DBConfirm.Frameworks.MSTest;
 
 namespace DBConfirm.Packages.SQLServer.MSTest
@@ -8,6 +9,9 @@ namespace DBConfirm.Packages.SQLServer.MSTest
     /// </summary>
     public abstract class MSTestBase : MSTestFrameworkBase
     {
+        /// <summary>
+        /// Uses <see cref="SQLServerTestRunnerFactory"/> to generate <see cref="SQLServerTestRunner"/> as the test runner
+        /// </summary>
         protected MSTestBase() : base(new SQLServerTestRunnerFactory())
         {
         }

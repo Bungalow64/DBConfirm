@@ -18,8 +18,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DBConfirm.Packages.SQLServer.XUnit" Version="1.1.0" />
-		<PackageReference Include="XUnit" Version="3.14.0" />
-		<PackageReference Include="XUnit3TestAdapter" Version="4.5.0" />
+		<PackageReference Include="XUnit" Version="2.9.3" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
 	</ItemGroup>
 

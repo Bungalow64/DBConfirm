@@ -62,6 +62,11 @@
             <param name="parameterName">The name of the parameter</param>
             <returns>Returns the value of the parameter, or null if the parameter is not found</returns>
         </member>
+        <member name="M:DBConfirm.Frameworks.NUnit.NUnitFrameworkBase.#ctor(DBConfirm.Core.Factories.Abstract.ITestRunnerFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Frameworks.NUnit.NUnitFrameworkBase"/> class.
+            </summary>
+        </member>
         <member name="M:DBConfirm.Frameworks.NUnit.NUnitFrameworkBase.Init">
             <summary>
             The initialisation called before each test, to set up the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the test, and making the initial connection to the target database
@@ -70,7 +75,7 @@
         </member>
         <member name="M:DBConfirm.Frameworks.NUnit.NUnitFrameworkBase.Cleanup">
             <summary>
-            The cleaup called after each test, to dispose the current instance of <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/>, rolling back the transaction and closing the connection
+            The cleanup called after each test, to dispose the current instance of <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/>, rolling back the transaction and closing the connection
             </summary>
         </member>
     </members>

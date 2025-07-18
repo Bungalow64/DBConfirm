@@ -1611,6 +1611,11 @@
             <param name="parameterName">The name of the parameter</param>
             <returns>The value of the parameter, or null if the parameter is not found</returns>
         </member>
+        <member name="M:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.#ctor(DBConfirm.Core.Factories.Abstract.ITestRunnerFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase"/> class.
+            </summary>
+        </member>
         <member name="M:DBConfirm.Core.TestFrameworks.Abstract.BaseTestBase.BaseInit">
             <summary>
             The initialisation method to set up the <see cref="T:DBConfirm.Core.Runners.Abstract.ITestRunner"/> for the test, and making the initial connection to the target database

@@ -55,6 +55,9 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseTestBase"/> class.
+        /// </summary>
         protected BaseTestBase(ITestRunnerFactory testRunnerFactory)
         {
             TestRunnerFactory = testRunnerFactory;

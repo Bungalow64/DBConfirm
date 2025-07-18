@@ -4,7 +4,7 @@
   "classifications": [ "Test", "XUnit", "DBConfirm", "SQLServer" ],
   "identity": "DBConfirm.SQLServer.XUnit",
   "name": "DBConfirm: XUnit project for SQL Server",
-  "shortName": "dbconfirm-sqlserver-XUnit",
+  "shortName": "dbconfirm-sqlserver-xunit",
   "tags": {
     "language": "C#",
     "type": "project"

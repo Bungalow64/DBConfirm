@@ -9,5 +9,15 @@
             The abstract base class for test classes using XUnit and SQL Server
             </summary>
         </member>
+        <member name="M:DBConfirm.Packages.SQLServer.XUnit.XUnitBase.#ctor">
+            <summary>
+            Uses <see cref="T:DBConfirm.Databases.SQLServer.Factories.SQLServerTestRunnerFactory"/> to generate <see cref="T:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner"/> as the test runner
+            </summary>
+        </member>
+        <member name="M:DBConfirm.Packages.SQLServer.XUnit.XUnitBase.#ctor(DBConfirm.Core.Factories.Abstract.ITestRunnerFactory)">
+            <summary>
+            Allows the caller to provide an <see cref="T:DBConfirm.Core.Factories.Abstract.ITestRunnerFactory"/>
+            </summary>
+        </member>
     </members>
 </doc>
