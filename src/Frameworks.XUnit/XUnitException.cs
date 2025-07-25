@@ -14,9 +14,10 @@ namespace DBConfirm.Frameworks.XUnit
         /// </summary>
         private static string HandleMessage(string userMessage, Exception innerException)
         {
-            var exMessage = innerException.Message;
+            var exMessage = innerException?.Message ?? "";
             var i = exMessage.IndexOf("\r\n");
-            exMessage = exMessage.Substring(i, exMessage.Length - i);
+            if (i > 0)
+                exMessage = exMessage.Substring(i, exMessage.Length - i);
 
             return $"{userMessage}{exMessage}";
         }
