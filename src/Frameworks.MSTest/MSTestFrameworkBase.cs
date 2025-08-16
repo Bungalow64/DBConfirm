@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DBConfirm.Core.Factories.Abstract;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DBConfirm.Core.TestFrameworks.Abstract;
 using DBConfirm.Core.Runners.Abstract;
@@ -46,6 +47,13 @@ namespace DBConfirm.Frameworks.MSTest
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MSTestFrameworkBase"/> class.
+        /// </summary>
+        protected MSTestFrameworkBase(ITestRunnerFactory testRunnerFactory) : base(testRunnerFactory)
+        {
+        }
+
+        /// <summary>
         /// The initialisation called before each test, to set up the <see cref="ITestRunner"/> for the test, and making the initial connection to the target database
         /// </summary>
         /// <returns>A task representing the asynchronous operation</returns>
@@ -53,7 +61,7 @@ namespace DBConfirm.Frameworks.MSTest
         public Task Init() => BaseInit();
 
         /// <summary>
-        /// The cleaup called after each test, to dispose the current instance of <see cref="ITestRunner"/>, rolling back the transaction and closing the connection
+        /// The cleanup called after each test, to dispose the current instance of <see cref="ITestRunner"/>, rolling back the transaction and closing the connection
         /// </summary>
         [TestCleanup]
         public void Cleanup() => BaseCleanup();

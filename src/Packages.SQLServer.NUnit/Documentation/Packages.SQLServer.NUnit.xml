@@ -9,7 +9,7 @@
             The abstract base class for test classes using NUnit and SQL Server
             </summary>
         </member>
-        <member name="P:DBConfirm.Packages.SQLServer.NUnit.NUnitBase.TestRunnerFactory">
+        <member name="M:DBConfirm.Packages.SQLServer.NUnit.NUnitBase.#ctor">
             <summary>
             Uses <see cref="T:DBConfirm.Databases.SQLServer.Factories.SQLServerTestRunnerFactory"/> to generate <see cref="T:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner"/> as the test runner
             </summary>

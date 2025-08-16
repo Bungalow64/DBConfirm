@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Bungalow64",
+  "classifications": [ "Test", "XUnit", "DBConfirm", "SQLServer" ],
+  "identity": "DBConfirm.SQLServer.XUnit",
+  "name": "DBConfirm: XUnit project for SQL Server",
+  "shortName": "dbconfirm-sqlserver-xunit",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Default.Templates.SQLServer.XUnit",
+  "preferNameDirectory": true
+}

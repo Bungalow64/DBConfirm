@@ -9,7 +9,7 @@
             The abstract base class for test classes using MSTest and SQL Server
             </summary>
         </member>
-        <member name="P:DBConfirm.Packages.SQLServer.MSTest.MSTestBase.TestRunnerFactory">
+        <member name="M:DBConfirm.Packages.SQLServer.MSTest.MSTestBase.#ctor">
             <summary>
             Uses <see cref="T:DBConfirm.Databases.SQLServer.Factories.SQLServerTestRunnerFactory"/> to generate <see cref="T:DBConfirm.Databases.SQLServer.Runners.SQLServerTestRunner"/> as the test runner
             </summary>

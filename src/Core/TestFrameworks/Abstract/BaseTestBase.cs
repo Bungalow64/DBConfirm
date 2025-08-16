@@ -31,7 +31,7 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
         /// <summary>
         /// The <see cref="ITestRunnerFactory"/> to be used to generate the <see cref="ITestRunner"/> to be used
         /// </summary>
-        protected abstract ITestRunnerFactory TestRunnerFactory { get; set; }
+        protected ITestRunnerFactory TestRunnerFactory { get; set; }
 
         /// <summary>
         /// The <see cref="ITestFramework"/> to be used for assertions
@@ -53,6 +53,14 @@ namespace DBConfirm.Core.TestFrameworks.Abstract
                     .AddJsonFile("appsettings.json", true)
                     .Build();
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseTestBase"/> class.
+        /// </summary>
+        protected BaseTestBase(ITestRunnerFactory testRunnerFactory)
+        {
+            TestRunnerFactory = testRunnerFactory;
         }
 
         /// <summary>
