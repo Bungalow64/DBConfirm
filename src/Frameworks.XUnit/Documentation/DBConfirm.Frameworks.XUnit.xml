@@ -81,10 +81,9 @@
         </member>
         <member name="M:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.GetParameter(System.String)">
             <summary>
-            Gets the value of the parameter from <see cref="!:TestContext"/>.  If the parameter does not exist, null is returned
+            Not available for XUnit
             </summary>
-            <param name="parameterName">The name of the parameter</param>
-            <returns>Returns the value of the parameter, or null if the parameter is not found</returns>
+            <returns>null</returns>
         </member>
         <member name="M:DBConfirm.Frameworks.XUnit.XUnitFrameworkBase.#ctor(DBConfirm.Core.Factories.Abstract.ITestRunnerFactory)">
             <summary>

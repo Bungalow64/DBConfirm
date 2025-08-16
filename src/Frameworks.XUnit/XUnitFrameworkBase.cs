@@ -20,16 +20,11 @@ namespace DBConfirm.Frameworks.XUnit
         protected override ITestFramework TestFramework { get; set; } = new XUnitFramework();
 
         /// <summary>
-        /// Gets the value of the parameter from <see cref="TestContext"/>.  If the parameter does not exist, null is returned
+        /// Not available for XUnit
         /// </summary>
-        /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>Returns the value of the parameter, or null if the parameter is not found</returns>
+        /// <returns>null</returns>
         protected override string GetParameter(string parameterName)
         {
-            //if (TestContext.Current.Parameters.Exists(parameterName))
-            //{
-            //    return TestContext.Parameters[parameterName];
-            //}
             return null;
         }
 
